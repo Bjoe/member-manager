@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CodeLite_Project Name="Dorfverwaltung-UT" InternalType="UnitTest++">
+  <Description/>
+  <Dependencies/>
+  <VirtualDirectory Name="src-ut">
+    <File Name="../../dorfverwaltung/src-ut/main.cpp"/>
+    <File Name="../../dorfverwaltung/src-ut/club-member-test.cpp"/>
+    <File Name="../../dorfverwaltung/src/dorfmanagement.hpp"/>
+    <File Name="../../dorfverwaltung/src/dorfmanagement.cpp"/>
+    <File Name="../../dorfverwaltung/src/club-member.cpp"/>
+    <File Name="../../dorfverwaltung/src/club-member.hpp"/>
+    <File Name="../../dorfverwaltung/src-ut/email-test.cpp"/>
+    <File Name="../../dorfverwaltung/src/e-mail.cpp"/>
+    <File Name="../../dorfverwaltung/src/e-mail.hpp"/>
+  </VirtualDirectory>
+  <Dependencies Name="Release"/>
+  <Settings Type="Executable">
+    <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+      <Compiler Options="-g" Required="yes">
+        <IncludePath Value="."/>
+        <IncludePath Value="/usr/local/include/unittest++"/>
+        <IncludePath Value="/usr/local/include/boost/date_time/gregorian"/>
+        <IncludePath Value="/usr/local/include"/>
+        <IncludePath Value="/usr/local/include/boost/regex"/>
+      </Compiler>
+      <Linker Options="" Required="yes">
+        <LibraryPath Value="/usr/local/lib"/>
+        <Library Value="UnitTest++"/>
+        <Library Value="litesql"/>
+        <Library Value="boost_date_time"/>
+        <Library Value="boost_regex"/>
+      </Linker>
+      <ResourceCompiler Options="" Required="no"/>
+      <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="./Debug" Command="./$(ProjectName)" CommandArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
+      <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
+        <PostConnectCommands/>
+        <StartupCommands/>
+      </Debugger>
+      <PreBuild/>
+      <PostBuild/>
+      <CustomBuild Enabled="no">
+        <CleanCommand>make</CleanCommand>
+        <BuildCommand>make</BuildCommand>
+        <PreprocessFileCommand/>
+        <SingleFileCommand/>
+        <MakefileGenerationCommand/>
+        <ThirdPartyToolName>configure</ThirdPartyToolName>
+        <WorkingDirectory/>
+      </CustomBuild>
+      <AdditionalRules>
+        <CustomPostBuild/>
+        <CustomPreBuild/>
+      </AdditionalRules>
+    </Configuration>
+    <Configuration Name="Release" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+      <Compiler Options="" Required="yes">
+        <IncludePath Value="."/>
+      </Compiler>
+      <Linker Options="-O2" Required="yes">
+        <LibraryPath Value=""/>
+        <Library Value="libUnitTest++.a"/>
+      </Linker>
+      <ResourceCompiler Options="" Required="no"/>
+      <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="./Release" Command="./$(ProjectName)" CommandArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
+      <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
+        <PostConnectCommands/>
+        <StartupCommands/>
+      </Debugger>
+      <PreBuild/>
+      <PostBuild/>
+      <CustomBuild Enabled="no">
+        <CleanCommand/>
+        <BuildCommand/>
+        <PreprocessFileCommand/>
+        <SingleFileCommand/>
+        <MakefileGenerationCommand/>
+        <ThirdPartyToolName>None</ThirdPartyToolName>
+        <WorkingDirectory/>
+      </CustomBuild>
+      <AdditionalRules>
+        <CustomPostBuild/>
+        <CustomPreBuild/>
+      </AdditionalRules>
+    </Configuration>
+    <GlobalSettings>
+      <Compiler Options="">
+        <IncludePath Value="."/>
+      </Compiler>
+      <Linker Options="">
+        <LibraryPath Value="."/>
+      </Linker>
+      <ResourceCompiler Options=""/>
+    </GlobalSettings>
+  </Settings>
+  <Dependencies Name="Debug"/>
+</CodeLite_Project>
