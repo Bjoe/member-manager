@@ -1,0 +1,585 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MemberDialog</class>
+ <widget class="QWidget" name="MemberDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>496</width>
+    <height>286</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>Mitglied Eingabe</string>
+  </property>
+  <widget class="QTabWidget" name="tabWidget">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>431</width>
+     <height>221</height>
+    </rect>
+   </property>
+   <property name="currentIndex">
+    <number>2</number>
+   </property>
+   <widget class="QWidget" name="name">
+    <attribute name="title">
+     <string>Name</string>
+    </attribute>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>10</y>
+       <width>351</width>
+       <height>151</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>GroupBox</string>
+     </property>
+     <widget class="QLineEdit" name="nickname">
+      <property name="geometry">
+       <rect>
+        <x>180</x>
+        <y>100</y>
+        <width>127</width>
+        <height>27</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="firstName">
+      <property name="geometry">
+       <rect>
+        <x>180</x>
+        <y>70</y>
+        <width>127</width>
+        <height>27</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="memberName">
+      <property name="geometry">
+       <rect>
+        <x>180</x>
+        <y>40</y>
+        <width>127</width>
+        <height>27</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="memberNameLabel">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>50</y>
+        <width>40</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>&amp;Name</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="firstNameLabel">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>80</y>
+        <width>61</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>&amp;Vorname</string>
+      </property>
+      <property name="buddy">
+       <cstring>firstName</cstring>
+      </property>
+     </widget>
+     <widget class="QLabel" name="nicknameLabel">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>120</y>
+        <width>68</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Nic&amp;kname</string>
+      </property>
+      <property name="buddy">
+       <cstring>nickname</cstring>
+      </property>
+     </widget>
+     <widget class="QLabel" name="memberIdLabel">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>20</y>
+        <width>119</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Mitgliedsnummer</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="memberId">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>180</x>
+        <y>20</y>
+        <width>16</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="adress">
+    <attribute name="title">
+     <string>Adresse</string>
+    </attribute>
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>20</y>
+       <width>361</width>
+       <height>141</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>GroupBox</string>
+     </property>
+     <widget class="QLineEdit" name="zipcode">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>104</y>
+        <width>127</width>
+        <height>27</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="zipcodeLabel">
+      <property name="geometry">
+       <rect>
+        <x>35</x>
+        <y>104</y>
+        <width>79</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>&amp;Postleitzahl</string>
+      </property>
+      <property name="buddy">
+       <cstring>zipcode</cstring>
+      </property>
+     </widget>
+     <widget class="QLabel" name="cityLabel">
+      <property name="geometry">
+       <rect>
+        <x>35</x>
+        <y>70</y>
+        <width>36</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>St&amp;adt</string>
+      </property>
+      <property name="buddy">
+       <cstring>city</cstring>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="street">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>36</y>
+        <width>127</width>
+        <height>27</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="streetLabel">
+      <property name="geometry">
+       <rect>
+        <x>35</x>
+        <y>36</y>
+        <width>45</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>&amp;Straße</string>
+      </property>
+      <property name="buddy">
+       <cstring>street</cstring>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="city">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>70</y>
+        <width>127</width>
+        <height>27</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="etc">
+    <attribute name="title">
+     <string>Sonstiges</string>
+    </attribute>
+    <widget class="QGroupBox" name="groupBox_3">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>20</y>
+       <width>291</width>
+       <height>151</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>GroupBox</string>
+     </property>
+     <widget class="QLabel" name="emailLabel">
+      <property name="geometry">
+       <rect>
+        <x>15</x>
+        <y>43</y>
+        <width>36</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>&amp;Email</string>
+      </property>
+      <property name="buddy">
+       <cstring>email</cstring>
+      </property>
+     </widget>
+     <widget class="QLabel" name="entryDateLabel">
+      <property name="geometry">
+       <rect>
+        <x>15</x>
+        <y>77</y>
+        <width>102</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Eintritts &amp;Datum</string>
+      </property>
+      <property name="buddy">
+       <cstring>entryDate</cstring>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="email">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>43</y>
+        <width>127</width>
+        <height>27</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QDateEdit" name="entryDate">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>77</y>
+        <width>97</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="calendarPopup">
+       <bool>true</bool>
+      </property>
+      <property name="date">
+       <date>
+        <year>2009</year>
+        <month>12</month>
+        <day>8</day>
+       </date>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="contribution">
+    <attribute name="title">
+     <string>Beitrag</string>
+    </attribute>
+    <widget class="QGroupBox" name="groupBox_6">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>20</y>
+       <width>341</width>
+       <height>151</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>GroupBox</string>
+     </property>
+     <widget class="QLineEdit" name="fee">
+      <property name="geometry">
+       <rect>
+        <x>165</x>
+        <y>30</y>
+        <width>127</width>
+        <height>27</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="feeLabel">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>30</y>
+        <width>49</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>&amp;Beitrag</string>
+      </property>
+      <property name="buddy">
+       <cstring>fee</cstring>
+      </property>
+     </widget>
+     <widget class="QLabel" name="donationLabel">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>70</y>
+        <width>64</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Spende</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="donation">
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>70</y>
+        <width>113</width>
+        <height>28</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="conInfoLabel">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>110</y>
+        <width>64</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Info</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="contributionInfo">
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>110</y>
+        <width>113</width>
+        <height>28</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="bank">
+    <attribute name="title">
+     <string>Bank</string>
+    </attribute>
+    <widget class="QGroupBox" name="groupBox_5">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>361</width>
+       <height>171</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>GroupBox</string>
+     </property>
+     <widget class="QLabel" name="accountLabel">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>80</y>
+        <width>64</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Konto Nr.</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="account">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>80</y>
+        <width>113</width>
+        <height>28</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="codeLabel">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>120</y>
+        <width>64</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>BLZ</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="code">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>120</y>
+        <width>113</width>
+        <height>28</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="bankNameLabel">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>40</y>
+        <width>64</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Name</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="bankName">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>40</y>
+        <width>113</width>
+        <height>28</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="infoSite">
+    <attribute name="title">
+     <string>Info</string>
+    </attribute>
+    <widget class="QGroupBox" name="groupBox_4">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>321</width>
+       <height>161</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>GroupBox</string>
+     </property>
+     <widget class="QLabel" name="infoLabel">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>40</y>
+        <width>25</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>&amp;Info</string>
+      </property>
+      <property name="buddy">
+       <cstring>info</cstring>
+      </property>
+     </widget>
+     <widget class="QPlainTextEdit" name="info">
+      <property name="geometry">
+       <rect>
+        <x>70</x>
+        <y>20</y>
+        <width>241</width>
+        <height>131</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QDialogButtonBox" name="buttonBox">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>240</y>
+     <width>334</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="standardButtons">
+    <set>QDialogButtonBox::Discard|QDialogButtonBox::Save</set>
+   </property>
+   <property name="centerButtons">
+    <bool>false</bool>
+   </property>
+  </widget>
+ </widget>
+ <tabstops>
+  <tabstop>memberName</tabstop>
+  <tabstop>firstName</tabstop>
+  <tabstop>nickname</tabstop>
+  <tabstop>email</tabstop>
+  <tabstop>entryDate</tabstop>
+  <tabstop>info</tabstop>
+  <tabstop>buttonBox</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>
