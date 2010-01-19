@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!DOCTYPE database SYSTEM "litesql.dtd">
+<database name="DorfManagement" namespace="MemberManagement">
+	<object name="Member">
+		<field name="memberId" type="integer" indexed="true"/>
+		<field name="deleted" type="boolean" default="false"/>
+
+		<field name="surename" type="string"/>
+		<field name="firstName" type="string"/>
+		<field name="nickname" type="string"/>
+
+		<field name="dateOfEntry" type="date"/>
+		<field name="dateOfLeaving" type="date"></field>
+
+		<field name="email" type="string"/>
+
+		<field name="street" type="string"></field>
+		<field name="zipCode" type="integer"></field>
+		<field name="city" type="string"></field>
+		
+		<field name="cashCollection" type="boolean"/>
+
+		<field name="info" type="string"/>
+	</object>
+
+	<relation id="Bank" name="Bank">
+		<relate object="Member" handle="bankAccount"></relate>
+		<field name="account" type="integer"></field>		
+		<field name="name" type="string"></field>		
+		<field name="code" type="integer"></field>		
+	</relation>
+
+	<relation id="Contribution" name="Contribution">
+		<relate object="Member" handle="money"></relate>
+		<field name="fee" type="integer"/>
+		<field name="donation" type="integer"/>
+		<field name="validFrom" type="date"/>
+		<field name="info" type="string"/>
+	</relation>
+	
+	<relation id="Balance" name="Balance">
+		<relate object="Member" handle="cashAccount"></relate>
+		<field name="amount" type="integer"></field>
+		<field name="date" type="date"></field>
+		<field name="description" type="string"></field>
+		<field name="info" type="string"></field>
+	</relation>
+
+	<relation id="Ressourcen" name="Ressourcen">
+		<relate object="Member" handle="internalRessourcen"></relate>
+		<field name="emailIntern" type="string"/>
+		<field name="emailCCC" type="string"/>
+		<field name="shellAccount" type="string"/>
+	</relation>
+			
+</database>
