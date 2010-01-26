@@ -5,7 +5,7 @@
 #include "litesql.hpp"
 
 #include "dorfmanagement.hpp"
-#include "ClubMember.hpp"
+#include "Member.hpp"
 #include "Balance.hpp"
 
 namespace ClubBackend
@@ -16,14 +16,14 @@ namespace ClubBackend
     public:
         VillageSquare(const MemberManagement::DorfManagement& aDatabase);
 
-        std::vector<ClubMember> sortedBySurename();
-        std::vector<ClubMember> sortedByFirstname();
-        std::vector<ClubMember> sortedByMemberId();
-        std::vector<ClubMember> sortedByNickname();
-        std::vector<ClubMember> sortedBy(const litesql::FieldType);
+        std::vector<Member> sortedBySurename();
+        std::vector<Member> sortedByFirstname();
+        std::vector<Member> sortedByMemberId();
+        std::vector<Member> sortedByNickname();
+        std::vector<Member> sortedBy(const litesql::FieldType);
 
-        std::vector<ClubMember> getDeletedMembers();
-        ClubMember getMember(const int anId);
+        std::vector<Member> getDeletedMembers();
+        Member getMember(const int anId);
 
         std::vector<Balance> getMemberCashAccount(const int anId);
         //std::vector<Balance> getMemberCashAccount(const ClubMember& aMember);

@@ -4,7 +4,7 @@
 #include <iostream>
 
 #include "../src/dorfmanagement.hpp"
-#include "../src/ClubMember.hpp"
+#include "../src/Member.hpp"
 #include "../src/Balance.hpp"
 #include "../src/VillageSquare.hpp"
 
@@ -16,7 +16,7 @@ BOOST_FIXTURE_TEST_CASE(SortedBySurename, MemberDB)
 {
     VillageSquare square(database);
 
-    std::vector<ClubMember> clubmember = square.sortedBySurename();
+    std::vector<Member> clubmember = square.sortedBySurename();
 
     unsigned int i = 2;
     BOOST_CHECK_EQUAL(i,clubmember.size());
@@ -29,7 +29,7 @@ BOOST_FIXTURE_TEST_CASE(SortedByFirstname, MemberDB)
 {
     VillageSquare square(database);
 
-    std::vector<ClubMember> clubmember = square.sortedByFirstname();
+    std::vector<Member> clubmember = square.sortedByFirstname();
 
     unsigned int i = 2;
     BOOST_CHECK_EQUAL(i,clubmember.size());
@@ -42,7 +42,7 @@ BOOST_FIXTURE_TEST_CASE(SortedByMemberId, MemberDB)
 {
     VillageSquare square(database);
 
-    std::vector<ClubMember> clubmember = square.sortedByMemberId();
+    std::vector<Member> clubmember = square.sortedByMemberId();
 
     unsigned int i = 2;
     BOOST_CHECK_EQUAL(i,clubmember.size());
@@ -55,7 +55,7 @@ BOOST_FIXTURE_TEST_CASE(SortedByNickname, MemberDB)
 {
     VillageSquare square(database);
 
-    std::vector<ClubMember> clubmember = square.sortedByNickname();
+    std::vector<Member> clubmember = square.sortedByNickname();
 
     unsigned int i = 2;
     BOOST_CHECK_EQUAL(i,clubmember.size());
@@ -68,7 +68,7 @@ BOOST_FIXTURE_TEST_CASE(GetDeleted, MemberDB)
 {
     VillageSquare square(database);
 
-    std::vector<ClubMember> clubmember = square.getDeletedMembers();
+    std::vector<Member> clubmember = square.getDeletedMembers();
 
     unsigned int i = 1;
     BOOST_CHECK_EQUAL(i,clubmember.size());
@@ -79,7 +79,7 @@ BOOST_FIXTURE_TEST_CASE(GetMember, MemberDB)
 {
     VillageSquare square(database);
 
-    ClubMember clubmember = square.getMember(1024);
+    Member clubmember = square.getMember(1024);
 
     BOOST_CHECK_EQUAL("Solo",clubmember.getName());
 }

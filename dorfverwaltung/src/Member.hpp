@@ -6,8 +6,8 @@
  *  <joerg@<host>>
  ****************************************************************************/
 
-#ifndef _CLUB_MEMBER_HPP_
-#define _CLUB_MEMBER_HPP_
+#ifndef _MEMBER_HPP_
+#define _MEMBER_HPP_
 
 #include <iostream>
 #include <litesql.hpp>
@@ -19,16 +19,16 @@
 namespace ClubBackend
 {
 
-    class ClubMember
+    class Member
     {
 
     private:
         MemberManagement::Member member;
 
     public:
-        ClubMember(const MemberManagement::DorfManagement& aDatabase);
+        Member(const MemberManagement::DorfManagement& aDatabase);
         // Wird von litesql::select benoetigt
-        ClubMember(const litesql::Database& aDatabase, const litesql::Record& aRecord);
+        Member(const litesql::Database& aDatabase, const litesql::Record& aRecord);
 
         // Wird von litesql::select benoetigt
         static void getFieldTypes(std::vector<litesql::FieldType>& aFtypes)
@@ -167,4 +167,4 @@ namespace ClubBackend
     };
 }
 
-#endif // _MCLUB_MEMBER_HPP_
+#endif // _MEMBER_HPP_

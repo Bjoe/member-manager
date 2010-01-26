@@ -2,52 +2,49 @@
 
 namespace ClubBackend
 {
-    using MemberManagement::Member;
-    using MemberManagement::BalanceRl;
-
     VillageSquare::VillageSquare(const MemberManagement::DorfManagement& aDatabase) : database(aDatabase)
     {
 
     }
 
-    std::vector<ClubMember> VillageSquare::sortedBy(const litesql::FieldType aType)
+    std::vector<Member> VillageSquare::sortedBy(const litesql::FieldType aType)
     {
-        return litesql::select<ClubMember>(database, Member::Deleted == false).orderBy(aType).all();
+        return litesql::select<Member>(database, MemberManagement::Member::Deleted == false).orderBy(aType).all();
     }
 
-    std::vector<ClubMember> VillageSquare::sortedBySurename()
+    std::vector<Member> VillageSquare::sortedBySurename()
     {
-        return sortedBy(Member::Surename);
+        return sortedBy(MemberManagement::Member::Surename);
     }
 
-    std::vector<ClubMember> VillageSquare::sortedByFirstname()
+    std::vector<Member> VillageSquare::sortedByFirstname()
     {
-        return sortedBy(Member::FirstName);
+        return sortedBy(MemberManagement::Member::FirstName);
     }
 
-    std::vector<ClubMember> VillageSquare::sortedByNickname()
+    std::vector<Member> VillageSquare::sortedByNickname()
     {
-        return sortedBy(Member::Nickname);
+        return sortedBy(MemberManagement::Member::Nickname);
     }
 
-    std::vector<ClubMember> VillageSquare::sortedByMemberId()
+    std::vector<Member> VillageSquare::sortedByMemberId()
     {
-        return sortedBy(Member::MemberId);
+        return sortedBy(MemberManagement::Member::MemberId);
     }
 
-    std::vector<ClubMember> VillageSquare::getDeletedMembers()
+    std::vector<Member> VillageSquare::getDeletedMembers()
     {
-        return litesql::select<ClubMember>(database, Member::Deleted == true).orderBy(Member::Surename).all();
+        return litesql::select<Member>(database, MemberManagement::Member::Deleted == true).orderBy(MemberManagement::Member::Surename).all();
     }
 
-    ClubMember VillageSquare::getMember(const int anId)
+    Member VillageSquare::getMember(const int anId)
     {
-        return litesql::select<ClubMember>(database, Member::MemberId == anId).one();
+        return litesql::select<Member>(database, MemberManagement::Member::MemberId == anId).one();
     }
 
     std::vector<Balance> VillageSquare::getMemberCashAccount(const int anId)
     {
-        Member member = litesql::select<Member>(database, Member::MemberId == anId).one();
-        return BalanceRl::get<Balance>(database, litesql::Expr(), BalanceRl::Member == member.id ).all();
+        MemberManagement::Member member = litesql::select<MemberManagement::Member>(database, MemberManagement::Member::MemberId == anId).one();
+        return MemberManagement::BalanceRl::get<Balance>(database, litesql::Expr(), MemberManagement::BalanceRl::Member == member.id ).all();
     }
 }

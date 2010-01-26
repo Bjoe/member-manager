@@ -3,49 +3,49 @@
 //  Copyright  2009  joerg
 //  <joerg@<host>>
 
-#include "ClubMember.hpp"
+#include "Member.hpp"
 
 namespace ClubBackend
 {
 
-    ClubMember::ClubMember(const MemberManagement::DorfManagement& aDatabase) : member(aDatabase)
+    Member::Member(const MemberManagement::DorfManagement& aDatabase) : member(aDatabase)
     {
     }
 
-    ClubMember::ClubMember(const litesql::Database& aDatabase, const litesql::Record& aRecord) : member(aDatabase,aRecord)
+    Member::Member(const litesql::Database& aDatabase, const litesql::Record& aRecord) : member(aDatabase,aRecord)
     {
     }
 
-    void ClubMember::setEntryDate(const boost::gregorian::date& anEntryDate)
+    void Member::setEntryDate(const boost::gregorian::date& anEntryDate)
     {
         litesql::Date sqlDate(anEntryDate.day(),anEntryDate.month(),anEntryDate.year());
         member.dateOfEntry = sqlDate;
     }
 
-    boost::gregorian::date ClubMember::getEntryDate() const
+    boost::gregorian::date Member::getEntryDate() const
     {
         litesql::Date sqlDate = member.dateOfEntry;
         return boost::gregorian::date(sqlDate.year(),sqlDate.month(),sqlDate.day());
     }
 
-    void ClubMember::setLeavingDate(const boost::gregorian::date& anLeavingDate)
+    void Member::setLeavingDate(const boost::gregorian::date& anLeavingDate)
     {
         litesql::Date sqlDate(anLeavingDate.day(),anLeavingDate.month(),anLeavingDate.year());
         member.dateOfEntry = sqlDate;
     }
 
-    boost::gregorian::date ClubMember::getLeavingDate() const
+    boost::gregorian::date Member::getLeavingDate() const
     {
         litesql::Date sqlDate = member.dateOfEntry;
         return boost::gregorian::date(sqlDate.year(),sqlDate.month(),sqlDate.day());
     }
 
-    void ClubMember::setEmail(const EMail::EMail& anEmailAdr)
+    void Member::setEmail(const EMail::EMail& anEmailAdr)
     {
         member.email = anEmailAdr.getAddress();
     }
 
-    EMail::EMail ClubMember::getEmail() const
+    EMail::EMail Member::getEmail() const
     {
         return EMail::EMail(member.email);
     }
