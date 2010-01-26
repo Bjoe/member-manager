@@ -1,6 +1,6 @@
 #include "Balance.hpp"
 
-namespace Dorfverwaltung
+namespace ClubBackend
 {
 
     Balance::Balance(const MemberManagement::DorfManagement& aDatabase) : balance(aDatabase)

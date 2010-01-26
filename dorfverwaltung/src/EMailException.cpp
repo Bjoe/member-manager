@@ -1,6 +1,6 @@
 #include "EMailException.hpp"
 
-namespace Dorfverwaltung
+namespace ClubBackend
 {
 
     EMailException::EMailException() throw()

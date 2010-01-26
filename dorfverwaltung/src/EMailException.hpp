@@ -4,7 +4,7 @@
 #include <exception>
 #include <string>
 
-namespace Dorfverwaltung
+namespace ClubBackend
 {
 
     class EMailException : public std::exception

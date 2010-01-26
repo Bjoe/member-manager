@@ -1,6 +1,6 @@
 #include "Bank.hpp"
 
-namespace Dorfverwaltung
+namespace ClubBackend
 {
 
     Bank::Bank(const MemberManagement::DorfManagement& aDatabase) : bankAccount(aDatabase)

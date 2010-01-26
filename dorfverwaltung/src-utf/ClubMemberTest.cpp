@@ -10,7 +10,7 @@
 #include "../src/dorfmanagement.hpp"
 #include "../src/ClubMember.hpp"
 
-using namespace Dorfverwaltung;
+using namespace ClubBackend;
 
 BOOST_AUTO_TEST_SUITE(ClubMemberTest)
 

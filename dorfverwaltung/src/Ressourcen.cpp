@@ -1,6 +1,6 @@
 #include "Ressourcen.hpp"
 
-namespace Dorfverwaltung
+namespace ClubBackend
 {
 
     Ressourcen::Ressourcen(const MemberManagement::DorfManagement& aDatabase) : ressourcen(aDatabase)

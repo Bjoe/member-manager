@@ -1,6 +1,6 @@
 #include "Contribution.hpp"
 
-namespace Dorfverwaltung
+namespace ClubBackend
 {
 
     Contribution::Contribution(const MemberManagement::DorfManagement& aDatabase) : contribution(aDatabase)

@@ -5,8 +5,7 @@
 
 #include "ClubMember.hpp"
 
-// TODO Rename ClubBackend
-namespace Dorfverwaltung
+namespace ClubBackend
 {
 
     ClubMember::ClubMember(const MemberManagement::DorfManagement& aDatabase) : member(aDatabase)

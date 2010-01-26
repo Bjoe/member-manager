@@ -1,6 +1,6 @@
 #include "VillageSquare.hpp"
 
-namespace Dorfverwaltung
+namespace ClubBackend
 {
     using MemberManagement::Member;
     using MemberManagement::BalanceRl;

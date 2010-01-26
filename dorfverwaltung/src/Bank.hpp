@@ -6,7 +6,7 @@
 
 #include "../src/dorfmanagement.hpp"
 
-namespace Dorfverwaltung
+namespace ClubBackend
 {
 
     class Bank

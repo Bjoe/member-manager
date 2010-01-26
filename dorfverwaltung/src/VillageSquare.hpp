@@ -8,7 +8,7 @@
 #include "ClubMember.hpp"
 #include "Balance.hpp"
 
-namespace Dorfverwaltung
+namespace ClubBackend
 {
 
     class VillageSquare

@@ -7,7 +7,7 @@
 #include "dorfmanagement.hpp"
 #include "EMail.hpp"
 
-namespace Dorfverwaltung {
+namespace ClubBackend {
 
 class Ressourcen
 {

@@ -7,7 +7,7 @@
 
 #include "../src/EMailException.hpp"
 
-namespace Dorfverwaltung
+namespace ClubBackend
 {
 
     class EMail

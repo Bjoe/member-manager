@@ -8,7 +8,7 @@
 #include "../src/Balance.hpp"
 #include "../src/VillageSquare.hpp"
 
-using namespace Dorfverwaltung;
+using namespace ClubBackend;
 
 BOOST_AUTO_TEST_SUITE(VillageSquareTest)
 

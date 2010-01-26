@@ -1,6 +1,6 @@
 #include "EMail.hpp"
 
-namespace Dorfverwaltung
+namespace ClubBackend
 {
 
     EMail::EMail(const std::string& anEmail) : address(anEmail)

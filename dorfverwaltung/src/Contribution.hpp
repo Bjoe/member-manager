@@ -7,7 +7,7 @@
 
 #include "dorfmanagement.hpp"
 
-namespace Dorfverwaltung {
+namespace ClubBackend {
 
 class Contribution
 {

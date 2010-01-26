@@ -7,7 +7,7 @@
 
 #include "../src/Contribution.hpp"
 
-using namespace Dorfverwaltung;
+using namespace ClubBackend;
 
 BOOST_AUTO_TEST_SUITE(ContributionTest)
 
