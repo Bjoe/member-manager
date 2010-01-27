@@ -26,8 +26,8 @@ void MemberDialog::showMember() const
             QDate::fromString(
                     QString::fromStdString(member->getEntryDate()),
                     QString("dd.MM.yyyy")));
-    info->setDocument(new QTextDocument(QString::fromStdString(member->getInfo())));
-
+	info->setPlainText(QString::fromStdString(member->getInfo()));
+		
     const ClubFrontend::Contribution* contribution = controller->getContribution();
     contributionInfo->setText(QString::fromStdString(contribution->getInfo()));
     donation->setText(QString::number(contribution->getDonation()));

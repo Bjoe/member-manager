@@ -142,7 +142,7 @@ void MemberDialogTest::changeMember()
     QCOMPARE(dialog.account->text(), QString("123456789"));
     QCOMPARE(dialog.bankName->text(), QString("Galaxy"));
     QCOMPARE(dialog.code->text(), QString("98765"));
-    //QCOMPARE(dialog.info->toPlainText(), QString("Lalala"));
+    QCOMPARE(dialog.info->toPlainText(), QString("Lalala"));
 
     delete member;
     delete bank;
