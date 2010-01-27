@@ -1,5 +1,7 @@
-HEADERS += iclubmember.h \
-    memberdialog.h
+HEADERS += member.h \
+    memberdialog.h \
+    resources.h
 SOURCES += main.cpp \
     memberdialog.cpp
-FORMS += memberDialog.ui
+FORMS += memberDialog.ui \
+    mainWindow.ui
