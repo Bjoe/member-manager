@@ -17,6 +17,7 @@ class MemberDialog : public QWidget, public Ui::MemberDialog
 
 public:
     MemberDialog(ClubFrontend::Controller& aController, QWidget *parent = 0);
+	void showMember() const;
     void setMemberId(const int& anId);
 
 private:

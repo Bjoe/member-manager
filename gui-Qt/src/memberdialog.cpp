@@ -8,7 +8,11 @@ MemberDialog::MemberDialog(ClubFrontend::Controller& aController, QWidget *paren
         QWidget(parent), controller(&aController)
 {
     setupUi(this);
+    connect(buttonBox, SIGNAL(accepted()), this, SLOT(saveMember()));
+}
 
+void MemberDialog::showMember() const
+{
     const ClubFrontend::Member* member = controller->getMember();
     memberId->setText(QString::number(member->getId()));
     firstName->setText(QString::fromStdString(member->getFirstname()));
@@ -33,8 +37,6 @@ MemberDialog::MemberDialog(ClubFrontend::Controller& aController, QWidget *paren
     account->setText(QString::number(bank->getAccount()));
     code->setText(QString::number(bank->getCode()));
     bankName->setText(QString::fromStdString(bank->getName()));
-
-    connect(buttonBox, SIGNAL(accepted()), this, SLOT(saveMember()));
 }
 
 void MemberDialog::setMemberId(const int& anId)

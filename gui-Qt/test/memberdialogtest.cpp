@@ -35,8 +35,8 @@ void MemberDialogTest::setMemberId()
 
 void MemberDialogTest::newMember()
 {
-    MemberMock* const memberMock = new MemberMock;;
-    BankMock* const bankMock = new BankMock;
+    MemberMock* const memberMock = new MemberMock;
+	BankMock* const bankMock = new BankMock;
     ContributionMock* const contributionMock = new ContributionMock;
     ResourcesMock* const resourcesMock = new ResourcesMock;
 
@@ -72,7 +72,7 @@ void MemberDialogTest::newMember()
     QCOMPARE(QString::fromStdString(member->getNickname()), QString("Rod"));
     QCOMPARE(QString::fromStdString(member->getStreet()), QString("Atlantis"));
     QCOMPARE(QString::fromStdString(member->getCity()), QString("Pegasus"));
-//    QCOMPARE(member->getZipCode(), 40215);
+    QCOMPARE(member->getZipCode(), 40215);
     QCOMPARE(QString::fromStdString(member->getEmail()), QString("rod@atlantis.pegasus"));
     QCOMPARE(QString::fromStdString(member->getEntryDate()), QString("08.01.09"));
     QCOMPARE(QString::fromStdString(member->getInfo()), QString("Foo"));
@@ -81,7 +81,7 @@ void MemberDialogTest::newMember()
     const BankMock* bank = controller.getBankMock();
     QCOMPARE(QString::fromStdString(bank->getName()), QString("Galaxy Bank"));
     QCOMPARE(bank->getCode(),98765432);
-  //  QCOMPARE(bank->getAccount(),123456789);
+    QCOMPARE(bank->getAccount(),123456789);
     delete bank;
 
     const ResourcesMock* resources = controller.getResourcesMock();
@@ -90,8 +90,8 @@ void MemberDialogTest::newMember()
 
     const ContributionMock* contribution = controller.getContributionMock();
     QCOMPARE(QString::fromStdString(contribution->getInfo()),QString("Info"));
- //   QCOMPARE(contribution->getDonation(),5);
- //   QCOMPARE(contribution->getFee(),15);
+    QCOMPARE(contribution->getDonation(),5);
+    QCOMPARE(contribution->getFee(),15);
     delete contribution;
 }
 
@@ -125,7 +125,8 @@ void MemberDialogTest::changeMember()
 
     ControllerMock controller(member, bank, contribution, resources);
     GuiManagement::MemberDialog dialog(controller);
-
+	dialog.showMember();
+		
     QCOMPARE(dialog.firstName->text(), QString("Jonathan"));
     QCOMPARE(dialog.memberName->text(), QString("Archer"));
     QCOMPARE(dialog.nickname->text(), QString("Captain"));
@@ -151,6 +152,11 @@ void MemberDialogTest::changeMember()
 
 void MemberDialogTest::foo()
 {
+	QString foo("10");
+     QCOMPARE(QString("10"),foo);
+	int ifoo = foo.toInt();
+		QCOMPARE(10,ifoo);
+	
     int i = 1;
     int& r = i;
     int x = r;
