@@ -4,58 +4,51 @@
 #include <string>
 #include "../src/contribution.h"
 
-namespace ClubFrontendTest {
+namespace ClubFrontendTest
+{
 
 class ContributionMock : public ClubFrontend::Contribution
 {
 public:
-    ContributionMock();
+	ContributionMock();
 
-    virtual void setFee(const int& aFee)
-    {
-        fee = aFee;
-    }
+	virtual void setFee(const int& aFee) {
+		fee = aFee;
+	}
 
-    virtual int getFee() const
-    {
-        return fee;
-    }
+	virtual int getFee() const {
+		return fee;
+	}
 
-    virtual void setDonation(const int& aDonation)
-    {
-        donation = aDonation;
-    }
+	virtual void setDonation(const int& aDonation) {
+		donation = aDonation;
+	}
 
-    virtual int getDonation() const
-    {
-        return donation;
-    }
+	virtual int getDonation() const {
+		return donation;
+	}
 
-    virtual void setInfo(const std::string& anInfo)
-    {
-        info = anInfo;
-    }
+	virtual void setInfo(const std::string& anInfo) {
+		info = anInfo;
+	}
 
-    virtual std::string getInfo() const
-    {
-        return info;
-    }
+	virtual std::string getInfo() const {
+		return info;
+	}
 
-    virtual void setValidFrom(const std::string& aValidFrom)
-    {
-        validFrom = aValidFrom;
-    }
+	virtual void setValidFrom(const std::string& aValidFrom) {
+		validFrom = aValidFrom;
+	}
 
-    virtual std::string getValidFrom() const
-    {
-        return validFrom;
-    }
+	virtual std::string getValidFrom() const {
+		return validFrom;
+	}
 
 private:
-    int fee;
-    int donation;
-    std::string info;
-    std::string validFrom;
+	int fee;
+	int donation;
+	std::string info;
+	std::string validFrom;
 };
 
 }

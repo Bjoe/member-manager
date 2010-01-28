@@ -1,6 +1,7 @@
 #include "resourcesmock.h"
 
-namespace ClubFrontendTest {
+namespace ClubFrontendTest
+{
 
 ResourcesMock::ResourcesMock()
 {

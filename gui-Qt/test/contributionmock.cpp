@@ -1,6 +1,7 @@
 #include "contributionmock.h"
 
-namespace ClubFrontendTest {
+namespace ClubFrontendTest
+{
 
 ContributionMock::ContributionMock()
 {

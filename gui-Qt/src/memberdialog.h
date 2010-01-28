@@ -9,22 +9,23 @@
 #include "resources.h"
 #include "controller.h"
 
-namespace GuiManagement {
+namespace GuiManagement
+{
 
 class MemberDialog : public QWidget, public Ui::MemberDialog
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
-    MemberDialog(ClubFrontend::Controller& aController, QWidget *parent = 0);
+	MemberDialog(ClubFrontend::Controller& aController, QWidget *parent = 0);
 	void showMember() const;
-    void setMemberId(const int& anId);
+	void setMemberId(const int& anId);
 
 private:
-    ClubFrontend::Controller* controller;
+	ClubFrontend::Controller* controller;
 
 private slots:
-    void saveMember();
+	void saveMember();
 };
 
 }

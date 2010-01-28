@@ -9,55 +9,49 @@
 
 namespace ClubBackend
 {
-    class Balance
-    {
-    public:
-        Balance(const MemberManagement::DorfManagement& aDatabase);
-        // Wird von litesql::select benoetigt
-        Balance(const litesql::Database& aDatabase, const litesql::Record& aRecord);
 
-        // Wird von litesql::select benoetigt
-        static void getFieldTypes(std::vector<litesql::FieldType>& aFtypes)
-        {
-            MemberManagement::Balance::getFieldTypes(aFtypes);
-        }
+class Balance
+{
+public:
+	Balance(const MemberManagement::DorfManagement& aDatabase);
+	// Wird von litesql::select benoetigt
+	Balance(const litesql::Database& aDatabase, const litesql::Record& aRecord);
 
-        void setAmount(const int& anAmount)
-        {
-            balance.amount = anAmount;
-        }
+	// Wird von litesql::select benoetigt
+	static void getFieldTypes(std::vector<litesql::FieldType>& aFtypes) {
+		MemberManagement::Balance::getFieldTypes(aFtypes);
+	}
 
-        int getAmount() const
-        {
-            return balance.amount;
-        }
+	void setAmount(const int& anAmount) {
+		balance.amount = anAmount;
+	}
 
-        void setDescription(const std::string& aText)
-        {
-            balance.description = aText;
-        }
+	int getAmount() const {
+		return balance.amount;
+	}
 
-        std::string getDescription() const
-        {
-            return balance.description;
-        }
+	void setDescription(const std::string& aText) {
+		balance.description = aText;
+	}
 
-        void setInfo(const std::string& aText)
-        {
-            balance.info = aText;
-        }
+	std::string getDescription() const {
+		return balance.description;
+	}
 
-        std::string getInfo() const
-        {
-            return balance.info;
-        }
+	void setInfo(const std::string& aText) {
+		balance.info = aText;
+	}
 
-        void setDate(const boost::gregorian::date& aDate);
-        boost::gregorian::date getDate() const;
+	std::string getInfo() const {
+		return balance.info;
+	}
 
-    protected:
-    private:
-        MemberManagement::Balance balance;
-    };
+	void setDate(const boost::gregorian::date& aDate);
+	boost::gregorian::date getDate() const;
+
+protected:
+private:
+	MemberManagement::Balance balance;
+};
 }
 #endif // BALANCE_H

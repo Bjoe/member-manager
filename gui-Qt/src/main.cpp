@@ -4,10 +4,10 @@
 
 int main(int argc, char *argv[])
 {
-    QApplication app(argc, argv);
+	QApplication app(argc, argv);
 
 //    GuiVerwaltung::MemberDialog *dialog = new GuiVerwaltung::MemberDialog;
 //    dialog->show();
 
-    return app.exec();
+	return app.exec();
 }

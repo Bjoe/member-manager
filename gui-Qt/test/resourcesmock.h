@@ -4,47 +4,42 @@
 #include <string>
 #include "../src/resources.h"
 
-namespace ClubFrontendTest {
+namespace ClubFrontendTest
+{
 
 class ResourcesMock : public ClubFrontend::Resources
 {
 public:
-    ResourcesMock();
+	ResourcesMock();
 
-    virtual void setEmailIntern(const std::string& anEmailIntern)
-    {
-        emailIntern = anEmailIntern;
-    }
+	virtual void setEmailIntern(const std::string& anEmailIntern) {
+		emailIntern = anEmailIntern;
+	}
 
-    virtual std::string getEmailIntern() const
-    {
-        return emailIntern;
-    }
+	virtual std::string getEmailIntern() const {
+		return emailIntern;
+	}
 
-    virtual void setEmailCCC(const std::string& anEmailCCC)
-    {
-        emailCCC = anEmailCCC;
-    }
+	virtual void setEmailCCC(const std::string& anEmailCCC) {
+		emailCCC = anEmailCCC;
+	}
 
-    virtual std::string getEmailCCC() const
-    {
-        return emailCCC;
-    }
+	virtual std::string getEmailCCC() const {
+		return emailCCC;
+	}
 
-    virtual void setShellAccount(const std::string& aShellAccount)
-    {
-        shellAccount = aShellAccount;
-    }
+	virtual void setShellAccount(const std::string& aShellAccount) {
+		shellAccount = aShellAccount;
+	}
 
-    virtual std::string getShellAccount() const
-    {
-        return shellAccount;
-    }
+	virtual std::string getShellAccount() const {
+		return shellAccount;
+	}
 
 private:
-    std::string emailIntern;
-    std::string emailCCC;
-    std::string shellAccount;
+	std::string emailIntern;
+	std::string emailCCC;
+	std::string shellAccount;
 };
 
 }

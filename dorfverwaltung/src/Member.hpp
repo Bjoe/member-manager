@@ -19,152 +19,127 @@
 namespace ClubBackend
 {
 
-    class Member
-    {
+class Member
+{
 
-    private:
-        MemberManagement::Member member;
+private:
+	MemberManagement::Member member;
 
-    public:
-        Member(const MemberManagement::DorfManagement& aDatabase);
-        // Wird von litesql::select benoetigt
-        Member(const litesql::Database& aDatabase, const litesql::Record& aRecord);
+public:
+	Member(const MemberManagement::DorfManagement& aDatabase);
+	// Wird von litesql::select benoetigt
+	Member(const litesql::Database& aDatabase, const litesql::Record& aRecord);
 
-        // Wird von litesql::select benoetigt
-        static void getFieldTypes(std::vector<litesql::FieldType>& aFtypes)
-        {
-            MemberManagement::Member::getFieldTypes(aFtypes);
-        }
+	// Wird von litesql::select benoetigt
+	static void getFieldTypes(std::vector<litesql::FieldType>& aFtypes) {
+		MemberManagement::Member::getFieldTypes(aFtypes);
+	}
 
-        MemberManagement::Member::MoneyHandle money()
-        {
-            return member.money();
-        }
+	MemberManagement::Member::MoneyHandle money() {
+		return member.money();
+	}
 
-        MemberManagement::Member::InternalRessourcenHandle internalRessourcen()
-        {
-            return member.internalRessourcen();
-        }
+	MemberManagement::Member::InternalRessourcenHandle internalRessourcen() {
+		return member.internalRessourcen();
+	}
 
-        MemberManagement::Member::BankAccountHandle bankAccount()
-        {
-            return member.bankAccount();
-        }
+	MemberManagement::Member::BankAccountHandle bankAccount() {
+		return member.bankAccount();
+	}
 
-        MemberManagement::Member::CashAccountHandle cashAccount()
-        {
-            return member.cashAccount();
-        }
+	MemberManagement::Member::CashAccountHandle cashAccount() {
+		return member.cashAccount();
+	}
 
-        void setEntryDate(const boost::gregorian::date& anEntryDate);
-        boost::gregorian::date getEntryDate() const;
+	void setEntryDate(const boost::gregorian::date& anEntryDate);
+	boost::gregorian::date getEntryDate() const;
 
-        void setLeavingDate(const boost::gregorian::date& anLeavingDate);
-        boost::gregorian::date getLeavingDate() const;
+	void setLeavingDate(const boost::gregorian::date& anLeavingDate);
+	boost::gregorian::date getLeavingDate() const;
 
-        void setEmail(const EMail::EMail& anEmailAdr);
-        EMail::EMail getEmail() const;
+	void setEmail(const EMail::EMail& anEmailAdr);
+	EMail::EMail getEmail() const;
 
-        void setId(const int& anId)
-        {
-            member.memberId = anId;
-        }
+	void setId(const int& anId) {
+		member.memberId = anId;
+	}
 
-        int getId() const
-        {
-            return member.memberId;
-        }
+	int getId() const {
+		return member.memberId;
+	}
 
-        void setDeleted(const bool& aDeleted)
-        {
-            member.deleted = aDeleted;
-        }
+	void setDeleted(const bool& aDeleted) {
+		member.deleted = aDeleted;
+	}
 
-        bool getDeleted() const
-        {
-            return member.deleted;
-        }
+	bool getDeleted() const {
+		return member.deleted;
+	}
 
-        void setCashCollection(const bool& aCashCollection)
-        {
-            member.cashCollection = aCashCollection;
-        }
+	void setCashCollection(const bool& aCashCollection) {
+		member.cashCollection = aCashCollection;
+	}
 
-        bool getCashCollection() const
-        {
-            return member.cashCollection;
-        }
+	bool getCashCollection() const {
+		return member.cashCollection;
+	}
 
-        void setName(const std::string& aName)
-        {
-            member.surename = aName;
-        }
+	void setName(const std::string& aName) {
+		member.surename = aName;
+	}
 
-        std::string getName() const
-        {
-            return member.surename;
-        }
+	std::string getName() const {
+		return member.surename;
+	}
 
-        void setFirstname(const std::string& aName)
-        {
-            member.firstName = aName;
-        }
+	void setFirstname(const std::string& aName) {
+		member.firstName = aName;
+	}
 
-        std::string getFirstname() const
-        {
-            return member.firstName;
-        }
+	std::string getFirstname() const {
+		return member.firstName;
+	}
 
-        void setNickname(const std::string& aNickname)
-        {
-            member.nickname = aNickname;
-        }
+	void setNickname(const std::string& aNickname) {
+		member.nickname = aNickname;
+	}
 
-        std::string getNickname() const
-        {
-            return member.nickname;
-        }
+	std::string getNickname() const {
+		return member.nickname;
+	}
 
-        void setStreet(const std::string& aStreet)
-        {
-            member.street = aStreet;
-        }
+	void setStreet(const std::string& aStreet) {
+		member.street = aStreet;
+	}
 
-        std::string getStreet() const
-        {
-            return member.street;
-        }
+	std::string getStreet() const {
+		return member.street;
+	}
 
-        void setZipCode(const int& aZipCode)
-        {
-            member.zipCode = aZipCode;
-        }
+	void setZipCode(const int& aZipCode) {
+		member.zipCode = aZipCode;
+	}
 
-        int getZipCode() const
-        {
-            return member.zipCode;
-        }
+	int getZipCode() const {
+		return member.zipCode;
+	}
 
-        void setCity(const std::string& aCity)
-        {
-            member.city = aCity;
-        }
+	void setCity(const std::string& aCity) {
+		member.city = aCity;
+	}
 
-        std::string getCity() const
-        {
-            return member.city;
-        }
+	std::string getCity() const {
+		return member.city;
+	}
 
-        void setInfo(const std::string& anInfo)
-        {
-            member.info = anInfo;
-        }
+	void setInfo(const std::string& anInfo) {
+		member.info = anInfo;
+	}
 
-        std::string getInfo() const
-        {
-            return member.info;
-        }
-    };
+	std::string getInfo() const {
+		return member.info;
+	}
+};
 }
 
 #endif // _MEMBER_HPP_

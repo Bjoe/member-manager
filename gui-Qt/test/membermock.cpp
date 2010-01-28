@@ -1,6 +1,7 @@
 #include "membermock.h"
 
-namespace ClubFrontendTest {
+namespace ClubFrontendTest
+{
 
 MemberMock::MemberMock()
 {

@@ -1,6 +1,7 @@
 #include "bankmock.h"
 
-namespace ClubFrontendTest {
+namespace ClubFrontendTest
+{
 
 BankMock::BankMock()
 {

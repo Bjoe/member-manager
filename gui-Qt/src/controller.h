@@ -6,20 +6,21 @@
 #include "contribution.h"
 #include "resources.h"
 
-namespace ClubFrontend {
+namespace ClubFrontend
+{
 
 class Controller
 {
 public:
-    virtual ~Controller() {}
-    virtual Member* getMember() const = 0;
-    virtual Bank* getBank() const = 0;
-    virtual Contribution* getContribution() const = 0;
-    virtual Resources* getResources() const = 0;
-    virtual void saveMember(const Member* aMember,
-                            const Bank* aBank,
-                            const Contribution* aContribution,
-                            const Resources* aResources) = 0;
+	virtual ~Controller() {}
+	virtual Member* getMember() const = 0;
+	virtual Bank* getBank() const = 0;
+	virtual Contribution* getContribution() const = 0;
+	virtual Resources* getResources() const = 0;
+	virtual void saveMember(const Member* aMember,
+	                        const Bank* aBank,
+	                        const Contribution* aContribution,
+	                        const Resources* aResources) = 0;
 };
 
 }

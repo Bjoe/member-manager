@@ -10,21 +10,20 @@
 namespace ClubBackend
 {
 
-    class EMail
-    {
-    private:
-        std::string address;
+class EMail
+{
+private:
+	std::string address;
 
-    public:
-        EMail(const std::string& anEmail);
-        virtual ~EMail();
+public:
+	EMail(const std::string& anEmail);
+	virtual ~EMail();
 
-        std::string getAddress() const
-        {
-            return address;
-        }
+	std::string getAddress() const {
+		return address;
+	}
 
-    };
+};
 }
 
 #endif // __email__

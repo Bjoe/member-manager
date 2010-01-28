@@ -5,18 +5,19 @@
 #include <QtTest/QtTest>
 #include "../src/memberdialog.h"
 
-namespace ClubFrontendTest {
+namespace ClubFrontendTest
+{
 
 class MemberDialogTest : public QObject
 {
-    Q_OBJECT
+	Q_OBJECT
 
 private slots:
-    void setMemberId();
-    void newMember();
-    void changeMember();
+	void setMemberId();
+	void newMember();
+	void changeMember();
 
-    void foo();
+	void foo();
 };
 
 }
