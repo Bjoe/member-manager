@@ -6,7 +6,6 @@
 #include "membermock.h"
 #include "bankmock.h"
 #include "contributionmock.h"
-#include "resourcesmock.h"
 #include "controllermock.h"
 #include "memberdialogtest.h"
 
@@ -20,9 +19,8 @@ void MemberDialogTest::setMemberId()
 	MemberMock member;
 	BankMock bank;
 	ContributionMock contribution;
-	ResourcesMock resources;
 
-	ControllerMock controller(&member, &bank, &contribution, &resources);
+	ControllerMock controller(&member, &bank, &contribution);
 	GuiManagement::MemberDialog dialog(controller);
 
 	dialog.setMemberId(23);
@@ -55,9 +53,7 @@ void MemberDialogTest::newMember()
 	EXPECT_CALL(contributionMock, setDonation(5)).Times(1);	
 	EXPECT_CALL(contributionMock, setInfo("Info")).Times(1);
 		
-	ResourcesMock resourcesMock;
-
-	ControllerMock controller(&memberMock, &bankMock, &contributionMock, &resourcesMock);
+	ControllerMock controller(&memberMock, &bankMock, &contributionMock);
 	GuiManagement::MemberDialog dialog(controller);
 
 	QTest::keyClicks(dialog.memberName, "Mc Kay");
@@ -82,9 +78,6 @@ void MemberDialogTest::newMember()
 	QTest::keyClicks(dialog.info, "Foo");
 
 	QTest::mouseClick(dialog.buttonBox->button(QDialogButtonBox::Save),Qt::LeftButton);
-
-	const ResourcesMock* resources = controller.getResourcesMock();
-	QCOMPARE(QString::fromStdString(resources->getEmailIntern()),QString("rod@atlantis.pegasus"));
 }
 
 void MemberDialogTest::changeMember()
@@ -147,10 +140,8 @@ void MemberDialogTest::changeMember()
 //		.WillOnce(Return("13.09.2006"));
 //	contribution->setValidFrom("13.09.2006");
 
-	ResourcesMock resources;
-	resources.setEmailIntern("foo@bar.tx");
 
-	ControllerMock controller(&member, &bank, &contribution, &resources);
+	ControllerMock controller(&member, &bank, &contribution);
 	GuiManagement::MemberDialog dialog(controller);
 	dialog.showMember();
 }

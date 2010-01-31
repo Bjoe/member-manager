@@ -1,6 +1,5 @@
 HEADERS += member.h \
-    memberdialog.h \
-    resources.h
+    memberdialog.h
 SOURCES += main.cpp \
     memberdialog.cpp
 FORMS += memberDialog.ui \

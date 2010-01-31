@@ -9,7 +9,6 @@ SOURCES += main.cpp \
     ../src/memberdialog.cpp \
     controllermock.cpp \
     bankmock.cpp \
-    resourcesmock.cpp \
     contributionmock.cpp
 HEADERS += membermock.h \
     memberdialogtest.h \
@@ -18,9 +17,7 @@ HEADERS += membermock.h \
     controllermock.h \
     ../src/bank.h \
     ../src/contribution.h \
-    ../src/resources.h \
     ../src/member.h \
     bankmock.h \
-    resourcesmock.h \
     contributionmock.h
 FORMS += ../src/memberDialog.ui

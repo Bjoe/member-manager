@@ -70,10 +70,7 @@ void MemberDialog::saveMember()
 	contribution->setFee(fee->text().toInt());
 	contribution->setInfo(contributionInfo->text().toStdString());
 
-	ClubFrontend::Resources* const resources = controller->getResources();
-	resources->setEmailIntern(email->text().toStdString());
-
-	controller->saveMember(member,bank,contribution,resources);
+	controller->saveMember(member,bank,contribution);
 }
 
 }

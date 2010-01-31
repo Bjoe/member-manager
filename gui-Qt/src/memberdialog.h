@@ -6,7 +6,6 @@
 #include "member.h"
 #include "bank.h"
 #include "contribution.h"
-#include "resources.h"
 #include "controller.h"
 
 namespace GuiManagement

@@ -5,21 +5,18 @@ namespace ClubFrontendTest
 
 ControllerMock::ControllerMock(MemberMock* aMember,
                                BankMock* aBank,
-                               ContributionMock* aContribution,
-                               ResourcesMock* aResources)
-		: memberMock(aMember), bankMock(aBank), contributionMock(aContribution), resourcesMock(aResources)
+                               ContributionMock* aContribution)
+		: memberMock(aMember), bankMock(aBank), contributionMock(aContribution)
 {
 }
 
 void ControllerMock::saveMember(const ClubFrontend::Member* aMember,
                                 const ClubFrontend::Bank* aBank,
-                                const ClubFrontend::Contribution* aContribution,
-                                const ClubFrontend::Resources* aResources)
+                                const ClubFrontend::Contribution* aContribution)
 {
 	member = aMember;
 	bank = aBank;
 	contribution = aContribution;
-	resources = aResources;
 }
 
 ClubFrontend::Member* ControllerMock::getMember() const
@@ -52,17 +49,6 @@ ClubFrontend::Contribution* ControllerMock::getContribution() const
 const ContributionMock* ControllerMock::getContributionMock() const
 {
 	const ContributionMock* obj = static_cast<const ContributionMock*>(contribution);
-	return obj;
-}
-
-ClubFrontend::Resources* ControllerMock::getResources() const
-{
-	return resourcesMock;
-}
-
-const ResourcesMock* ControllerMock::getResourcesMock() const
-{
-	const ResourcesMock* obj = static_cast<const ResourcesMock*>(resources);
 	return obj;
 }
 
