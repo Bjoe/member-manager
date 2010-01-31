@@ -2,6 +2,7 @@
 #define BANKMOCK_H
 
 #include <string>
+#include <gmock/gmock.h>
 #include "../src/bank.h"
 
 namespace ClubFrontendTest
@@ -12,34 +13,14 @@ class BankMock : public ClubFrontend::Bank
 public:
 	BankMock();
 
-	virtual void setAccount(const int& anAccount) {
-		account = anAccount;
-	}
+	MOCK_METHOD1(setAccount, void(const int& anAccount));
+	MOCK_CONST_METHOD0(getAccount, int());
 
-	virtual int getAccount() const {
-		return account;
-	}
-
-	virtual void setName(const std::string& aName) {
-		name = aName;
-	}
-
-	virtual std::string getName() const {
-		return name;
-	}
-
-	virtual void setCode(const int& aCode) {
-		code = aCode;
-	}
-
-	virtual int getCode() const {
-		return code;
-	}
-
-private:
-	int account;
-	std::string name;
-	int code;
+	MOCK_METHOD1(setName, void(const std::string& aName));
+	MOCK_CONST_METHOD0(getName, std::string());
+	
+	MOCK_METHOD1(setCode, void(const int& aCode));
+	MOCK_CONST_METHOD0(getCode, int());
 };
 
 }

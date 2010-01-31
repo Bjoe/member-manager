@@ -1,3 +1,8 @@
+LIBS += -L/usr/local/lib -lgmock -lgtest
+INCLUDEPATH = /usr/local/include
+
+CONFIG += qtestlib
+
 SOURCES += main.cpp \
     membermock.cpp \
     memberdialogtest.cpp \
@@ -6,7 +11,6 @@ SOURCES += main.cpp \
     bankmock.cpp \
     resourcesmock.cpp \
     contributionmock.cpp
-CONFIG += qtestlib
 HEADERS += membermock.h \
     memberdialogtest.h \
     ../src/memberdialog.h \
