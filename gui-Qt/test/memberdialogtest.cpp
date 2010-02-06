@@ -20,7 +20,7 @@ void MemberDialogTest::setMemberId()
 	BankMock bank;
 	ContributionMock contribution;
 
-	ControllerMock controller(&member, &bank, &contribution);
+	ControllerMock controller;
 	GuiManagement::MemberDialog dialog(controller);
 
 	dialog.setMemberId(23);
@@ -53,7 +53,20 @@ void MemberDialogTest::newMember()
 	EXPECT_CALL(contributionMock, setDonation(5)).Times(1);	
 	EXPECT_CALL(contributionMock, setInfo("Info")).Times(1);
 		
-	ControllerMock controller(&memberMock, &bankMock, &contributionMock);
+	ControllerMock controller;
+	EXPECT_CALL(controller, getMember())
+		.Times(1)
+		.WillOnce(Return(&memberMock));
+	EXPECT_CALL(controller, getBank())
+		.Times(1)
+		.WillOnce(Return(&bankMock));
+	EXPECT_CALL(controller, getContribution())
+		.Times(1)
+		.WillOnce(Return(&contributionMock));
+	EXPECT_CALL(controller, 
+		saveMember(&memberMock, &bankMock, &contributionMock))
+		.Times(1);
+		
 	GuiManagement::MemberDialog dialog(controller);
 
 	QTest::keyClicks(dialog.memberName, "Mc Kay");
@@ -135,13 +148,23 @@ void MemberDialogTest::changeMember()
 	EXPECT_CALL(contribution, getInfo())
 		.Times(1)
 		.WillOnce(Return("Kohle"));
+		// TODO Fix Datum Test
 //	EXPECT_CALL(contribution, getValidFrom())
 //		.Times(1)
 //		.WillOnce(Return("13.09.2006"));
 //	contribution->setValidFrom("13.09.2006");
 
-
-	ControllerMock controller(&member, &bank, &contribution);
+	ControllerMock controller;
+	EXPECT_CALL(controller, getMember())
+		.Times(1)
+		.WillOnce(Return(&member));
+	EXPECT_CALL(controller, getBank())
+		.Times(1)
+		.WillOnce(Return(&bank));
+	EXPECT_CALL(controller, getContribution())
+		.Times(1)
+		.WillOnce(Return(&contribution));	
+		
 	GuiManagement::MemberDialog dialog(controller);
 	dialog.showMember();
 }

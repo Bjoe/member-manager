@@ -1,10 +1,9 @@
 #ifndef CONTROLLERMOCK_H
 #define CONTROLLERMOCK_H
 
+#include <gmock/gmock.h>
+
 #include "../src/controller.h"
-#include "membermock.h"
-#include "bankmock.h"
-#include "contributionmock.h"
 
 namespace ClubFrontendTest
 {
@@ -12,28 +11,16 @@ namespace ClubFrontendTest
 class ControllerMock : public ClubFrontend::Controller
 {
 public:
-	ControllerMock(MemberMock* aMember,
-	               BankMock* aBank,
-	               ContributionMock* aContribution);
-
-	void saveMember(const ClubFrontend::Member* aMember,
+	ControllerMock();
+		
+	MOCK_METHOD3(saveMember, void(const ClubFrontend::Member* aMember,
 	                const ClubFrontend::Bank* aBank,
-	                const ClubFrontend::Contribution* aContribution);
-	ClubFrontend::Member* getMember() const;
-	ClubFrontend::Bank* getBank() const;
-	ClubFrontend::Contribution* getContribution() const;
+	                const ClubFrontend::Contribution* aContribution));
+		
+	MOCK_CONST_METHOD0(getMember, ClubFrontend::Member*());
+	MOCK_CONST_METHOD0(getBank, ClubFrontend::Bank*());
+	MOCK_CONST_METHOD0(getContribution, ClubFrontend::Contribution*());
 
-	const MemberMock* getMemberMock() const;
-	const BankMock* getBankMock() const;
-	const ContributionMock* getContributionMock() const;
-
-private:
-	MemberMock* memberMock;
-	BankMock* bankMock;
-	ContributionMock* contributionMock;
-	const ClubFrontend::Member* member;
-	const ClubFrontend::Bank* bank;
-	const ClubFrontend::Contribution* contribution;
 };
 
 }
