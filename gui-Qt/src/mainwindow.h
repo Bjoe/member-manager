@@ -14,6 +14,8 @@ class MainWindow : public QMainWindow, public Ui::MainWindow
 
 public:
 	MainWindow(QWidget *parent = 0);
+	
+	void loadMembers();
 
 };
 

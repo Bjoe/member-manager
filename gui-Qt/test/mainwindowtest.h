@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QtTest/QtTest>
-#include "../src/mainwindow.h"
+#include "mainwindow.h"
 
 namespace ClubFrontendTest
 {
@@ -14,6 +14,7 @@ class MainWindowTest : public QObject
 
 private slots:
 	void instanz();
+	void loadMembers();
 };
 
 }

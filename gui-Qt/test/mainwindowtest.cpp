@@ -11,5 +11,13 @@ void MainWindowTest::instanz()
 	GuiManagement::MainWindow mainWindow;
 }
 
+void MainWindowTest::loadMembers()
+{
+	GuiManagement::MainWindow mainWindow;
+	
+	mainWindow.loadMembers();
+	
+}
+
 }
 

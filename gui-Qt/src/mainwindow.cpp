@@ -9,5 +9,10 @@ MainWindow::MainWindow(QWidget *parent) :
 	setupUi(this);
 }
 
+void MainWindow::loadMembers()
+{
+	
+}
+
 }
 
