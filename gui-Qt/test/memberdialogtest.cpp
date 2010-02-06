@@ -1,7 +1,7 @@
 #include <QtGui>
 #include <gmock/gmock.h>
 
-#include "../src/member.h"
+#include "member.h"
 
 #include "membermock.h"
 #include "bankmock.h"

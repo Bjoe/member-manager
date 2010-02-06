@@ -3,7 +3,8 @@
 
 #include <string>
 #include <gmock/gmock.h>
-#include "../src/member.h"
+
+#include "member.h"
 
 namespace ClubFrontendTest
 {

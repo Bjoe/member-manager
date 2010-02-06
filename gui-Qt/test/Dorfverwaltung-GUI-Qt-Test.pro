@@ -1,5 +1,5 @@
 LIBS += -L/usr/local/lib -lgmock -lgtest
-INCLUDEPATH = /usr/local/include
+INCLUDEPATH = /usr/local/include ../src
 
 CONFIG += qtestlib
 

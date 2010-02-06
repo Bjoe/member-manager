@@ -3,7 +3,10 @@
 
 #include <gmock/gmock.h>
 
-#include "../src/controller.h"
+#include "controller.h"
+#include "member.h"
+#include "bank.h"
+#include "contribution.h"
 
 namespace ClubFrontendTest
 {

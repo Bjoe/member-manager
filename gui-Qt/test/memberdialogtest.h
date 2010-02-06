@@ -3,7 +3,8 @@
 
 #include <QObject>
 #include <QtTest/QtTest>
-#include "../src/memberdialog.h"
+
+#include "memberdialog.h"
 
 namespace ClubFrontendTest
 {
