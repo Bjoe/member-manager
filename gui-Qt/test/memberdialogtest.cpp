@@ -107,7 +107,7 @@ void MemberDialogTest::changeMember()
 		.WillOnce(Return("15.07.2006"));
 	EXPECT_CALL(member, getFirstname())
 		.Times(1)
-		.WillOnce(Return("Jonathen"));
+		.WillOnce(Return("Jonathan"));
 	EXPECT_CALL(member, getId())
 		.Times(1)
 		.WillOnce(Return(23));
@@ -167,6 +167,23 @@ void MemberDialogTest::changeMember()
 		
 	GuiManagement::MemberDialog dialog(controller);
 	dialog.showMember();
+		
+	QCOMPARE(dialog.firstName->text(), QString("Jonathan"));
+	QCOMPARE(dialog.memberName->text(), QString("Archer"));
+	QCOMPARE(dialog.nickname->text(), QString("Captain"));
+	QCOMPARE(dialog.memberId->text(), QString("23"));
+	QCOMPARE(dialog.city->text(), QString("Dtown"));
+	QCOMPARE(dialog.street->text(), QString("NCC-1701"));
+	QCOMPARE(dialog.zipcode->text(), QString("98765"));
+	QCOMPARE(dialog.email->text(), QString("foo@bar.tx"));
+	//QCOMPARE(dialog.entryDate->text(), QString("15.07.06"));
+	QCOMPARE(dialog.contributionInfo->text(), QString("Kohle"));
+	QCOMPARE(dialog.donation->text(), QString("1"));
+	QCOMPARE(dialog.fee->text(), QString("15"));
+	QCOMPARE(dialog.account->text(), QString("123456789"));
+	QCOMPARE(dialog.bankName->text(), QString("Galaxy"));
+	QCOMPARE(dialog.code->text(), QString("98765"));
+	QCOMPARE(dialog.info->toPlainText(), QString("Lalala"));
 }
 
 void MemberDialogTest::foo()
