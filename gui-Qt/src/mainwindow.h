@@ -5,6 +5,8 @@
 #include <QMainWindow>
 #include "ui_mainWindow.h"
 
+#include "controller.h"
+
 namespace GuiManagement
 {
 
@@ -15,7 +17,7 @@ class MainWindow : public QMainWindow, public Ui::MainWindow
 public:
 	MainWindow(QWidget *parent = 0);
 	
-	void loadMembers();
+	void loadMembers(const ClubFrontend::Controller *aController) const;
 
 };
 

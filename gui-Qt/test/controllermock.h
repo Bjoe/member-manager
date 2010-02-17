@@ -3,6 +3,8 @@
 
 #include <gmock/gmock.h>
 
+#include <vector>
+
 #include "controller.h"
 #include "member.h"
 #include "bank.h"
@@ -19,7 +21,8 @@ public:
 	MOCK_METHOD3(saveMember, void(const ClubFrontend::Member* aMember,
 	                const ClubFrontend::Bank* aBank,
 	                const ClubFrontend::Contribution* aContribution));
-		
+	
+	MOCK_CONST_METHOD0(getMembers, std::vector<ClubFrontend::Member*>());
 	MOCK_CONST_METHOD0(getMember, ClubFrontend::Member*());
 	MOCK_CONST_METHOD0(getBank, ClubFrontend::Bank*());
 	MOCK_CONST_METHOD0(getContribution, ClubFrontend::Contribution*());

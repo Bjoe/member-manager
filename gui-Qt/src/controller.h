@@ -1,6 +1,8 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
+#include <vector>
+
 #include "member.h"
 #include "bank.h"
 #include "contribution.h"
@@ -12,6 +14,7 @@ class Controller
 {
 public:
 	virtual ~Controller() {}
+	virtual std::vector<Member*> getMembers() const = 0;
 	virtual Member* getMember() const = 0;
 	virtual Bank* getBank() const = 0;
 	virtual Contribution* getContribution() const = 0;
