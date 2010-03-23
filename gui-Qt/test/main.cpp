@@ -1,5 +1,5 @@
-#include "memberdialogtest.h"
-#include "mainwindowtest.h"
+#include "MemberDialogTest.h"
+#include "MainWindowTest.h"
 
 #include <QtTest/QtTest>
 

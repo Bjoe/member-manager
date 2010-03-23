@@ -1,5 +1,5 @@
 
-#include "mainwindowtest.h"
+#include "MainWindowTest.h"
 
 
 namespace ClubFrontendTest

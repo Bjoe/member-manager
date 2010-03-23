@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QtTest/QtTest>
-#include "mainwindow.h"
+#include "MainWindow.h"
 
 namespace ClubFrontendTest
 {

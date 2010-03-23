@@ -1,6 +1,6 @@
 #include <QtGui>
 
-#include "memberdialogtest.h"
+#include "MemberDialogTest.h"
 
 namespace ClubFrontendTest
 {

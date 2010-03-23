@@ -4,13 +4,13 @@ include(${QT_USE_FILE})
 
 set(QT_FRONTEND_TEST
     TestData.cpp
-    mainwindowtest.cpp
-    memberdialogtest.cpp
+    MainWindowTest.cpp
+    MemberDialogTest.cpp
     )
 
 set(QT_FRONTEND_TEST_MOC_HEADERS
-    mainwindowtest.h
-    memberdialogtest.h
+    MainWindowTest.h
+    MemberDialogTest.h
     )
 
 # Setze src Verzeichniss

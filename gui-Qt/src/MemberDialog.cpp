@@ -1,6 +1,6 @@
 #include <QtGui>
 
-#include "memberdialog.h"
+#include "MemberDialog.h"
 
 namespace ClubFrontend
 {

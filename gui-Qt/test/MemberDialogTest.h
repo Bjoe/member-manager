@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QtTest/QtTest>
 
-#include "memberdialog.h"
+#include "MemberDialog.h"
 
 namespace ClubFrontendTest
 {

@@ -1,7 +1,7 @@
 
 set(QT_FRONTEND_MOC_HEADERS
-    mainwindow.h
-    memberdialog.h
+    MainWindow.h
+    MemberDialog.h
     )
 
 set(QT_FRONTEND_UI
@@ -10,8 +10,8 @@ set(QT_FRONTEND_UI
     )
 
 set(QT_FRONTEND_SRC
-    mainwindow.cpp
-    memberdialog.cpp
+    MainWindow.cpp
+    MemberDialog.cpp
     )
 
 # Setze Sourcen fuer die tests

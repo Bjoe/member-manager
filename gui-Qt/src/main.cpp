@@ -1,6 +1,6 @@
 #include <QtGui>
 
-#include "memberdialog.h"
+#include "MemberDialog.h"
 
 int main(int argc, char *argv[])
 {
