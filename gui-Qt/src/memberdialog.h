@@ -4,7 +4,7 @@
 #include <QWidget>
 #include "ui_memberDialog.h"
 
-namespace GuiManagement
+namespace ClubFrontend
 {
 
 class MemberDialog : public QWidget, public Ui::MemberDialog

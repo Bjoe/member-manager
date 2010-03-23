@@ -2,7 +2,7 @@
 
 #include "memberdialog.h"
 
-namespace GuiManagement
+namespace ClubFrontend
 {
 
 MemberDialog::MemberDialog(QWidget *parent) :
