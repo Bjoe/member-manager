@@ -13,8 +13,7 @@ class MainWindowTest : public QObject
 	Q_OBJECT
 
 private slots:
-	void instanz();
-	void loadMembers();
+
 };
 
 }

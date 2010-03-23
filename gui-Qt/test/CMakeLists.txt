@@ -4,10 +4,6 @@ include(${QT_USE_FILE})
 
 set(QT_FRONTEND_TEST
     TestData.cpp
-    bankmock.cpp
-    contributionmock.cpp
-    controllermock.cpp
-    membermock.cpp
     mainwindowtest.cpp
     memberdialogtest.cpp
     )
