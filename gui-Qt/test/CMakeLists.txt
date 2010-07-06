@@ -6,13 +6,13 @@ set(QT_FRONTEND_TEST
     TestData.cpp
     MainWindowTest.cpp
     MemberDialogTest.cpp
-    DataSourceTest.cpp
+    MemberModelTest.cpp
     )
 
 set(QT_FRONTEND_TEST_MOC_HEADERS
     MainWindowTest.h
     MemberDialogTest.h
-    DataSourceTest.h
+    MemberModelTest.h
     )
 
 # Setze src Verzeichniss

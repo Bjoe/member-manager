@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <QMainWindow>
 #include "ui_mainWindow.h"
-#include "DataSource.h"
+#include "MemberModel.h"
 
 namespace ClubFrontend
 {
@@ -14,10 +14,10 @@ class MainWindow : public QMainWindow, public Ui::MainWindow
 	Q_OBJECT
 
 public:
-	MainWindow(DataSource & aDataSource, QWidget * parent = 0);
+	MainWindow(MemberModel & aDataSource, QWidget * parent = 0);
 
 private:
-	DataSource & dataSource;
+	MemberModel & dataSource;
 };
 
 }

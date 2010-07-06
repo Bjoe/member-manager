@@ -12,7 +12,7 @@ set(QT_FRONTEND_UI
 set(QT_FRONTEND_SRC
     MainWindow.cpp
     MemberDialog.cpp
-    DataSource.cpp
+    MemberModel.cpp
     )
 
 # Setze Sourcen fuer die tests

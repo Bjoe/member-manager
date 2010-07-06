@@ -15,7 +15,7 @@ void MainWindowTest::initTestCase() {
 }
 
 void MainWindowTest::testMemberView() {
-	ClubFrontend::DataSource dataSource(QSqlDatabase::database());
+	ClubFrontend::MemberModel dataSource(QSqlDatabase::database());
 	ClubFrontend::MainWindow mainWindow(dataSource);
 
 	QTableView * view = mainWindow.memberTableView;

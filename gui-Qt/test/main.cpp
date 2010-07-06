@@ -1,4 +1,4 @@
-#include "DataSourceTest.h"
+#include "MemberModelTest.h"
 #include "MemberDialogTest.h"
 #include "MainWindowTest.h"
 
@@ -12,7 +12,7 @@ int main(int argc, char* argv[])
 	db.setDatabaseName("dorfverw.dat");
 	db.open();
 
-	ClubFrontendTest::DataSourceTest sourceTest;
+	ClubFrontendTest::MemberModelTest sourceTest;
 	QTest::qExec(&sourceTest);
 
 	ClubFrontendTest::MemberDialogTest dialogTest;

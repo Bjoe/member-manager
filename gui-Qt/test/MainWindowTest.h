@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QtTest/QtTest>
 
-#include "DataSource.h"
+#include "MemberModel.h"
 
 namespace ClubFrontendTest
 {
