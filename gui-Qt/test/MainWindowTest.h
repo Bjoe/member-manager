@@ -3,7 +3,8 @@
 
 #include <QObject>
 #include <QtTest/QtTest>
-#include "MainWindow.h"
+
+#include "DataSource.h"
 
 namespace ClubFrontendTest
 {
@@ -13,6 +14,9 @@ class MainWindowTest : public QObject
 	Q_OBJECT
 
 private slots:
+	void initTestCase();
+
+	void testMemberView();
 
 };
 

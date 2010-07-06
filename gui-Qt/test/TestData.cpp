@@ -63,7 +63,7 @@ void TestData::createFakeContributionTable() {
 	execStatement("INSERT INTO beitragstab("
 			"            beitragstab_pkey, dorfmitglied_pkey, beitrag, spende, schulden,"
 			"            gueltigab, info)"
-			"    VALUES (1,1025,15.00,0.00,0.00,'2007-05-01','Spende wird eingestellt')");
+			"    VALUES (1,1025,15.00,0.00,0.00,date('2007-05-01'),'Spende wird eingestellt')");
 }
 
 void TestData::createFakeMemberTable() {
@@ -88,7 +88,7 @@ void TestData::createFakeMemberTable() {
 	execStatement("INSERT INTO dorfmitglied ("
 			"            dorfmitglied_pkey, deleted, vorname, name, nickname, chaosdorfadr,"
 			"            intern, ccc, shell, einzug, chaosnr, eintrittsdatum, info)"
-			"    VALUES (1025,FALSE,'James T','Kirk','Capt. Kirk','kirk@chaosdorf.de','kirk@chaosdorf.de','kirk@chaosdorf.de','kirk',TRUE,2193,'2001-04-24','')");
+			"    VALUES (1025,0,'James T','Kirk','Capt. Kirk','kirk@chaosdorf.de','kirk@chaosdorf.de','kirk@chaosdorf.de','kirk',1,2193,date('2001-04-24'),'')");
 
 }
 
@@ -128,8 +128,8 @@ void TestData::createFakeKassaTable() {
 			"            valutadatum, buchungsdatum, shkenn, betrag, buschl, bankbuschl,"
 			"            fremdblz, fremdktnr, fremdname, bezeichnung, barkonto, konten,"
 			"            dorfmitglied_pkey, erfasst)"
-			"    VALUES (1,FALSE,'',1,1,'credit','2006-01-12',3519.92,'credit','2006-01-23',3423.02,'2006-01-23','2006-01-23','debit',34.90,5,"
-			"37010050,5820507,'ISH NRW GMBH','LASTSCHRIFT  KDNR 4039458011 RGN 2495227',,,,FALSE");
+			"    VALUES (1,0,'',1,1,'credit',date('2006-01-12'),3519.92,'credit',date('2006-01-23'),3423.02,date('2006-01-23'),date('2006-01-23'),'debit',34.90,5,"
+			"37010050,5820507,'ISH NRW GMBH','LASTSCHRIFT  KDNR 4039458011 RGN 2495227',,,,0");
 
 	execStatement("INSERT INTO kasse ("
 			"            kasse_pkey, deleted, einlesedatum, einleseid, auszug, zwshkenn60,"
@@ -137,8 +137,8 @@ void TestData::createFakeKassaTable() {
 			"            valutadatum, buchungsdatum, shkenn, betrag, buschl, bankbuschl,"
 			"            fremdblz, fremdktnr, fremdname, bezeichnung, barkonto, konten,"
 			"            dorfmitglied_pkey, erfasst)"
-			"    VALUES (2,FALSE,'',1,1,'credit','2006-01-12',3519.92,'credit','2006-01-23',3423.02,'2006-01-23','2006-01-23'"
-			",'debit',62.00,,5,30050110,10012433,'STADTWERKE DUESSELDORF AG','LASTSCHRIFT  313001563692 VK020009330101 ABSCHLAG FAELLIG 23.01.06 FUERSTENWALL 232',,,,FALSE)");
+			"    VALUES (2,0,'',1,1,'credit',date('2006-01-12'),3519.92,'credit',date('2006-01-23'),3423.02,date('2006-01-23'),date('2006-01-23')"
+			",'debit',62.00,,5,30050110,10012433,'STADTWERKE DUESSELDORF AG','LASTSCHRIFT  313001563692 VK020009330101 ABSCHLAG FAELLIG 23.01.06 FUERSTENWALL 232',,,,0)");
 
 	execStatement("INSERT INTO kasse ("
 			"            kasse_pkey, deleted, einlesedatum, einleseid, auszug, zwshkenn60,"
@@ -146,8 +146,9 @@ void TestData::createFakeKassaTable() {
 			"            valutadatum, buchungsdatum, shkenn, betrag, buschl, bankbuschl,"
 			"            fremdblz, fremdktnr, fremdname, bezeichnung, barkonto, konten,"
 			"            dorfmitglied_pkey, erfasst)"
-			"    VALUES (3,FALSE,'',1,1,'credit','2006-01-23',3423.02,'credit','2006-01-27',3318.16,'2006-01-27','2006-01-27','debit',104.86,,820,30050110,21236716,'BOEHME, JOERG-CHRISTIAN',"
-			"'UMBUCHUNG  ATELCO RECHNUNG VOM 12.1.06 LIEFERSCHNR. L4592165 DATUM 27.01.2006, 00.50 UHR 1.TAN 783978',,,,FALSE)");
+			"    VALUES (3,0,'',1,1,'credit',date('2006-01-23'),3423.02,'credit',date('2006-01-27'),3318.16,date('2006-01-27'),date('2006-01-27'),'debit',104.86,,820,30050110,21236716,'BOEHME, JOERG-CHRISTIAN',"
+			"'UMBUCHUNG  ATELCO RECHNUNG VOM 12.1.06 LIEFERSCHNR. L4592165 DATUM 27.01.2006, 00.50 UHR 1.TAN 783978',,,,"
+			"0)");
 
 	execStatement("INSERT INTO kasse ("
 			"            kasse_pkey, deleted, einlesedatum, einleseid, auszug, zwshkenn60,"
@@ -155,9 +156,9 @@ void TestData::createFakeKassaTable() {
 			"            valutadatum, buchungsdatum, shkenn, betrag, buschl, bankbuschl,"
 			"            fremdblz, fremdktnr, fremdname, bezeichnung, barkonto, konten,"
 			"            dorfmitglied_pkey, erfasst)"
-			"    VALUES (4,FALSE,'',1,1,'credit','2006-01-27',3318.16,'credit','2006-01-31',"
-			"3374.56,'2006-02-01','2006-01-31','debit',4.74,,805,30050110;0,'-',"
-			"'ABSCHLUSS  Abrechnung 30.01.2006 siehe Anlage',,,,FALSE)");
+			"    VALUES (4,0,'',1,1,'credit',date('2006-01-27'),3318.16,'credit',date('2006-01-31'),"
+			"3374.56,date('2006-02-01'),date('2006-01-31'),'debit',4.74,,805,30050110;0,'-',"
+			"'ABSCHLUSS  Abrechnung 30.01.2006 siehe Anlage',,,,0)");
 }
 
 void TestData::createFakeRessourcenTable() {
@@ -226,12 +227,12 @@ void TestData::createFakeBalanceTable() {
 	execStatement("INSERT INTO saldo ("
 			"            saldo_pkey, dorfmitglied_pkey, betrag, datum, bezeichnung, barkonto,"
 			"            konten, kasse_pkey, info)"
-			"    VALUES (1,1025,0.00,'2005-08-11','Start Saldo',,,,'Start Saldo')");
+			"    VALUES (1,1025,0.00,date('2005-08-11'),'Start Saldo',,,,'Start Saldo')");
 
 	execStatement("INSERT INTO saldo ("
 			"            saldo_pkey, dorfmitglied_pkey, betrag, datum, bezeichnung, barkonto,"
 			"            konten, kasse_pkey, info)"
-			"    VALUES (90,1025,-15.00,'2005-09-18','Mitgliedsbeitrag Sep',,,,'Automatische Monats Abbuchung')");
+			"    VALUES (90,1025,-15.00,date('2005-09-18'),'Mitgliedsbeitrag Sep',,,,'Automatische Monats Abbuchung')");
 
 }
 

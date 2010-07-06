@@ -3,8 +3,8 @@
 namespace ClubFrontend
 {
 
-MainWindow::MainWindow(QWidget *parent) :
-	QMainWindow(parent)
+MainWindow::MainWindow(DataSource & aDataSource, QWidget *parent) :
+	QMainWindow(parent), dataSource(aDataSource)
 {
 	setupUi(this);
 }

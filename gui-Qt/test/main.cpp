@@ -1,3 +1,4 @@
+#include "DataSourceTest.h"
 #include "MemberDialogTest.h"
 #include "MainWindowTest.h"
 
@@ -6,6 +7,14 @@
 int main(int argc, char* argv[])
 {
 	QApplication app(argc, argv);
+
+	QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+	db.setDatabaseName("dorfverw.dat");
+	db.open();
+
+	ClubFrontendTest::DataSourceTest sourceTest;
+	QTest::qExec(&sourceTest);
+
 	ClubFrontendTest::MemberDialogTest dialogTest;
 	QTest::qExec(&dialogTest);
 
