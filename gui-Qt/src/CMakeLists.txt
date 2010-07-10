@@ -13,6 +13,7 @@ set(QT_FRONTEND_SRC
     MainWindow.cpp
     MemberDialog.cpp
     MemberModel.cpp
+    MemberFilter.cpp
     )
 
 # Setze Sourcen fuer die tests

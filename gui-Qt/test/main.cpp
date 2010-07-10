@@ -1,4 +1,5 @@
 #include "MemberModelTest.h"
+#include "MemberFilterTest.h"
 #include "MemberDialogTest.h"
 #include "MainWindowTest.h"
 
@@ -14,6 +15,9 @@ int main(int argc, char* argv[])
 
 	ClubFrontendTest::MemberModelTest sourceTest;
 	QTest::qExec(&sourceTest);
+
+	ClubFrontendTest::MemberFilterTest filterTest;
+	QTest::qExec(&filterTest);
 
 	ClubFrontendTest::MemberDialogTest dialogTest;
 	QTest::qExec(&dialogTest);
