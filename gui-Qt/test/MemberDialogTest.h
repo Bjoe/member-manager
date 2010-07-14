@@ -14,6 +14,8 @@ class MemberDialogTest : public QObject
 	Q_OBJECT
 
 private slots:
+	void initTestCase();
+	void showMember();
 	void setMemberId();
 	void newMember();
 	void changeMember();

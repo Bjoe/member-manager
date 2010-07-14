@@ -18,11 +18,18 @@ void MainWindowTest::testMemberView() {
 	ClubFrontend::MemberModel dataSource(QSqlDatabase::database());
 	ClubFrontend::MainWindow mainWindow(dataSource);
 
-	QTableView * view = mainWindow.memberTableView;
-	QAbstractItemModel * model = view->model();
+	QTableView *view = mainWindow.memberTableView;
+
+	// XXX QTest::mouseClick(view, Qt::LeftButton, Qt::NoModifier, QPoint(0,0));
+	// XXX QModelIndex index = view->currentIndex();
+
+	QModelIndex index = view->indexAt(QPoint(0,0));
+	QVERIFY(index.isValid());
+	const QAbstractItemModel * model = index.model();
 	QVERIFY(model != 0);
 	QCOMPARE(model->rowCount(), 1);
-	// TODO Test erweitern auf Tabellen inhalt.
+	QVariant value = model->data(index);
+	QCOMPARE(value.toInt(),1025);
 }
 
 

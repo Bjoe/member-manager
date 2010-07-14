@@ -17,7 +17,7 @@ void TestData::execStatement(const QString & aSql) {
 }
 
 void TestData::createFakeAdressTable() {
-	execStatement("DROP TABLE adress");
+	execStatement("DROP TABLE adresse");
 	execStatement("CREATE TABLE adresse ("
 			"  adresse_pkey serial NOT NULL,"
 			"  dorfmitglied_pkey integer,"
@@ -27,7 +27,7 @@ void TestData::createFakeAdressTable() {
 			")");
 	execStatement("INSERT INTO adresse("
 			"            adresse_pkey, dorfmitglied_pkey, strasse, plz, ort)"
-			"    VALUES (1,1025,'Industriestr. 23',90546,'Bloedeldorf'");
+			"    VALUES (1,1025,'Industriestr. 23',90546,'Bloedeldorf')");
 }
 
 void TestData::createFakeCashKontoTable() {

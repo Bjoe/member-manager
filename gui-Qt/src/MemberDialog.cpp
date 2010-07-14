@@ -12,39 +12,36 @@ MemberDialog::MemberDialog(QWidget *parent) :
 	connect(buttonBox, SIGNAL(accepted()), this, SLOT(saveMember()));
 }
 
-void MemberDialog::showMember() const
+void MemberDialog::showMember(const QSqlRecord &aRecord) const
 {
-//	const ClubFrontend::Member* member = controller->getMember();
-//	memberId->setText(QString::number(member->getId()));
-//	firstName->setText(QString::fromStdString(member->getFirstname()));
-//	memberName->setText(QString::fromStdString(member->getName()));
-//	nickname->setText(QString::fromStdString(member->getNickname()));
-//	city->setText(QString::fromStdString(member->getCity()));
-//	street->setText(QString::fromStdString(member->getStreet()));
-//	zipcode->setText(QString::number(member->getZipCode()));
-//	email->setText(QString::fromStdString(member->getEmail()));
-//	entryDate->setDate(
-//	    QDate::fromString(
-//	        QString::fromStdString(member->getEntryDate()),
-//	        QString("dd.MM.yyyy")));
-//	info->setPlainText(QString::fromStdString(member->getInfo()));
-//
-//	const ClubFrontend::Contribution* contribution = controller->getContribution();
-//	contributionInfo->setText(QString::fromStdString(contribution->getInfo()));
-//	donation->setText(QString::number(contribution->getDonation()));
-//	fee->setText(QString::number(contribution->getFee()));
-//
-//	const ClubFrontend::Bank* bank = controller->getBank();
-//	account->setText(QString::number(bank->getAccount()));
-//	code->setText(QString::number(bank->getCode()));
-//	bankName->setText(QString::fromStdString(bank->getName()));
+	int id = aRecord.value("dorfmitglied_pkey").toInt();
+	memberId->setText(QString::number(id));
+	firstName->setText(aRecord.value("vorname").toString());
+	memberName->setText(aRecord.value("name").toString());
+	nickname->setText(aRecord.value("nickname").toString());
+	city->setText(aRecord.value("ort").toString());
+	street->setText(aRecord.value("strasse").toString());
+	zipcode->setText(aRecord.value("plz").toString());
+	email->setText(aRecord.value("email").toString());
+	entryDate->setDate(aRecord.value("eintrittsdatum").toDate());
+	info->setPlainText(aRecord.value("info").toString());
+	contributionInfo->setText(aRecord.value("btinfo").toString());
+	double donationValue = aRecord.value("spende").toDouble();
+	donation->setText(QString::number(donationValue));
+	double feeValue = aRecord.value("beitrag").toDouble();
+	fee->setText(QString::number(feeValue));
+	int accountValue = aRecord.value("kontonr").toInt();
+	account->setText(QString::number(accountValue));
+	int codeValue = aRecord.value("blz").toInt();
+	code->setText(QString::number(codeValue));
+	bankName->setText(aRecord.value("bank").toString());
 }
 
 void MemberDialog::setMemberId(const int& anId)
 {
-//	QString id;
-//	id.setNum(anId);
-//	memberId->setText(id);
+	QString id;
+	id.setNum(anId);
+	memberId->setText(id);
 }
 
 void MemberDialog::saveMember()

@@ -16,7 +16,14 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
-     <widget class="QTableView" name="memberTableView"/>
+     <widget class="QTableView" name="memberTableView">
+      <property name="selectionMode">
+       <enum>QAbstractItemView::SingleSelection</enum>
+      </property>
+      <property name="selectionBehavior">
+       <enum>QAbstractItemView::SelectRows</enum>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -29,9 +36,9 @@
      <height>25</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuMilglied">
+   <widget class="QMenu" name="menuMitglied">
     <property name="title">
-     <string>Milglied</string>
+     <string>Mitglied</string>
     </property>
     <addaction name="actionNewMember"/>
     <addaction name="actionSelectMember"/>
@@ -47,7 +54,7 @@
      <string>Hilfe</string>
     </property>
    </widget>
-   <addaction name="menuMilglied"/>
+   <addaction name="menuMitglied"/>
    <addaction name="menuDatenbank"/>
    <addaction name="menuHilfe"/>
   </widget>

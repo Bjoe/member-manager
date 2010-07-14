@@ -1,24 +1,65 @@
 #include <QtGui>
+#include <QtSql>
+
+#include "TestData.h"
 
 #include "MemberDialogTest.h"
 
 namespace ClubFrontendTest
 {
 
+void MemberDialogTest::initTestCase() {
+	TestData testData;
+	testData.createFakeMemberTable();
+	testData.createFakeAdressTable();
+	testData.createFakeBankTable();
+	testData.createFakeRessourcenTable();
+	testData.createFakeContributionTable();
+}
+
+void MemberDialogTest::showMember() {
+	QSqlQuery query;
+
+	query.exec("select bt.info as btinfo, * from adresse ad, dorfmitglied me, kommunikation ko, kontodaten ba, beitragstab bt where "
+			"me.dorfmitglied_pkey = 1025 and "
+			"me.dorfmitglied_pkey = ad.dorfmitglied_pkey and "
+			"me.dorfmitglied_pkey = ko.dorfmitglied_pkey and "
+			"me.dorfmitglied_pkey = ba.dorfmitglied_pkey and "
+			"me.dorfmitglied_pkey = bt.dorfmitglied_pkey");
+	query.next();
+	QVERIFY(query.isValid());
+
+	QSqlRecord record = query.record();
+
+	QCOMPARE(record.count(), 36);
+
+	const ClubFrontend::MemberDialog dialog;
+	dialog.showMember(record);
+
+	QCOMPARE(dialog.memberId->text(), QString("1025"));
+	QCOMPARE(dialog.firstName->text(), QString("James T"));
+	QCOMPARE(dialog.memberName->text(), QString("Kirk"));
+	QCOMPARE(dialog.nickname->text(), QString("Capt. Kirk"));
+	QCOMPARE(dialog.info->toPlainText(), QString(""));
+	QCOMPARE(dialog.city->text(), QString("Bloedeldorf"));
+	QCOMPARE(dialog.street->text(), QString("Industriestr. 23"));
+	QCOMPARE(dialog.zipcode->text(), QString("90546"));
+	QCOMPARE(dialog.email->text(), QString("fooo@baaar.xx"));
+	QCOMPARE(dialog.entryDate->text(), QString("24.04.01"));
+	QCOMPARE(dialog.contributionInfo->text(), QString("Spende wird eingestellt"));
+	QCOMPARE(dialog.donation->text(), QString("0"));
+	QCOMPARE(dialog.fee->text(), QString("15"));
+	QCOMPARE(dialog.account->text(), QString("12234569"));
+	QCOMPARE(dialog.code->text(), QString("9004010"));
+	QCOMPARE(dialog.bankName->text(), QString("sparstrumpf"));
+}
+
 void MemberDialogTest::setMemberId()
 {
-//	MemberMock member;
-//	BankMock bank;
-//	ContributionMock contribution;
-//
-//	ControllerMock controller;
-//	GuiManagement::MemberDialog dialog(controller);
-//
-//	dialog.setMemberId(23);
-//
-//	QString id;
-//	id.setNum(23);
-//	QCOMPARE(dialog.memberId->text(), id);
+	ClubFrontend::MemberDialog dialog;
+
+	dialog.setMemberId(23);
+	QCOMPARE(dialog.memberId->text(), QString::number(23));
 }
 
 void MemberDialogTest::newMember()
