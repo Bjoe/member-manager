@@ -99,30 +99,30 @@ void MemberDialogTest::newMember()
 //		saveMember(&memberMock, &bankMock, &contributionMock))
 //		.Times(1);
 //
-//	GuiManagement::MemberDialog dialog(controller);
-//
-//	QTest::keyClicks(dialog.memberName, "Mc Kay");
-//	QTest::keyClicks(dialog.firstName, "Rodney");
-//	QTest::keyClicks(dialog.nickname, "Rod");
-//
-//	QTest::keyClicks(dialog.street, "Atlantis");
-//	QTest::keyClicks(dialog.city, "Pegasus");
-//	QTest::keyClicks(dialog.zipcode, "40215");
-//
-//	QTest::keyClicks(dialog.email, "rod@atlantis.pegasus");
-//	QTest::keyClicks(dialog.entryDate, "01.01.09");
-//
-//	QTest::keyClicks(dialog.fee, "15");
-//	QTest::keyClicks(dialog.donation, "5");
-//	QTest::keyClicks(dialog.contributionInfo, "Info");
-//
-//	QTest::keyClicks(dialog.account, "123456789");
-//	QTest::keyClicks(dialog.bankName, "Galaxy Bank");
-//	QTest::keyClicks(dialog.code, "98765432");
-//
-//	QTest::keyClicks(dialog.info, "Foo");
-//
-//	QTest::mouseClick(dialog.buttonBox->button(QDialogButtonBox::Save),Qt::LeftButton);
+	ClubFrontend::MemberDialog dialog;
+
+	QTest::keyClicks(dialog.memberName, "Mc Kay");
+	QTest::keyClicks(dialog.firstName, "Rodney");
+	QTest::keyClicks(dialog.nickname, "Rod");
+
+	QTest::keyClicks(dialog.street, "Atlantis");
+	QTest::keyClicks(dialog.city, "Pegasus");
+	QTest::keyClicks(dialog.zipcode, "40215");
+
+	QTest::keyClicks(dialog.email, "rod@atlantis.pegasus");
+	QTest::keyClicks(dialog.entryDate, "01.01.09");
+
+	QTest::keyClicks(dialog.fee, "15");
+	QTest::keyClicks(dialog.donation, "5");
+	QTest::keyClicks(dialog.contributionInfo, "Info");
+
+	QTest::keyClicks(dialog.account, "123456789");
+	QTest::keyClicks(dialog.bankName, "Galaxy Bank");
+	QTest::keyClicks(dialog.code, "98765432");
+
+	QTest::keyClicks(dialog.info, "Foo");
+
+	QTest::mouseClick(dialog.buttonBox->button(QDialogButtonBox::Save),Qt::LeftButton);
 }
 
 void MemberDialogTest::changeMember()

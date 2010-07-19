@@ -2,19 +2,21 @@
 find_package(Qt4 4.5.2 COMPONENTS QtTest REQUIRED)
 include(${QT_USE_FILE})
 
+set(QT_FRONTEND_TEST_MOC_HEADERS
+    MainWindowTest.h
+    MemberDialogTest.h
+    MemberModelTest.h
+    MemberDetailModelTest.h
+    MemberFilterTest.h
+    )
+
 set(QT_FRONTEND_TEST
     TestData.cpp
     MainWindowTest.cpp
     MemberDialogTest.cpp
     MemberModelTest.cpp
+    MemberDetailModelTest.cpp
     MemberFilterTest.cpp
-    )
-
-set(QT_FRONTEND_TEST_MOC_HEADERS
-    MainWindowTest.h
-    MemberDialogTest.h
-    MemberModelTest.h
-    MemberFilterTest.h
     )
 
 # Setze src Verzeichniss

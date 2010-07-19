@@ -13,6 +13,7 @@ set(QT_FRONTEND_SRC
     MainWindow.cpp
     MemberDialog.cpp
     MemberModel.cpp
+    MemberDetailModel.cpp
     MemberFilter.cpp
     )
 

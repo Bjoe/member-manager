@@ -14,6 +14,7 @@ MemberDialog::MemberDialog(QWidget *parent) :
 
 void MemberDialog::showMember(const QSqlRecord &aRecord) const
 {
+	// TODO QDataWidgetMapper
 	int id = aRecord.value("dorfmitglied_pkey").toInt();
 	memberId->setText(QString::number(id));
 	firstName->setText(aRecord.value("vorname").toString());
