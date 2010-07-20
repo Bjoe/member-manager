@@ -18,23 +18,9 @@ void MemberDialogTest::initTestCase() {
 }
 
 void MemberDialogTest::showMember() {
-	QSqlQuery query;
-
-	query.exec("select bt.info as btinfo, * from adresse ad, dorfmitglied me, kommunikation ko, kontodaten ba, beitragstab bt where "
-			"me.dorfmitglied_pkey = 1025 and "
-			"me.dorfmitglied_pkey = ad.dorfmitglied_pkey and "
-			"me.dorfmitglied_pkey = ko.dorfmitglied_pkey and "
-			"me.dorfmitglied_pkey = ba.dorfmitglied_pkey and "
-			"me.dorfmitglied_pkey = bt.dorfmitglied_pkey");
-	query.next();
-	QVERIFY(query.isValid());
-
-	QSqlRecord record = query.record();
-
-	QCOMPARE(record.count(), 36);
-
-	const ClubFrontend::MemberDialog dialog;
-	dialog.showMember(record);
+	ClubFrontend::MemberDialog dialog;
+	dialog.setMemberId(1025);
+	dialog.showMember();
 
 	QCOMPARE(dialog.memberId->text(), QString("1025"));
 	QCOMPARE(dialog.firstName->text(), QString("James T"));

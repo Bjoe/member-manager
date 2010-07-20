@@ -6,40 +6,59 @@ namespace ClubFrontend
 {
 
 MemberDialog::MemberDialog(QWidget *parent) :
-		QWidget(parent)
+		QWidget(parent), memberDetailModel(QSqlDatabase::database())
+
 {
 	setupUi(this);
 	connect(buttonBox, SIGNAL(accepted()), this, SLOT(saveMember()));
 }
 
-void MemberDialog::showMember(const QSqlRecord &aRecord) const
+void MemberDialog::showMember()
 {
-	// TODO QDataWidgetMapper
-	int id = aRecord.value("dorfmitglied_pkey").toInt();
-	memberId->setText(QString::number(id));
-	firstName->setText(aRecord.value("vorname").toString());
-	memberName->setText(aRecord.value("name").toString());
-	nickname->setText(aRecord.value("nickname").toString());
-	city->setText(aRecord.value("ort").toString());
-	street->setText(aRecord.value("strasse").toString());
-	zipcode->setText(aRecord.value("plz").toString());
-	email->setText(aRecord.value("email").toString());
-	entryDate->setDate(aRecord.value("eintrittsdatum").toDate());
-	info->setPlainText(aRecord.value("info").toString());
-	contributionInfo->setText(aRecord.value("btinfo").toString());
-	double donationValue = aRecord.value("spende").toDouble();
-	donation->setText(QString::number(donationValue));
-	double feeValue = aRecord.value("beitrag").toDouble();
-	fee->setText(QString::number(feeValue));
-	int accountValue = aRecord.value("kontonr").toInt();
-	account->setText(QString::number(accountValue));
-	int codeValue = aRecord.value("blz").toInt();
-	code->setText(QString::number(codeValue));
-	bankName->setText(aRecord.value("bank").toString());
+	QDataWidgetMapper* memberMapper = new QDataWidgetMapper(this);
+	memberMapper->setModel(memberDetailModel.getMemberTableModel());
+	memberMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
+	memberMapper->addMapping(firstName, 2);
+	memberMapper->addMapping(memberName, 3);
+	memberMapper->addMapping(nickname, 4);
+	memberMapper->addMapping(entryDate, 11);
+	memberMapper->addMapping(info, 12);
+	memberMapper->toFirst();
+
+	QDataWidgetMapper* addressMapper = new QDataWidgetMapper(this);
+	addressMapper->setModel(memberDetailModel.getAddressTableModel());
+	addressMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
+	addressMapper->addMapping(city, 4);;
+	addressMapper->addMapping(street, 2);
+	addressMapper->addMapping(zipcode, 3);
+	addressMapper->toFirst();
+
+	QDataWidgetMapper* bankMapper = new QDataWidgetMapper(this);
+	bankMapper->setModel(memberDetailModel.getBankAccountTableModel());
+	bankMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
+	bankMapper->addMapping(account, 2);
+	bankMapper->addMapping(code, 4);
+	bankMapper->addMapping(bankName, 3);
+	bankMapper->toFirst();
+
+	QDataWidgetMapper* contributionMapper = new QDataWidgetMapper(this);
+	contributionMapper->setModel(memberDetailModel.getContributionTableModel());
+	contributionMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
+	contributionMapper->addMapping(contributionInfo, 6);
+	contributionMapper->addMapping(donation, 3);
+	contributionMapper->addMapping(fee, 2);
+	contributionMapper->toFirst();
+
+	QDataWidgetMapper* ressourcenMapper = new QDataWidgetMapper(this);
+	ressourcenMapper->setModel(memberDetailModel.getRessourcenTableModel());
+	ressourcenMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
+	ressourcenMapper->addMapping(email, 2);
+	ressourcenMapper->toFirst();
 }
 
 void MemberDialog::setMemberId(const int& anId)
 {
+	memberDetailModel.setMemberId(anId);
 	QString id;
 	id.setNum(anId);
 	memberId->setText(id);
