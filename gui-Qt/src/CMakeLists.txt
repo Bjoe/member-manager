@@ -15,6 +15,7 @@ set(QT_FRONTEND_SRC
     MemberModel.cpp
     MemberDetailModel.cpp
     MemberFilter.cpp
+    DatabaseStructure.cpp
     )
 
 # Setze Sourcen fuer die tests
