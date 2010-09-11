@@ -8,6 +8,7 @@ set(QT_FRONTEND_TEST_MOC_HEADERS
     MemberModelTest.h
     MemberDetailModelTest.h
     MemberFilterTest.h
+    ConnectionDialogTest.h
     )
 
 set(QT_FRONTEND_TEST
@@ -17,6 +18,7 @@ set(QT_FRONTEND_TEST
     MemberModelTest.cpp
     MemberDetailModelTest.cpp
     MemberFilterTest.cpp
+    ConnectionDialogTest.cpp
     )
 
 # Setze src Verzeichniss
