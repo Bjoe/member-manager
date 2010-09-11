@@ -19,15 +19,17 @@ void TestData::execStatement(const QString & aSql) {
 void TestData::createFakeAdressTable() {
 	execStatement("DROP TABLE adresse");
 	execStatement("CREATE TABLE adresse ("
-			"  adresse_pkey serial NOT NULL,"
+			"  adresse_pkey INTEGER PRIMARY KEY AUTOINCREMENT,"
 			"  dorfmitglied_pkey integer,"
 			"  strasse text,  plz integer,"
-			"  ort character varying(20),"
-			"  CONSTRAINT adresse_pkey PRIMARY KEY (adresse_pkey)"
-			")");
+			"  ort character varying(20)"
+			"  )");
 	execStatement("INSERT INTO adresse("
 			"            adresse_pkey, dorfmitglied_pkey, strasse, plz, ort)"
-			"    VALUES (1,1025,'Industriestr. 23',90546,'Bloedeldorf')");
+			"    VALUES (1,1024,'Industriestr. 24',90547,'Bloedeldorff')");
+	execStatement("INSERT INTO adresse("
+			"            adresse_pkey, dorfmitglied_pkey, strasse, plz, ort)"
+			"    VALUES (2,1025,'Industriestr. 23',90546,'Bloedeldorf')");
 }
 
 void TestData::createFakeCashKontoTable() {
@@ -51,14 +53,13 @@ void TestData::createFakeContributionTable() {
 	execStatement("DROP TABLE beitragstab");
 
 	execStatement("CREATE TABLE beitragstab ("
-			"  beitragstab_pkey serial NOT NULL,"
+			"  beitragstab_pkey INTEGER PRIMARY KEY AUTOINCREMENT,"
 			"  dorfmitglied_pkey integer,"
 			"  beitrag numeric(10,2),"
 			"  spende numeric(10,2),"
 			"  schulden numeric(10,2),"
 			"  gueltigab date,"
-			"  info text,"
-			"  CONSTRAINT beitragstab_pkey PRIMARY KEY (beitragstab_pkey))");
+			"  info text)");
 
 	execStatement("INSERT INTO beitragstab("
 			"            beitragstab_pkey, dorfmitglied_pkey, beitrag, spende, schulden,"
@@ -70,7 +71,7 @@ void TestData::createFakeMemberTable() {
 	execStatement("DROP TABLE dorfmitglied");
 
 	execStatement("CREATE TABLE dorfmitglied ("
-			"  dorfmitglied_pkey serial NOT NULL,"
+			"  dorfmitglied_pkey INTEGER PRIMARY KEY AUTOINCREMENT,"
 			"  deleted boolean DEFAULT false,"
 			"  vorname character varying(20),"
 			"  name character varying(20),"
@@ -82,8 +83,7 @@ void TestData::createFakeMemberTable() {
 			"  einzug boolean DEFAULT false,"
 			"  chaosnr smallint,"
 			"  eintrittsdatum date,"
-			"  info text,"
-			"  CONSTRAINT dorfmitglied_pkey PRIMARY KEY (dorfmitglied_pkey))");
+			"  info text)");
 
 	execStatement("INSERT INTO dorfmitglied ("
 			"            dorfmitglied_pkey, deleted, vorname, name, nickname, chaosdorfadr,"
@@ -96,7 +96,7 @@ void TestData::createFakeKassaTable() {
 	execStatement("DROP TABLE kasse");
 
 	execStatement("CREATE TABLE kasse ("
-			"  kasse_pkey serial NOT NULL,"
+			"  kasse_pkey INTEGER PRIMARY KEY AUTOINCREMENT,"
 			"  deleted boolean DEFAULT false,"
 			"  einlesedatum date,"
 			"  einleseid integer,"
@@ -119,8 +119,7 @@ void TestData::createFakeKassaTable() {
 			"  barkonto integer,"
 			"  konten integer,"
 			"  dorfmitglied_pkey integer,"
-			"  erfasst boolean DEFAULT false,"
-			"  CONSTRAINT kasse_pkey PRIMARY KEY (kasse_pkey))");
+			"  erfasst boolean DEFAULT false)");
 
 	execStatement("INSERT INTO kasse ("
 			"            kasse_pkey, deleted, einlesedatum, einleseid, auszug, zwshkenn60,"
@@ -165,12 +164,11 @@ void TestData::createFakeRessourcenTable() {
 	execStatement("DROP TABLE kommunikation");
 
 	execStatement("CREATE TABLE kommunikation ("
-			"  kommunikation_pkey serial NOT NULL,"
+			"  kommunikation_pkey INTEGER PRIMARY KEY AUTOINCREMENT,"
 			"  dorfmitglied_pkey integer,"
 			"  email character varying(50),"
 			"  schluessel text,"
-			"  publickey text,"
-			"  CONSTRAINT kommunikation_pkey PRIMARY KEY (kommunikation_pkey))");
+			"  publickey text)");
 
 	execStatement("INSERT INTO kommunikation ("
 			"            kommunikation_pkey, dorfmitglied_pkey, email, schluessel, publickey)"
@@ -197,12 +195,11 @@ void TestData::createFakeBankTable() {
 	execStatement("DROP TABLE kontodaten");
 
 	execStatement("CREATE TABLE kontodaten ("
-			"  kontodaten_pkey serial NOT NULL, "
+			"  kontodaten_pkey INTEGER PRIMARY KEY AUTOINCREMENT, "
 			"  dorfmitglied_pkey integer,"
 			"  kontonr bigint,"
 			"  bank text,"
-			"  blz integer,"
-			"  CONSTRAINT kontodaten_pkey PRIMARY KEY (kontodaten_pkey))");
+			"  blz integer)");
 
 	execStatement("INSERT INTO kontodaten ("
 			"            kontodaten_pkey, dorfmitglied_pkey, kontonr, bank, blz)"
@@ -213,7 +210,7 @@ void TestData::createFakeBalanceTable() {
 	execStatement("DROP TABLE saldo");
 
 	execStatement("CREATE TABLE saldo ("
-			"  saldo_pkey serial NOT NULL,"
+			"  saldo_pkey INTEGER PRIMARY KEY AUTOINCREMENT,"
 			"  dorfmitglied_pkey integer,"
 			"  betrag numeric(10,2),"
 			"  datum date,"
@@ -221,8 +218,7 @@ void TestData::createFakeBalanceTable() {
 			"  barkonto integer,"
 			"  konten smallint,"
 			"  kasse_pkey integer,"
-			"  info text,"
-			"  CONSTRAINT saldo_pkey PRIMARY KEY (saldo_pkey))");
+			"  info text)");
 
 	execStatement("INSERT INTO saldo ("
 			"            saldo_pkey, dorfmitglied_pkey, betrag, datum, bezeichnung, barkonto,"
