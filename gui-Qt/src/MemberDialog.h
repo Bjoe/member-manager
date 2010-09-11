@@ -2,7 +2,7 @@
 #define MEMBERDIALOG_H
 
 #include <QWidget>
-#include <QSqlRecord>
+#include <QDataWidgetMapper>
 #include "ui_memberDialog.h"
 #include "MemberDetailModel.h"
 
@@ -14,15 +14,18 @@ class MemberDialog : public QWidget, public Ui::MemberDialog
 	Q_OBJECT
 
 public:
-	MemberDialog(QWidget *parent = 0);
-	void showMember();
-	void setMemberId(const int& anId);
+	MemberDialog(const int anId, QWidget *parent = 0);
 
 private slots:
 	void saveMember();
 
 private:
 	MemberDetailModel memberDetailModel;
+	QDataWidgetMapper* memberMapper;
+	QDataWidgetMapper* addressMapper;
+	QDataWidgetMapper* bankMapper;
+	QDataWidgetMapper* contributionMapper;
+	QDataWidgetMapper* ressourcenMapper;
 };
 
 }
