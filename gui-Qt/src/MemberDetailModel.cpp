@@ -24,11 +24,11 @@ MemberDetailModel::MemberDetailModel(const QSqlDatabase& aDb) :
 
 MemberDetailModel::~MemberDetailModel()
 {
-	addressModel->~QSqlTableModel();
-	bankAccountModel->~QSqlTableModel();
-	contributionModel->~QSqlTableModel();
-	ressourcenModel->~QSqlTableModel();
-	memberModel->~QSqlTableModel();
+	delete addressModel;
+	delete bankAccountModel;
+	delete contributionModel;
+	delete ressourcenModel;
+	delete memberModel;
 }
 
 QSqlTableModel* MemberDetailModel::setTableModel(const QString& aTableName, QSqlTableModel* const aModel) {
