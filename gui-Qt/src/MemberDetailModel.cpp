@@ -11,13 +11,15 @@
 namespace ClubFrontend
 {
 
-MemberDetailModel::MemberDetailModel(const QSqlDatabase& aDb)
+MemberDetailModel::MemberDetailModel(const QSqlDatabase& aDb) :
+		addressModel(new QSqlTableModel(this, aDb)), bankAccountModel(new QSqlTableModel(this, aDb)), contributionModel(new QSqlTableModel(this, aDb)),
+		ressourcenModel(new QSqlTableModel(this, aDb)), memberModel(new QSqlTableModel(this, aDb))
 {
-	addressModel = getTableModel(AddressTable::TABLENAME, aDb);
-	bankAccountModel = getTableModel(BankAccountTable::TABLENAME, aDb);
-	contributionModel = getTableModel(ContributionTable::TABLENAME, aDb);
-	ressourcenModel = getTableModel(RessourcenTable::TABLENAME, aDb);
-	memberModel = getTableModel(MemberTable::TABLENAME, aDb);
+	setTableModel(AddressTable::TABLENAME, addressModel);
+	setTableModel(BankAccountTable::TABLENAME, bankAccountModel);
+	setTableModel(ContributionTable::TABLENAME, contributionModel);
+	setTableModel(RessourcenTable::TABLENAME, ressourcenModel);
+	setTableModel(MemberTable::TABLENAME, memberModel);
 }
 
 MemberDetailModel::~MemberDetailModel()
@@ -27,6 +29,11 @@ MemberDetailModel::~MemberDetailModel()
 	contributionModel->~QSqlTableModel();
 	ressourcenModel->~QSqlTableModel();
 	memberModel->~QSqlTableModel();
+}
+
+QSqlTableModel* MemberDetailModel::setTableModel(const QString& aTableName, QSqlTableModel* const aModel) {
+	aModel->setTable(aTableName);
+	aModel->select();
 }
 
 QString MemberDetailModel::getLastError() const {
@@ -79,31 +86,24 @@ int MemberDetailModel::insertNewMember(
 	return row;
 }
 
-QSqlTableModel* MemberDetailModel::getAddressTableModel() {
+QSqlTableModel* MemberDetailModel::getAddressTableModel() const {
 	return addressModel;
 }
 
-QSqlTableModel* MemberDetailModel::getBankAccountTableModel() {
+QSqlTableModel* MemberDetailModel::getBankAccountTableModel() const {
 	return bankAccountModel;
 }
 
-QSqlTableModel* MemberDetailModel::getContributionTableModel() {
+QSqlTableModel* MemberDetailModel::getContributionTableModel() const {
 	return contributionModel;
 }
 
-QSqlTableModel* MemberDetailModel::getRessourcenTableModel() {
+QSqlTableModel* MemberDetailModel::getRessourcenTableModel() const {
 	return ressourcenModel;
 }
 
-QSqlTableModel* MemberDetailModel::getMemberTableModel() {
+QSqlTableModel* MemberDetailModel::getMemberTableModel() const {
 	return memberModel;
-}
-
-QSqlTableModel* MemberDetailModel::getTableModel(const QString& aTableName, const QSqlDatabase& aDb) {
-	QSqlTableModel* model = new QSqlTableModel(this, aDb);
-	model->setTable(aTableName);
-	model->select();
-	return model;
 }
 
 }

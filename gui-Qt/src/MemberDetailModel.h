@@ -25,21 +25,21 @@ public:
 	void setMemberId(int id);
 	int newMember();
 
-	QSqlTableModel* getAddressTableModel();
-	QSqlTableModel* getBankAccountTableModel();
-	QSqlTableModel* getContributionTableModel();
-	QSqlTableModel* getRessourcenTableModel();
-	QSqlTableModel* getMemberTableModel();
+	QSqlTableModel* getAddressTableModel() const;
+	QSqlTableModel* getBankAccountTableModel() const;
+	QSqlTableModel* getContributionTableModel() const;
+	QSqlTableModel* getRessourcenTableModel() const;
+	QSqlTableModel* getMemberTableModel() const;
 
 private:
 	int insertNewMember(QSqlTableModel* aModel, const int& aColumnId, const QVariant& aValue);
-	QSqlTableModel* getTableModel(const QString& aTableName, const QSqlDatabase& aDb);
+	QSqlTableModel* setTableModel(const QString& aTableName, QSqlTableModel* const aModel);
 
-	QSqlTableModel* addressModel;
-	QSqlTableModel* bankAccountModel;
-	QSqlTableModel* contributionModel;
-	QSqlTableModel* ressourcenModel;
-	QSqlTableModel* memberModel;
+	QSqlTableModel* const addressModel;
+	QSqlTableModel* const bankAccountModel;
+	QSqlTableModel* const contributionModel;
+	QSqlTableModel* const ressourcenModel;
+	QSqlTableModel* const memberModel;
 };
 
 }
