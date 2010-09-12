@@ -1,11 +1,7 @@
-/*
- * TestData.cpp
- *
- *  Created on: Mar 17, 2010
- *      Author: joerg
- */
-#include <QtTest>
 #include "TestData.h"
+
+#include <QtTest>
+#include <QtSql>
 
 namespace ClubFrontendTest {
 

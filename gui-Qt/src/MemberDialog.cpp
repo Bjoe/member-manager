@@ -10,63 +10,58 @@ MemberDialog::MemberDialog(const int anId, QWidget *parent) :
 		QWidget(parent), memberDetailModel(QSqlDatabase::database())
 
 {
-	setupUi(this);
+	ui.setupUi(this);
 
 	memberDetailModel.setMemberId(anId);
 	QString id;
 	id.setNum(anId);
-	memberId->setText(id);
+	ui.memberId->setText(id);
 
 	memberMapper = new QDataWidgetMapper(this);
 	memberMapper->setModel(memberDetailModel.getMemberTableModel());
 	memberMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
-	memberMapper->addMapping(firstName, MemberTable::FirstName);
-	memberMapper->addMapping(memberName, MemberTable::Name);
-	memberMapper->addMapping(nickname, MemberTable::NickName);
-	memberMapper->addMapping(entryDate, MemberTable::EntryDate);
-	memberMapper->addMapping(info, MemberTable::Info);
+	memberMapper->addMapping(ui.firstName, MemberTable::FirstName);
+	memberMapper->addMapping(ui.memberName, MemberTable::Name);
+	memberMapper->addMapping(ui.nickname, MemberTable::NickName);
+	memberMapper->addMapping(ui.entryDate, MemberTable::EntryDate);
+	memberMapper->addMapping(ui.info, MemberTable::Info);
 	memberMapper->toFirst();
 
 	addressMapper = new QDataWidgetMapper(this);
 	addressMapper->setModel(memberDetailModel.getAddressTableModel());
 	addressMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
-	addressMapper->addMapping(city, AddressTable::Town);;
-	addressMapper->addMapping(street, AddressTable::Street);
-	addressMapper->addMapping(zipcode, AddressTable::ZipCode);
+	addressMapper->addMapping(ui.city, AddressTable::Town);;
+	addressMapper->addMapping(ui.street, AddressTable::Street);
+	addressMapper->addMapping(ui.zipcode, AddressTable::ZipCode);
 	addressMapper->toFirst();
 
 	bankMapper = new QDataWidgetMapper(this);
 	bankMapper->setModel(memberDetailModel.getBankAccountTableModel());
 	bankMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
-	bankMapper->addMapping(account, BankAccountTable::AccountNr);
-	bankMapper->addMapping(code, BankAccountTable::Code);
-	bankMapper->addMapping(bankName, BankAccountTable::BankName);
+	bankMapper->addMapping(ui.account, BankAccountTable::AccountNr);
+	bankMapper->addMapping(ui.code, BankAccountTable::Code);
+	bankMapper->addMapping(ui.bankName, BankAccountTable::BankName);
 	bankMapper->toFirst();
 
 	contributionMapper = new QDataWidgetMapper(this);
 	contributionMapper->setModel(memberDetailModel.getContributionTableModel());
 	contributionMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
-	contributionMapper->addMapping(contributionInfo, ContributionTable::Info);
-	contributionMapper->addMapping(donation, ContributionTable::Donation);
-	contributionMapper->addMapping(fee, ContributionTable::Fee);
+	contributionMapper->addMapping(ui.contributionInfo, ContributionTable::Info);
+	contributionMapper->addMapping(ui.donation, ContributionTable::Donation);
+	contributionMapper->addMapping(ui.fee, ContributionTable::Fee);
 	contributionMapper->toFirst();
 
 	ressourcenMapper = new QDataWidgetMapper(this);
 	ressourcenMapper->setModel(memberDetailModel.getRessourcenTableModel());
 	ressourcenMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
-	ressourcenMapper->addMapping(email, RessourcenTable::EmailAdress);
+	ressourcenMapper->addMapping(ui.email, RessourcenTable::EmailAdress);
 	ressourcenMapper->toFirst();
 
-	connect(buttonBox, SIGNAL(accepted()), this, SLOT(saveMember()));
-}
-
-void MemberDialog::saveMember()
-{
-	memberMapper->submit();
-	addressMapper->submit();
-	contributionMapper->submit();
-	bankMapper->submit();
-	ressourcenMapper->submit();
+	connect(ui.buttonBox, SIGNAL(accepted()), memberMapper, SLOT(submit()));
+	connect(ui.buttonBox, SIGNAL(accepted()), addressMapper, SLOT(submit()));
+	connect(ui.buttonBox, SIGNAL(accepted()), bankMapper, SLOT(submit()));
+	connect(ui.buttonBox, SIGNAL(accepted()), contributionMapper, SLOT(submit()));
+	connect(ui.buttonBox, SIGNAL(accepted()), ressourcenMapper, SLOT(submit()));
 }
 
 }

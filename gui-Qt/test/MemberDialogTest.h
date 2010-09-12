@@ -4,8 +4,6 @@
 #include <QObject>
 #include <QtTest/QtTest>
 
-#include "MemberDialog.h"
-
 namespace ClubFrontendTest
 {
 
@@ -18,8 +16,6 @@ private slots:
 	void showMember();
 	void newMember();
 	void changeMember();
-
-	void foo();
 };
 
 }

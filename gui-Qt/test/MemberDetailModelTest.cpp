@@ -1,18 +1,12 @@
-/*
- * MemberDetailModelTest.cpp
- *
- *  Created on: Jul 17, 2010
- *      Author: joerg
- */
-
 #include "MemberDetailModelTest.h"
 
-#include "TestData.h"
-
-#include "DatabaseStructure.h"
 #include "MemberDetailModel.h"
 
+#include "TestData.h"
+#include "DatabaseStructure.h"
+
 #include <QDebug>
+#include <QSqlRecord>
 
 namespace ClubFrontendTest
 {

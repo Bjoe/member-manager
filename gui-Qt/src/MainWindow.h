@@ -9,7 +9,7 @@
 namespace ClubFrontend
 {
 
-class MainWindow : public QMainWindow, public Ui::MainWindow
+class MainWindow : public QMainWindow
 {
 	Q_OBJECT
 
@@ -17,6 +17,7 @@ public:
 	MainWindow(MemberModel & aDataSource, QWidget * parent = 0);
 
 private:
+	Ui::MainWindow ui;
 	MemberModel & dataSource;
 };
 

@@ -1,15 +1,14 @@
-/*
- * MemberModelTest.cpp
- *
- *  Created on: Mar 23, 2010
- *      Author: joerg
- */
-
 #include "MemberModelTest.h"
-#include "TestData.h"
 
 #include "MemberModel.h"
+
+#include "TestData.h"
 #include "MemberDetailModel.h"
+
+#include <QSqlTableModel>
+#include <QSqlRecord>
+#include <QVariant>
+#include <QString>
 
 namespace ClubFrontendTest {
 

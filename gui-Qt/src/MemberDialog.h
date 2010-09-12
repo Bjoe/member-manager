@@ -9,15 +9,12 @@
 namespace ClubFrontend
 {
 
-class MemberDialog : public QWidget, public Ui::MemberDialog
+class MemberDialog : public QWidget
 {
 	Q_OBJECT
 
 public:
 	MemberDialog(const int anId, QWidget *parent = 0);
-
-private slots:
-	void saveMember();
 
 private:
 	MemberDetailModel memberDetailModel;
@@ -26,6 +23,8 @@ private:
 	QDataWidgetMapper* bankMapper;
 	QDataWidgetMapper* contributionMapper;
 	QDataWidgetMapper* ressourcenMapper;
+
+	Ui::MemberDialog ui;
 };
 
 }

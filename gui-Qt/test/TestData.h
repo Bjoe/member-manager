@@ -8,8 +8,7 @@
 #ifndef TESTDATA_H_
 #define TESTDATA_H_
 
-#include <QtCore>
-#include <QtSql>
+#include <QString>
 
 namespace ClubFrontendTest {
 

@@ -1,9 +1,15 @@
-
 #include "MainWindowTest.h"
 
-#include "TestData.h"
-
 #include "MainWindow.h"
+
+#include "TestData.h"
+#include "MemberModel.h"
+
+#include <QTableView>
+#include <QModelIndex>
+#include <QAbstractItemModel>
+#include <QVariant>
+
 
 namespace ClubFrontendTest
 {
@@ -18,7 +24,7 @@ void MainWindowTest::testMemberView() {
 	ClubFrontend::MemberModel dataSource(QSqlDatabase::database());
 	ClubFrontend::MainWindow mainWindow(dataSource);
 
-	QTableView *view = mainWindow.memberTableView;
+	QTableView* view = mainWindow.findChild<QTableView* >("memberTableView");
 
 	// XXX QTest::mouseClick(view, Qt::LeftButton, Qt::NoModifier, QPoint(0,0));
 	// XXX QModelIndex index = view->currentIndex();

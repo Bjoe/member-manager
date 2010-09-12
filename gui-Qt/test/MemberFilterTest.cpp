@@ -9,6 +9,8 @@
 
 #include "MemberFilter.h"
 
+#include <QString>
+
 namespace ClubFrontendTest {
 
 void MemberFilterTest::testSetDeleted() {
