@@ -36,8 +36,8 @@ QString MemberDetailModel::getLastError() const {
 }
 
 void MemberDetailModel::setMemberId(int id) {
-	// TODO dorfmitglied angabe nach DatabaseStuture auslagern.
-	QString filter = QString("dorfmitglied_pkey = %1").arg(id);
+	QString pkey = MemberTable::COLUMNNAME[MemberTable::MemberId];
+	QString filter = QString(pkey + " = %1").arg(id);
 	addressModel->setFilter(filter);
 	addressModel->select();
 	bankAccountModel->setFilter(filter);

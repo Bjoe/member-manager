@@ -9,9 +9,9 @@
 #define DATABASESTRUCTURE_H_
 
 #include <QString>
+#include <QStringList>
 
 namespace ClubFrontend {
-
 
 
 class AddressTable
@@ -36,6 +36,7 @@ public:
 	static const QString TABLENAME;
 	enum column { MemberId, Deleted, FirstName, Name, NickName, FOO_ClubAdress,
 		FOO_intern, FOO_CCC, FOO_Shell, FOO_Einzug, FOO_ChaosNr, EntryDate, Info };
+	static const QStringList COLUMNNAME;
 };
 
 
