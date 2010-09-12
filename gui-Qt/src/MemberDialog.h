@@ -14,15 +14,16 @@ class MemberDialog : public QWidget
 	Q_OBJECT
 
 public:
-	MemberDialog(const int anId, QWidget *parent = 0);
+	MemberDialog(const int anId, QWidget* parent = 0);
+	virtual ~MemberDialog();
 
 private:
 	MemberDetailModel memberDetailModel;
-	QDataWidgetMapper* memberMapper;
-	QDataWidgetMapper* addressMapper;
-	QDataWidgetMapper* bankMapper;
-	QDataWidgetMapper* contributionMapper;
-	QDataWidgetMapper* ressourcenMapper;
+	QDataWidgetMapper* const memberMapper;
+	QDataWidgetMapper* const addressMapper;
+	QDataWidgetMapper* const bankMapper;
+	QDataWidgetMapper* const contributionMapper;
+	QDataWidgetMapper* const ressourcenMapper;
 
 	Ui::MemberDialog ui;
 };

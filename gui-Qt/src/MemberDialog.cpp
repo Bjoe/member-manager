@@ -6,9 +6,13 @@
 namespace ClubFrontend
 {
 
-MemberDialog::MemberDialog(const int anId, QWidget *parent) :
-		QWidget(parent), memberDetailModel(QSqlDatabase::database())
-
+MemberDialog::MemberDialog(const int anId, QWidget* parent) :
+		QWidget(parent), memberDetailModel(QSqlDatabase::database()),
+		memberMapper(new QDataWidgetMapper(this)),
+		addressMapper(new QDataWidgetMapper(this)),
+		bankMapper(new QDataWidgetMapper(this)),
+		contributionMapper(new QDataWidgetMapper(this)),
+		ressourcenMapper(new QDataWidgetMapper(this))
 {
 	ui.setupUi(this);
 
@@ -17,7 +21,6 @@ MemberDialog::MemberDialog(const int anId, QWidget *parent) :
 	id.setNum(anId);
 	ui.memberId->setText(id);
 
-	memberMapper = new QDataWidgetMapper(this);
 	memberMapper->setModel(memberDetailModel.getMemberTableModel());
 	memberMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
 	memberMapper->addMapping(ui.firstName, MemberTable::FirstName);
@@ -27,7 +30,6 @@ MemberDialog::MemberDialog(const int anId, QWidget *parent) :
 	memberMapper->addMapping(ui.info, MemberTable::Info);
 	memberMapper->toFirst();
 
-	addressMapper = new QDataWidgetMapper(this);
 	addressMapper->setModel(memberDetailModel.getAddressTableModel());
 	addressMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
 	addressMapper->addMapping(ui.city, AddressTable::Town);;
@@ -35,7 +37,6 @@ MemberDialog::MemberDialog(const int anId, QWidget *parent) :
 	addressMapper->addMapping(ui.zipcode, AddressTable::ZipCode);
 	addressMapper->toFirst();
 
-	bankMapper = new QDataWidgetMapper(this);
 	bankMapper->setModel(memberDetailModel.getBankAccountTableModel());
 	bankMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
 	bankMapper->addMapping(ui.account, BankAccountTable::AccountNr);
@@ -43,7 +44,6 @@ MemberDialog::MemberDialog(const int anId, QWidget *parent) :
 	bankMapper->addMapping(ui.bankName, BankAccountTable::BankName);
 	bankMapper->toFirst();
 
-	contributionMapper = new QDataWidgetMapper(this);
 	contributionMapper->setModel(memberDetailModel.getContributionTableModel());
 	contributionMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
 	contributionMapper->addMapping(ui.contributionInfo, ContributionTable::Info);
@@ -51,7 +51,6 @@ MemberDialog::MemberDialog(const int anId, QWidget *parent) :
 	contributionMapper->addMapping(ui.fee, ContributionTable::Fee);
 	contributionMapper->toFirst();
 
-	ressourcenMapper = new QDataWidgetMapper(this);
 	ressourcenMapper->setModel(memberDetailModel.getRessourcenTableModel());
 	ressourcenMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
 	ressourcenMapper->addMapping(ui.email, RessourcenTable::EmailAdress);
@@ -62,6 +61,15 @@ MemberDialog::MemberDialog(const int anId, QWidget *parent) :
 	connect(ui.buttonBox, SIGNAL(accepted()), bankMapper, SLOT(submit()));
 	connect(ui.buttonBox, SIGNAL(accepted()), contributionMapper, SLOT(submit()));
 	connect(ui.buttonBox, SIGNAL(accepted()), ressourcenMapper, SLOT(submit()));
+}
+
+MemberDialog::~MemberDialog()
+{
+	delete ressourcenMapper;
+	delete contributionMapper;
+	delete bankMapper;
+	delete addressMapper;
+	delete memberMapper;
 }
 
 }
