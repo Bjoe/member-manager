@@ -22,6 +22,7 @@ private slots:
 	void initTestCase();
 	void testGetLastError();
 	void testGetMemberModel();
+	void testSetFilter();
 };
 
 }

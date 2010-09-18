@@ -73,7 +73,7 @@ void MemberDetailModelTest::testGetMemberModel()
 	ClubFrontend::MemberDetailModel memberModel(QSqlDatabase::database());
 
 	const QSqlTableModel* model = memberModel.getMemberTableModel();
-	QCOMPARE(model->rowCount(), 1);
+	QCOMPARE(model->rowCount(), 2);
 	QSqlRecord record = model->record(0);
 	QCOMPARE(record.value("name").toString(), QString("Kirk"));
 }
@@ -122,15 +122,15 @@ void MemberDetailModelTest::testNewMember()
 	memberDetailModel.setMemberId(id);
 
 	QCOMPARE(getMemberId(memberDetailModel.getMemberTableModel(),
-					ClubFrontend::MemberTable::MemberId), 1026);
+					ClubFrontend::MemberTable::MemberId), 1027);
 	QCOMPARE(getMemberId(memberDetailModel.getAddressTableModel(),
-					ClubFrontend::AddressTable::MemberId), 1026);
+					ClubFrontend::AddressTable::MemberId), 1027);
 	QCOMPARE(getMemberId(memberDetailModel.getBankAccountTableModel(),
-					ClubFrontend::BankAccountTable::MemberId), 1026);
+					ClubFrontend::BankAccountTable::MemberId), 1027);
 	QCOMPARE(getMemberId(memberDetailModel.getContributionTableModel(),
-					ClubFrontend::ContributionTable::MemberId), 1026);
+					ClubFrontend::ContributionTable::MemberId), 1027);
 	QCOMPARE(getMemberId(memberDetailModel.getRessourcenTableModel(),
-					ClubFrontend::RessourcenTable::MemberId), 1026);
+					ClubFrontend::RessourcenTable::MemberId), 1027);
 }
 
 int MemberDetailModelTest::getMemberId(const QSqlTableModel* aModel,

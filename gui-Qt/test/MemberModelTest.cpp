@@ -30,9 +30,21 @@ void MemberModelTest::testGetMemberModel()
 	ClubFrontend::MemberModel dataSource(QSqlDatabase::database());
 
 	const QSqlTableModel* model = dataSource.getMemberTableModel();
-	QCOMPARE(model->rowCount(), 1);
-	QSqlRecord record = model->record(0);
-	QCOMPARE(record.value("name").toString(), QString("Kirk"));
+	QCOMPARE(model->rowCount(), 2);
+	QSqlRecord record = model->record(1);
+	QCOMPARE(record.value("name").toString(), QString("Spock"));
+}
+
+void MemberModelTest::testSetFilter()
+{
+	ClubFrontend::MemberModel memberModel(QSqlDatabase::database());
+
+	memberModel.setFilter("deleted=0");
+
+	const QSqlTableModel* model = memberModel.getMemberTableModel();
+		QCOMPARE(model->rowCount(), 1);
+		QSqlRecord record = model->record(0);
+		QCOMPARE(record.value("name").toString(), QString("Kirk"));
 }
 
 }

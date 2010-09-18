@@ -19,7 +19,7 @@ void MemberFilterTest::testSetDeleted()
 	ClubFrontend::MemberFilter filter;
 	filter.setDeleted(true);
 
-	QCOMPARE(filter.getFilter(), QString("deleted=1"));
+	QCOMPARE(filter.getFilter(), QString("deleted='true'"));
 }
 
 void MemberFilterTest::testSetDeletedFalse()
@@ -27,7 +27,7 @@ void MemberFilterTest::testSetDeletedFalse()
 	ClubFrontend::MemberFilter filter;
 	filter.setDeleted(false);
 
-	QCOMPARE(filter.getFilter(), QString("deleted=0"));
+	QCOMPARE(filter.getFilter(), QString("deleted='false'"));
 }
 
 }

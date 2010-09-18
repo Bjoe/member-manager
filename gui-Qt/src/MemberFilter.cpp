@@ -14,10 +14,10 @@ namespace ClubFrontend
 void MemberFilter::setDeleted(const bool aBoolean)
 {
 	QString column = MemberTable::COLUMNNAME[MemberTable::Deleted];
-	QString deletedColumn(column + "=0");
+	QString deletedColumn(column + "='false'");
 	if (aBoolean)
 	{
-		deletedColumn = column + "=1";
+		deletedColumn = column + "='true'";
 	}
 	columns.append(deletedColumn);
 }

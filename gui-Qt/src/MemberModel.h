@@ -24,6 +24,9 @@ public:
 	MemberModel(const QSqlDatabase& aDb);
 	virtual ~MemberModel();
 
+	void setFilter(const QString aSqlFilter);
+	void refresh();
+
 	QString getLastError() const;
 	QSqlTableModel* getMemberTableModel() const;
 
