@@ -10,33 +10,25 @@
 namespace ClubFrontend
 {
 
-MemberModel::~MemberModel()
+MemberModel::MemberModel(const QSqlDatabase& aDb) :
+		model(new QSqlTableModel(this, aDb))
 {
-	memberModel->~QSqlTableModel();
+	model->setTable(MemberTable::TABLENAME);
+	model->select();
 }
 
-MemberModel::MemberModel(const QSqlDatabase & aDb)
+MemberModel::~MemberModel()
 {
-	memberModel = getTableModel("dorfmitglied", aDb);
+	delete model;
 }
 
 QString MemberModel::getLastError() const
 {
-	QSqlDatabase db = QSqlDatabase::database();
-	return db.lastError().text();
+	return model->lastError().text();
 }
 
-QSqlTableModel* MemberModel::getMemberTableModel()
+QSqlTableModel* MemberModel::getMemberTableModel() const
 {
-	return memberModel;
-}
-
-QSqlTableModel* MemberModel::getTableModel(const QString& aTableName,
-		const QSqlDatabase& aDb)
-{
-	QSqlTableModel* model = new QSqlTableModel(this, aDb);
-	model->setTable(aTableName);
-	model->select();
 	return model;
 }
 

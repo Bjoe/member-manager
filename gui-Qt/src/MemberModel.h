@@ -9,7 +9,9 @@
 #define MEMBERMODEL_H_
 
 #include <QtCore>
-#include <QtSql>
+#include <QSqlDatabase>
+#include <QSqlTableModel>
+
 #include "MemberDetailModel.h"
 
 namespace ClubFrontend
@@ -19,17 +21,15 @@ class MemberModel: public QObject
 {
 
 public:
-	virtual ~MemberModel();
 	MemberModel(const QSqlDatabase& aDb);
+	virtual ~MemberModel();
 
 	QString getLastError() const;
-	QSqlTableModel* getMemberTableModel();
+	QSqlTableModel* getMemberTableModel() const;
 
 private:
-	QSqlTableModel* getTableModel(const QString& aTableName,
-			const QSqlDatabase& aDb);
 
-	QSqlTableModel* memberModel;
+	QSqlTableModel* const model;
 };
 
 }
