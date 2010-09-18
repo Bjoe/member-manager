@@ -28,12 +28,12 @@ void MainWindowTest::testMemberView()
 
 	QModelIndex index = view->indexAt(QPoint(0, 0));
 	// XXX SQLite does not have a separate Boolean storage class.
-	// QVERIFY(index.isValid());
-	// const QAbstractItemModel * model = index.model();
-	// QVERIFY(model != 0);
-	// QCOMPARE(model->rowCount(), 1);
-	// QVariant value = model->data(index);
-	// QCOMPARE(value.toInt(),1025);
+	QVERIFY(index.isValid());
+	const QAbstractItemModel * model = index.model();
+	QVERIFY(model != 0);
+	QCOMPARE(model->rowCount(), 1);
+	QVariant value = model->data(index);
+	QCOMPARE(value.toInt(),1025);
 
 	// XXX QTest::mouseClick(view, Qt::LeftButton, Qt::NoModifier, QPoint(0,0));
 	// XXX QModelIndex index = view->currentIndex();

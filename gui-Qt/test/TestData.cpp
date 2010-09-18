@@ -76,7 +76,7 @@ void TestData::createFakeMemberTable()
 
 	execStatement("CREATE TABLE dorfmitglied ("
 		"  dorfmitglied_pkey INTEGER PRIMARY KEY AUTOINCREMENT,"
-		"  deleted boolean DEFAULT false,"
+		"  deleted character varying(6) DEFAULT 'false',"
 		"  vorname character varying(20),"
 		"  name character varying(20),"
 		"  nickname character varying(20),"
@@ -93,13 +93,13 @@ void TestData::createFakeMemberTable()
 			"INSERT INTO dorfmitglied ("
 				"            dorfmitglied_pkey, deleted, vorname, name, nickname, chaosdorfadr,"
 				"            intern, ccc, shell, einzug, chaosnr, eintrittsdatum, info)"
-				"    VALUES (1025,0,'James T','Kirk','Capt. Kirk','kirk@chaosdorf.de','kirk@chaosdorf.de','kirk@chaosdorf.de','kirk',1,2193,date('2001-04-24'),'')");
+				"    VALUES (1025,'false','James T','Kirk','Capt. Kirk','kirk@chaosdorf.de','kirk@chaosdorf.de','kirk@chaosdorf.de','kirk',1,2193,date('2001-04-24'),'')");
 
 	execStatement(
 			"INSERT INTO dorfmitglied ("
 				"            dorfmitglied_pkey, deleted, vorname, name, nickname, chaosdorfadr,"
 				"            intern, ccc, shell, einzug, chaosnr, eintrittsdatum, info)"
-				"    VALUES (1026,1,'Spock','Spock','Spock','spock@chaosdorf.de','spock@chaosdorf.de','spock@chaosdorf.de','spock',0,1234,date('2002-05-26'),'')");
+				"    VALUES (1026,'true','Spock','Spock','Spock','spock@chaosdorf.de','spock@chaosdorf.de','spock@chaosdorf.de','spock',0,1234,date('2002-05-26'),'')");
 }
 
 void TestData::createFakeKassaTable()
@@ -108,7 +108,7 @@ void TestData::createFakeKassaTable()
 
 	execStatement("CREATE TABLE kasse ("
 		"  kasse_pkey INTEGER PRIMARY KEY AUTOINCREMENT,"
-		"  deleted boolean DEFAULT false,"
+		"  deleted character varying(6) DEFAULT 'false',"
 		"  einlesedatum date,"
 		"  einleseid integer,"
 		"  auszug smallint,"
@@ -139,7 +139,7 @@ void TestData::createFakeKassaTable()
 				"            valutadatum, buchungsdatum, shkenn, betrag, buschl, bankbuschl,"
 				"            fremdblz, fremdktnr, fremdname, bezeichnung, barkonto, konten,"
 				"            dorfmitglied_pkey, erfasst)"
-				"    VALUES (1,0,'',1,1,'credit',date('2006-01-12'),3519.92,'credit',date('2006-01-23'),3423.02,date('2006-01-23'),date('2006-01-23'),'debit',34.90,5,"
+				"    VALUES (1,'false','',1,1,'credit',date('2006-01-12'),3519.92,'credit',date('2006-01-23'),3423.02,date('2006-01-23'),date('2006-01-23'),'debit',34.90,5,"
 				"37010050,5820507,'ISH NRW GMBH','LASTSCHRIFT  KDNR 4039458011 RGN 2495227',,,,0");
 
 	execStatement(
@@ -149,7 +149,7 @@ void TestData::createFakeKassaTable()
 				"            valutadatum, buchungsdatum, shkenn, betrag, buschl, bankbuschl,"
 				"            fremdblz, fremdktnr, fremdname, bezeichnung, barkonto, konten,"
 				"            dorfmitglied_pkey, erfasst)"
-				"    VALUES (2,0,'',1,1,'credit',date('2006-01-12'),3519.92,'credit',date('2006-01-23'),3423.02,date('2006-01-23'),date('2006-01-23')"
+				"    VALUES (2,'false','',1,1,'credit',date('2006-01-12'),3519.92,'credit',date('2006-01-23'),3423.02,date('2006-01-23'),date('2006-01-23')"
 				",'debit',62.00,,5,30050110,10012433,'STADTWERKE DUESSELDORF AG','LASTSCHRIFT  313001563692 VK020009330101 ABSCHLAG FAELLIG 23.01.06 FUERSTENWALL 232',,,,0)");
 
 	execStatement(
@@ -159,7 +159,7 @@ void TestData::createFakeKassaTable()
 				"            valutadatum, buchungsdatum, shkenn, betrag, buschl, bankbuschl,"
 				"            fremdblz, fremdktnr, fremdname, bezeichnung, barkonto, konten,"
 				"            dorfmitglied_pkey, erfasst)"
-				"    VALUES (3,0,'',1,1,'credit',date('2006-01-23'),3423.02,'credit',date('2006-01-27'),3318.16,date('2006-01-27'),date('2006-01-27'),'debit',104.86,,820,30050110,21236716,'BOEHME, JOERG-CHRISTIAN',"
+				"    VALUES (3,'false','',1,1,'credit',date('2006-01-23'),3423.02,'credit',date('2006-01-27'),3318.16,date('2006-01-27'),date('2006-01-27'),'debit',104.86,,820,30050110,21236716,'BOEHME, JOERG-CHRISTIAN',"
 				"'UMBUCHUNG  ATELCO RECHNUNG VOM 12.1.06 LIEFERSCHNR. L4592165 DATUM 27.01.2006, 00.50 UHR 1.TAN 783978',,,,"
 				"0)");
 
@@ -170,7 +170,7 @@ void TestData::createFakeKassaTable()
 				"            valutadatum, buchungsdatum, shkenn, betrag, buschl, bankbuschl,"
 				"            fremdblz, fremdktnr, fremdname, bezeichnung, barkonto, konten,"
 				"            dorfmitglied_pkey, erfasst)"
-				"    VALUES (4,0,'',1,1,'credit',date('2006-01-27'),3318.16,'credit',date('2006-01-31'),"
+				"    VALUES (4,'false','',1,1,'credit',date('2006-01-27'),3318.16,'credit',date('2006-01-31'),"
 				"3374.56,date('2006-02-01'),date('2006-01-31'),'debit',4.74,,805,30050110;0,'-',"
 				"'ABSCHLUSS  Abrechnung 30.01.2006 siehe Anlage',,,,0)");
 }

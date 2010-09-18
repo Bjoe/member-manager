@@ -39,7 +39,7 @@ void MemberModelTest::testSetFilter()
 {
 	ClubFrontend::MemberModel memberModel(QSqlDatabase::database());
 
-	memberModel.setFilter("deleted=0");
+	memberModel.setFilter("deleted='false'");
 
 	const QSqlTableModel* model = memberModel.getMemberTableModel();
 		QCOMPARE(model->rowCount(), 1);
