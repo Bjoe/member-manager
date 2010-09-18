@@ -9,7 +9,7 @@
 #define MEMBERFILTER_H_
 
 #include <QString>
-#include <QVector>
+#include <QStringList>
 
 namespace ClubFrontend
 {
@@ -18,15 +18,12 @@ class MemberFilter
 {
 
 public:
-	void setDeleted();
+	void setDeleted(const bool aBoolean);
 
 	QString getFilter() const;
 
 private:
-	QVector<QString> columns;
-
-	bool
-			isNext(const QVector<QString>::const_iterator &i, QString &aFilter) const;
+	QStringList columns;
 };
 
 }

@@ -20,6 +20,7 @@ Q_OBJECT
 
 private slots:
 	void testSetDeleted();
+	void testSetDeletedFalse();
 };
 
 }

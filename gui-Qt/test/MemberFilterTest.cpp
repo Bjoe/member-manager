@@ -17,9 +17,17 @@ namespace ClubFrontendTest
 void MemberFilterTest::testSetDeleted()
 {
 	ClubFrontend::MemberFilter filter;
-	filter.setDeleted();
+	filter.setDeleted(true);
 
-	QCOMPARE(filter.getFilter(),QString("deleted=1"));
+	QCOMPARE(filter.getFilter(), QString("deleted=1"));
+}
+
+void MemberFilterTest::testSetDeletedFalse()
+{
+	ClubFrontend::MemberFilter filter;
+	filter.setDeleted(false);
+
+	QCOMPARE(filter.getFilter(), QString("deleted=0"));
 }
 
 }

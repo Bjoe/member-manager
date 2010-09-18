@@ -6,41 +6,25 @@
  */
 
 #include "MemberFilter.h"
+#include "DatabaseStructure.h"
 
 namespace ClubFrontend
 {
 
-void MemberFilter::setDeleted()
+void MemberFilter::setDeleted(const bool aBoolean)
 {
-	QString deletedColumn("deleted=1");
+	QString column = MemberTable::COLUMNNAME[MemberTable::Deleted];
+	QString deletedColumn(column + "=0");
+	if (aBoolean)
+	{
+		deletedColumn = column + "=1";
+	}
 	columns.append(deletedColumn);
 }
 
 QString MemberFilter::getFilter() const
 {
-	QString filter("");
-	if (columns.size() > 0)
-	{
-		QVector<QString>::const_iterator iterator = columns.constBegin();
-		do
-		{
-			filter.append(*iterator);
-			iterator++;
-		} while (isNext(iterator, filter));
-	}
-	return filter;
-}
-
-bool MemberFilter::isNext(const QVector<QString>::const_iterator &anIterator,
-		QString &aFilter) const
-{
-	bool isNext = false;
-	if (anIterator < columns.constEnd())
-	{
-		isNext = true;
-		aFilter.append(" AND ");
-	}
-	return isNext;
+	return columns.join(" AND ");
 }
 
 }
