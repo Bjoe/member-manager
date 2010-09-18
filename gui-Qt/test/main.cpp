@@ -4,6 +4,7 @@
 #include "MemberDialogTest.h"
 #include "MainWindowTest.h"
 #include "ConnectionDialogTest.h"
+#include "TestData.h"
 
 #include <QtTest/QtTest>
 
@@ -13,7 +14,10 @@ int main(int argc, char* argv[])
 
 	QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
 	db.setDatabaseName("dorfverw.dat");
-	db.open();
+	if(!db.open()) {
+		qDebug() << db.lastError().text();
+		return 1;
+	}
 
 	ClubFrontendTest::MemberModelTest sourceTest;
 	QTest::qExec(&sourceTest);
