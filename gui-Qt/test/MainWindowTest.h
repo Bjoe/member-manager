@@ -17,6 +17,7 @@ private slots:
 	void initTestCase();
 
 	void testMemberView();
+	void testDeletedMemberView();
 
 };
 

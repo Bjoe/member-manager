@@ -16,6 +16,10 @@ Q_OBJECT
 public:
 	MainWindow(MemberModel & aDataSource, QWidget * parent = 0);
 
+private slots:
+	void deletedView();
+	void refreshTable();
+
 private:
 	Ui::MainWindow ui;
 	MemberModel & dataSource;
