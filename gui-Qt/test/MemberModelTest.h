@@ -11,11 +11,12 @@
 #include <QObject>
 #include <QtTest/QtTest>
 
+namespace ClubFrontendTest
+{
 
-namespace ClubFrontendTest {
-
-class MemberModelTest : public QObject {
-	Q_OBJECT
+class MemberModelTest: public QObject
+{
+Q_OBJECT
 
 private slots:
 	void initTestCase();

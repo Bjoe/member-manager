@@ -15,8 +15,9 @@
 namespace ClubFrontendTest
 {
 
-class MemberDetailModelTest : public QObject
-{	Q_OBJECT
+class MemberDetailModelTest: public QObject
+{
+Q_OBJECT
 
 private slots:
 	void initTestCase();

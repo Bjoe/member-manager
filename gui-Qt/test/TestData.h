@@ -10,9 +10,11 @@
 
 #include <QString>
 
-namespace ClubFrontendTest {
+namespace ClubFrontendTest
+{
 
-class TestData {
+class TestData
+{
 
 public:
 	void createFakeAdressTable();
@@ -24,7 +26,6 @@ public:
 	void createFakeKontenTable();
 	void createFakeBankTable();
 	void createFakeBalanceTable();
-
 
 private:
 	void execStatement(const QString &aSql);

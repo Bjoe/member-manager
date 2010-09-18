@@ -11,7 +11,8 @@ int main(int argc, char *argv[])
 	QApplication app(argc, argv);
 
 	ClubFrontend::ConnectionDialog dialog;
-	if(dialog.exec() != QDialog::Accepted) {
+	if (dialog.exec() != QDialog::Accepted)
+	{
 		return 0;
 	}
 
@@ -20,17 +21,22 @@ int main(int argc, char *argv[])
 	db.setPort(dialog.getPort());
 	db.setPassword(dialog.getPassword());
 	db.setUserName(dialog.getUsername());
-	if(!db.open()) {
+	if (!db.open())
+	{
 		QSqlError err = db.lastError();
-		if(err.type() != QSqlError::NoError) {
+		if (err.type() != QSqlError::NoError)
+		{
 			QMessageBox::warning(0, QObject::tr("Unable to open database"),
-					QObject::tr("An error occured while opening the connection: ") + err.text());
+					QObject::tr(
+							"An error occured while opening the connection: ")
+							+ err.text());
 			return 1;
 		}
 	}
 
 	ClubFrontend::MemberModel dataSource(db);
-	ClubFrontend::MainWindow* mainWindow = new ClubFrontend::MainWindow(dataSource);
+	ClubFrontend::MainWindow* mainWindow = new ClubFrontend::MainWindow(
+			dataSource);
 	mainWindow->show();
 
 	return app.exec();

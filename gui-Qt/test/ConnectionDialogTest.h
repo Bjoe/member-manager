@@ -14,9 +14,9 @@
 namespace ClubFrontendTest
 {
 
-class ConnectionDialogTest : public QObject
+class ConnectionDialogTest: public QObject
 {
-	Q_OBJECT
+Q_OBJECT
 
 private slots:
 	void testGetUsername();

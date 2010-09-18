@@ -12,8 +12,10 @@ namespace ClubFrontend
 {
 
 MemberDetailModel::MemberDetailModel(const QSqlDatabase& aDb) :
-		addressModel(new QSqlTableModel(this, aDb)), bankAccountModel(new QSqlTableModel(this, aDb)), contributionModel(new QSqlTableModel(this, aDb)),
-		ressourcenModel(new QSqlTableModel(this, aDb)), memberModel(new QSqlTableModel(this, aDb))
+	addressModel(new QSqlTableModel(this, aDb)), bankAccountModel(
+			new QSqlTableModel(this, aDb)), contributionModel(
+			new QSqlTableModel(this, aDb)), ressourcenModel(new QSqlTableModel(
+			this, aDb)), memberModel(new QSqlTableModel(this, aDb))
 {
 	setTableModel(AddressTable::TABLENAME, addressModel);
 	setTableModel(BankAccountTable::TABLENAME, bankAccountModel);
@@ -31,18 +33,22 @@ MemberDetailModel::~MemberDetailModel()
 	delete memberModel;
 }
 
-QSqlTableModel* MemberDetailModel::setTableModel(const QString& aTableName, QSqlTableModel* const aModel) {
+QSqlTableModel* MemberDetailModel::setTableModel(const QString& aTableName,
+		QSqlTableModel* const aModel)
+{
 	aModel->setTable(aTableName);
 	aModel->select();
 }
 
-QString MemberDetailModel::getLastError() const {
+QString MemberDetailModel::getLastError() const
+{
 	// TODO besser model->lastError()
 	QSqlDatabase db = QSqlDatabase::database();
 	return db.lastError().text();
 }
 
-void MemberDetailModel::setMemberId(int id) {
+void MemberDetailModel::setMemberId(int id)
+{
 	QString pkey = MemberTable::COLUMNNAME[MemberTable::MemberId];
 	QString filter = QString(pkey + " = %1").arg(id);
 	addressModel->setFilter(filter);
@@ -57,7 +63,8 @@ void MemberDetailModel::setMemberId(int id) {
 	memberModel->select();
 }
 
-int MemberDetailModel::newMember() {
+int MemberDetailModel::newMember()
+{
 	// Dirty Hack um ein Neues Mitglied einzutragen. Refactor!
 
 	QVariant variant;
@@ -75,8 +82,9 @@ int MemberDetailModel::newMember() {
 	return valueId.toInt();
 }
 
-int MemberDetailModel::insertNewMember(
-		QSqlTableModel* aModel, const int& aColumnId, const QVariant& aValue) {
+int MemberDetailModel::insertNewMember(QSqlTableModel* aModel,
+		const int& aColumnId, const QVariant& aValue)
+{
 	QSqlRecord record = aModel->record();
 	record.setValue(aColumnId, aValue);
 	int row = aModel->rowCount();
@@ -86,23 +94,28 @@ int MemberDetailModel::insertNewMember(
 	return row;
 }
 
-QSqlTableModel* MemberDetailModel::getAddressTableModel() const {
+QSqlTableModel* MemberDetailModel::getAddressTableModel() const
+{
 	return addressModel;
 }
 
-QSqlTableModel* MemberDetailModel::getBankAccountTableModel() const {
+QSqlTableModel* MemberDetailModel::getBankAccountTableModel() const
+{
 	return bankAccountModel;
 }
 
-QSqlTableModel* MemberDetailModel::getContributionTableModel() const {
+QSqlTableModel* MemberDetailModel::getContributionTableModel() const
+{
 	return contributionModel;
 }
 
-QSqlTableModel* MemberDetailModel::getRessourcenTableModel() const {
+QSqlTableModel* MemberDetailModel::getRessourcenTableModel() const
+{
 	return ressourcenModel;
 }
 
-QSqlTableModel* MemberDetailModel::getMemberTableModel() const {
+QSqlTableModel* MemberDetailModel::getMemberTableModel() const
+{
 	return memberModel;
 }
 

@@ -10,19 +10,23 @@
 #include <QVariant>
 #include <QString>
 
-namespace ClubFrontendTest {
+namespace ClubFrontendTest
+{
 
-void MemberModelTest::initTestCase() {
+void MemberModelTest::initTestCase()
+{
 	TestData testData;
 	testData.createFakeMemberTable();
 }
 
-void MemberModelTest::testGetLastError() {
+void MemberModelTest::testGetLastError()
+{
 	ClubFrontend::MemberModel dataSource(QSqlDatabase::database());
 	// Fehler Produzieren ? QCOMPARE(dataSource.getLastError(),QString());
 }
 
-void MemberModelTest::testGetMemberModel() {
+void MemberModelTest::testGetMemberModel()
+{
 	ClubFrontend::MemberModel dataSource(QSqlDatabase::database());
 
 	const QSqlTableModel* model = dataSource.getMemberTableModel();

@@ -9,9 +9,9 @@
 namespace ClubFrontendTest
 {
 
-class MainWindowTest : public QObject
+class MainWindowTest: public QObject
 {
-	Q_OBJECT
+Q_OBJECT
 
 private slots:
 	void initTestCase();

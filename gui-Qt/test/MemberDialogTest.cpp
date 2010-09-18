@@ -16,7 +16,8 @@
 namespace ClubFrontendTest
 {
 
-void MemberDialogTest::initTestCase() {
+void MemberDialogTest::initTestCase()
+{
 	TestData testData;
 	testData.createFakeMemberTable();
 	testData.createFakeAdressTable();
@@ -25,55 +26,57 @@ void MemberDialogTest::initTestCase() {
 	testData.createFakeContributionTable();
 }
 
-void MemberDialogTest::showMember() {
+void MemberDialogTest::showMember()
+{
 	ClubFrontend::MemberDialog dialog(1025);
 
-	QLabel* memberId = dialog.findChild<QLabel* >("memberId");
+	QLabel* memberId = dialog.findChild<QLabel*> ("memberId");
 	QCOMPARE(memberId->text(), QString("1025"));
 
-	QLineEdit* firstName = dialog.findChild<QLineEdit* >("firstName");
+	QLineEdit* firstName = dialog.findChild<QLineEdit*> ("firstName");
 	QCOMPARE(firstName->text(), QString("James T"));
 
-	QLineEdit* memberName = dialog.findChild<QLineEdit* >("memberName");
+	QLineEdit* memberName = dialog.findChild<QLineEdit*> ("memberName");
 	QCOMPARE(memberName->text(), QString("Kirk"));
 
-	QLineEdit* nickname = dialog.findChild<QLineEdit* >("nickname");
+	QLineEdit* nickname = dialog.findChild<QLineEdit*> ("nickname");
 	QCOMPARE(nickname->text(), QString("Capt. Kirk"));
 
-	QPlainTextEdit* info = dialog.findChild<QPlainTextEdit* >("info");
+	QPlainTextEdit* info = dialog.findChild<QPlainTextEdit*> ("info");
 	QCOMPARE(info->toPlainText(), QString(""));
 
-	QLineEdit* city = dialog.findChild<QLineEdit* >("city");
+	QLineEdit* city = dialog.findChild<QLineEdit*> ("city");
 	QCOMPARE(city->text(), QString("Bloedeldorf"));
 
-	QLineEdit* street = dialog.findChild<QLineEdit* >("street");
+	QLineEdit* street = dialog.findChild<QLineEdit*> ("street");
 	QCOMPARE(street->text(), QString("Industriestr. 23"));
 
-	QLineEdit* zipcode = dialog.findChild<QLineEdit* >("zipcode");
+	QLineEdit* zipcode = dialog.findChild<QLineEdit*> ("zipcode");
 	QCOMPARE(zipcode->text(), QString("90546"));
 
-	QLineEdit* email = dialog.findChild<QLineEdit* >("email");
+	QLineEdit* email = dialog.findChild<QLineEdit*> ("email");
 	QCOMPARE(email->text(), QString("fooo@baaar.xx"));
 
-	QDateEdit* entryDate = dialog.findChild<QDateEdit* >("entryDate");
+	QDateEdit* entryDate = dialog.findChild<QDateEdit*> ("entryDate");
 	QCOMPARE(entryDate->text(), QString("24.04.01"));
 
-	QLineEdit* contributionInfo = dialog.findChild<QLineEdit* >("contributionInfo");
+	QLineEdit* contributionInfo = dialog.findChild<QLineEdit*> (
+			"contributionInfo");
 	QCOMPARE(contributionInfo->text(), QString("Spende wird eingestellt"));
 
-	QLineEdit* donation = dialog.findChild<QLineEdit* >("donation");
+	QLineEdit* donation = dialog.findChild<QLineEdit*> ("donation");
 	QCOMPARE(donation->text(), QString("0"));
 
-	QLineEdit* fee = dialog.findChild<QLineEdit* >("fee");
+	QLineEdit* fee = dialog.findChild<QLineEdit*> ("fee");
 	QCOMPARE(fee->text(), QString("15"));
 
-	QLineEdit* account = dialog.findChild<QLineEdit* >("account");
+	QLineEdit* account = dialog.findChild<QLineEdit*> ("account");
 	QCOMPARE(account->text(), QString("12234569"));
 
-	QLineEdit* code = dialog.findChild<QLineEdit* >("code");
+	QLineEdit* code = dialog.findChild<QLineEdit*> ("code");
 	QCOMPARE(code->text(), QString("9004010"));
 
-	QLineEdit* bankName = dialog.findChild<QLineEdit* >("bankName");
+	QLineEdit* bankName = dialog.findChild<QLineEdit*> ("bankName");
 	QCOMPARE(bankName->text(), QString("sparstrumpf"));
 }
 
@@ -81,106 +84,109 @@ void MemberDialogTest::newMember()
 {
 	ClubFrontend::MemberDialog dialog(0);
 
-	QLineEdit* memberName = dialog.findChild<QLineEdit* >("memberName");
+	QLineEdit* memberName = dialog.findChild<QLineEdit*> ("memberName");
 	QTest::keyClicks(memberName, "Mc Kay");
 
-	QLineEdit* firstName = dialog.findChild<QLineEdit* >("firstName");
+	QLineEdit* firstName = dialog.findChild<QLineEdit*> ("firstName");
 	QTest::keyClicks(firstName, "Rodney");
 
-	QLineEdit* nickname = dialog.findChild<QLineEdit* >("nickname");
+	QLineEdit* nickname = dialog.findChild<QLineEdit*> ("nickname");
 	QTest::keyClicks(nickname, "Rod");
 
-	QLineEdit* street = dialog.findChild<QLineEdit* >("street");
+	QLineEdit* street = dialog.findChild<QLineEdit*> ("street");
 	QTest::keyClicks(street, "Atlantis");
 
-	QLineEdit* city = dialog.findChild<QLineEdit* >("city");
+	QLineEdit* city = dialog.findChild<QLineEdit*> ("city");
 	QTest::keyClicks(city, "Pegasus");
 
-	QLineEdit* zipcode = dialog.findChild<QLineEdit* >("zipcode");
+	QLineEdit* zipcode = dialog.findChild<QLineEdit*> ("zipcode");
 	QTest::keyClicks(zipcode, "40215");
 
-	QLineEdit* email = dialog.findChild<QLineEdit* >("email");
+	QLineEdit* email = dialog.findChild<QLineEdit*> ("email");
 	QTest::keyClicks(email, "rod@atlantis.pegasus");
 
-	QDateEdit* entryDate = dialog.findChild<QDateEdit* >("entryDate");
+	QDateEdit* entryDate = dialog.findChild<QDateEdit*> ("entryDate");
 	QTest::keyClicks(entryDate, "01.01.09");
 
-	QLineEdit* fee = dialog.findChild<QLineEdit* >("fee");
+	QLineEdit* fee = dialog.findChild<QLineEdit*> ("fee");
 	QTest::keyClicks(fee, "15");
 
-	QLineEdit* donation = dialog.findChild<QLineEdit* >("donation");
+	QLineEdit* donation = dialog.findChild<QLineEdit*> ("donation");
 	QTest::keyClicks(donation, "5");
 
-	QLineEdit* contributionInfo = dialog.findChild<QLineEdit* >("contributionInfo");
+	QLineEdit* contributionInfo = dialog.findChild<QLineEdit*> (
+			"contributionInfo");
 	QTest::keyClicks(contributionInfo, "Info");
 
-	QLineEdit* account = dialog.findChild<QLineEdit* >("account");
+	QLineEdit* account = dialog.findChild<QLineEdit*> ("account");
 	QTest::keyClicks(account, "123456789");
 
-	QLineEdit* bankName = dialog.findChild<QLineEdit* >("bankName");
+	QLineEdit* bankName = dialog.findChild<QLineEdit*> ("bankName");
 	QTest::keyClicks(bankName, "Galaxy Bank");
 
-	QLineEdit* code = dialog.findChild<QLineEdit* >("code");
+	QLineEdit* code = dialog.findChild<QLineEdit*> ("code");
 	QTest::keyClicks(code, "98765432");
 
-	QPlainTextEdit* info = dialog.findChild<QPlainTextEdit* >("info");
+	QPlainTextEdit* info = dialog.findChild<QPlainTextEdit*> ("info");
 	QTest::keyClicks(info, "Foo");
 
-	QDialogButtonBox* buttonBox = dialog.findChild<QDialogButtonBox* >("buttonBox");
+	QDialogButtonBox* buttonBox = dialog.findChild<QDialogButtonBox*> (
+			"buttonBox");
 	QPushButton* saveButton = buttonBox->button(QDialogButtonBox::Save);
-	QTest::mouseClick(saveButton,Qt::LeftButton);
+	QTest::mouseClick(saveButton, Qt::LeftButton);
 }
 
 void MemberDialogTest::changeMember()
 {
 	ClubFrontend::MemberDialog dialog(1025);
 
-	QLabel* id = dialog.findChild<QLabel *>("memberId");
+	QLabel* id = dialog.findChild<QLabel *> ("memberId");
 	QCOMPARE(id->text(), QString("1025"));
 
-	QLineEdit* firstName = dialog.findChild<QLineEdit* >("firstName");
+	QLineEdit* firstName = dialog.findChild<QLineEdit*> ("firstName");
 	QCOMPARE(firstName->text(), QString("James T"));
 
-	QLineEdit* memberName = dialog.findChild<QLineEdit* >("memberName");
+	QLineEdit* memberName = dialog.findChild<QLineEdit*> ("memberName");
 	QCOMPARE(memberName->text(), QString("Kirk"));
 
-	QLineEdit* nickname = dialog.findChild<QLineEdit* >("nickname");
+	QLineEdit* nickname = dialog.findChild<QLineEdit*> ("nickname");
 	QCOMPARE(nickname->text(), QString("Capt. Kirk"));
 
-	QPlainTextEdit* info = dialog.findChild<QPlainTextEdit* >("info");
+	QPlainTextEdit* info = dialog.findChild<QPlainTextEdit*> ("info");
 	QCOMPARE(info->toPlainText(), QString(""));
 
-	QLineEdit* city = dialog.findChild<QLineEdit* >("city");
+	QLineEdit* city = dialog.findChild<QLineEdit*> ("city");
 	QCOMPARE(city->text(), QString("Bloedeldorf"));
 
-	QLineEdit* street = dialog.findChild<QLineEdit* >("street");
+	QLineEdit* street = dialog.findChild<QLineEdit*> ("street");
 	QCOMPARE(street->text(), QString("Industriestr. 23"));
 
-	QLineEdit* zipcode = dialog.findChild<QLineEdit* >("zipcode");
+	QLineEdit* zipcode = dialog.findChild<QLineEdit*> ("zipcode");
 	QCOMPARE(zipcode->text(), QString("90546"));
 
-	QLineEdit* email = dialog.findChild<QLineEdit* >("email");
+	QLineEdit* email = dialog.findChild<QLineEdit*> ("email");
 	QCOMPARE(email->text(), QString("fooo@baaar.xx"));
 
-	QDateEdit* entryDate = dialog.findChild<QDateEdit* >("entryDate");
+	QDateEdit* entryDate = dialog.findChild<QDateEdit*> ("entryDate");
 	QCOMPARE(entryDate->text(), QString("24.04.01"));
 
-	QLineEdit* contributionInfo = dialog.findChild<QLineEdit* >("contributionInfo");
+	QLineEdit* contributionInfo = dialog.findChild<QLineEdit*> (
+			"contributionInfo");
 	QCOMPARE(contributionInfo->text(), QString("Spende wird eingestellt"));
 
-	QLineEdit* donation = dialog.findChild<QLineEdit* >("donation");
+	QLineEdit* donation = dialog.findChild<QLineEdit*> ("donation");
 	QCOMPARE(donation->text(), QString("0"));
 
-	QLineEdit* fee = dialog.findChild<QLineEdit* >("fee");
+	QLineEdit* fee = dialog.findChild<QLineEdit*> ("fee");
 	QCOMPARE(fee->text(), QString("15"));
 
-	QLineEdit* account = dialog.findChild<QLineEdit* >("account");
+	QLineEdit* account = dialog.findChild<QLineEdit*> ("account");
 	QCOMPARE(account->text(), QString("12234569"));
 
-	QLineEdit* code = dialog.findChild<QLineEdit* >("code");
+	QLineEdit* code = dialog.findChild<QLineEdit*> ("code");
 	QCOMPARE(code->text(), QString("9004010"));
 
-	QLineEdit* bankName = dialog.findChild<QLineEdit* >("bankName");
+	QLineEdit* bankName = dialog.findChild<QLineEdit*> ("bankName");
 	QCOMPARE(bankName->text(), QString("sparstrumpf"));
 
 	memberName->clear();
@@ -218,9 +224,10 @@ void MemberDialogTest::changeMember()
 	info->clear();
 	QTest::keyClicks(info, "Lalala");
 
-	QDialogButtonBox* buttonBox = dialog.findChild<QDialogButtonBox* >("buttonBox");
+	QDialogButtonBox* buttonBox = dialog.findChild<QDialogButtonBox*> (
+			"buttonBox");
 	QPushButton* saveButton = buttonBox->button(QDialogButtonBox::Save);
-	QTest::mouseClick(saveButton ,Qt::LeftButton);
+	QTest::mouseClick(saveButton, Qt::LeftButton);
 
 	QCOMPARE(firstName->text(), QString("Jonathan"));
 	QCOMPARE(memberName->text(), QString("Archer"));

@@ -14,7 +14,7 @@
 namespace ClubFrontend
 {
 
-class MemberDetailModel : public QObject
+class MemberDetailModel: public QObject
 {
 public:
 	MemberDetailModel(const QSqlDatabase& aDb);
@@ -32,8 +32,10 @@ public:
 	QSqlTableModel* getMemberTableModel() const;
 
 private:
-	int insertNewMember(QSqlTableModel* aModel, const int& aColumnId, const QVariant& aValue);
-	QSqlTableModel* setTableModel(const QString& aTableName, QSqlTableModel* const aModel);
+	int insertNewMember(QSqlTableModel* aModel, const int& aColumnId,
+			const QVariant& aValue);
+	QSqlTableModel* setTableModel(const QString& aTableName,
+			QSqlTableModel* const aModel);
 
 	QSqlTableModel* const addressModel;
 	QSqlTableModel* const bankAccountModel;

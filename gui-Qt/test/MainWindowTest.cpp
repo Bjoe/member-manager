@@ -10,26 +10,26 @@
 #include <QAbstractItemModel>
 #include <QVariant>
 
-
 namespace ClubFrontendTest
 {
 
-
-void MainWindowTest::initTestCase() {
+void MainWindowTest::initTestCase()
+{
 	TestData testData;
 	testData.createFakeMemberTable();
 }
 
-void MainWindowTest::testMemberView() {
+void MainWindowTest::testMemberView()
+{
 	ClubFrontend::MemberModel dataSource(QSqlDatabase::database());
 	ClubFrontend::MainWindow mainWindow(dataSource);
 
-	QTableView* view = mainWindow.findChild<QTableView* >("memberTableView");
+	QTableView* view = mainWindow.findChild<QTableView*> ("memberTableView");
 
 	// XXX QTest::mouseClick(view, Qt::LeftButton, Qt::NoModifier, QPoint(0,0));
 	// XXX QModelIndex index = view->currentIndex();
 
-	QModelIndex index = view->indexAt(QPoint(0,0));
+	QModelIndex index = view->indexAt(QPoint(0, 0));
 	QVERIFY(index.isValid());
 	const QAbstractItemModel * model = index.model();
 	QVERIFY(model != 0);
@@ -37,8 +37,6 @@ void MainWindowTest::testMemberView() {
 	QVariant value = model->data(index);
 	QCOMPARE(value.toInt(),1025);
 }
-
-
 
 }
 

@@ -7,12 +7,11 @@ namespace ClubFrontend
 {
 
 MemberDialog::MemberDialog(const int anId, QWidget* parent) :
-		QWidget(parent), memberDetailModel(QSqlDatabase::database()),
-		memberMapper(new QDataWidgetMapper(this)),
-		addressMapper(new QDataWidgetMapper(this)),
-		bankMapper(new QDataWidgetMapper(this)),
-		contributionMapper(new QDataWidgetMapper(this)),
-		ressourcenMapper(new QDataWidgetMapper(this))
+	QWidget(parent), memberDetailModel(QSqlDatabase::database()), memberMapper(
+			new QDataWidgetMapper(this)), addressMapper(new QDataWidgetMapper(
+			this)), bankMapper(new QDataWidgetMapper(this)),
+			contributionMapper(new QDataWidgetMapper(this)), ressourcenMapper(
+					new QDataWidgetMapper(this))
 {
 	ui.setupUi(this);
 
@@ -32,7 +31,8 @@ MemberDialog::MemberDialog(const int anId, QWidget* parent) :
 
 	addressMapper->setModel(memberDetailModel.getAddressTableModel());
 	addressMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
-	addressMapper->addMapping(ui.city, AddressTable::Town);;
+	addressMapper->addMapping(ui.city, AddressTable::Town);
+	;
 	addressMapper->addMapping(ui.street, AddressTable::Street);
 	addressMapper->addMapping(ui.zipcode, AddressTable::ZipCode);
 	addressMapper->toFirst();
@@ -59,7 +59,8 @@ MemberDialog::MemberDialog(const int anId, QWidget* parent) :
 	connect(ui.buttonBox, SIGNAL(accepted()), memberMapper, SLOT(submit()));
 	connect(ui.buttonBox, SIGNAL(accepted()), addressMapper, SLOT(submit()));
 	connect(ui.buttonBox, SIGNAL(accepted()), bankMapper, SLOT(submit()));
-	connect(ui.buttonBox, SIGNAL(accepted()), contributionMapper, SLOT(submit()));
+	connect(ui.buttonBox, SIGNAL(accepted()), contributionMapper,
+			SLOT(submit()));
 	connect(ui.buttonBox, SIGNAL(accepted()), ressourcenMapper, SLOT(submit()));
 }
 

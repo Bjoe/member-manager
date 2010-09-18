@@ -17,7 +17,7 @@ namespace ClubFrontendTest
 void ConnectionDialogTest::testGetUsername()
 {
 	ClubFrontend::ConnectionDialog dialog;
-	QLineEdit* username = dialog.findChild<QLineEdit* >("username");
+	QLineEdit* username = dialog.findChild<QLineEdit*> ("username");
 
 	QTest::keyClicks(username, "bjoe");
 
@@ -27,7 +27,7 @@ void ConnectionDialogTest::testGetUsername()
 void ConnectionDialogTest::testGetPassword()
 {
 	ClubFrontend::ConnectionDialog dialog;
-	QLineEdit* password = dialog.findChild<QLineEdit* >("passwd");
+	QLineEdit* password = dialog.findChild<QLineEdit*> ("passwd");
 
 	QTest::keyClicks(password, "1234");
 
@@ -37,7 +37,7 @@ void ConnectionDialogTest::testGetPassword()
 void ConnectionDialogTest::testGetDatebaseName()
 {
 	ClubFrontend::ConnectionDialog dialog;
-	QLineEdit* databaseName = dialog.findChild<QLineEdit* >("databaseName");
+	QLineEdit* databaseName = dialog.findChild<QLineEdit*> ("databaseName");
 
 	QTest::keyClicks(databaseName, "Databasename");
 
@@ -47,7 +47,7 @@ void ConnectionDialogTest::testGetDatebaseName()
 void ConnectionDialogTest::testGetHostname()
 {
 	ClubFrontend::ConnectionDialog dialog;
-	QLineEdit* hostname = dialog.findChild<QLineEdit* >("hostname");
+	QLineEdit* hostname = dialog.findChild<QLineEdit*> ("hostname");
 
 	QTest::keyClicks(hostname, "FooBar");
 
@@ -57,7 +57,7 @@ void ConnectionDialogTest::testGetHostname()
 void ConnectionDialogTest::testGetDriverName()
 {
 	ClubFrontend::ConnectionDialog dialog;
-	QComboBox* driverName = dialog.findChild<QComboBox* >("driver");
+	QComboBox* driverName = dialog.findChild<QComboBox*> ("driver");
 
 	QCOMPARE(dialog.getDriver(), QString("QSQLITE"));
 }
@@ -65,7 +65,7 @@ void ConnectionDialogTest::testGetDriverName()
 void ConnectionDialogTest::testGetPort()
 {
 	ClubFrontend::ConnectionDialog dialog;
-	QSpinBox* port = dialog.findChild<QSpinBox* >("port");
+	QSpinBox* port = dialog.findChild<QSpinBox*> ("port");
 
 	QTest::keyClicks(port, "23");
 
@@ -75,7 +75,8 @@ void ConnectionDialogTest::testGetPort()
 void ConnectionDialogTest::testOkButton()
 {
 	ClubFrontend::ConnectionDialog dialog;
-	QDialogButtonBox* buttonBox = dialog.findChild<QDialogButtonBox * >("buttonBox");
+	QDialogButtonBox* buttonBox = dialog.findChild<QDialogButtonBox *> (
+			"buttonBox");
 
 	QPushButton* okButton = buttonBox->button(QDialogButtonBox::Ok);
 	QTest::mouseClick(okButton, Qt::LeftButton);
@@ -86,7 +87,8 @@ void ConnectionDialogTest::testOkButton()
 void ConnectionDialogTest::testCancelButton()
 {
 	ClubFrontend::ConnectionDialog dialog;
-	QDialogButtonBox* buttonBox = dialog.findChild<QDialogButtonBox * >("buttonBox");
+	QDialogButtonBox* buttonBox = dialog.findChild<QDialogButtonBox *> (
+			"buttonBox");
 
 	QPushButton* cancelButton = buttonBox->button(QDialogButtonBox::Cancel);
 	QTest::mouseClick(cancelButton, Qt::LeftButton);

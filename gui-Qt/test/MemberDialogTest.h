@@ -7,9 +7,9 @@
 namespace ClubFrontendTest
 {
 
-class MemberDialogTest : public QObject
+class MemberDialogTest: public QObject
 {
-	Q_OBJECT
+Q_OBJECT
 
 private slots:
 	void initTestCase();

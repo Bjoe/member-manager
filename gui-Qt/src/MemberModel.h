@@ -12,9 +12,11 @@
 #include <QtSql>
 #include "MemberDetailModel.h"
 
-namespace ClubFrontend {
+namespace ClubFrontend
+{
 
-class MemberModel : public QObject {
+class MemberModel: public QObject
+{
 
 public:
 	virtual ~MemberModel();
@@ -24,7 +26,8 @@ public:
 	QSqlTableModel* getMemberTableModel();
 
 private:
-	QSqlTableModel* getTableModel(const QString& aTableName, const QSqlDatabase& aDb);
+	QSqlTableModel* getTableModel(const QString& aTableName,
+			const QSqlDatabase& aDb);
 
 	QSqlTableModel* memberModel;
 };

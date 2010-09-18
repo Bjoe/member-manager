@@ -9,9 +9,9 @@
 namespace ClubFrontend
 {
 
-class MemberDialog : public QWidget
+class MemberDialog: public QWidget
 {
-	Q_OBJECT
+Q_OBJECT
 
 public:
 	MemberDialog(const int anId, QWidget* parent = 0);

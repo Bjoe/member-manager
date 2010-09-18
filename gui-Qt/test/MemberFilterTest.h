@@ -11,13 +11,15 @@
 #include <QObject>
 #include <QtTest/QtTest>
 
-namespace ClubFrontendTest {
+namespace ClubFrontendTest
+{
 
-class MemberFilterTest : public QObject {
-	Q_OBJECT
+class MemberFilterTest: public QObject
+{
+Q_OBJECT
 
-	private slots:
-		void testSetDeleted();
+private slots:
+	void testSetDeleted();
 };
 
 }

@@ -11,48 +11,70 @@
 #include <QString>
 #include <QStringList>
 
-namespace ClubFrontend {
-
+namespace ClubFrontend
+{
 
 class AddressTable
 {
 public:
 	static const QString TABLENAME;
-	enum column { AddressId, MemberId, Street, ZipCode, Town };
+	enum column
+	{
+		AddressId, MemberId, Street, ZipCode, Town
+	};
 };
 
-
-
-class ContributionTable {
+class ContributionTable
+{
 public:
 	static const QString TABLENAME;
-	enum column { ContributionId, MemberId, Fee, Donation, Debit, ValidFrom, Info };
+	enum column
+	{
+		ContributionId, MemberId, Fee, Donation, Debit, ValidFrom, Info
+	};
 };
 
-
-
-class MemberTable {
+class MemberTable
+{
 public:
 	static const QString TABLENAME;
-	enum column { MemberId, Deleted, FirstName, Name, NickName, FOO_ClubAdress,
-		FOO_intern, FOO_CCC, FOO_Shell, FOO_Einzug, FOO_ChaosNr, EntryDate, Info };
+	enum column
+	{
+		MemberId,
+		Deleted,
+		FirstName,
+		Name,
+		NickName,
+		FOO_ClubAdress,
+		FOO_intern,
+		FOO_CCC,
+		FOO_Shell,
+		FOO_Einzug,
+		FOO_ChaosNr,
+		EntryDate,
+		Info
+	};
 	static const QStringList COLUMNNAME;
 };
 
-
-
-class RessourcenTable {
+class RessourcenTable
+{
 public:
 	static const QString TABLENAME;
-	enum column { RessoucenId, MemberId, EmailAdress, FOO_KeyName, FOO_PublicKey };
+	enum column
+	{
+		RessoucenId, MemberId, EmailAdress, FOO_KeyName, FOO_PublicKey
+	};
 };
 
-
-
-class BankAccountTable {
+class BankAccountTable
+{
 public:
 	static const QString TABLENAME;
-	enum column { BankAccountId, MemberId, AccountNr, BankName, Code };
+	enum column
+	{
+		BankAccountId, MemberId, AccountNr, BankName, Code
+	};
 };
 }
 

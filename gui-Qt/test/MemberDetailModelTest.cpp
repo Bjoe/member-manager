@@ -11,7 +11,8 @@
 namespace ClubFrontendTest
 {
 
-void MemberDetailModelTest::initTestCase() {
+void MemberDetailModelTest::initTestCase()
+{
 	TestData testData;
 	testData.createFakeMemberTable();
 	testData.createFakeAdressTable();
@@ -20,12 +21,14 @@ void MemberDetailModelTest::initTestCase() {
 	testData.createFakeRessourcenTable();
 }
 
-void MemberDetailModelTest::testGetLastError() {
+void MemberDetailModelTest::testGetLastError()
+{
 	// XXX Test fehlt noch
 	// keine Aenderung und dann model->submit()
 }
 
-void MemberDetailModelTest::testGetAddressModel() {
+void MemberDetailModelTest::testGetAddressModel()
+{
 	ClubFrontend::MemberDetailModel dataSource(QSqlDatabase::database());
 
 	const QSqlTableModel* model = dataSource.getAddressTableModel();
@@ -34,7 +37,8 @@ void MemberDetailModelTest::testGetAddressModel() {
 	QCOMPARE(record.value("ort").toString(), QString("Bloedeldorff"));
 }
 
-void MemberDetailModelTest::testGetBankAccountModel() {
+void MemberDetailModelTest::testGetBankAccountModel()
+{
 	ClubFrontend::MemberDetailModel dataSource(QSqlDatabase::database());
 
 	const QSqlTableModel* model = dataSource.getBankAccountTableModel();
@@ -43,7 +47,8 @@ void MemberDetailModelTest::testGetBankAccountModel() {
 	QCOMPARE(record.value("bank").toString(), QString("sparstrumpf"));
 }
 
-void MemberDetailModelTest::testGetContributionModel() {
+void MemberDetailModelTest::testGetContributionModel()
+{
 	ClubFrontend::MemberDetailModel dataSource(QSqlDatabase::database());
 
 	const QSqlTableModel* model = dataSource.getContributionTableModel();
@@ -53,7 +58,8 @@ void MemberDetailModelTest::testGetContributionModel() {
 	QCOMPARE(record.value("beitrag").toDouble(), fee);
 }
 
-void MemberDetailModelTest::testGetRessourcenModel() {
+void MemberDetailModelTest::testGetRessourcenModel()
+{
 	ClubFrontend::MemberDetailModel dataSource(QSqlDatabase::database());
 
 	const QSqlTableModel* model = dataSource.getRessourcenTableModel();
@@ -62,7 +68,8 @@ void MemberDetailModelTest::testGetRessourcenModel() {
 	QCOMPARE(record.value("email").toString(), QString("fooo@baaar.xx"));
 }
 
-void MemberDetailModelTest::testGetMemberModel() {
+void MemberDetailModelTest::testGetMemberModel()
+{
 	ClubFrontend::MemberDetailModel memberModel(QSqlDatabase::database());
 
 	const QSqlTableModel* model = memberModel.getMemberTableModel();
@@ -71,12 +78,15 @@ void MemberDetailModelTest::testGetMemberModel() {
 	QCOMPARE(record.value("name").toString(), QString("Kirk"));
 }
 
-void MemberDetailModelTest::testSetMemberId() {
+void MemberDetailModelTest::testSetMemberId()
+{
 	ClubFrontend::MemberDetailModel dataSource(QSqlDatabase::database());
 
-	const QSqlTableModel* ressourcenModel = dataSource.getRessourcenTableModel();
+	const QSqlTableModel* ressourcenModel =
+			dataSource.getRessourcenTableModel();
 	const QSqlTableModel* addressModel = dataSource.getAddressTableModel();
-	const QSqlTableModel* contributionModel = dataSource.getContributionTableModel();
+	const QSqlTableModel* contributionModel =
+			dataSource.getContributionTableModel();
 	const QSqlTableModel* accountModel = dataSource.getBankAccountTableModel();
 	const QSqlTableModel* memberModel = dataSource.getMemberTableModel();
 
@@ -104,25 +114,28 @@ void MemberDetailModelTest::testSetMemberId() {
 	QCOMPARE(record.value("email").toString(), QString("fooo@baaar.xx"));
 }
 
-void MemberDetailModelTest::testNewMember() {
+void MemberDetailModelTest::testNewMember()
+{
 	ClubFrontend::MemberDetailModel memberDetailModel(QSqlDatabase::database());
 	int id = memberDetailModel.newMember();
 
 	memberDetailModel.setMemberId(id);
 
 	QCOMPARE(getMemberId(memberDetailModel.getMemberTableModel(),
-			ClubFrontend::MemberTable::MemberId), 1026);
+					ClubFrontend::MemberTable::MemberId), 1026);
 	QCOMPARE(getMemberId(memberDetailModel.getAddressTableModel(),
-			ClubFrontend::AddressTable::MemberId), 1026);
+					ClubFrontend::AddressTable::MemberId), 1026);
 	QCOMPARE(getMemberId(memberDetailModel.getBankAccountTableModel(),
-			ClubFrontend::BankAccountTable::MemberId), 1026);
+					ClubFrontend::BankAccountTable::MemberId), 1026);
 	QCOMPARE(getMemberId(memberDetailModel.getContributionTableModel(),
-			ClubFrontend::ContributionTable::MemberId), 1026);
+					ClubFrontend::ContributionTable::MemberId), 1026);
 	QCOMPARE(getMemberId(memberDetailModel.getRessourcenTableModel(),
-			ClubFrontend::RessourcenTable::MemberId), 1026);
+					ClubFrontend::RessourcenTable::MemberId), 1026);
 }
 
-int MemberDetailModelTest::getMemberId(const QSqlTableModel* aModel, const int& aColumnId) {
+int MemberDetailModelTest::getMemberId(const QSqlTableModel* aModel,
+		const int& aColumnId)
+{
 	QSqlRecord record = aModel->record(0);
 	return record.value(aColumnId).toInt();
 }

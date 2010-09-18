@@ -9,9 +9,9 @@
 namespace ClubFrontend
 {
 
-class MainWindow : public QMainWindow
+class MainWindow: public QMainWindow
 {
-	Q_OBJECT
+Q_OBJECT
 
 public:
 	MainWindow(MemberModel & aDataSource, QWidget * parent = 0);

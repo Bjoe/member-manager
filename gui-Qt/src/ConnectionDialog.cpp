@@ -5,8 +5,8 @@
 namespace ClubFrontend
 {
 
-ConnectionDialog::ConnectionDialog(QWidget *parent)
-    : QDialog(parent)
+ConnectionDialog::ConnectionDialog(QWidget *parent) :
+	QDialog(parent)
 {
 	ui.setupUi(this);
 	QStringList drivers = QSqlDatabase::drivers();

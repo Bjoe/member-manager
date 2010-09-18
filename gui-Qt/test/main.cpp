@@ -14,7 +14,8 @@ int main(int argc, char* argv[])
 
 	QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
 	db.setDatabaseName("dorfverw.dat");
-	if(!db.open()) {
+	if (!db.open())
+	{
 		qDebug() << db.lastError().text();
 		return 1;
 	}

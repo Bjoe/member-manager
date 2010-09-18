@@ -7,18 +7,23 @@
 
 #include "MemberFilter.h"
 
-namespace ClubFrontend {
+namespace ClubFrontend
+{
 
-void MemberFilter::setDeleted() {
+void MemberFilter::setDeleted()
+{
 	QString deletedColumn("deleted=1");
 	columns.append(deletedColumn);
 }
 
-QString MemberFilter::getFilter() const {
+QString MemberFilter::getFilter() const
+{
 	QString filter("");
-	if (columns.size() > 0) {
+	if (columns.size() > 0)
+	{
 		QVector<QString>::const_iterator iterator = columns.constBegin();
-		do {
+		do
+		{
 			filter.append(*iterator);
 			iterator++;
 		} while (isNext(iterator, filter));
@@ -27,9 +32,11 @@ QString MemberFilter::getFilter() const {
 }
 
 bool MemberFilter::isNext(const QVector<QString>::const_iterator &anIterator,
-		QString &aFilter) const {
+		QString &aFilter) const
+{
 	bool isNext = false;
-	if (anIterator < columns.constEnd()) {
+	if (anIterator < columns.constEnd())
+	{
 		isNext = true;
 		aFilter.append(" AND ");
 	}

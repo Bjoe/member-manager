@@ -11,9 +11,11 @@
 
 #include <QString>
 
-namespace ClubFrontendTest {
+namespace ClubFrontendTest
+{
 
-void MemberFilterTest::testSetDeleted() {
+void MemberFilterTest::testSetDeleted()
+{
 	ClubFrontend::MemberFilter filter;
 	filter.setDeleted();
 

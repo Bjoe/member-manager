@@ -11,9 +11,11 @@
 #include <QString>
 #include <QVector>
 
-namespace ClubFrontend {
+namespace ClubFrontend
+{
 
-class MemberFilter {
+class MemberFilter
+{
 
 public:
 	void setDeleted();
@@ -23,7 +25,8 @@ public:
 private:
 	QVector<QString> columns;
 
-	bool isNext(const QVector<QString>::const_iterator &i, QString &aFilter) const;
+	bool
+			isNext(const QVector<QString>::const_iterator &i, QString &aFilter) const;
 };
 
 }

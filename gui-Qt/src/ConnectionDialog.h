@@ -7,24 +7,24 @@
 namespace ClubFrontend
 {
 
-class ConnectionDialog : public QDialog
+class ConnectionDialog: public QDialog
 {
-    Q_OBJECT
+Q_OBJECT
 
 public:
-    ConnectionDialog(QWidget *parent = 0);
-    ~ConnectionDialog();
+	ConnectionDialog(QWidget *parent = 0);
+	~ConnectionDialog();
 
-    QString getUsername() const;
-    QString getPassword() const;
-    QString getDatabaseName() const;
-    QString getHostname() const;
-    QString getDriver() const;
+	QString getUsername() const;
+	QString getPassword() const;
+	QString getDatabaseName() const;
+	QString getHostname() const;
+	QString getDriver() const;
 
-    int getPort() const;
+	int getPort() const;
 
 private:
-    Ui::ConnectionDialogClass ui;
+	Ui::ConnectionDialogClass ui;
 };
 
 }
