@@ -15,7 +15,7 @@ MemberDetailModel::MemberDetailModel(const QSqlDatabase& aDb) :
 	addressModel(new QSqlTableModel(this, aDb)), bankAccountModel(
 			new QSqlTableModel(this, aDb)), contributionModel(
 			new QSqlTableModel(this, aDb)), ressourcenModel(new QSqlTableModel(
-			this, aDb)), memberModel(new QSqlTableModel(this, aDb))
+			this, aDb)), memberModel(new QSqlTableModel(this, aDb)), id(0)
 {
 	setTableModel(AddressTable::TABLENAME, addressModel);
 	setTableModel(BankAccountTable::TABLENAME, bankAccountModel);
@@ -47,8 +47,10 @@ QString MemberDetailModel::getLastError() const
 	return db.lastError().text();
 }
 
-void MemberDetailModel::setMemberId(int id)
+void MemberDetailModel::setMemberId(int anId)
 {
+	id = anId;
+
 	QString pkey = MemberTable::COLUMNNAME[MemberTable::MemberId];
 	QString filter = QString(pkey + " = %1").arg(id);
 	addressModel->setFilter(filter);
@@ -63,14 +65,16 @@ void MemberDetailModel::setMemberId(int id)
 	memberModel->select();
 }
 
+int MemberDetailModel::getMemberId() const
+{
+	return id;
+}
+
 int MemberDetailModel::newMember()
 {
-	// Dirty Hack um ein Neues Mitglied einzutragen. Refactor!
-
-	QVariant variant;
-	variant.setValue(QString(""));
-
-	int row = insertNewMember(memberModel, MemberTable::Name, variant);
+	// Dirty Hack um ein Neues Mitglied einzutragen.
+	QVariant variant(true);
+	int row = insertNewMember(memberModel, MemberTable::Deleted, variant);
 	QSqlRecord record = memberModel->record(row);
 	QVariant valueId = record.value(MemberTable::MemberId);
 
@@ -79,7 +83,9 @@ int MemberDetailModel::newMember()
 	insertNewMember(contributionModel, ContributionTable::MemberId, valueId);
 	insertNewMember(ressourcenModel, RessourcenTable::MemberId, valueId);
 
-	return valueId.toInt();
+	int newId = valueId.toInt();
+	setMemberId(newId);
+	return newId;
 }
 
 int MemberDetailModel::insertNewMember(QSqlTableModel* aModel,

@@ -112,14 +112,14 @@ void MemberDetailModelTest::testSetMemberId()
 	QCOMPARE(ressourcenModel->rowCount(), 1);
 	record = ressourcenModel->record(0);
 	QCOMPARE(record.value("email").toString(), QString("fooo@baaar.xx"));
+
+	QCOMPARE(dataSource.getMemberId(), 1025);
 }
 
 void MemberDetailModelTest::testNewMember()
 {
 	ClubFrontend::MemberDetailModel memberDetailModel(QSqlDatabase::database());
-	int id = memberDetailModel.newMember();
-
-	memberDetailModel.setMemberId(id);
+	QCOMPARE(memberDetailModel.newMember(), 1027);
 
 	QCOMPARE(getMemberId(memberDetailModel.getMemberTableModel(),
 					ClubFrontend::MemberTable::MemberId), 1027);

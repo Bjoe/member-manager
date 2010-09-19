@@ -6,8 +6,8 @@
 namespace ClubFrontend
 {
 
-MemberDialog::MemberDialog(const int anId, QWidget* parent) :
-	QWidget(parent), memberDetailModel(QSqlDatabase::database()), memberMapper(
+MemberDialog::MemberDialog(const MemberDetailModel& aMemberDetailModel, QWidget* parent) :
+	QDialog(parent), memberDetailModel(aMemberDetailModel), memberMapper(
 			new QDataWidgetMapper(this)), addressMapper(new QDataWidgetMapper(
 			this)), bankMapper(new QDataWidgetMapper(this)),
 			contributionMapper(new QDataWidgetMapper(this)), ressourcenMapper(
@@ -15,9 +15,8 @@ MemberDialog::MemberDialog(const int anId, QWidget* parent) :
 {
 	ui.setupUi(this);
 
-	memberDetailModel.setMemberId(anId);
 	QString id;
-	id.setNum(anId);
+	id.setNum(memberDetailModel.getMemberId());
 	ui.memberId->setText(id);
 
 	memberMapper->setModel(memberDetailModel.getMemberTableModel());

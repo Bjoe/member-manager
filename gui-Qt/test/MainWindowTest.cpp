@@ -6,6 +6,7 @@
 #include "MemberModel.h"
 
 #include <QTableView>
+#include <QSqlTableModel>
 #include <QModelIndex>
 #include <QAbstractItemModel>
 #include <QVariant>
@@ -14,10 +15,26 @@
 namespace ClubFrontendTest
 {
 
-void MainWindowTest::initTestCase()
+void MainWindowTest::init()
 {
 	TestData testData;
 	testData.createFakeMemberTable();
+}
+
+void MainWindowTest::testNewMember()
+{
+	ClubFrontend::MemberModel memberModel(QSqlDatabase::database());
+	ClubFrontend::MainWindow mainWindow(memberModel);
+
+	QAction* actionNewMember = mainWindow.findChild<QAction* > ("actionNewMember");
+	actionNewMember->trigger();
+
+	QAction* actionShowDeletedMember = mainWindow.findChild<QAction*> (
+			"actionShowDeletedMember");
+	actionShowDeletedMember->trigger();
+
+	QSqlTableModel* model = memberModel.getMemberTableModel();
+	QCOMPARE(model->rowCount(), 2);
 }
 
 void MainWindowTest::testMemberView()
@@ -25,10 +42,15 @@ void MainWindowTest::testMemberView()
 	ClubFrontend::MemberModel memberModel(QSqlDatabase::database());
 	ClubFrontend::MainWindow mainWindow(memberModel);
 
-	QAction* action = mainWindow.findChild<QAction*> ("actionSelectMember");
-	action->trigger();
+	QAction* actionSelectMember = mainWindow.findChild<QAction* > (
+			"actionSelectMember");
+	actionSelectMember->trigger();
 
-	QTableView* view = mainWindow.findChild<QTableView*> ("memberTableView");
+	QAction* actionShowDeletedMember = mainWindow.findChild<QAction* > (
+			"actionShowDeletedMember");
+	QVERIFY(!actionShowDeletedMember->isChecked());
+
+	QTableView* view = mainWindow.findChild<QTableView* > ("memberTableView");
 
 	QModelIndex index = view->indexAt(QPoint(0, 0));
 	QVERIFY(index.isValid());
@@ -47,9 +69,13 @@ void MainWindowTest::testDeletedMemberView()
 	ClubFrontend::MemberModel memberModel(QSqlDatabase::database());
 	ClubFrontend::MainWindow mainWindow(memberModel);
 
-	QAction* action =
-			mainWindow.findChild<QAction*> ("actionShowDeletedMember");
-	action->trigger();
+	QAction* actionShowDeletedMember = mainWindow.findChild<QAction*> (
+			"actionShowDeletedMember");
+	actionShowDeletedMember->trigger();
+
+	QAction* actionSelectMember = mainWindow.findChild<QAction*> (
+			"actionSelectMember");
+	QVERIFY(!actionSelectMember->isChecked());
 
 	QTableView* view = mainWindow.findChild<QTableView*> ("memberTableView");
 

@@ -17,12 +17,13 @@ namespace ClubFrontend
 class MemberDetailModel: public QObject
 {
 public:
-	MemberDetailModel(const QSqlDatabase& aDb);
+	MemberDetailModel(const QSqlDatabase& aDb = QSqlDatabase::database());
 	virtual ~MemberDetailModel();
 
 	QString getLastError() const;
 
 	void setMemberId(int id);
+	int getMemberId() const;
 	int newMember();
 
 	QSqlTableModel* getAddressTableModel() const;
@@ -42,6 +43,7 @@ private:
 	QSqlTableModel* const contributionModel;
 	QSqlTableModel* const ressourcenModel;
 	QSqlTableModel* const memberModel;
+	int id;
 };
 
 }

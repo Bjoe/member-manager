@@ -2,6 +2,7 @@
 
 #include "MemberDialog.h"
 
+#include "MemberDetailModel.h"
 #include "DatabaseStructure.h"
 #include "TestData.h"
 
@@ -28,7 +29,9 @@ void MemberDialogTest::initTestCase()
 
 void MemberDialogTest::showMember()
 {
-	ClubFrontend::MemberDialog dialog(1025);
+	ClubFrontend::MemberDetailModel detailModel;
+	detailModel.setMemberId(1025);
+	ClubFrontend::MemberDialog dialog(detailModel);
 
 	QLabel* memberId = dialog.findChild<QLabel*> ("memberId");
 	QCOMPARE(memberId->text(), QString("1025"));
@@ -82,7 +85,9 @@ void MemberDialogTest::showMember()
 
 void MemberDialogTest::newMember()
 {
-	ClubFrontend::MemberDialog dialog(0);
+	ClubFrontend::MemberDetailModel detailModel;
+	detailModel.newMember();
+	ClubFrontend::MemberDialog dialog(detailModel);
 
 	QLineEdit* memberName = dialog.findChild<QLineEdit*> ("memberName");
 	QTest::keyClicks(memberName, "Mc Kay");
@@ -134,11 +139,15 @@ void MemberDialogTest::newMember()
 			"buttonBox");
 	QPushButton* saveButton = buttonBox->button(QDialogButtonBox::Save);
 	QTest::mouseClick(saveButton, Qt::LeftButton);
+
+	// FIXME Test ausbaueen.
 }
 
 void MemberDialogTest::changeMember()
 {
-	ClubFrontend::MemberDialog dialog(1025);
+	ClubFrontend::MemberDetailModel detailModel;
+	detailModel.setMemberId(1025);
+	ClubFrontend::MemberDialog dialog(detailModel);
 
 	QLabel* id = dialog.findChild<QLabel *> ("memberId");
 	QCOMPARE(id->text(), QString("1025"));
@@ -285,3 +294,4 @@ void MemberDialogTest::changeMember()
 }
 
 }
+

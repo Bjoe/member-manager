@@ -1,7 +1,7 @@
 #ifndef MEMBERDIALOG_H
 #define MEMBERDIALOG_H
 
-#include <QWidget>
+#include <QDialog>
 #include <QDataWidgetMapper>
 #include "ui_memberDialog.h"
 #include "MemberDetailModel.h"
@@ -9,16 +9,16 @@
 namespace ClubFrontend
 {
 
-class MemberDialog: public QWidget
+class MemberDialog: public QDialog
 {
 Q_OBJECT
 
 public:
-	MemberDialog(const int anId, QWidget* parent = 0);
+	MemberDialog(const MemberDetailModel& aMemberDetailModel, QWidget* parent = 0);
 	virtual ~MemberDialog();
 
 private:
-	MemberDetailModel memberDetailModel;
+	const MemberDetailModel& memberDetailModel;
 	QDataWidgetMapper* const memberMapper;
 	QDataWidgetMapper* const addressMapper;
 	QDataWidgetMapper* const bankMapper;

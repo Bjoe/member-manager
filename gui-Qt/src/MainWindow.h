@@ -19,10 +19,13 @@ public:
 private slots:
 	void deletedView();
 	void refreshTable();
+	void newMember();
 
 private:
 	Ui::MainWindow ui;
-	MemberModel & dataSource;
+	MemberModel& dataSource;
+
+	void showDeletedMember(const bool aBoolean);
 };
 
 }

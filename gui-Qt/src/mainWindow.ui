@@ -58,8 +58,10 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="actionSelectMember"/>
    <addaction name="actionNewMember"/>
+   <addaction name="separator"/>
+   <addaction name="actionSelectMember"/>
+   <addaction name="actionShowDeletedMember"/>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -70,13 +72,12 @@
      <height>25</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuMitglied">
+   <widget class="QMenu" name="menuEdit">
     <property name="title">
-     <string>Mitglied</string>
+     <string>Bearbeiten</string>
     </property>
     <addaction name="actionNewMember"/>
-    <addaction name="actionSelectMember"/>
-    <addaction name="actionShowDeletedMember"/>
+    <addaction name="actionDeletMember"/>
    </widget>
    <widget class="QMenu" name="menuDatei">
     <property name="title">
@@ -84,8 +85,16 @@
     </property>
     <addaction name="actionExit"/>
    </widget>
+   <widget class="QMenu" name="menuAnsicht">
+    <property name="title">
+     <string>Ansicht</string>
+    </property>
+    <addaction name="actionSelectMember"/>
+    <addaction name="actionShowDeletedMember"/>
+   </widget>
    <addaction name="menuDatei"/>
-   <addaction name="menuMitglied"/>
+   <addaction name="menuEdit"/>
+   <addaction name="menuAnsicht"/>
   </widget>
   <action name="actionNewMember">
    <property name="text">
@@ -93,18 +102,29 @@
    </property>
   </action>
   <action name="actionSelectMember">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
-    <string>Mitglied Anzeigen</string>
+    <string>aktive Mitglieder</string>
    </property>
   </action>
   <action name="actionShowDeletedMember">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
-    <string>Gelöschte Mitglieder Anzeigen</string>
+    <string>gelöschte Mitglieder</string>
    </property>
   </action>
   <action name="actionExit">
    <property name="text">
     <string>Exit</string>
+   </property>
+  </action>
+  <action name="actionDeletMember">
+   <property name="text">
+    <string>Lösche Mitglied</string>
    </property>
   </action>
  </widget>
