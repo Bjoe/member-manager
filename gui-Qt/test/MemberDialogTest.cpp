@@ -86,7 +86,7 @@ void MemberDialogTest::showMember()
 void MemberDialogTest::newMember()
 {
 	ClubFrontend::MemberDetailModel detailModel;
-	detailModel.newMember();
+	int id = detailModel.newMember();
 	ClubFrontend::MemberDialog dialog(detailModel);
 
 	QLineEdit* memberName = dialog.findChild<QLineEdit*> ("memberName");
@@ -124,7 +124,7 @@ void MemberDialogTest::newMember()
 	QTest::keyClicks(contributionInfo, "Info");
 
 	QLineEdit* account = dialog.findChild<QLineEdit*> ("account");
-	QTest::keyClicks(account, "123456789");
+	QTest::keyClicks(account, "123454321");
 
 	QLineEdit* bankName = dialog.findChild<QLineEdit*> ("bankName");
 	QTest::keyClicks(bankName, "Galaxy Bank");
@@ -140,7 +140,42 @@ void MemberDialogTest::newMember()
 	QPushButton* saveButton = buttonBox->button(QDialogButtonBox::Save);
 	QTest::mouseClick(saveButton, Qt::LeftButton);
 
-	// FIXME Test ausbaueen.
+	const QString whereClause = QString(" where dorfmitglied_pkey=%1").arg(id);
+
+	using ClubFrontend::MemberTable;
+	QSqlQuery query;
+	query.exec("select * from " + MemberTable::TABLENAME + whereClause);
+	query.next();
+	QCOMPARE(query.value(MemberTable::FirstName).toString(), QString("Rodney"));
+	QCOMPARE(query.value(MemberTable::Name).toString(), QString("Mc Kay"));
+	QCOMPARE(query.value(MemberTable::NickName).toString(), QString("Rod"));
+	QCOMPARE(query.value(MemberTable::Info).toString(), QString("Foo"));
+
+	using ClubFrontend::AddressTable;
+	query.exec("select * from " + AddressTable::TABLENAME + whereClause);
+	query.next();
+	QCOMPARE(query.value(AddressTable::Street).toString(), QString("Atlantis"));
+	QCOMPARE(query.value(AddressTable::ZipCode).toString(), QString("40215"));
+	QCOMPARE(query.value(AddressTable::Town).toString(), QString("Pegasus"));
+
+	using ClubFrontend::ContributionTable;
+	query.exec("select * from " + ContributionTable::TABLENAME + whereClause);
+	query.next();
+	QCOMPARE(query.value(ContributionTable::Fee).toInt(), 15);
+	QCOMPARE(query.value(ContributionTable::Donation).toInt(), 5);
+	QCOMPARE(query.value(ContributionTable::Info).toString(), QString("Info"));
+
+	using ClubFrontend::BankAccountTable;
+	query.exec("select * from " + BankAccountTable::TABLENAME + whereClause);
+	query.next();
+	QCOMPARE(query.value(BankAccountTable::Code).toInt(), 98765432);
+	QCOMPARE(query.value(BankAccountTable::AccountNr).toInt(), 123454321);
+	QCOMPARE(query.value(BankAccountTable::BankName).toString(), QString("Galaxy Bank"));
+
+	using ClubFrontend::RessourcenTable;
+	query.exec("select * from " + RessourcenTable::TABLENAME + whereClause);
+	query.next();
+	QCOMPARE(query.value(RessourcenTable::EmailAdress).toString(), QString("rod@atlantis.pegasus"));
 }
 
 void MemberDialogTest::changeMember()
