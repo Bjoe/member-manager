@@ -27,9 +27,11 @@ void MainWindow::newMember()
 	MemberDetailModel memberDetailModel;
 	memberDetailModel.newMember();
 
-	MemberDialog dialog(memberDetailModel);
+	MemberDialog dialog(memberDetailModel, this);
 	dialog.show();
 	dialog.exec();
+
+	dataSource.refresh();
 }
 
 void MainWindow::deletedView()

@@ -119,18 +119,35 @@ void MemberDetailModelTest::testSetMemberId()
 void MemberDetailModelTest::testNewMember()
 {
 	ClubFrontend::MemberDetailModel memberDetailModel(QSqlDatabase::database());
-	QCOMPARE(memberDetailModel.newMember(), 1027);
+	int id = memberDetailModel.newMember();
 
 	QCOMPARE(getMemberId(memberDetailModel.getMemberTableModel(),
-					ClubFrontend::MemberTable::MemberId), 1027);
+					ClubFrontend::MemberTable::MemberId), id);
 	QCOMPARE(getMemberId(memberDetailModel.getAddressTableModel(),
-					ClubFrontend::AddressTable::MemberId), 1027);
+					ClubFrontend::AddressTable::MemberId), id);
 	QCOMPARE(getMemberId(memberDetailModel.getBankAccountTableModel(),
-					ClubFrontend::BankAccountTable::MemberId), 1027);
+					ClubFrontend::BankAccountTable::MemberId), id);
 	QCOMPARE(getMemberId(memberDetailModel.getContributionTableModel(),
-					ClubFrontend::ContributionTable::MemberId), 1027);
+					ClubFrontend::ContributionTable::MemberId), id);
 	QCOMPARE(getMemberId(memberDetailModel.getRessourcenTableModel(),
-					ClubFrontend::RessourcenTable::MemberId), 1027);
+					ClubFrontend::RessourcenTable::MemberId), id);
+}
+
+void MemberDetailModelTest::testDeleteMember()
+{
+	ClubFrontend::MemberDetailModel memberDetailModel(QSqlDatabase::database());
+	int id = memberDetailModel.newMember();
+
+	memberDetailModel.deleteMember();
+
+	const QString whereClause = QString(" where dorfmitglied_pkey=%1").arg(id);
+
+	using ClubFrontend::MemberTable;
+	QSqlQuery query;
+	query.exec("select * from " + MemberTable::TABLENAME + whereClause);
+	QVERIFY(!query.next());
+
+
 }
 
 int MemberDetailModelTest::getMemberId(const QSqlTableModel* aModel,

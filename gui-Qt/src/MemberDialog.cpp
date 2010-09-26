@@ -6,7 +6,8 @@
 namespace ClubFrontend
 {
 
-MemberDialog::MemberDialog(const MemberDetailModel& aMemberDetailModel, QWidget* parent) :
+MemberDialog::MemberDialog(MemberDetailModel& aMemberDetailModel,
+		QWidget* parent) :
 	QDialog(parent), memberDetailModel(aMemberDetailModel), memberMapper(
 			new QDataWidgetMapper(this)), addressMapper(new QDataWidgetMapper(
 			this)), bankMapper(new QDataWidgetMapper(this)),
@@ -61,6 +62,12 @@ MemberDialog::MemberDialog(const MemberDetailModel& aMemberDetailModel, QWidget*
 	connect(ui.buttonBox, SIGNAL(accepted()), contributionMapper,
 			SLOT(submit()));
 	connect(ui.buttonBox, SIGNAL(accepted()), ressourcenMapper, SLOT(submit()));
+
+	QPushButton* discardButton =
+			ui.buttonBox->button(QDialogButtonBox::Discard);
+	connect(discardButton, SIGNAL(clicked()), this, SLOT(deleteMember()));
+
+	connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
 MemberDialog::~MemberDialog()
@@ -70,6 +77,17 @@ MemberDialog::~MemberDialog()
 	delete bankMapper;
 	delete addressMapper;
 	delete memberMapper;
+}
+
+void MemberDialog::deleteMember()
+{
+	int exitStatus = QMessageBox::warning(this, tr("Loesche Mitglied"), tr(
+			"Wollen Sie wirklich Mitglied mit der Nr. %1 loeschen?"). arg(
+			memberDetailModel.getMemberId()), QMessageBox::Yes | QMessageBox::No);
+	if (exitStatus == QMessageBox::Yes)
+	{
+		memberDetailModel.deleteMember();
+	}
 }
 
 }

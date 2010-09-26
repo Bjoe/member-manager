@@ -29,6 +29,7 @@ private slots:
 	void testGetMemberModel();
 	void testSetMemberId();
 	void testNewMember();
+	void testDeleteMember();
 
 private:
 	int getMemberId(const QSqlTableModel* aModel, const int& aColumnId);

@@ -3,6 +3,7 @@
 #include "MainWindow.h"
 
 #include "TestData.h"
+#include "TriggerThread.h"
 #include "MemberModel.h"
 
 #include <QTableView>
@@ -11,6 +12,9 @@
 #include <QAbstractItemModel>
 #include <QVariant>
 #include <QAction>
+#include <QDialogButtonBox>
+#include <QPushButton>
+#include <QApplication>
 
 namespace ClubFrontendTest
 {
@@ -26,8 +30,11 @@ void MainWindowTest::testNewMember()
 	ClubFrontend::MemberModel memberModel(QSqlDatabase::database());
 	ClubFrontend::MainWindow mainWindow(memberModel);
 
-	QAction* actionNewMember = mainWindow.findChild<QAction* > ("actionNewMember");
-	actionNewMember->trigger();
+	QAction* actionNewMember = mainWindow.findChild<QAction*> (
+			"actionNewMember");
+	TriggerThread thread(this, this);
+	connect(&thread, SIGNAL(triggered()), actionNewMember, SLOT(trigger()));
+	thread.syncStart();
 
 	QAction* actionShowDeletedMember = mainWindow.findChild<QAction*> (
 			"actionShowDeletedMember");
@@ -37,20 +44,35 @@ void MainWindowTest::testNewMember()
 	QCOMPARE(model->rowCount(), 2);
 }
 
+void MainWindowTest::doWork()
+{
+	sleep(1);
+	bool next = true;
+	do
+	{
+		QWidget* widget = QApplication::activeWindow();
+		if (widget)
+		{
+			widget->close();
+			next = false;
+		}
+	} while (next);
+}
+
 void MainWindowTest::testMemberView()
 {
 	ClubFrontend::MemberModel memberModel(QSqlDatabase::database());
 	ClubFrontend::MainWindow mainWindow(memberModel);
 
-	QAction* actionSelectMember = mainWindow.findChild<QAction* > (
+	QAction* actionSelectMember = mainWindow.findChild<QAction*> (
 			"actionSelectMember");
 	actionSelectMember->trigger();
 
-	QAction* actionShowDeletedMember = mainWindow.findChild<QAction* > (
+	QAction* actionShowDeletedMember = mainWindow.findChild<QAction*> (
 			"actionShowDeletedMember");
 	QVERIFY(!actionShowDeletedMember->isChecked());
 
-	QTableView* view = mainWindow.findChild<QTableView* > ("memberTableView");
+	QTableView* view = mainWindow.findChild<QTableView*> ("memberTableView");
 
 	QModelIndex index = view->indexAt(QPoint(0, 0));
 	QVERIFY(index.isValid());

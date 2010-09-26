@@ -5,6 +5,7 @@
 #include "MemberDetailModel.h"
 #include "DatabaseStructure.h"
 #include "TestData.h"
+#include "TriggerThread.h"
 
 #include <QLabel>
 #include <QLineEdit>
@@ -13,6 +14,7 @@
 #include <QString>
 #include <QPushButton>
 #include <QDialogButtonBox>
+#include <QMessageBox>
 
 namespace ClubFrontendTest
 {
@@ -137,7 +139,7 @@ void MemberDialogTest::newMember()
 
 	QDialogButtonBox* buttonBox = dialog.findChild<QDialogButtonBox*> (
 			"buttonBox");
-	QPushButton* saveButton = buttonBox->button(QDialogButtonBox::Save);
+	QPushButton* saveButton = buttonBox->button(QDialogButtonBox::SaveAll);
 	QTest::mouseClick(saveButton, Qt::LeftButton);
 
 	const QString whereClause = QString(" where dorfmitglied_pkey=%1").arg(id);
@@ -270,7 +272,7 @@ void MemberDialogTest::changeMember()
 
 	QDialogButtonBox* buttonBox = dialog.findChild<QDialogButtonBox*> (
 			"buttonBox");
-	QPushButton* saveButton = buttonBox->button(QDialogButtonBox::Save);
+	QPushButton* saveButton = buttonBox->button(QDialogButtonBox::SaveAll);
 	QTest::mouseClick(saveButton, Qt::LeftButton);
 
 	QCOMPARE(firstName->text(), QString("Jonathan"));
@@ -328,5 +330,43 @@ void MemberDialogTest::changeMember()
 	QCOMPARE(query.value(RessourcenTable::EmailAdress).toString(), QString("foo@bar.tx"));
 }
 
+void MemberDialogTest::newMemberDiscard()
+{
+	ClubFrontend::MemberDetailModel detailModel;
+	int id = detailModel.newMember();
+	ClubFrontend::MemberDialog dialog(detailModel);
+
+	QDialogButtonBox* buttonBox = dialog.findChild<QDialogButtonBox*> (
+			"buttonBox");
+	QPushButton* discardButton = buttonBox->button(QDialogButtonBox::Discard);
+	TriggerThread thread(this, this);
+	connect(&thread, SIGNAL(triggered()), discardButton, SLOT(click()));
+	thread.syncStart();
+
+	const QString whereClause = QString(" where dorfmitglied_pkey=%1").arg(id);
+
+	using ClubFrontend::MemberTable;
+	QSqlQuery query;
+	query.exec("select * from " + MemberTable::TABLENAME + whereClause);
+	QVERIFY(!query.next());
 }
 
+void MemberDialogTest::doWork()
+{
+	sleep(1);
+	bool next = true;
+	do
+	{
+		QWidget* widget = QApplication::activeWindow();
+		if (widget)
+		{
+			QDialogButtonBox* messageBox =
+					widget->findChild<QDialogButtonBox*> ();
+			QPushButton* okButton = messageBox->button(QDialogButtonBox::Yes);
+			okButton->click();
+			next = false;
+		}
+	} while (next);
+}
+
+}

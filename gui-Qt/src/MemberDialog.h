@@ -14,11 +14,14 @@ class MemberDialog: public QDialog
 Q_OBJECT
 
 public:
-	MemberDialog(const MemberDetailModel& aMemberDetailModel, QWidget* parent = 0);
+	MemberDialog(MemberDetailModel& aMemberDetailModel, QWidget* parent = 0);
 	virtual ~MemberDialog();
 
+private slots:
+	void deleteMember();
+
 private:
-	const MemberDetailModel& memberDetailModel;
+	MemberDetailModel& memberDetailModel;
 	QDataWidgetMapper* const memberMapper;
 	QDataWidgetMapper* const addressMapper;
 	QDataWidgetMapper* const bankMapper;

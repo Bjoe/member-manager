@@ -5,13 +5,17 @@
 #include <QtTest/QtTest>
 
 #include "MemberModel.h"
+#include "Executor.h"
 
 namespace ClubFrontendTest
 {
 
-class MainWindowTest: public QObject
+class MainWindowTest: public QObject, public Executor
 {
 Q_OBJECT
+
+public:
+	virtual void doWork();
 
 private slots:
 	void init();
@@ -19,7 +23,6 @@ private slots:
 	void testNewMember();
 	void testMemberView();
 	void testDeletedMemberView();
-
 };
 
 }

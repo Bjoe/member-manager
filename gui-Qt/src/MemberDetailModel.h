@@ -25,6 +25,7 @@ public:
 	void setMemberId(int id);
 	int getMemberId() const;
 	int newMember();
+	void deleteMember();
 
 	QSqlTableModel* getAddressTableModel() const;
 	QSqlTableModel* getBankAccountTableModel() const;

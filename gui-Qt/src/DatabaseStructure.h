@@ -32,6 +32,7 @@ public:
 	{
 		ContributionId, MemberId, Fee, Donation, Debit, ValidFrom, Info
 	};
+	static const QStringList COLUMNNAME;
 };
 
 class MemberTable

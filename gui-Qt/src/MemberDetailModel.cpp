@@ -100,6 +100,37 @@ int MemberDetailModel::insertNewMember(QSqlTableModel* aModel,
 	return row;
 }
 
+void MemberDetailModel::deleteMember()
+{
+	if (id == 0)
+		return;
+
+	const QString whereClause = QString(" where %1=%2").arg(
+			MemberTable::COLUMNNAME[MemberTable::MemberId]).arg(id);
+	const QString columnDeteled = MemberTable::COLUMNNAME[MemberTable::Deleted];
+
+	QSqlQuery query("select * from " + MemberTable::TABLENAME + whereClause
+			+ " AND " + columnDeteled + "='false'");
+	if (query.next())
+	{
+		query .exec("update " + MemberTable::TABLENAME + " set "
+				+ columnDeteled + "='true' " + whereClause + " AND "
+				+ columnDeteled + "='false'");
+	}
+	else
+	{
+		query.exec("delete from " + MemberTable::TABLENAME + whereClause);
+		query.exec("delete from " + AddressTable::TABLENAME + whereClause);
+		query.exec("delete from " + BankAccountTable::TABLENAME + whereClause);
+		query.exec("delete from " + ContributionTable::TABLENAME + whereClause
+				+ " AND " + ContributionTable::COLUMNNAME[ContributionTable::Fee] + " isNull AND " +
+				ContributionTable::COLUMNNAME[ContributionTable::Donation] + " isNull AND " +
+				ContributionTable::COLUMNNAME[ContributionTable::ValidFrom] + " isNull AND" +
+				ContributionTable::COLUMNNAME[ContributionTable::Info] + " isNull");
+		query.exec("delete from " + RessourcenTable::TABLENAME + whereClause);
+	}
+}
+
 QSqlTableModel* MemberDetailModel::getAddressTableModel() const
 {
 	return addressModel;

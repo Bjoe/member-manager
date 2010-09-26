@@ -79,22 +79,22 @@
     <addaction name="actionNewMember"/>
     <addaction name="actionDeletMember"/>
    </widget>
-   <widget class="QMenu" name="menuDatei">
+   <widget class="QMenu" name="menuFile">
     <property name="title">
      <string>Datei</string>
     </property>
     <addaction name="actionExit"/>
    </widget>
-   <widget class="QMenu" name="menuAnsicht">
+   <widget class="QMenu" name="menuView">
     <property name="title">
      <string>Ansicht</string>
     </property>
     <addaction name="actionSelectMember"/>
     <addaction name="actionShowDeletedMember"/>
    </widget>
-   <addaction name="menuDatei"/>
+   <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
-   <addaction name="menuAnsicht"/>
+   <addaction name="menuView"/>
   </widget>
   <action name="actionNewMember">
    <property name="text">

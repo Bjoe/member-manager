@@ -564,7 +564,7 @@
     </rect>
    </property>
    <property name="standardButtons">
-    <set>QDialogButtonBox::Discard|QDialogButtonBox::Save</set>
+    <set>QDialogButtonBox::Close|QDialogButtonBox::Discard|QDialogButtonBox::SaveAll</set>
    </property>
    <property name="centerButtons">
     <bool>false</bool>

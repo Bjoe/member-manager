@@ -12,6 +12,9 @@ namespace ClubFrontend
 const QString AddressTable::TABLENAME = "adresse";
 
 const QString ContributionTable::TABLENAME = "beitragstab";
+const QStringList ContributionTable::COLUMNNAME = QStringList()
+		<< "beitragstab_pkey" << "dorfmitglied_pkey" << "beitrag"
+		<< "spende" << "schulden" << "gueltigab" << "info";
 
 const QString MemberTable::TABLENAME = "dorfmitglied";
 const QStringList MemberTable::COLUMNNAME = QStringList()
