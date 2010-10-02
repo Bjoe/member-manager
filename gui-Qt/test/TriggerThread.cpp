@@ -15,8 +15,10 @@
 namespace ClubFrontendTest
 {
 
-TriggerThread::TriggerThread(QObject *aParent, Executor* const anExecutor) :
-	QThread(aParent), mutex(), waitForThread(), executor(anExecutor)
+TriggerThread::TriggerThread(QObject *aParent, Executor* const anExecutor,
+		const QModelIndex& anIndex) :
+	QThread(aParent), mutex(), waitForThread(), executor(anExecutor),
+			modelIndex(anIndex)
 {
 }
 
@@ -37,8 +39,13 @@ void TriggerThread::syncStart()
 void TriggerThread::run()
 {
 	mutex.lock();
+
 	emit
 	triggered();
+
+	emit
+	triggered(modelIndex);
+
 	waitForThread.wakeAll();
 	mutex.unlock();
 	executor->doWork();

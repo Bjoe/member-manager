@@ -15,6 +15,11 @@
 #include <QDialogButtonBox>
 #include <QPushButton>
 #include <QApplication>
+#include <QSqlTableModel>
+#include <QModelIndex>
+#include <QLabel>
+
+#include <QDebug>
 
 namespace ClubFrontendTest
 {
@@ -42,6 +47,23 @@ void MainWindowTest::testNewMember()
 
 	QSqlTableModel* model = memberModel.getMemberTableModel();
 	QCOMPARE(model->rowCount(), 2);
+
+	QCOMPARE(id, QString("1027"));
+}
+
+void MainWindowTest::testEditMember()
+{
+	ClubFrontend::MemberModel memberModel(QSqlDatabase::database());
+	ClubFrontend::MainWindow mainWindow(memberModel);
+
+	QSqlTableModel* model = memberModel.getMemberTableModel();
+	QModelIndex index = model->index(0, 3);
+
+	TriggerThread thread(this, this, index);
+	connect(&thread, SIGNAL(triggered(const QModelIndex&)), &mainWindow, SLOT(editMember(const QModelIndex&)));
+	thread.syncStart();
+
+	QCOMPARE(id, QString("1025"));
 }
 
 void MainWindowTest::doWork()
@@ -53,6 +75,8 @@ void MainWindowTest::doWork()
 		QWidget* widget = QApplication::activeWindow();
 		if (widget)
 		{
+			QLabel* memberId = widget->findChild<QLabel* >("memberId");
+			id = memberId->text();
 			widget->close();
 			next = false;
 		}

@@ -1,6 +1,5 @@
 #include "MainWindow.h"
 #include "MemberFilter.h"
-#include "MemberDetailModel.h"
 #include "MemberDialog.h"
 
 namespace ClubFrontend
@@ -20,18 +19,26 @@ MainWindow::MainWindow(MemberModel& aDataSource, QWidget* parent) :
 	connect(ui.actionSelectMember, SIGNAL(triggered()), this,
 			SLOT(refreshTable()));
 	connect(ui.actionNewMember, SIGNAL(triggered()), this, SLOT(newMember()));
+	connect(ui.memberTableView, SIGNAL(doubleClicked(const QModelIndex&)),
+			this, SLOT(editMember(const QModelIndex&)));
 }
 
 void MainWindow::newMember()
 {
-	MemberDetailModel memberDetailModel;
-	memberDetailModel.newMember();
+	MemberDetailModel model;
+	model.newMember();
 
-	MemberDialog dialog(memberDetailModel, this);
-	dialog.show();
-	dialog.exec();
+	showMemberDialog(model);
+}
 
-	dataSource.refresh();
+void MainWindow::editMember(const QModelIndex& anIndex)
+{
+	int id = dataSource.getMemberId(anIndex);
+
+	MemberDetailModel model;
+	model.setMemberId(id);
+
+	showMemberDialog(model);
 }
 
 void MainWindow::deletedView()
@@ -60,6 +67,15 @@ void MainWindow::showDeletedMember(const bool aBoolean)
 		ui.actionShowDeletedMember->setChecked(false);
 		ui.actionSelectMember->setChecked(true);
 	}
+}
+
+void MainWindow::showMemberDialog(MemberDetailModel& aModel)
+{
+	MemberDialog dialog(aModel, this);
+	dialog.show();
+	dialog.exec();
+
+	dataSource.refresh();
 }
 
 }

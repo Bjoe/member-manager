@@ -3,8 +3,11 @@
 
 #include <QWidget>
 #include <QMainWindow>
+#include <QModelIndex>
+
 #include "ui_mainWindow.h"
 #include "MemberModel.h"
+#include "MemberDetailModel.h"
 
 namespace ClubFrontend
 {
@@ -20,12 +23,14 @@ private slots:
 	void deletedView();
 	void refreshTable();
 	void newMember();
+	void editMember(const QModelIndex& anIndex);
 
 private:
 	Ui::MainWindow ui;
 	MemberModel& dataSource;
 
 	void showDeletedMember(const bool aBoolean);
+	void showMemberDialog(MemberDetailModel& aModel);
 };
 
 }

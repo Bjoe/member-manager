@@ -11,6 +11,7 @@
 #include <QtCore>
 #include <QSqlDatabase>
 #include <QSqlTableModel>
+#include <QModelIndex>
 
 #include "MemberDetailModel.h"
 
@@ -26,6 +27,8 @@ public:
 
 	void setFilter(const QString aSqlFilter);
 	void refresh();
+
+	int getMemberId(const QModelIndex& anIndex);
 
 	QString getLastError() const;
 	QSqlTableModel* getMemberTableModel() const;

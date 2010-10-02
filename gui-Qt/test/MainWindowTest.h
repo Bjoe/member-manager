@@ -21,8 +21,12 @@ private slots:
 	void init();
 
 	void testNewMember();
+	void testEditMember();
 	void testMemberView();
 	void testDeletedMemberView();
+
+private:
+	QString id;
 };
 
 }

@@ -5,6 +5,9 @@
  *      Author: joerg
  */
 #include "MemberModel.h"
+
+#include <QSqlRecord>
+
 #include "DatabaseStructure.h"
 
 namespace ClubFrontend
@@ -31,6 +34,12 @@ void MemberModel::setFilter(const QString aSqlFilter)
 void MemberModel::refresh()
 {
 	model->select();
+}
+
+int MemberModel::getMemberId(const QModelIndex& anIndex)
+{
+	QSqlRecord record = model->record(anIndex.row());
+	return record.value(MemberTable::MemberId).toInt();
 }
 
 QString MemberModel::getLastError() const
