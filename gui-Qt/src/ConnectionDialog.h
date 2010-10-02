@@ -16,12 +16,16 @@ public:
 	~ConnectionDialog();
 
 	QString getUsername() const;
+	void setUsername(const QString& aName);
 	QString getPassword() const;
 	QString getDatabaseName() const;
+	void setDatabaseName(const QString& aName);
 	QString getHostname() const;
+	void setHostname(const QString& aName);
 	QString getDriver() const;
-
+	void setDriver(const QString& aName);
 	int getPort() const;
+	void setPort(const int& aPort);
 
 private:
 	Ui::ConnectionDialogClass ui;

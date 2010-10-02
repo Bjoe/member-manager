@@ -25,6 +25,8 @@ private slots:
 	void testGetHostname();
 	void testGetPort();
 	void testGetDriverName();
+	void testSetDriverName();
+	void testSetWrongDriverName();
 	void testOkButton();
 	void testCancelButton();
 };
