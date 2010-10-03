@@ -136,43 +136,39 @@ void TestData::createFakeKassaTable()
 			"INSERT INTO kasse ("
 				"            kasse_pkey, deleted, einlesedatum, einleseid, auszug, zwshkenn60,"
 				"            zwbudatum60, zwischensaldo60, zwshkenn62, zwbudatum62, zwischensaldo62,"
-				"            valutadatum, buchungsdatum, shkenn, betrag, buschl, bankbuschl,"
-				"            fremdblz, fremdktnr, fremdname, bezeichnung, barkonto, konten,"
-				"            dorfmitglied_pkey, erfasst)"
+				"            valutadatum, buchungsdatum, shkenn, betrag, bankbuschl,"
+				"            fremdblz, fremdktnr, fremdname, bezeichnung, erfasst)"
 				"    VALUES (1,'false','',1,1,'credit',date('2006-01-12'),3519.92,'credit',date('2006-01-23'),3423.02,date('2006-01-23'),date('2006-01-23'),'debit',34.90,5,"
-				"37010050,5820507,'ISH NRW GMBH','LASTSCHRIFT  KDNR 4039458011 RGN 2495227',,,,0");
+				"37010050,5820507,'ISH NRW GMBH','LASTSCHRIFT  KDNR 4039458011 RGN 2495227','false')");
 
 	execStatement(
 			"INSERT INTO kasse ("
 				"            kasse_pkey, deleted, einlesedatum, einleseid, auszug, zwshkenn60,"
 				"            zwbudatum60, zwischensaldo60, zwshkenn62, zwbudatum62, zwischensaldo62,"
-				"            valutadatum, buchungsdatum, shkenn, betrag, buschl, bankbuschl,"
-				"            fremdblz, fremdktnr, fremdname, bezeichnung, barkonto, konten,"
-				"            dorfmitglied_pkey, erfasst)"
-				"    VALUES (2,'false','',1,1,'credit',date('2006-01-12'),3519.92,'credit',date('2006-01-23'),3423.02,date('2006-01-23'),date('2006-01-23')"
-				",'debit',62.00,,5,30050110,10012433,'STADTWERKE DUESSELDORF AG','LASTSCHRIFT  313001563692 VK020009330101 ABSCHLAG FAELLIG 23.01.06 FUERSTENWALL 232',,,,0)");
+				"            valutadatum, buchungsdatum, shkenn, betrag, bankbuschl,"
+				"            fremdblz, fremdktnr, fremdname, bezeichnung, erfasst)"
+				"    VALUES (2,'true','',1,1,'credit',date('2006-01-12'),3519.92,'credit',date('2006-01-23'),3423.02,date('2006-01-23'),date('2006-01-23')"
+				",'debit',62.00,5,30050110,10012433,'STADTWERKE DUESSELDORF AG','LASTSCHRIFT  313001563692 VK020009330101 ABSCHLAG FAELLIG 23.01.06 FUERSTENWALL 232','false')");
 
 	execStatement(
 			"INSERT INTO kasse ("
 				"            kasse_pkey, deleted, einlesedatum, einleseid, auszug, zwshkenn60,"
 				"            zwbudatum60, zwischensaldo60, zwshkenn62, zwbudatum62, zwischensaldo62,"
-				"            valutadatum, buchungsdatum, shkenn, betrag, buschl, bankbuschl,"
-				"            fremdblz, fremdktnr, fremdname, bezeichnung, barkonto, konten,"
-				"            dorfmitglied_pkey, erfasst)"
-				"    VALUES (3,'false','',1,1,'credit',date('2006-01-23'),3423.02,'credit',date('2006-01-27'),3318.16,date('2006-01-27'),date('2006-01-27'),'debit',104.86,,820,30050110,21236716,'BOEHME, JOERG-CHRISTIAN',"
-				"'UMBUCHUNG  ATELCO RECHNUNG VOM 12.1.06 LIEFERSCHNR. L4592165 DATUM 27.01.2006, 00.50 UHR 1.TAN 783978',,,,"
-				"0)");
+				"            valutadatum, buchungsdatum, shkenn, betrag, bankbuschl,"
+				"            fremdblz, fremdktnr, fremdname, bezeichnung, erfasst)"
+				"    VALUES (3,'false','',1,1,'credit',date('2006-01-23'),3423.02,'credit',date('2006-01-27'),3318.16,date('2006-01-27'),date('2006-01-27'),'debit',104.86,820,30050110,21236716,'BOEHME, JOERG-CHRISTIAN',"
+				"'UMBUCHUNG  ATELCO RECHNUNG VOM 12.1.06 LIEFERSCHNR. L4592165 DATUM 27.01.2006, 00.50 UHR 1.TAN 783978','false'"
+				")");
 
 	execStatement(
 			"INSERT INTO kasse ("
 				"            kasse_pkey, deleted, einlesedatum, einleseid, auszug, zwshkenn60,"
 				"            zwbudatum60, zwischensaldo60, zwshkenn62, zwbudatum62, zwischensaldo62,"
-				"            valutadatum, buchungsdatum, shkenn, betrag, buschl, bankbuschl,"
-				"            fremdblz, fremdktnr, fremdname, bezeichnung, barkonto, konten,"
-				"            dorfmitglied_pkey, erfasst)"
+				"            valutadatum, buchungsdatum, shkenn, betrag, bankbuschl,"
+				"            fremdblz, fremdktnr, fremdname, bezeichnung, erfasst)"
 				"    VALUES (4,'false','',1,1,'credit',date('2006-01-27'),3318.16,'credit',date('2006-01-31'),"
-				"3374.56,date('2006-02-01'),date('2006-01-31'),'debit',4.74,,805,30050110;0,'-',"
-				"'ABSCHLUSS  Abrechnung 30.01.2006 siehe Anlage',,,,0)");
+				"3374.56,date('2006-02-01'),date('2006-01-31'),'debit',4.74,805,30050110,0,'-',"
+				"'ABSCHLUSS  Abrechnung 30.01.2006 siehe Anlage','false')");
 }
 
 void TestData::createFakeRessourcenTable()

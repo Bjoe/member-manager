@@ -6,6 +6,7 @@ set(QT_FRONTEND_TEST_MOC_HEADERS
     MainWindowTest.h
     MemberDialogTest.h
     MemberModelTest.h
+    KassaModelTest.h
     MemberDetailModelTest.h
     MemberFilterTest.h
     ConnectionDialogTest.h
@@ -17,6 +18,7 @@ set(QT_FRONTEND_TEST
     MainWindowTest.cpp
     MemberDialogTest.cpp
     MemberModelTest.cpp
+    KassaModelTest.cpp
     MemberDetailModelTest.cpp
     MemberFilterTest.cpp
     ConnectionDialogTest.cpp

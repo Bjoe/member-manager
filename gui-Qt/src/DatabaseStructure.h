@@ -77,6 +77,42 @@ public:
 		BankAccountId, MemberId, AccountNr, BankName, Code
 	};
 };
+
+class KassaTable
+{
+public:
+	static const QString TABLENAME;
+	enum column
+	{
+		kasse_pkey,
+		deleted,
+		einlesedatum,
+		einleseid,
+		auszug,
+		zwshkenn60,
+		zwbudatum60,
+		zwischensaldo60,
+		zwshkenn62,
+		zwbudatum62,
+		zwischensaldo62,
+		valutadatum,
+		buchungsdatum,
+		shkenn,
+		betrag,
+		buschl,
+		bankbuschl,
+		fremdblz,
+		fremdktnr,
+		fremdname,
+		bezeichnung,
+		barkonto,
+		konten,
+		dorfmitglied_pkey,
+		erfasst
+	};
+	static const QStringList COLUMNNAME;
+};
+
 }
 
 #endif /* DATABASESTRUCTURE_H_ */

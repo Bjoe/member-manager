@@ -13,8 +13,8 @@ const QString AddressTable::TABLENAME = "adresse";
 
 const QString ContributionTable::TABLENAME = "beitragstab";
 const QStringList ContributionTable::COLUMNNAME = QStringList()
-		<< "beitragstab_pkey" << "dorfmitglied_pkey" << "beitrag"
-		<< "spende" << "schulden" << "gueltigab" << "info";
+		<< "beitragstab_pkey" << "dorfmitglied_pkey" << "beitrag" << "spende"
+		<< "schulden" << "gueltigab" << "info";
 
 const QString MemberTable::TABLENAME = "dorfmitglied";
 const QStringList MemberTable::COLUMNNAME = QStringList()
@@ -24,5 +24,14 @@ const QStringList MemberTable::COLUMNNAME = QStringList()
 const QString RessourcenTable::TABLENAME = "kommunikation";
 
 const QString BankAccountTable::TABLENAME = "kontodaten";
+
+const QString KassaTable::TABLENAME = "kasse";
+const QStringList KassaTable::COLUMNNAME = QStringList() << "kasse_pkey"
+		<< "deleted" << "einlesedatum" << "einleseid" << "auszug"
+		<< "zwshkenn60" << "zwbudatum60" << "zwischensaldo60" << "zwshkenn62"
+		<< "zwbudatum62" << "zwischensaldo62" << "valutadatum"
+		<< "buchungsdatum" << "shkenn" << "betrag" << "buschl" << "bankbuschl"
+		<< "fremdblz" << "fremdktnr" << "fremdname" << "bezeichnung"
+		<< "barkonto" << "konten" << "dorfmitglied_pkey" << "erfasst";
 
 }

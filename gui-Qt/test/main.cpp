@@ -1,4 +1,5 @@
 #include "MemberModelTest.h"
+#include "KassaModelTest.h"
 #include "MemberDetailModelTest.h"
 #include "MemberFilterTest.h"
 #include "MemberDialogTest.h"
@@ -37,6 +38,9 @@ int main(int argc, char* argv[])
 
 	ClubFrontendTest::ConnectionDialogTest connectionDialogTest;
 	QTest::qExec(&connectionDialogTest);
+
+	ClubFrontendTest::KassaModelTest kassaModelTest;
+	QTest::qExec(&kassaModelTest);
 
 	return 0;
 }
