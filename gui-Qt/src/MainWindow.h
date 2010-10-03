@@ -20,14 +20,14 @@ public:
 	MainWindow(MemberModel & aDataSource, QWidget * parent = 0);
 
 private slots:
-	void deletedView();
-	void refreshTable();
+	void showDeletedMemberView();
+	void showMemberView();
 	void newMember();
 	void editMember(const QModelIndex& anIndex);
 
 private:
 	Ui::MainWindow ui;
-	MemberModel& dataSource;
+	MemberModel& memberModel;
 
 	void showDeletedMember(const bool aBoolean);
 	void showMemberDialog(MemberDetailModel& aModel);

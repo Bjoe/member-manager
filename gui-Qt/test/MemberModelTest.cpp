@@ -23,7 +23,7 @@ void MemberModelTest::initTestCase()
 void MemberModelTest::testGetLastError()
 {
 	ClubFrontend::MemberModel dataSource(QSqlDatabase::database());
-	// Fehler Produzieren ? QCOMPARE(dataSource.getLastError(),QString());
+	// Fehler Produzieren ? QCOMPARE(memberModel.getLastError(),QString());
 }
 
 void MemberModelTest::testGetMemberModel()

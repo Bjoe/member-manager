@@ -89,14 +89,14 @@ void MainWindowTest::testMemberView()
 	ClubFrontend::MainWindow mainWindow(memberModel);
 
 	QAction* actionSelectMember = mainWindow.findChild<QAction*> (
-			"actionSelectMember");
+			"actionShowMember");
 	actionSelectMember->trigger();
 
 	QAction* actionShowDeletedMember = mainWindow.findChild<QAction*> (
 			"actionShowDeletedMember");
 	QVERIFY(!actionShowDeletedMember->isChecked());
 
-	QTableView* view = mainWindow.findChild<QTableView*> ("memberTableView");
+	QTableView* view = mainWindow.findChild<QTableView*> ("tableView");
 
 	QModelIndex index = view->indexAt(QPoint(0, 0));
 	QVERIFY(index.isValid());
@@ -120,10 +120,10 @@ void MainWindowTest::testDeletedMemberView()
 	actionShowDeletedMember->trigger();
 
 	QAction* actionSelectMember = mainWindow.findChild<QAction*> (
-			"actionSelectMember");
+			"actionShowMember");
 	QVERIFY(!actionSelectMember->isChecked());
 
-	QTableView* view = mainWindow.findChild<QTableView*> ("memberTableView");
+	QTableView* view = mainWindow.findChild<QTableView*> ("tableView");
 
 	QModelIndex index = view->indexAt(QPoint(0, 0));
 	QVERIFY(index.isValid());
@@ -138,4 +138,3 @@ void MainWindowTest::testDeletedMemberView()
 }
 
 }
-

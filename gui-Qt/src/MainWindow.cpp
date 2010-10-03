@@ -5,22 +5,17 @@
 namespace ClubFrontend
 {
 
-MainWindow::MainWindow(MemberModel& aDataSource, QWidget* parent) :
-	QMainWindow(parent), ui(), dataSource(aDataSource)
+MainWindow::MainWindow(MemberModel& aMemberModel, QWidget* parent) :
+	QMainWindow(parent), ui(), memberModel(aMemberModel)
 {
 	ui.setupUi(this);
-
 	showDeletedMember(false);
 
-	ui.memberTableView->setModel(dataSource.getMemberTableModel());
-
 	connect(ui.actionShowDeletedMember, SIGNAL(triggered()), this,
-			SLOT(deletedView()));
-	connect(ui.actionSelectMember, SIGNAL(triggered()), this,
-			SLOT(refreshTable()));
+			SLOT(showDeletedMemberView()));
+	connect(ui.actionShowMember, SIGNAL(triggered()), this,
+			SLOT(showMemberView()));
 	connect(ui.actionNewMember, SIGNAL(triggered()), this, SLOT(newMember()));
-	connect(ui.memberTableView, SIGNAL(doubleClicked(const QModelIndex&)),
-			this, SLOT(editMember(const QModelIndex&)));
 }
 
 void MainWindow::newMember()
@@ -33,7 +28,7 @@ void MainWindow::newMember()
 
 void MainWindow::editMember(const QModelIndex& anIndex)
 {
-	int id = dataSource.getMemberId(anIndex);
+	int id = memberModel.getMemberId(anIndex);
 
 	MemberDetailModel model;
 	model.setMemberId(id);
@@ -41,12 +36,12 @@ void MainWindow::editMember(const QModelIndex& anIndex)
 	showMemberDialog(model);
 }
 
-void MainWindow::deletedView()
+void MainWindow::showDeletedMemberView()
 {
 	showDeletedMember(true);
 }
 
-void MainWindow::refreshTable()
+void MainWindow::showMemberView()
 {
 	showDeletedMember(false);
 }
@@ -55,18 +50,21 @@ void MainWindow::showDeletedMember(const bool aBoolean)
 {
 	MemberFilter filter;
 	filter.setDeleted(aBoolean);
-	dataSource.setFilter(filter.getFilter());
+	memberModel.setFilter(filter.getFilter());
+	ui.tableView->setModel(memberModel.getMemberTableModel());
 
 	if (aBoolean)
 	{
 		ui.actionShowDeletedMember->setChecked(true);
-		ui.actionSelectMember->setChecked(false);
+		ui.actionShowMember->setChecked(false);
 	}
 	else
 	{
 		ui.actionShowDeletedMember->setChecked(false);
-		ui.actionSelectMember->setChecked(true);
+		ui.actionShowMember->setChecked(true);
 	}
+	connect(ui.tableView, SIGNAL(doubleClicked(const QModelIndex&)),
+			this, SLOT(editMember(const QModelIndex&)));
 }
 
 void MainWindow::showMemberDialog(MemberDetailModel& aModel)
@@ -75,7 +73,7 @@ void MainWindow::showMemberDialog(MemberDetailModel& aModel)
 	dialog.show();
 	dialog.exec();
 
-	dataSource.refresh();
+	memberModel.refresh();
 }
 
 }

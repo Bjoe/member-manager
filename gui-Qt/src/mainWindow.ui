@@ -16,7 +16,7 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
-     <widget class="QTableView" name="memberTableView">
+     <widget class="QTableView" name="tableView">
       <property name="editTriggers">
        <set>QAbstractItemView::NoEditTriggers</set>
       </property>
@@ -60,7 +60,7 @@
    </attribute>
    <addaction name="actionNewMember"/>
    <addaction name="separator"/>
-   <addaction name="actionSelectMember"/>
+   <addaction name="actionShowMember"/>
    <addaction name="actionShowDeletedMember"/>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -89,7 +89,7 @@
     <property name="title">
      <string>Ansicht</string>
     </property>
-    <addaction name="actionSelectMember"/>
+    <addaction name="actionShowMember"/>
     <addaction name="actionShowDeletedMember"/>
    </widget>
    <addaction name="menuFile"/>
@@ -101,7 +101,7 @@
     <string>Neues Mitglied</string>
    </property>
   </action>
-  <action name="actionSelectMember">
+  <action name="actionShowMember">
    <property name="checkable">
     <bool>true</bool>
    </property>
