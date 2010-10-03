@@ -1,7 +1,5 @@
 #include "MainWindowTest.h"
 
-#include "MainWindow.h"
-
 #include "TestData.h"
 #include "TriggerThread.h"
 #include "MemberModel.h"
@@ -28,12 +26,14 @@ void MainWindowTest::init()
 {
 	TestData testData;
 	testData.createFakeMemberTable();
+	testData.createFakeKassaTable();
 }
 
 void MainWindowTest::testNewMember()
 {
+	ClubFrontend::KassaModel kassaModel(QSqlDatabase::database());
 	ClubFrontend::MemberModel memberModel(QSqlDatabase::database());
-	ClubFrontend::MainWindow mainWindow(memberModel);
+	ClubFrontend::MainWindow mainWindow(memberModel, kassaModel);
 
 	QAction* actionNewMember = mainWindow.findChild<QAction*> (
 			"actionNewMember");
@@ -45,7 +45,8 @@ void MainWindowTest::testNewMember()
 			"actionShowDeletedMember");
 	actionShowDeletedMember->trigger();
 
-	QSqlTableModel* model = memberModel.getMemberTableModel();
+	QTableView* view = mainWindow.findChild<QTableView* >("tableView");
+	QAbstractItemModel* model = view->model();
 	QCOMPARE(model->rowCount(), 2);
 
 	QCOMPARE(id, QString("1027"));
@@ -53,10 +54,12 @@ void MainWindowTest::testNewMember()
 
 void MainWindowTest::testEditMember()
 {
+	ClubFrontend::KassaModel kassaModel(QSqlDatabase::database());
 	ClubFrontend::MemberModel memberModel(QSqlDatabase::database());
-	ClubFrontend::MainWindow mainWindow(memberModel);
+	ClubFrontend::MainWindow mainWindow(memberModel, kassaModel);
 
-	QSqlTableModel* model = memberModel.getMemberTableModel();
+	QTableView* view = mainWindow.findChild<QTableView* >("tableView");
+	QAbstractItemModel* model = view->model();
 	QModelIndex index = model->index(0, 3);
 
 	TriggerThread thread(this, this, index);
@@ -85,8 +88,9 @@ void MainWindowTest::doWork()
 
 void MainWindowTest::testMemberView()
 {
+	ClubFrontend::KassaModel kassaModel(QSqlDatabase::database());
 	ClubFrontend::MemberModel memberModel(QSqlDatabase::database());
-	ClubFrontend::MainWindow mainWindow(memberModel);
+	ClubFrontend::MainWindow mainWindow(memberModel, kassaModel);
 
 	QAction* actionSelectMember = mainWindow.findChild<QAction*> (
 			"actionShowMember");
@@ -112,8 +116,9 @@ void MainWindowTest::testMemberView()
 
 void MainWindowTest::testDeletedMemberView()
 {
+	ClubFrontend::KassaModel kassaModel(QSqlDatabase::database());
 	ClubFrontend::MemberModel memberModel(QSqlDatabase::database());
-	ClubFrontend::MainWindow mainWindow(memberModel);
+	ClubFrontend::MainWindow mainWindow(memberModel, kassaModel);
 
 	QAction* actionShowDeletedMember = mainWindow.findChild<QAction*> (
 			"actionShowDeletedMember");
@@ -135,6 +140,35 @@ void MainWindowTest::testDeletedMemberView()
 
 	// XXX QTest::mouseClick(view, Qt::LeftButton, Qt::NoModifier, QPoint(0,0));
 	// XXX QModelIndex index = view->currentIndex();
+}
+
+void MainWindowTest::testShowKassaView()
+{
+	ClubFrontend::KassaModel kassaModel(QSqlDatabase::database());
+	ClubFrontend::MemberModel memberModel(QSqlDatabase::database());
+	ClubFrontend::MainWindow mainWindow(memberModel, kassaModel);
+
+	QAction* actionShowKassa = mainWindow.findChild<QAction*> (
+			"actionShowKassa");
+	actionShowKassa->trigger();
+
+	QAction* actionSelectMember = mainWindow.findChild<QAction*> (
+			"actionShowMember");
+	QVERIFY(!actionSelectMember->isChecked());
+
+	QAction* actionShowDeletedMember = mainWindow.findChild<QAction*> (
+			"actionShowDeletedMember");
+	QVERIFY(!actionShowDeletedMember->isChecked());
+
+	QTableView* view = mainWindow.findChild<QTableView*> ("tableView");
+
+	QModelIndex index = view->indexAt(QPoint(0, 0));
+	QVERIFY(index.isValid());
+	const QAbstractItemModel * model = index.model();
+	QVERIFY(model != 0);
+	QCOMPARE(model->rowCount(), 3);
+	QVariant value = model->data(index);
+	QCOMPARE(value.toInt(),4);
 }
 
 }

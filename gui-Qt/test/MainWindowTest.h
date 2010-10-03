@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QtTest/QtTest>
 
-#include "MemberModel.h"
+#include "MainWindow.h"
 #include "Executor.h"
 
 namespace ClubFrontendTest
@@ -24,6 +24,7 @@ private slots:
 	void testEditMember();
 	void testMemberView();
 	void testDeletedMemberView();
+	void testShowKassaView();
 
 private:
 	QString id;

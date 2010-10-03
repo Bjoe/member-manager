@@ -4,6 +4,7 @@
 #include "ConnectionDialog.h"
 #include "MemberDialog.h"
 #include "MemberModel.h"
+#include "KassaModel.h"
 #include "MainWindow.h"
 
 int main(int argc, char *argv[])
@@ -60,9 +61,10 @@ int main(int argc, char *argv[])
 	settings.setValue(hostnameKey, dialog.getHostname());
 	settings.setValue(portKey, dialog.getPort());
 
-	ClubFrontend::MemberModel dataSource(db);
+	ClubFrontend::MemberModel memberModel(db);
+	ClubFrontend::KassaModel kassaModel(db);
 	ClubFrontend::MainWindow* mainWindow = new ClubFrontend::MainWindow(
-			dataSource);
+			memberModel, kassaModel);
 	mainWindow->show();
 
 	return app.exec();

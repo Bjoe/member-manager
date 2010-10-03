@@ -5,8 +5,10 @@
 namespace ClubFrontend
 {
 
-MainWindow::MainWindow(MemberModel& aMemberModel, QWidget* parent) :
-	QMainWindow(parent), ui(), memberModel(aMemberModel)
+MainWindow::MainWindow(MemberModel& aMemberModel, KassaModel& aKassaModel,
+		QWidget* parent) :
+	QMainWindow(parent), ui(), memberModel(aMemberModel), kassaModel(
+			aKassaModel)
 {
 	ui.setupUi(this);
 	showDeletedMember(false);
@@ -15,6 +17,8 @@ MainWindow::MainWindow(MemberModel& aMemberModel, QWidget* parent) :
 			SLOT(showDeletedMemberView()));
 	connect(ui.actionShowMember, SIGNAL(triggered()), this,
 			SLOT(showMemberView()));
+	connect(ui.actionShowKassa, SIGNAL(triggered()), this,
+			SLOT(showKassaView()));
 	connect(ui.actionNewMember, SIGNAL(triggered()), this, SLOT(newMember()));
 }
 
@@ -57,14 +61,28 @@ void MainWindow::showDeletedMember(const bool aBoolean)
 	{
 		ui.actionShowDeletedMember->setChecked(true);
 		ui.actionShowMember->setChecked(false);
+		ui.actionShowKassa->setChecked(false);
 	}
 	else
 	{
 		ui.actionShowDeletedMember->setChecked(false);
 		ui.actionShowMember->setChecked(true);
+		ui.actionShowKassa->setChecked(false);
 	}
-	connect(ui.tableView, SIGNAL(doubleClicked(const QModelIndex&)),
-			this, SLOT(editMember(const QModelIndex&)));
+	connect(ui.tableView, SIGNAL(doubleClicked(const QModelIndex&)), this,
+			SLOT(editMember(const QModelIndex&)), Qt::UniqueConnection);
+}
+
+void MainWindow::showKassaView()
+{
+	disconnect(ui.tableView, SIGNAL(doubleClicked(const QModelIndex&)), this,
+			SLOT(editMember(const QModelIndex&)));
+	ui.actionShowDeletedMember->setChecked(false);
+	ui.actionShowMember->setChecked(false);
+	ui.actionShowKassa->setChecked(true);
+
+	ui.tableView->setModel(kassaModel.getKassaTableModel());
+	// TODO Unoetige Tabellen Felder auf Hidden setzen.
 }
 
 void MainWindow::showMemberDialog(MemberDetailModel& aModel)
