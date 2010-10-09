@@ -34,4 +34,8 @@ const QStringList KassaTable::COLUMNNAME = QStringList() << "kasse_pkey"
 		<< "fremdblz" << "fremdktnr" << "fremdname" << "bezeichnung"
 		<< "barkonto" << "konten" << "dorfmitglied_pkey" << "erfasst";
 
+const QString SaldoTable::TABLENAME = "saldo";
+const QStringList SaldoTable::COLUMNNAME = QStringList() << "saldo_pkey"
+		<< "dorfmitglied_pkey" << "betrag" << "datum" << "bezeichnung"
+		<< "barkonto" << "konten" << "kasse_pkey" << "info";
 }

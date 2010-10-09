@@ -113,6 +113,25 @@ public:
 	static const QStringList COLUMNNAME;
 };
 
+class SaldoTable
+{
+public:
+	static const QString TABLENAME;
+	enum column
+	{
+		saldo_pkey,
+		dorfmitglied_pkey,
+		betrag,
+		datum,
+		bezeichnung,
+		barkonto,
+		konten,
+		kasse_pkey,
+		info
+	};
+	static const QStringList COLUMNNAME;
+};
+
 }
 
 #endif /* DATABASESTRUCTURE_H_ */

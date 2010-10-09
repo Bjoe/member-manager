@@ -238,15 +238,15 @@ void TestData::createFakeBalanceTable()
 
 	execStatement(
 			"INSERT INTO saldo ("
-				"            saldo_pkey, dorfmitglied_pkey, betrag, datum, bezeichnung, barkonto,"
-				"            konten, kasse_pkey, info)"
-				"    VALUES (1,1025,0.00,date('2005-08-11'),'Start Saldo',,,,'Start Saldo')");
+				"            saldo_pkey, dorfmitglied_pkey, betrag, datum, bezeichnung, "
+				"             info)"
+				"    VALUES (1,1025,0.00,date('2005-08-11'),'Start Saldo','Start Saldo')");
 
 	execStatement(
 			"INSERT INTO saldo ("
-				"            saldo_pkey, dorfmitglied_pkey, betrag, datum, bezeichnung, barkonto,"
-				"            konten, kasse_pkey, info)"
-				"    VALUES (90,1025,-15.00,date('2005-09-18'),'Mitgliedsbeitrag Sep',,,,'Automatische Monats Abbuchung')");
+				"            saldo_pkey, dorfmitglied_pkey, betrag, datum, bezeichnung, "
+				"             info)"
+				"    VALUES (2,1025,-15.00,date('2005-09-18'),'Mitgliedsbeitrag Sep','Automatische Monats Abbuchung')");
 
 }
 

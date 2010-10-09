@@ -16,6 +16,7 @@ set(QT_FRONTEND_SRC
     MemberDialog.cpp
     MemberModel.cpp
     KassaModel.cpp
+    SaldoModel.cpp
     MemberDetailModel.cpp
     MemberFilter.cpp
     DatabaseStructure.cpp

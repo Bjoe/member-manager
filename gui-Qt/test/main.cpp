@@ -1,5 +1,6 @@
 #include "MemberModelTest.h"
 #include "KassaModelTest.h"
+#include "SaldoModelTest.h"
 #include "MemberDetailModelTest.h"
 #include "MemberFilterTest.h"
 #include "MemberDialogTest.h"
@@ -21,7 +22,7 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 
-	ClubFrontendTest::MemberModelTest sourceTest;
+/*	ClubFrontendTest::MemberModelTest sourceTest;
 	QTest::qExec(&sourceTest);
 
 	ClubFrontendTest::MemberFilterTest filterTest;
@@ -41,6 +42,9 @@ int main(int argc, char* argv[])
 
 	ClubFrontendTest::KassaModelTest kassaModelTest;
 	QTest::qExec(&kassaModelTest);
+*/
+	ClubFrontendTest::SaldoModelTest saldoModelTest;
+	QTest::qExec(&saldoModelTest);
 
 	return 0;
 }
