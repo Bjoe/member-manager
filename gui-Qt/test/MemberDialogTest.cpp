@@ -6,6 +6,7 @@
 #include "DatabaseStructure.h"
 #include "TestData.h"
 #include "TriggerThread.h"
+#include "DialogButtonBoxHandler.h"
 
 #include <QLabel>
 #include <QLineEdit>
@@ -339,7 +340,10 @@ void MemberDialogTest::newMemberDiscard()
 	QDialogButtonBox* buttonBox = dialog.findChild<QDialogButtonBox*> (
 			"buttonBox");
 	QPushButton* discardButton = buttonBox->button(QDialogButtonBox::Discard);
-	TriggerThread thread(this, this);
+
+	DialogButtonBoxHandler handler;
+
+	TriggerThread thread(this, &handler);
 	connect(&thread, SIGNAL(triggered()), discardButton, SLOT(click()));
 	thread.syncStart();
 
@@ -351,22 +355,18 @@ void MemberDialogTest::newMemberDiscard()
 	QVERIFY(!query.next());
 }
 
-void MemberDialogTest::doWork()
+void MemberDialogTest::showSaldo()
 {
-	sleep(1);
-	bool next = true;
-	do
-	{
-		QWidget* widget = QApplication::activeWindow();
-		if (widget)
-		{
-			QDialogButtonBox* messageBox =
-					widget->findChild<QDialogButtonBox*> ();
-			QPushButton* okButton = messageBox->button(QDialogButtonBox::Yes);
-			okButton->click();
-			next = false;
-		}
-	} while (next);
+	ClubFrontend::MemberDetailModel detailModel;
+	detailModel.setMemberId(1025);
+	ClubFrontend::MemberDialog dialog(detailModel);
+
+	DialogButtonBoxHandler handler(QDialogButtonBox::Close);
+	TriggerThread thread(this, &handler);
+
+	QPushButton* saldoButton = dialog.findChild<QPushButton* >("saldoButton");
+	connect(&thread, SIGNAL(triggered()), saldoButton, SLOT(click()));
+	thread.syncStart();
 }
 
 }

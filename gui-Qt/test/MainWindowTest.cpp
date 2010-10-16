@@ -63,15 +63,14 @@ void MainWindowTest::testEditMember()
 	QModelIndex index = model->index(0, 3);
 
 	TriggerThread thread(this, this, index);
-	connect(&thread, SIGNAL(triggered(const QModelIndex&)), &mainWindow, SLOT(editMember(const QModelIndex&)));
+	connect(&thread, SIGNAL(triggeredModelIndex(const QModelIndex&)), &mainWindow, SLOT(editMember(const QModelIndex&)));
 	thread.syncStart();
 
 	QCOMPARE(id, QString("1025"));
 }
 
-void MainWindowTest::doWork()
+void MainWindowTest::handle()
 {
-	sleep(1);
 	bool next = true;
 	do
 	{
@@ -80,7 +79,10 @@ void MainWindowTest::doWork()
 		{
 			QLabel* memberId = widget->findChild<QLabel* >("memberId");
 			id = memberId->text();
-			widget->close();
+			QDialogButtonBox* buttonBox = widget->findChild<QDialogButtonBox*> (
+				"buttonBox");
+			QPushButton* button = buttonBox->button(QDialogButtonBox::Close);
+			button->click();
 			next = false;
 		}
 	} while (next);

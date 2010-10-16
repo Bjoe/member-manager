@@ -5,17 +5,17 @@
 #include <QtTest/QtTest>
 
 #include "MainWindow.h"
-#include "Executor.h"
+#include "Handler.h"
 
 namespace ClubFrontendTest
 {
 
-class MainWindowTest: public QObject, public Executor
+class MainWindowTest: public QObject, public Handler
 {
 Q_OBJECT
 
 public:
-	virtual void doWork();
+	virtual void handle();
 
 private slots:
 	void init();

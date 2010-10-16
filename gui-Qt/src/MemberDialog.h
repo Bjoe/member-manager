@@ -19,6 +19,7 @@ public:
 
 private slots:
 	void deleteMember();
+	void showSaldo();
 
 private:
 	MemberDetailModel& memberDetailModel;

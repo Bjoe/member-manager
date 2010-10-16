@@ -14,6 +14,7 @@
 int main(int argc, char* argv[])
 {
 	QApplication app(argc, argv);
+	app.setQuitOnLastWindowClosed(false);
 
 	QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
 	db.setDatabaseName("dorfverw.dat");
@@ -23,7 +24,7 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 
-/*	ClubFrontendTest::MemberModelTest sourceTest;
+	ClubFrontendTest::MemberModelTest sourceTest;
 	QTest::qExec(&sourceTest);
 
 	ClubFrontendTest::MemberFilterTest filterTest;
@@ -43,12 +44,12 @@ int main(int argc, char* argv[])
 
 	ClubFrontendTest::KassaModelTest kassaModelTest;
 	QTest::qExec(&kassaModelTest);
-*/
+
 	ClubFrontendTest::SaldoModelTest saldoModelTest;
 	QTest::qExec(&saldoModelTest);
 
-        ClubFrontendTest::SaldoDialogTest saldoDialogTest;
-        QTest::qExec(&saldoDialogTest);
+	ClubFrontendTest::SaldoDialogTest saldoDialogTest;
+	QTest::qExec(&saldoDialogTest);
 
 	return 0;
 }

@@ -2,6 +2,8 @@
 
 #include "MemberDialog.h"
 #include "DatabaseStructure.h"
+#include "SaldoDialog.h"
+#include "SaldoModel.h"
 
 namespace ClubFrontend
 {
@@ -32,7 +34,7 @@ MemberDialog::MemberDialog(MemberDetailModel& aMemberDetailModel,
 	addressMapper->setModel(memberDetailModel.getAddressTableModel());
 	addressMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
 	addressMapper->addMapping(ui.city, AddressTable::Town);
-	;
+
 	addressMapper->addMapping(ui.street, AddressTable::Street);
 	addressMapper->addMapping(ui.zipcode, AddressTable::ZipCode);
 	addressMapper->toFirst();
@@ -68,6 +70,8 @@ MemberDialog::MemberDialog(MemberDetailModel& aMemberDetailModel,
 	connect(discardButton, SIGNAL(clicked()), this, SLOT(deleteMember()));
 
 	connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
+
+	connect(ui.saldoButton, SIGNAL(clicked()), this, SLOT(showSaldo()));
 }
 
 MemberDialog::~MemberDialog()
@@ -89,5 +93,14 @@ void MemberDialog::deleteMember()
 		memberDetailModel.deleteMember();
 	}
 }
+
+void MemberDialog::showSaldo()
+{
+  SaldoModel model(QSqlDatabase::database(), memberDetailModel.getMemberId());
+  SaldoDialog dialog(model, this);
+
+  dialog.exec();
+}
+
 
 }

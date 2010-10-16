@@ -16,6 +16,7 @@ set(QT_FRONTEND_TEST_MOC_HEADERS
     )
 
 set(QT_FRONTEND_TEST
+    DialogButtonBoxHandler.cpp
     TestData.cpp
     MainWindowTest.cpp
     MemberDialogTest.cpp

@@ -14,7 +14,7 @@
 #include <QWaitCondition>
 #include <QModelIndex>
 
-#include "Executor.h"
+#include "Handler.h"
 
 namespace ClubFrontendTest
 {
@@ -24,7 +24,7 @@ class TriggerThread: public QThread
 Q_OBJECT
 
 public:
-	TriggerThread(QObject *aParent, Executor* const anExecutor, const QModelIndex& anIndex = QModelIndex());
+	TriggerThread(QObject *aParent, Handler* const anExecutor, const QModelIndex& anIndex = QModelIndex());
 	virtual ~TriggerThread();
 
 	void syncStart();
@@ -34,12 +34,12 @@ protected:
 
 signals:
 	void triggered();
-	void triggered(const QModelIndex& anIndex);
+	void triggeredModelIndex(const QModelIndex& anIndex);
 
 private:
 	mutable QMutex mutex;
 	mutable QWaitCondition waitForThread;
-	Executor* const executor;
+	Handler* const executor;
 	const QModelIndex& modelIndex;
 };
 

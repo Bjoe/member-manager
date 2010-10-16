@@ -11,11 +11,12 @@
 #include <QDialogButtonBox>
 #include <QPushButton>
 #include <QCoreApplication>
+#include <QEventLoop>
 
 namespace ClubFrontendTest
 {
 
-TriggerThread::TriggerThread(QObject *aParent, Executor* const anExecutor,
+TriggerThread::TriggerThread(QObject *aParent, Handler* const anExecutor,
 		const QModelIndex& anIndex) :
 	QThread(aParent), mutex(), waitForThread(), executor(anExecutor),
 			modelIndex(anIndex)
@@ -44,11 +45,12 @@ void TriggerThread::run()
 	triggered();
 
 	emit
-	triggered(modelIndex);
+	triggeredModelIndex(modelIndex);
 
 	waitForThread.wakeAll();
 	mutex.unlock();
-	executor->doWork();
+	sleep(1);
+	executor->handle();
 }
 
 }
