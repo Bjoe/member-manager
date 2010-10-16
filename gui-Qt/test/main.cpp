@@ -6,6 +6,7 @@
 #include "MemberDialogTest.h"
 #include "MainWindowTest.h"
 #include "ConnectionDialogTest.h"
+#include "SaldoDialogTest.h"
 #include "TestData.h"
 
 #include <QtTest/QtTest>
@@ -45,6 +46,9 @@ int main(int argc, char* argv[])
 */
 	ClubFrontendTest::SaldoModelTest saldoModelTest;
 	QTest::qExec(&saldoModelTest);
+
+        ClubFrontendTest::SaldoDialogTest saldoDialogTest;
+        QTest::qExec(&saldoDialogTest);
 
 	return 0;
 }

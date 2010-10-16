@@ -11,6 +11,7 @@ set(QT_FRONTEND_TEST_MOC_HEADERS
     MemberDetailModelTest.h
     MemberFilterTest.h
     ConnectionDialogTest.h
+    SaldoDialogTest.h
     TriggerThread.h
     )
 
@@ -24,6 +25,7 @@ set(QT_FRONTEND_TEST
     MemberDetailModelTest.cpp
     MemberFilterTest.cpp
     ConnectionDialogTest.cpp
+    SaldoDialogTest.cpp
     TriggerThread.cpp
     )
 

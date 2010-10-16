@@ -3,12 +3,14 @@ set(QT_FRONTEND_MOC_HEADERS
     MainWindow.h
     MemberDialog.h
     ConnectionDialog.h
+    SaldoDialog.h
     )
 
 set(QT_FRONTEND_UI
     mainWindow.ui
     memberDialog.ui
     ConnectionDialog.ui
+    SaldoDialog.ui
     )
 
 set(QT_FRONTEND_SRC
@@ -21,6 +23,7 @@ set(QT_FRONTEND_SRC
     MemberFilter.cpp
     DatabaseStructure.cpp
     ConnectionDialog.cpp
+    SaldoDialog.cpp
     )
 
 # Setze Sourcen fuer die tests
