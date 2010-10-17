@@ -4,6 +4,7 @@ set(QT_FRONTEND_MOC_HEADERS
     MemberDialog.h
     ConnectionDialog.h
     SaldoDialog.h
+    ContributionDialog.h
     )
 
 set(QT_FRONTEND_UI
@@ -11,6 +12,7 @@ set(QT_FRONTEND_UI
     memberDialog.ui
     ConnectionDialog.ui
     SaldoDialog.ui
+    ContributionDialog.ui
     )
 
 set(QT_FRONTEND_SRC
@@ -19,11 +21,13 @@ set(QT_FRONTEND_SRC
     MemberModel.cpp
     KassaModel.cpp
     SaldoModel.cpp
+    ContributionModel.cpp
     MemberDetailModel.cpp
     MemberFilter.cpp
     DatabaseStructure.cpp
     ConnectionDialog.cpp
     SaldoDialog.cpp
+    ContributionDialog.cpp
     )
 
 # Setze Sourcen fuer die tests
