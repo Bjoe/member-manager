@@ -369,4 +369,18 @@ void MemberDialogTest::showSaldo()
 	thread.syncStart();
 }
 
+void MemberDialogTest::showfee()
+{
+    ClubFrontend::MemberDetailModel detailModel;
+    detailModel.setMemberId(1025);
+    ClubFrontend::MemberDialog dialog(detailModel);
+
+    DialogButtonBoxHandler handler(QDialogButtonBox::Close);
+    TriggerThread thread(this, &handler);
+
+    QPushButton* feeButton = dialog.findChild<QPushButton* >("feeButton");
+    connect(&thread, SIGNAL(triggered()), feeButton, SLOT(click()));
+    thread.syncStart();
+}
+
 }

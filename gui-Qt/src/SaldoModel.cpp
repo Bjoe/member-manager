@@ -9,6 +9,8 @@
 
 #include "DatabaseStructure.h"
 
+#include <QString>
+
 namespace ClubFrontend
 {
 

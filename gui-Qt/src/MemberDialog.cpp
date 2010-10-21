@@ -4,6 +4,8 @@
 #include "DatabaseStructure.h"
 #include "SaldoDialog.h"
 #include "SaldoModel.h"
+#include "ContributionDialog.h"
+#include "ContributionModel.h"
 
 namespace ClubFrontend
 {
@@ -72,6 +74,7 @@ MemberDialog::MemberDialog(MemberDetailModel& aMemberDetailModel,
 	connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 
 	connect(ui.saldoButton, SIGNAL(clicked()), this, SLOT(showSaldo()));
+	connect(ui.feeButton, SIGNAL(clicked()), this, SLOT(showFee()));
 }
 
 MemberDialog::~MemberDialog()
@@ -102,5 +105,12 @@ void MemberDialog::showSaldo()
   dialog.exec();
 }
 
+void MemberDialog::showFee()
+{
+  ContributionModel model(QSqlDatabase::database(), memberDetailModel.getMemberId());
+  ContributionDialog dialog(model, this);
+
+  dialog.exec();
+}
 
 }

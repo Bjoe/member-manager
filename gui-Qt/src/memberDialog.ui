@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>496</width>
-    <height>286</height>
+    <width>516</width>
+    <height>290</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -29,7 +29,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>3</number>
    </property>
    <widget class="QWidget" name="name">
     <attribute name="title">
@@ -420,6 +420,19 @@
        </rect>
       </property>
      </widget>
+    </widget>
+    <widget class="QPushButton" name="feeButton">
+     <property name="geometry">
+      <rect>
+       <x>220</x>
+       <y>170</y>
+       <width>83</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Beiträge</string>
+     </property>
     </widget>
    </widget>
    <widget class="QWidget" name="bank">

@@ -18,6 +18,7 @@ private slots:
 	void changeMember();
 	void newMemberDiscard();
 	void showSaldo();
+	void showfee();
 };
 
 }
