@@ -27,6 +27,7 @@
 */
 
 #include "ContributionDialog.h"
+#include "DatabaseStructure.h"
 
 namespace ClubFrontend
 {
@@ -36,6 +37,11 @@ ContributionDialog::ContributionDialog(ContributionModel& aContributionModel, QW
 {
   ui.setupUi(this);
   ui.contributionTableView->setModel(contributionModel.getContributionTableModel());
+  
+  ui.contributionTableView->setColumnHidden(ContributionTable::ContributionId, true);
+  ui.contributionTableView->setColumnHidden(ContributionTable::MemberId, true);
+  ui.contributionTableView->setSortingEnabled(true);
+  ui.contributionTableView->sortByColumn(ContributionTable::ValidFrom, Qt::AscendingOrder);
 }
 
 ContributionDialog::~ContributionDialog()

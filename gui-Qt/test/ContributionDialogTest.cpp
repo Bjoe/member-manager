@@ -59,11 +59,11 @@ void ContributionDialogTest::testShowDialog()
   const QTableView* tableView = dialog.findChild<QTableView* >("contributionTableView");
   const QAbstractItemModel* model = tableView->model();
   QVERIFY(model != 0);
-  QCOMPARE(model->rowCount(), 1);
+  QCOMPARE(model->rowCount(), 2);
   using ClubFrontend::ContributionTable;
-  const QModelIndex index = model->index(0, ContributionTable::Fee);
+  const QModelIndex index = model->index(0, ContributionTable::ValidFrom);
   const QVariant value = model->data(index);
-  QCOMPARE(value.toString(), QString("15"));
+  QCOMPARE(value.toString(), QString("2006-05-01"));
 }
 
 

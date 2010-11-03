@@ -51,11 +51,11 @@ void ContributionModelTest::testModel()
   ClubFrontend::ContributionModel contributionModel(QSqlDatabase::database(), 1025);
 
   const QSqlTableModel* model = contributionModel.getContributionTableModel();
-  QCOMPARE(model->rowCount(), 1);
+  QCOMPARE(model->rowCount(), 2);
   QSqlRecord record = model->record(0);
   using ClubFrontend::ContributionTable;
   QCOMPARE(record.value(ContributionTable::Info).toString(), QString("Spende wird eingestellt"));
-  QCOMPARE(record.value(ContributionTable::Fee).toString(), QString("15"));
+  QCOMPARE(record.value(ContributionTable::Fee).toString(), QString("14"));
 }
 
 }

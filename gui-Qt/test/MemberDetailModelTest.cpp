@@ -52,7 +52,7 @@ void MemberDetailModelTest::testGetContributionModel()
 	ClubFrontend::MemberDetailModel dataSource(QSqlDatabase::database());
 
 	const QSqlTableModel* model = dataSource.getContributionTableModel();
-	QCOMPARE(model->rowCount(), 1);
+	QCOMPARE(model->rowCount(), 2);
 	QSqlRecord record = model->record(0);
 	double fee = 15.00;
 	QCOMPARE(record.value("beitrag").toDouble(), fee);
@@ -104,7 +104,7 @@ void MemberDetailModelTest::testSetMemberId()
 	record = accountModel->record(0);
 	QCOMPARE(record.value("bank").toString(), QString("sparstrumpf"));
 
-	QCOMPARE(contributionModel->rowCount(), 1);
+	QCOMPARE(contributionModel->rowCount(), 2);
 	record = contributionModel->record(0);
 	double fee = 15.00;
 	QCOMPARE(record.value("beitrag").toDouble(), fee);
