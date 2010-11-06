@@ -12,8 +12,7 @@ MainWindow::MainWindow(MemberModel& aMemberModel, KassaModel& aKassaModel,
 			aKassaModel)
 {
 	ui.setupUi(this);
-	showMembers
-(false);
+	showMembers(false);
 
 	connect(ui.actionShowDeletedMember, SIGNAL(triggered()), this,
 			SLOT(showDeletedMemberView()));
@@ -44,14 +43,12 @@ void MainWindow::editMember(const QModelIndex& anIndex)
 
 void MainWindow::showDeletedMemberView()
 {
-	showMembers
-(true);
+	showMembers(true);
 }
 
 void MainWindow::showMemberView()
 {
-	showMembers
-(false);
+	showMembers(false);
 }
 
 void MainWindow::showMembers(const bool aBoolean)
@@ -61,6 +58,14 @@ void MainWindow::showMembers(const bool aBoolean)
 	memberModel.setFilter(filter.getFilter());
 	ui.tableView->setModel(memberModel.getMemberTableModel());
 	ui.tableView->sortByColumn(MemberTable::MemberId, Qt::AscendingOrder);
+	ui.tableView->resizeColumnsToContents();
+	ui.tableView->setColumnHidden(MemberTable::Deleted, true);
+	ui.tableView->setColumnHidden(MemberTable::FOO_CCC, true);
+	ui.tableView->setColumnHidden(MemberTable::FOO_ChaosNr, true);
+	ui.tableView->setColumnHidden(MemberTable::FOO_ClubAdress, true);
+	ui.tableView->setColumnHidden(MemberTable::FOO_Einzug, true);
+	ui.tableView->setColumnHidden(MemberTable::FOO_intern, true);
+	ui.tableView->setColumnHidden(MemberTable::FOO_Shell, true);
 
 	if (aBoolean)
 	{
@@ -88,7 +93,9 @@ void MainWindow::showKassaView()
 
 	ui.tableView->setModel(kassaModel.getKassaTableModel());
 	ui.tableView->sortByColumn(KassaTable::kasse_pkey, Qt::DescendingOrder);
-	// TODO Unoetige Tabellen Felder auf Hidden setzen.
+	ui.tableView->resizeColumnsToContents();
+	ui.tableView->setColumnHidden(KassaTable::kasse_pkey, true);
+	ui.tableView->setColumnHidden(KassaTable::deleted, true);
 }
 
 void MainWindow::showMemberDialog(MemberDetailModel& aModel)
