@@ -33,9 +33,9 @@ namespace ClubFrontendTest
         const QAbstractItemModel* model = tableView->model();
         QVERIFY(model != 0);
         QCOMPARE(model->rowCount(), 2);
-		QModelIndex index = model->index(1,3);
+		QModelIndex index = model->index(0,3);
         QVariant value = model->data(index);
-        QCOMPARE(value.toString(), QString("2005-08-11"));
+        QCOMPARE(value.toString(), QString("2005-09-18"));
     }
 
 }

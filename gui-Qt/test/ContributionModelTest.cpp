@@ -55,7 +55,7 @@ void ContributionModelTest::testModel()
   QSqlRecord record = model->record(0);
   using ClubFrontend::ContributionTable;
   QCOMPARE(record.value(ContributionTable::Info).toString(), QString("Spende wird eingestellt"));
-  QCOMPARE(record.value(ContributionTable::Fee).toString(), QString("14"));
+  QCOMPARE(record.value(ContributionTable::Fee).toString(), QString("15"));
 }
 
 }

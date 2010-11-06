@@ -31,7 +31,6 @@ void SaldoModel::setMemberId(const int aMemberId)
 	QString columnname = SaldoTable::COLUMNNAME[SaldoTable::dorfmitglied_pkey];
 	QString filter = QString(columnname + " = %1").arg(aMemberId);
 	model->setFilter(filter);
-	model->setSort(SaldoTable::saldo_pkey, Qt::DescendingOrder);
 }
 
 void SaldoModel::refresh()

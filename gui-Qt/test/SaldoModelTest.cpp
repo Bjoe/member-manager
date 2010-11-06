@@ -33,8 +33,8 @@ void SaldoModelTest::testModel()
 	QCOMPARE(model->rowCount(), 2);
 	QSqlRecord record = model->record(0);
 	using ClubFrontend::SaldoTable;
-	QCOMPARE(record.value(SaldoTable::bezeichnung).toString(), QString("Mitgliedsbeitrag Sep"));
-	QCOMPARE(record.value(SaldoTable::betrag).toString(), QString("-15"));
+	QCOMPARE(record.value(SaldoTable::bezeichnung).toString(), QString("Start Saldo"));
+	QCOMPARE(record.value(SaldoTable::betrag).toString(), QString("0"));
 }
 
 }

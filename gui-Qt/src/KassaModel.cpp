@@ -28,7 +28,6 @@ KassaModel::~KassaModel()
 void KassaModel::setDefaultFilter()
 {
 	model->setFilter(KassaTable::COLUMNNAME[KassaTable::deleted] + "='false'");
-	model->setSort(KassaTable::zwbudatum62, Qt::DescendingOrder);
 }
 
 void KassaModel::refresh()
