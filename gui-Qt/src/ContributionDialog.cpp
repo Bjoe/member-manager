@@ -42,6 +42,7 @@ ContributionDialog::ContributionDialog(ContributionModel& aContributionModel, QW
   ui.contributionTableView->setColumnHidden(ContributionTable::MemberId, true);
 
   ui.contributionTableView->sortByColumn(ContributionTable::ValidFrom, Qt::AscendingOrder);
+  ui.contributionTableView->resizeColumnsToContents();
 }
 
 ContributionDialog::~ContributionDialog()

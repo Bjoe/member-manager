@@ -13,6 +13,7 @@ SaldoDialog::SaldoDialog(SaldoModel& aSaldoModel, QWidget *parent)
     
     ui.saldoTableView->setColumnHidden(SaldoTable::saldo_pkey, true);
     ui.saldoTableView->setColumnHidden(SaldoTable::dorfmitglied_pkey, true);
+    ui.saldoTableView->resizeColumnsToContents();
 }
 
 SaldoDialog::~SaldoDialog()
