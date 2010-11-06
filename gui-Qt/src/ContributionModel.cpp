@@ -39,6 +39,10 @@ ContributionModel::ContributionModel(const QSqlDatabase& aDb, const int aMemberI
   model(new QSqlTableModel(this, aDb))
 {
   model->setTable(ContributionTable::TABLENAME);
+  model->setHeaderData(ContributionTable::Fee, Qt::Horizontal, tr("Beitrag"));
+  model->setHeaderData(ContributionTable::Donation, Qt::Horizontal, tr("Spende"));
+  model->setHeaderData(ContributionTable::ValidFrom, Qt::Horizontal, tr("Gültig ab:"));
+  model->setHeaderData(ContributionTable::Info, Qt::Horizontal, tr("Info"));
   setMemberId(aMemberId);
   refresh();
 }

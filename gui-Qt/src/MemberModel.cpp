@@ -17,6 +17,12 @@ MemberModel::MemberModel(const QSqlDatabase& aDb) :
 		model(new QSqlTableModel(this, aDb))
 {
 	model->setTable(MemberTable::TABLENAME);
+	model->setHeaderData(MemberTable::MemberId, Qt::Horizontal, tr("Nr."));
+	model->setHeaderData(MemberTable::FirstName, Qt::Horizontal, tr("Vorname"));
+	model->setHeaderData(MemberTable::Name, Qt::Horizontal, tr("Name"));
+	model->setHeaderData(MemberTable::NickName, Qt::Horizontal, tr("Nickname"));
+	model->setHeaderData(MemberTable::EntryDate, Qt::Horizontal, tr("Eintritts Datum"));
+	model->setHeaderData(MemberTable::Info, Qt::Horizontal, tr("Info"));
 	refresh();
 }
 
