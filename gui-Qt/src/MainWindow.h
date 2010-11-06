@@ -33,7 +33,7 @@ private:
 	MemberModel& memberModel;
 	KassaModel& kassaModel;
 
-	void showDeletedMember(const bool aBoolean);
+	void showMembers(const bool aBoolean);
 	void showMemberDialog(MemberDetailModel& aModel);
 };
 

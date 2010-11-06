@@ -1,6 +1,7 @@
 #include "MainWindow.h"
 #include "MemberFilter.h"
 #include "MemberDialog.h"
+#include "DatabaseStructure.h"
 
 namespace ClubFrontend
 {
@@ -11,7 +12,8 @@ MainWindow::MainWindow(MemberModel& aMemberModel, KassaModel& aKassaModel,
 			aKassaModel)
 {
 	ui.setupUi(this);
-	showDeletedMember(false);
+	showMembers
+(false);
 
 	connect(ui.actionShowDeletedMember, SIGNAL(triggered()), this,
 			SLOT(showDeletedMemberView()));
@@ -42,20 +44,23 @@ void MainWindow::editMember(const QModelIndex& anIndex)
 
 void MainWindow::showDeletedMemberView()
 {
-	showDeletedMember(true);
+	showMembers
+(true);
 }
 
 void MainWindow::showMemberView()
 {
-	showDeletedMember(false);
+	showMembers
+(false);
 }
 
-void MainWindow::showDeletedMember(const bool aBoolean)
+void MainWindow::showMembers(const bool aBoolean)
 {
 	MemberFilter filter;
 	filter.setDeleted(aBoolean);
 	memberModel.setFilter(filter.getFilter());
 	ui.tableView->setModel(memberModel.getMemberTableModel());
+	ui.tableView->sortByColumn(MemberTable::MemberId, Qt::AscendingOrder);
 
 	if (aBoolean)
 	{
@@ -82,6 +87,7 @@ void MainWindow::showKassaView()
 	ui.actionShowKassa->setChecked(true);
 
 	ui.tableView->setModel(kassaModel.getKassaTableModel());
+	ui.tableView->sortByColumn(KassaTable::kasse_pkey, Qt::DescendingOrder);
 	// TODO Unoetige Tabellen Felder auf Hidden setzen.
 }
 
