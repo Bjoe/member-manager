@@ -17,6 +17,9 @@
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
      <widget class="QTableView" name="tableView">
+      <property name="contextMenuPolicy">
+       <enum>Qt::ActionsContextMenu</enum>
+      </property>
       <property name="editTriggers">
        <set>QAbstractItemView::NoEditTriggers</set>
       </property>
@@ -138,6 +141,30 @@
    </property>
    <property name="toolTip">
     <string>Vereins Kasse</string>
+   </property>
+  </action>
+  <action name="actionCopyMailAdr">
+   <property name="text">
+    <string>Kopiere Email Adr.</string>
+   </property>
+   <property name="toolTip">
+    <string>Kopiere Email Adresse des Mitglieds in die Zwischenablage</string>
+   </property>
+  </action>
+  <action name="actionShowSaldo">
+   <property name="text">
+    <string>Saldo Ansicht</string>
+   </property>
+   <property name="toolTip">
+    <string>Zeige Saldo des Mitglieds</string>
+   </property>
+  </action>
+  <action name="actionEditMember">
+   <property name="text">
+    <string>Editiere Mitglied</string>
+   </property>
+   <property name="toolTip">
+    <string>Mitglieds Daten Ändern</string>
    </property>
   </action>
  </widget>

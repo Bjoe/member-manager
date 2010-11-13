@@ -1,7 +1,18 @@
+
 #include "MainWindow.h"
 #include "MemberFilter.h"
 #include "MemberDialog.h"
+#include "MemberDetailModel.h"
+#include "SaldoDialog.h"
 #include "DatabaseStructure.h"
+
+#include <QModelIndexList>
+#include <QSqlTableModel>
+#include <QSqlRecord>
+#include <QClipboard>
+#include <QItemSelectionModel>
+#include <QVariant>
+#include <QString>
 
 namespace ClubFrontend
 {
@@ -20,7 +31,14 @@ MainWindow::MainWindow(MemberModel& aMemberModel, KassaModel& aKassaModel,
 			SLOT(showMemberView()));
 	connect(ui.actionShowKassa, SIGNAL(triggered()), this,
 			SLOT(showKassaView()));
-	connect(ui.actionNewMember, SIGNAL(triggered()), this, SLOT(newMember()));
+	connect(ui.actionNewMember, SIGNAL(triggered()), this, 
+		SLOT(newMember()));
+	connect(ui.actionEditMember, SIGNAL(triggered()), this, 
+		SLOT(selectedMember()));
+	connect(ui.actionCopyMailAdr, SIGNAL(triggered()), this, 
+		SLOT(copyMailAdress()));
+	connect(ui.actionShowSaldo, SIGNAL(triggered()), this, 
+		SLOT(showSaldo()));
 }
 
 void MainWindow::newMember()
@@ -29,6 +47,11 @@ void MainWindow::newMember()
 	model.newMember();
 
 	showMemberDialog(model);
+}
+
+void MainWindow::selectedMember()
+{
+      editMember(getSelection());
 }
 
 void MainWindow::editMember(const QModelIndex& anIndex)
@@ -66,6 +89,10 @@ void MainWindow::showMembers(const bool aBoolean)
 	ui.tableView->setColumnHidden(MemberTable::FOO_Einzug, true);
 	ui.tableView->setColumnHidden(MemberTable::FOO_intern, true);
 	ui.tableView->setColumnHidden(MemberTable::FOO_Shell, true);
+	
+	ui.tableView->addAction(ui.actionEditMember);
+	ui.tableView->addAction(ui.actionCopyMailAdr);
+	ui.tableView->addAction(ui.actionShowSaldo);
 
 	if (aBoolean)
 	{
@@ -87,6 +114,10 @@ void MainWindow::showKassaView()
 {
 	disconnect(ui.tableView, SIGNAL(doubleClicked(const QModelIndex&)), this,
 			SLOT(editMember(const QModelIndex&)));
+	ui.tableView->removeAction(ui.actionEditMember);
+	ui.tableView->removeAction(ui.actionCopyMailAdr);
+	ui.tableView->removeAction(ui.actionShowSaldo);
+
 	ui.actionShowDeletedMember->setChecked(false);
 	ui.actionShowMember->setChecked(false);
 	ui.actionShowKassa->setChecked(true);
@@ -105,6 +136,38 @@ void MainWindow::showMemberDialog(MemberDetailModel& aModel)
 	dialog.exec();
 
 	memberModel.refresh();
+}
+
+void MainWindow::showSaldo()
+{
+      	int id = memberModel.getMemberId(getSelection());
+  
+	SaldoModel model(QSqlDatabase::database(), id);
+	SaldoDialog dialog(model, this);
+	dialog.show();
+	dialog.exec();
+}
+
+void MainWindow::copyMailAdress()
+{
+      	int id = memberModel.getMemberId(getSelection());
+	
+	MemberDetailModel memberDetailModel(QSqlDatabase::database());
+	memberDetailModel.setMemberId(id);
+	QSqlTableModel* resourcenModel = memberDetailModel.getRessourcenTableModel();
+	QSqlRecord record = resourcenModel->record(0);
+	QVariant value = record.value(RessourcenTable::EmailAdress);
+	QString emailAdr = value.toString();
+	
+	QClipboard* clipboard = QApplication::clipboard();
+	clipboard->setText(emailAdr);
+}
+
+QModelIndex MainWindow::getSelection() const
+{
+  	QItemSelectionModel* selectionModel = ui.tableView->selectionModel();
+	QModelIndexList indexes = selectionModel->selectedIndexes();
+	return indexes.first();
 }
 
 }

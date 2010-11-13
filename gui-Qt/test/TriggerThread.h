@@ -24,7 +24,7 @@ class TriggerThread: public QThread
 Q_OBJECT
 
 public:
-	TriggerThread(QObject *aParent, Handler* const anExecutor, const QModelIndex& anIndex = QModelIndex());
+	TriggerThread(QObject *aParent, Handler* const anExecutor = 0, const QModelIndex& anIndex = QModelIndex());
 	virtual ~TriggerThread();
 
 	void syncStart();

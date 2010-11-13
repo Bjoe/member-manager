@@ -1,8 +1,10 @@
+
 #include "MainWindowTest.h"
 
 #include "TestData.h"
 #include "TriggerThread.h"
 #include "MemberModel.h"
+#include "DialogButtonBoxHandler.h"
 
 #include <QTableView>
 #include <QSqlTableModel>
@@ -15,6 +17,10 @@
 #include <QApplication>
 #include <QSqlTableModel>
 #include <QModelIndex>
+#include <QItemSelection>
+#include <QItemSelectionModel>
+#include <QClipboard>
+#include <QApplication>
 #include <QLabel>
 
 #include <QDebug>
@@ -67,6 +73,45 @@ void MainWindowTest::testEditMember()
 	thread.syncStart();
 
 	QCOMPARE(id, QString("1025"));
+}
+
+void MainWindowTest::testSelectedMember()
+{
+      ClubFrontend::KassaModel kassaModel(QSqlDatabase::database());
+      ClubFrontend::MemberModel memberModel(QSqlDatabase::database());
+      ClubFrontend::MainWindow mainWindow(memberModel, kassaModel);
+      
+      QTableView* view = mainWindow.findChild<QTableView* >("tableView");
+      QItemSelectionModel* selectionModel = view->selectionModel();
+      QAbstractItemModel* model = view->model();
+      QModelIndex index = model->index(0,3);
+      QItemSelection selection(index, index);
+      selectionModel->select(selection, QItemSelectionModel::Select);
+      
+      TriggerThread thread(this, this);
+      connect(&thread, SIGNAL(triggered()), &mainWindow, SLOT(selectedMember()));
+      thread.syncStart();
+      
+      QCOMPARE(id, QString("1025"));
+}
+
+void MainWindowTest::testShowSaldo()
+{
+      ClubFrontend::KassaModel kassaModel(QSqlDatabase::database());
+      ClubFrontend::MemberModel memberModel(QSqlDatabase::database());
+      ClubFrontend::MainWindow mainWindow(memberModel, kassaModel);
+      
+      QTableView* view = mainWindow.findChild<QTableView* >("tableView");
+      QItemSelectionModel* selectionModel = view->selectionModel();
+      QAbstractItemModel* model = view->model();
+      QModelIndex index = model->index(0, 3);
+      QItemSelection selection(index, index);
+      selectionModel->select(selection, QItemSelectionModel::Select);
+      
+      DialogButtonBoxHandler handler(QDialogButtonBox::Close);
+      TriggerThread thread(this, &handler);
+      connect(&thread, SIGNAL(triggered()), &mainWindow, SLOT(showSaldo()));
+      thread.syncStart();
 }
 
 void MainWindowTest::handle()
@@ -170,7 +215,29 @@ void MainWindowTest::testShowKassaView()
 	QVERIFY(model != 0);
 	QCOMPARE(model->rowCount(), 3);
 	QVariant value = model->data(index);
-	QCOMPARE(value.toInt(),4);
+	QCOMPARE(value.toString(), QString(""));
+}
+
+void MainWindowTest::testCopyMailAdress()
+{
+      ClubFrontend::KassaModel kassaModel(QSqlDatabase::database());
+      ClubFrontend::MemberModel memberModel(QSqlDatabase::database());
+      ClubFrontend::MainWindow mainWindow(memberModel, kassaModel);
+      
+      QTableView* view = mainWindow.findChild<QTableView* >("tableView");
+      QItemSelectionModel* selectionModel = view->selectionModel();
+      QAbstractItemModel* model = view->model();
+      QModelIndex index = model->index(0,3);
+      QItemSelection selection(index, index);
+      selectionModel->select(selection, QItemSelectionModel::Select);
+      
+      TriggerThread thread(this);
+      connect(&thread, SIGNAL(triggered()), &mainWindow, SLOT(copyMailAdress()));
+      thread.syncStart();
+      
+      QClipboard* clipboard = QApplication::clipboard();
+      QString emailAdr = clipboard->text();
+      QCOMPARE(emailAdr, QString("fooo@baaar.xx"));
 }
 
 }

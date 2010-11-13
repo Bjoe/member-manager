@@ -50,7 +50,9 @@ void TriggerThread::run()
 	waitForThread.wakeAll();
 	mutex.unlock();
 	sleep(1);
-	executor->handle();
+	if(executor != 0) {
+	  executor->handle();
+	}
 }
 
 }

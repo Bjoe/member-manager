@@ -25,8 +25,11 @@ private slots:
 	void showDeletedMemberView();
 	void showMemberView();
 	void showKassaView();
+	void showSaldo();
 	void newMember();
+	void selectedMember();
 	void editMember(const QModelIndex& anIndex);
+	void copyMailAdress();
 
 private:
 	Ui::MainWindow ui;
@@ -35,6 +38,7 @@ private:
 
 	void showMembers(const bool aBoolean);
 	void showMemberDialog(MemberDetailModel& aModel);
+	QModelIndex getSelection() const;
 };
 
 }

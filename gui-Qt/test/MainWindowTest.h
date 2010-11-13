@@ -22,9 +22,12 @@ private slots:
 
 	void testNewMember();
 	void testEditMember();
+	void testSelectedMember();
 	void testMemberView();
 	void testDeletedMemberView();
 	void testShowKassaView();
+	void testShowSaldo();
+	void testCopyMailAdress();
 
 private:
 	QString id;
