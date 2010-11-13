@@ -21,6 +21,7 @@ Q_OBJECT
 private slots:
 	void initTestCase();
 	void testModel();
+	void testAmount();
 };
 
 }

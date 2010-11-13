@@ -22,6 +22,7 @@ public:
 	virtual ~SaldoModel();
 
 	void setMemberId(const int aMemberId);
+	int amount() const;
 	void refresh();
 
 	QSqlTableModel* getSaldoTableModel() const;

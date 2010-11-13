@@ -37,4 +37,12 @@ void SaldoModelTest::testModel()
 	QCOMPARE(record.value(SaldoTable::betrag).toString(), QString("0"));
 }
 
+void SaldoModelTest::testAmount()
+{
+      ClubFrontend::SaldoModel saldoModel(QSqlDatabase::database(), 1025);
+      
+      int sum = saldoModel.amount();
+      QCOMPARE(sum, -15);
+}
+
 }
