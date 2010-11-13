@@ -41,8 +41,9 @@ void SaldoModelTest::testAmount()
 {
       ClubFrontend::SaldoModel saldoModel(QSqlDatabase::database(), 1025);
       
-      int sum = saldoModel.amount();
-      QCOMPARE(sum, -15);
+      float sum = saldoModel.amount();
+      float expected = -15;
+      QCOMPARE(sum, expected);
 }
 
 }

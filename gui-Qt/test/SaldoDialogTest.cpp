@@ -12,6 +12,7 @@
 #include <QPoint>
 #include <QVariant>
 #include <QString>
+#include <QLabel>
 
 #include <QDebug>
 
@@ -37,5 +38,13 @@ namespace ClubFrontendTest
         QVariant value = model->data(index);
         QCOMPARE(value.toString(), QString("2005-09-18"));
     }
+    
+    void SaldoDialogTest::testShowSum()
+    {
+        ClubFrontend::SaldoModel saldoModel(QSqlDatabase::database(), 1025);
+        ClubFrontend::SaldoDialog dialog(saldoModel);
 
+	QLabel* sumLabel = dialog.findChild<QLabel* >("sumLabel");
+	QCOMPARE(sumLabel->text(), QString("Summe: -15"));
+    }
 }

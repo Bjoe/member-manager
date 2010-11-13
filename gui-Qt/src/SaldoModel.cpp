@@ -43,7 +43,7 @@ void SaldoModel::setMemberId(const int aMemberId)
 	model->setFilter(filter);
 }
 
-int SaldoModel::amount() const
+float SaldoModel::amount() const
 {
   QSqlRecord record = model->record(0);
   QVariant id = record.value(SaldoTable::dorfmitglied_pkey);
@@ -51,7 +51,7 @@ int SaldoModel::amount() const
   QSqlQuery sqlQuery(query);
   sqlQuery.next();
   QVariant sum = sqlQuery.value(0);
-  return sum.toInt();
+  return sum.toFloat();
 }
 
 void SaldoModel::refresh()

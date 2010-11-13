@@ -36,10 +36,17 @@
      </attribute>
     </widget>
    </item>
-   <item row="1" column="0">
+   <item row="2" column="0">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="standardButtons">
       <set>QDialogButtonBox::Close|QDialogButtonBox::SaveAll</set>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="sumLabel">
+     <property name="text">
+      <string extracomment="Mitgliedsbeitrags Summe">Summe: </string>
      </property>
     </widget>
    </item>
