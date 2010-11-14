@@ -4,6 +4,7 @@ set(QT_FRONTEND_MOC_HEADERS
     MemberDialog.h
     ConnectionDialog.h
     SaldoDialog.h
+    SaldoSumDialog.h
     ContributionDialog.h
     )
 
@@ -12,6 +13,7 @@ set(QT_FRONTEND_UI
     memberDialog.ui
     ConnectionDialog.ui
     SaldoDialog.ui
+    SaldoSumDialog.ui
     ContributionDialog.ui
     )
 
@@ -21,12 +23,14 @@ set(QT_FRONTEND_SRC
     MemberModel.cpp
     KassaModel.cpp
     SaldoModel.cpp
+    SaldoSumModel.cpp
     ContributionModel.cpp
     MemberDetailModel.cpp
     MemberFilter.cpp
     DatabaseStructure.cpp
     ConnectionDialog.cpp
     SaldoDialog.cpp
+    SaldoSumDialog.cpp
     ContributionDialog.cpp
     )
 

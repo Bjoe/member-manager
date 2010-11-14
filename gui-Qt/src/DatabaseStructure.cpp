@@ -22,6 +22,8 @@ const QStringList MemberTable::COLUMNNAME = QStringList()
 		<< "nickname";
 
 const QString RessourcenTable::TABLENAME = "kommunikation";
+const QStringList RessourcenTable::COLUMNNAME = QStringList() 
+		<< "kommunikation_pkey" << "dorfmitglied_pkey" << "email";
 
 const QString BankAccountTable::TABLENAME = "kontodaten";
 

@@ -1,12 +1,15 @@
+
 #include "MemberModelTest.h"
 #include "KassaModelTest.h"
 #include "SaldoModelTest.h"
+#include "SaldoSumModelTest.h"
 #include "MemberDetailModelTest.h"
 #include "MemberFilterTest.h"
 #include "MemberDialogTest.h"
 #include "MainWindowTest.h"
 #include "ConnectionDialogTest.h"
 #include "SaldoDialogTest.h"
+#include "SaldoSumDialogTest.h"
 #include "ContributionDialogTest.h"
 #include "ContributionModelTest.h"
 #include "TestData.h"
@@ -58,6 +61,12 @@ int main(int argc, char* argv[])
 
     ClubFrontendTest::ContributionDialogTest contributionDialogTest;
     QTest::qExec(&contributionDialogTest);
+    
+    ClubFrontendTest::SaldoSumDialogTest saldoSumDialogTest;
+    QTest::qExec(&saldoSumDialogTest);
+    
+    ClubFrontendTest::SaldoSumModelTest saldoSumModelTest;
+    QTest::qExec(&saldoSumModelTest);
 
 	return 0;
 }

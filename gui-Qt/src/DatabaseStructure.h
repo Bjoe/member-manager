@@ -66,6 +66,7 @@ public:
 	{
 		RessoucenId, MemberId, EmailAdress, FOO_KeyName, FOO_PublicKey
 	};
+	static const QStringList COLUMNNAME;
 };
 
 class BankAccountTable

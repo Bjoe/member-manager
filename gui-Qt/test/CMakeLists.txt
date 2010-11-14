@@ -8,10 +8,12 @@ set(QT_FRONTEND_TEST_MOC_HEADERS
     MemberModelTest.h
     KassaModelTest.h
     SaldoModelTest.h
+    SaldoSumModelTest.h
     MemberDetailModelTest.h
     MemberFilterTest.h
     ConnectionDialogTest.h
     SaldoDialogTest.h
+    SaldoSumDialogTest.h
     ContributionModelTest.h
     ContributionDialogTest.h
     TriggerThread.h
@@ -25,10 +27,12 @@ set(QT_FRONTEND_TEST
     MemberModelTest.cpp
     KassaModelTest.cpp
     SaldoModelTest.cpp
+    SaldoSumModelTest.cpp
     MemberDetailModelTest.cpp
     MemberFilterTest.cpp
     ConnectionDialogTest.cpp
     SaldoDialogTest.cpp
+    SaldoSumDialogTest.cpp
     ContributionModelTest.cpp
     ContributionDialogTest.cpp
     TriggerThread.cpp
