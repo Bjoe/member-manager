@@ -25,3 +25,4 @@ private:
 }
 
 #endif // SALDODIALOG_H
+
