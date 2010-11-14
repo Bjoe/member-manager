@@ -57,8 +57,9 @@ namespace ClubFrontend
 	  model->setQuery(query, aDb);
 	}
 
-	QSqlQueryModel* SaldoSumModel::getSaldoSumModel() const 
+	void SaldoSumModel::setTableView(QTableView* const aView)
 	{
-		return model;
+	  aView->setModel(model);
+	  aView->setColumnHidden(5, true);
 	}
 }

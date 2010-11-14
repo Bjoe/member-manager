@@ -31,6 +31,7 @@
 #include <QtCore>
 #include <QSqlDatabase>
 #include <QSqlQueryModel>
+#include <QTableView>
 
 namespace ClubFrontend
 {
@@ -40,7 +41,7 @@ class SaldoSumModel : public QObject
   public:
     SaldoSumModel(const QSqlDatabase& aDb);
     
-    QSqlQueryModel* getSaldoSumModel() const;
+    void setTableView(QTableView* const aView);
     
   private:
     QSqlQueryModel* model;

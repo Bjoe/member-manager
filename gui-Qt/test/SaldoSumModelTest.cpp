@@ -39,8 +39,6 @@
 #include <QVariant>
 #include <QString>
 
-#include <QDebug>
-
 namespace ClubFrontendTest
 {
  
@@ -52,15 +50,12 @@ namespace ClubFrontendTest
     testData.createFakeBalanceTable();
   }
   
-  void SaldoSumModelTest::testModel()
+  void SaldoSumModelTest::testView()
   {
     ClubFrontend::SaldoSumModel saldoSumModel(QSqlDatabase::database());
-    QSqlQueryModel* model = saldoSumModel.getSaldoSumModel();
-    if (model->lastError().isValid())
-     qDebug() << model->lastError();
-    int rowCount = model->rowCount();
-    QCOMPARE(rowCount, 1);
-    
+    QTableView* view = new QTableView();
+    saldoSumModel.setTableView(view);
+    QAbstractItemModel* model = view->model();
     QVariant variant = model->data(model->index(0,1));
     QCOMPARE(variant.toString(), QString("Capt. Kirk"));
   }

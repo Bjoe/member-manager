@@ -40,7 +40,7 @@ class SaldoSumModelTest : public QObject
   
   private slots:
     void initTestCase();
-    void testModel();
+    void testView();
 };
 
 }
