@@ -1,4 +1,19 @@
+/*
+Einige Todos:
+- Source Code einheitlich Formatieren.
+- Source Dokumentieren mit Doxygen.
+- Einpaar Denglisch Datenbankfelder auf Englisch Refactoren.
+- Refactor: QTableView den Model uebergeben.
+- In MemberDetail View dafuer sorgen das neue Beitraege eingefuegt werden koennen.
+- Einige unsinnige Datenbankfelder rauswerfen und Tabellen mergen. (Wird erst nach der ersten lauffaehigen Version umgesetzt)
 
+Fehlende Features:
+- Gesamt Status uebersicht ueber den Verein: Gesamt Einahemen, Gesamt Mitglieder etc.
+- Wie sollen die Umsaetze eingelesen werden? Per KMyMoney oder Aq API einbinden?
+- Matchen der Umsaetze und auf die Mitgliedskonten buchen.
+- DTAUS erstellen? Aq API?
+
+*/
 #include "MemberModelTest.h"
 #include "KassaModelTest.h"
 #include "SaldoModelTest.h"

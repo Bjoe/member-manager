@@ -63,6 +63,7 @@
    </attribute>
    <addaction name="actionNewMember"/>
    <addaction name="separator"/>
+   <addaction name="actionSaldoSum"/>
    <addaction name="actionShowMember"/>
    <addaction name="actionShowDeletedMember"/>
    <addaction name="actionShowKassa"/>
@@ -94,6 +95,7 @@
      <string>Ansicht</string>
     </property>
     <addaction name="actionShowMember"/>
+    <addaction name="actionSaldoSum"/>
     <addaction name="actionShowDeletedMember"/>
     <addaction name="actionShowKassa"/>
    </widget>
@@ -165,6 +167,17 @@
    </property>
    <property name="toolTip">
     <string>Mitglieds Daten Ändern</string>
+   </property>
+  </action>
+  <action name="actionSaldoSum">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Saldo Summe der Mitglieder</string>
+   </property>
+   <property name="toolTip">
+    <string>Saldo der Mitglieder</string>
    </property>
   </action>
  </widget>

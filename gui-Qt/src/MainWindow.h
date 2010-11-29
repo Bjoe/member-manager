@@ -26,6 +26,7 @@ private slots:
 	void showMemberView();
 	void showKassaView();
 	void showSaldo();
+	// TODO neue View showSaldoSum() einbauen
 	void newMember();
 	void selectedMember();
 	void editMember(const QModelIndex& anIndex);
