@@ -52,6 +52,9 @@ void MemberDetailModelTest::testGetContributionModel()
 	ClubFrontend::MemberDetailModel dataSource(QSqlDatabase::database());
 
 	const QSqlTableModel* model = dataSource.getContributionTableModel();
+	QCOMPARE(model->rowCount(), 0);
+	
+	dataSource.setMemberId(1025);
 	QCOMPARE(model->rowCount(), 2);
 	QSqlRecord record = model->record(0);
 	double fee = 15.00;

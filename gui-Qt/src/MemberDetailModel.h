@@ -11,6 +11,8 @@
 #include <QtCore>
 #include <QtSql>
 
+#include "ContributionModel.h"
+
 namespace ClubFrontend
 {
 
@@ -41,9 +43,9 @@ private:
 
 	QSqlTableModel* const addressModel;
 	QSqlTableModel* const bankAccountModel;
-	QSqlTableModel* const contributionModel;
 	QSqlTableModel* const ressourcenModel;
 	QSqlTableModel* const memberModel;
+	ContributionModel contributionModel;
 	int id;
 };
 

@@ -67,13 +67,13 @@ void TestData::createFakeContributionTable()
 			"INSERT INTO beitragstab("
 				"            beitragstab_pkey, dorfmitglied_pkey, beitrag, spende, schulden,"
 				"            gueltigab, info)"
-				"    VALUES (1,1025,15.00,0.00,0.00,date('2007-05-01'),'Spende wird eingestellt')");
+				"    VALUES (2,1025,15.00,1.00,0.00,date('2007-05-01'),'Beitragsaenderung')");
 
 	execStatement(
 			"INSERT INTO beitragstab("
 				"            beitragstab_pkey, dorfmitglied_pkey, beitrag, spende, schulden,"
 				"            gueltigab, info)"
-				"    VALUES (2,1025,14.00,1.00,2.00,date('2006-05-01'),'Spende wird eingestellt')");
+				"    VALUES (1,1025,14.00,0.00,2.00,date('2006-05-01'),'Spende wird eingestellt')");
 }
 
 void TestData::createFakeMemberTable()

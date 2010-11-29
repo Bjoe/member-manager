@@ -63,7 +63,7 @@ void ContributionDialogTest::testShowDialog()
   using ClubFrontend::ContributionTable;
   const QModelIndex index = model->index(0, ContributionTable::ValidFrom);
   const QVariant value = model->data(index);
-  QCOMPARE(value.toString(), QString("2006-05-01"));
+  QCOMPARE(value.toString(), QString("2007-05-01"));
 }
 
 

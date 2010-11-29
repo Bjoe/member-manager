@@ -56,6 +56,7 @@ void ContributionModel::setMemberId(const int aMemberId)
   QString columname = ContributionTable::COLUMNNAME[ContributionTable::MemberId];
   QString filter = QString(columname + " = %1").arg(aMemberId);
   model->setFilter(filter);
+  model->setSort(ContributionTable::ValidFrom, Qt::DescendingOrder);
 }
 
 void ContributionModel::refresh()

@@ -13,13 +13,11 @@ namespace ClubFrontend
 
 MemberDetailModel::MemberDetailModel(const QSqlDatabase& aDb) :
 	addressModel(new QSqlTableModel(this, aDb)), bankAccountModel(
-			new QSqlTableModel(this, aDb)), contributionModel(
 			new QSqlTableModel(this, aDb)), ressourcenModel(new QSqlTableModel(
-			this, aDb)), memberModel(new QSqlTableModel(this, aDb)), id(0)
+			this, aDb)), memberModel(new QSqlTableModel(this, aDb)), contributionModel(aDb, 0), id(0)
 {
 	setTableModel(AddressTable::TABLENAME, addressModel);
 	setTableModel(BankAccountTable::TABLENAME, bankAccountModel);
-	setTableModel(ContributionTable::TABLENAME, contributionModel);
 	setTableModel(RessourcenTable::TABLENAME, ressourcenModel);
 	setTableModel(MemberTable::TABLENAME, memberModel);
 }
@@ -28,7 +26,6 @@ MemberDetailModel::~MemberDetailModel()
 {
 	delete addressModel;
 	delete bankAccountModel;
-	delete contributionModel;
 	delete ressourcenModel;
 	delete memberModel;
 }
@@ -57,12 +54,12 @@ void MemberDetailModel::setMemberId(int anId)
 	addressModel->select();
 	bankAccountModel->setFilter(filter);
 	bankAccountModel->select();
-	contributionModel->setFilter(filter);
-	contributionModel->select();
 	ressourcenModel->setFilter(filter);
 	ressourcenModel->select();
 	memberModel->setFilter(filter);
 	memberModel->select();
+	
+	contributionModel.setMemberId(id);
 }
 
 int MemberDetailModel::getMemberId() const
@@ -80,7 +77,7 @@ int MemberDetailModel::newMember()
 
 	insertNewMember(addressModel, AddressTable::MemberId, valueId);
 	insertNewMember(bankAccountModel, BankAccountTable::MemberId, valueId);
-	insertNewMember(contributionModel, ContributionTable::MemberId, valueId);
+	insertNewMember(contributionModel.getContributionTableModel(), ContributionTable::MemberId, valueId);
 	insertNewMember(ressourcenModel, RessourcenTable::MemberId, valueId);
 
 	int newId = valueId.toInt();
@@ -143,7 +140,7 @@ QSqlTableModel* MemberDetailModel::getBankAccountTableModel() const
 
 QSqlTableModel* MemberDetailModel::getContributionTableModel() const
 {
-	return contributionModel;
+	return contributionModel.getContributionTableModel();
 }
 
 QSqlTableModel* MemberDetailModel::getRessourcenTableModel() const

@@ -68,10 +68,10 @@ void MemberDialogTest::showMember()
 
 	QLineEdit* contributionInfo = dialog.findChild<QLineEdit*> (
 			"contributionInfo");
-	QCOMPARE(contributionInfo->text(), QString("Spende wird eingestellt"));
+	QCOMPARE(contributionInfo->text(), QString("Beitragsaenderung"));
 
 	QLineEdit* donation = dialog.findChild<QLineEdit*> ("donation");
-	QCOMPARE(donation->text(), QString("0"));
+	QCOMPARE(donation->text(), QString("1"));
 
 	QLineEdit* fee = dialog.findChild<QLineEdit*> ("fee");
 	QCOMPARE(fee->text(), QString("15"));
@@ -219,10 +219,10 @@ void MemberDialogTest::changeMember()
 
 	QLineEdit* contributionInfo = dialog.findChild<QLineEdit*> (
 			"contributionInfo");
-	QCOMPARE(contributionInfo->text(), QString("Spende wird eingestellt"));
+	QCOMPARE(contributionInfo->text(), QString("Beitragsaenderung"));
 
 	QLineEdit* donation = dialog.findChild<QLineEdit*> ("donation");
-	QCOMPARE(donation->text(), QString("0"));
+	QCOMPARE(donation->text(), QString("1"));
 
 	QLineEdit* fee = dialog.findChild<QLineEdit*> ("fee");
 	QCOMPARE(fee->text(), QString("15"));
@@ -312,7 +312,8 @@ void MemberDialogTest::changeMember()
 	QCOMPARE(query.value(AddressTable::Town).toString(), QString("Dtown"));
 
 	using ClubFrontend::ContributionTable;
-	query.exec("select * from " + ContributionTable::TABLENAME + whereClause);
+	query.exec("select * from " + ContributionTable::TABLENAME + whereClause + 
+	  " order by " + ContributionTable::COLUMNNAME[ContributionTable::ValidFrom] + " desc");
 	query.next();
 	QCOMPARE(query.value(ContributionTable::Fee).toInt(), 16);
 	QCOMPARE(query.value(ContributionTable::Donation).toInt(), 1);
