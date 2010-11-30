@@ -30,12 +30,10 @@
 
 #include "DatabaseStructure.h"
 
-#include <QString>
-
 namespace ClubFrontend
 {
 
-ContributionModel::ContributionModel(const QSqlDatabase& aDb, const int aMemberId):
+ContributionModel::ContributionModel(const QSqlDatabase& aDb):
   model(new QSqlTableModel(this, aDb))
 {
   model->setTable(ContributionTable::TABLENAME);
@@ -43,8 +41,6 @@ ContributionModel::ContributionModel(const QSqlDatabase& aDb, const int aMemberI
   model->setHeaderData(ContributionTable::Donation, Qt::Horizontal, tr("Spende"));
   model->setHeaderData(ContributionTable::ValidFrom, Qt::Horizontal, tr("Gültig ab:"));
   model->setHeaderData(ContributionTable::Info, Qt::Horizontal, tr("Info"));
-  setMemberId(aMemberId);
-  refresh();
 }
 
 ContributionModel::~ContributionModel()
@@ -57,11 +53,33 @@ void ContributionModel::setMemberId(const int aMemberId)
   QString filter = QString(columname + " = %1").arg(aMemberId);
   model->setFilter(filter);
   model->setSort(ContributionTable::ValidFrom, Qt::DescendingOrder);
+  refresh();
 }
 
 void ContributionModel::refresh()
 {
   model->select();
+}
+
+QString ContributionModel::getDonation() const
+{
+  return returnValue(ContributionTable::Donation).toString();
+}
+
+QString ContributionModel::getFee() const
+{
+  return returnValue(ContributionTable::Fee).toString();
+}
+
+QString ContributionModel::getInfo() const
+{
+  return returnValue(ContributionTable::Info).toString();
+}
+
+QVariant ContributionModel::returnValue(int aColumn) const
+{
+  QSqlRecord record = model->record(0);
+  return record.value(aColumn);
 }
 
 QSqlTableModel* ContributionModel::getContributionTableModel() const

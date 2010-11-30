@@ -14,7 +14,8 @@ namespace ClubFrontend
 MemberDetailModel::MemberDetailModel(const QSqlDatabase& aDb) :
 	addressModel(new QSqlTableModel(this, aDb)), bankAccountModel(
 			new QSqlTableModel(this, aDb)), ressourcenModel(new QSqlTableModel(
-			this, aDb)), memberModel(new QSqlTableModel(this, aDb)), contributionModel(aDb, 0), id(0)
+			this, aDb)), memberModel(new QSqlTableModel(this, aDb)), 
+			contributionModel(new ContributionModel(aDb)), id(0)
 {
 	setTableModel(AddressTable::TABLENAME, addressModel);
 	setTableModel(BankAccountTable::TABLENAME, bankAccountModel);
@@ -59,7 +60,7 @@ void MemberDetailModel::setMemberId(int anId)
 	memberModel->setFilter(filter);
 	memberModel->select();
 	
-	contributionModel.setMemberId(id);
+	contributionModel->setMemberId(id);
 }
 
 int MemberDetailModel::getMemberId() const
@@ -77,7 +78,7 @@ int MemberDetailModel::newMember()
 
 	insertNewMember(addressModel, AddressTable::MemberId, valueId);
 	insertNewMember(bankAccountModel, BankAccountTable::MemberId, valueId);
-	insertNewMember(contributionModel.getContributionTableModel(), ContributionTable::MemberId, valueId);
+	insertNewMember(contributionModel->getContributionTableModel(), ContributionTable::MemberId, valueId);
 	insertNewMember(ressourcenModel, RessourcenTable::MemberId, valueId);
 
 	int newId = valueId.toInt();
@@ -138,11 +139,6 @@ QSqlTableModel* MemberDetailModel::getBankAccountTableModel() const
 	return bankAccountModel;
 }
 
-QSqlTableModel* MemberDetailModel::getContributionTableModel() const
-{
-	return contributionModel.getContributionTableModel();
-}
-
 QSqlTableModel* MemberDetailModel::getRessourcenTableModel() const
 {
 	return ressourcenModel;
@@ -151,6 +147,11 @@ QSqlTableModel* MemberDetailModel::getRessourcenTableModel() const
 QSqlTableModel* MemberDetailModel::getMemberTableModel() const
 {
 	return memberModel;
+}
+
+ContributionModel* MemberDetailModel::getContributionModel() const
+{
+	return contributionModel;
 }
 
 }

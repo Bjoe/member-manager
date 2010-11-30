@@ -15,8 +15,7 @@ MemberDialog::MemberDialog(MemberDetailModel& aMemberDetailModel,
 	QDialog(parent), memberDetailModel(aMemberDetailModel), memberMapper(
 			new QDataWidgetMapper(this)), addressMapper(new QDataWidgetMapper(
 			this)), bankMapper(new QDataWidgetMapper(this)),
-			contributionMapper(new QDataWidgetMapper(this)), ressourcenMapper(
-					new QDataWidgetMapper(this))
+			ressourcenMapper(new QDataWidgetMapper(this))
 {
 	ui.setupUi(this);
 
@@ -48,13 +47,11 @@ MemberDialog::MemberDialog(MemberDetailModel& aMemberDetailModel,
 	bankMapper->addMapping(ui.bankName, BankAccountTable::BankName);
 	bankMapper->toFirst();
 
-	contributionMapper->setModel(memberDetailModel.getContributionTableModel());
-	contributionMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
-	contributionMapper->addMapping(ui.contributionInfo, ContributionTable::Info);
-	contributionMapper->addMapping(ui.donation, ContributionTable::Donation);
-	contributionMapper->addMapping(ui.fee, ContributionTable::Fee);
-	contributionMapper->toFirst();
-
+	ContributionModel* model = memberDetailModel.getContributionModel();
+	ui.contributionInfo->setText(model->getInfo());
+	ui.donation->setText(model->getDonation());
+	ui.fee->setText(model->getFee());;
+	
 	ressourcenMapper->setModel(memberDetailModel.getRessourcenTableModel());
 	ressourcenMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
 	ressourcenMapper->addMapping(ui.email, RessourcenTable::EmailAdress);
@@ -63,8 +60,8 @@ MemberDialog::MemberDialog(MemberDetailModel& aMemberDetailModel,
 	connect(ui.buttonBox, SIGNAL(accepted()), memberMapper, SLOT(submit()));
 	connect(ui.buttonBox, SIGNAL(accepted()), addressMapper, SLOT(submit()));
 	connect(ui.buttonBox, SIGNAL(accepted()), bankMapper, SLOT(submit()));
-	connect(ui.buttonBox, SIGNAL(accepted()), contributionMapper,
-			SLOT(submit()));
+//	connect(ui.buttonBox, SIGNAL(accepted()), contributionMapper,
+//			SLOT(submit()));
 	connect(ui.buttonBox, SIGNAL(accepted()), ressourcenMapper, SLOT(submit()));
 
 	QPushButton* discardButton =
@@ -80,7 +77,6 @@ MemberDialog::MemberDialog(MemberDetailModel& aMemberDetailModel,
 MemberDialog::~MemberDialog()
 {
 	delete ressourcenMapper;
-	delete contributionMapper;
 	delete bankMapper;
 	delete addressMapper;
 	delete memberMapper;
@@ -107,7 +103,7 @@ void MemberDialog::showSaldo()
 
 void MemberDialog::showFee()
 {
-  ContributionModel model(QSqlDatabase::database(), memberDetailModel.getMemberId());
+  ContributionModel* model = memberDetailModel.getContributionModel();
   ContributionDialog dialog(model, this);
 
   dialog.exec();

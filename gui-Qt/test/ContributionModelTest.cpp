@@ -48,14 +48,25 @@ void ContributionModelTest::initTestCase()
 
 void ContributionModelTest::testModel()
 {
-  ClubFrontend::ContributionModel contributionModel(QSqlDatabase::database(), 1025);
-
+  ClubFrontend::ContributionModel contributionModel(QSqlDatabase::database());
+  
+  contributionModel.setMemberId(1025);  
   const QSqlTableModel* model = contributionModel.getContributionTableModel();
   QCOMPARE(model->rowCount(), 2);
   QSqlRecord record = model->record(0);
   using ClubFrontend::ContributionTable;
   QCOMPARE(record.value(ContributionTable::Info).toString(), QString("Beitragsaenderung"));
   QCOMPARE(record.value(ContributionTable::Fee).toString(), QString("15"));
+}
+
+void ContributionModelTest::testGetColumns()
+{
+  ClubFrontend::ContributionModel contributionModel(QSqlDatabase::database());
+  
+  contributionModel.setMemberId(1025);
+  QCOMPARE(contributionModel.getInfo(), QString("Beitragsaenderung"));
+  QCOMPARE(contributionModel.getDonation(), QString("1"));
+  QCOMPARE(contributionModel.getFee(), QString("15"));
 }
 
 }

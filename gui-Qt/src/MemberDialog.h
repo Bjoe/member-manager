@@ -27,7 +27,6 @@ private:
 	QDataWidgetMapper* const memberMapper;
 	QDataWidgetMapper* const addressMapper;
 	QDataWidgetMapper* const bankMapper;
-	QDataWidgetMapper* const contributionMapper;
 	QDataWidgetMapper* const ressourcenMapper;
 
 	Ui::MemberDialog ui;

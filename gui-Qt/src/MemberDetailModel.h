@@ -31,9 +31,9 @@ public:
 
 	QSqlTableModel* getAddressTableModel() const;
 	QSqlTableModel* getBankAccountTableModel() const;
-	QSqlTableModel* getContributionTableModel() const;
 	QSqlTableModel* getRessourcenTableModel() const;
 	QSqlTableModel* getMemberTableModel() const;
+	ContributionModel* getContributionModel() const;
 
 private:
 	int insertNewMember(QSqlTableModel* aModel, const int& aColumnId,
@@ -45,7 +45,7 @@ private:
 	QSqlTableModel* const bankAccountModel;
 	QSqlTableModel* const ressourcenModel;
 	QSqlTableModel* const memberModel;
-	ContributionModel contributionModel;
+	ContributionModel* contributionModel;
 	int id;
 };
 

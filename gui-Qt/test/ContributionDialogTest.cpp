@@ -53,8 +53,9 @@ void ContributionDialogTest::initTestCase()
 
 void ContributionDialogTest::testShowDialog()
 {
-  ClubFrontend::ContributionModel contributionModel(QSqlDatabase::database(), 1025);
-  ClubFrontend::ContributionDialog dialog(contributionModel);
+  ClubFrontend::ContributionModel contributionModel(QSqlDatabase::database());
+  contributionModel.setMemberId(1025);
+  ClubFrontend::ContributionDialog dialog(&contributionModel);
 
   const QTableView* tableView = dialog.findChild<QTableView* >("contributionTableView");
   const QAbstractItemModel* model = tableView->model();

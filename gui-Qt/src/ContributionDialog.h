@@ -42,12 +42,12 @@ class ContributionDialog : public QDialog
   Q_OBJECT
 
   public:
-    ContributionDialog(ContributionModel& aContributionModel, QWidget* parent = 0);
+    ContributionDialog(ContributionModel *aContributionModel, QWidget* parent = 0);
     ~ContributionDialog();
 
   private:
     Ui::ContributionDialogClass ui;
-    ContributionModel& contributionModel;
+    ContributionModel *contributionModel;
 };
 
 }

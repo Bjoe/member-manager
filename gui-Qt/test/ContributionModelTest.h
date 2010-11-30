@@ -43,6 +43,7 @@ class ContributionModelTest : public QObject
   private slots:
     void initTestCase();
     void testModel();
+    void testGetColumns();
 };
 
 }

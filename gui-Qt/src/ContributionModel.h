@@ -29,9 +29,8 @@
 #ifndef CONTRIBUTIONMODEL_H
 #define CONTRIBUTIONMODEL_H
 
-#include <QObject>
-#include <QSqlDatabase>
-#include <QSqlTableModel>
+#include <QtCore>
+#include <QtSql>
 
 namespace ClubFrontend
 {
@@ -39,15 +38,21 @@ namespace ClubFrontend
 class ContributionModel : public QObject
 {
   public:
-    ContributionModel(const QSqlDatabase& aDb, const int aMemberId);
+    ContributionModel(const QSqlDatabase& aDb);
     virtual ~ContributionModel();
 
     void setMemberId(const int aMemberId);
     void refresh();
 
     QSqlTableModel* getContributionTableModel() const;
+    
+    QString getInfo() const;
+    QString getDonation() const;
+    QString getFee() const;
 
   private:
+    QVariant returnValue(int aColumn) const;
+    
     QSqlTableModel* model;
 };
 

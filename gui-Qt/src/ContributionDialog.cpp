@@ -32,11 +32,11 @@
 namespace ClubFrontend
 {
 
-ContributionDialog::ContributionDialog(ContributionModel& aContributionModel, QWidget* parent):
+ContributionDialog::ContributionDialog(ClubFrontend::ContributionModel* aContributionModel, QWidget* parent):
   QDialog(parent), contributionModel(aContributionModel), ui()
 {
   ui.setupUi(this);
-  ui.contributionTableView->setModel(contributionModel.getContributionTableModel());
+  ui.contributionTableView->setModel(contributionModel->getContributionTableModel());
   
   ui.contributionTableView->setColumnHidden(ContributionTable::ContributionId, true);
   ui.contributionTableView->setColumnHidden(ContributionTable::MemberId, true);
