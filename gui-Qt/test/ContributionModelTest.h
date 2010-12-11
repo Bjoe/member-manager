@@ -44,6 +44,8 @@ class ContributionModelTest : public QObject
     void initTestCase();
     void testModel();
     void testGetColumns();
+    void testChangeInfo();
+    void testNewFeeDonation();
 };
 
 }

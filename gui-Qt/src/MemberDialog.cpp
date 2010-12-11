@@ -60,8 +60,7 @@ MemberDialog::MemberDialog(MemberDetailModel& aMemberDetailModel,
 	connect(ui.buttonBox, SIGNAL(accepted()), memberMapper, SLOT(submit()));
 	connect(ui.buttonBox, SIGNAL(accepted()), addressMapper, SLOT(submit()));
 	connect(ui.buttonBox, SIGNAL(accepted()), bankMapper, SLOT(submit()));
-//	connect(ui.buttonBox, SIGNAL(accepted()), contributionMapper,
-//			SLOT(submit()));
+	connect(ui.buttonBox, SIGNAL(accepted()), SLOT(submitContribution()));
 	connect(ui.buttonBox, SIGNAL(accepted()), ressourcenMapper, SLOT(submit()));
 
 	QPushButton* discardButton =
@@ -107,6 +106,12 @@ void MemberDialog::showFee()
   ContributionDialog dialog(model, this);
 
   dialog.exec();
+}
+
+void MemberDialog::submitContribution()
+{
+  ContributionModel* model = memberDetailModel.getContributionModel();
+  model->submit(ui.fee->text(), ui.donation->text(), ui.info->toPlainText());
 }
 
 }

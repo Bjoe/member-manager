@@ -21,6 +21,7 @@ private slots:
 	void deleteMember();
 	void showSaldo();
 	void showFee();
+	void submitContribution();
 
 private:
 	MemberDetailModel& memberDetailModel;

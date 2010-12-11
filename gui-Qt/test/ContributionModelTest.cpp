@@ -69,4 +69,39 @@ void ContributionModelTest::testGetColumns()
   QCOMPARE(contributionModel.getFee(), QString("15"));
 }
 
+void ContributionModelTest::testChangeInfo()
+{
+  ClubFrontend::ContributionModel contributionModel(QSqlDatabase::database());
+  
+  contributionModel.setMemberId(1025);
+  
+  contributionModel.submit("15","1","Foo");
+  
+  QCOMPARE(contributionModel.getDonation(), QString("1"));
+  QCOMPARE(contributionModel.getFee(), QString("15"));
+  QCOMPARE(contributionModel.getInfo(), QString("Foo"));
+}
+
+void ContributionModelTest::testNewFeeDonation()
+{
+  ClubFrontend::ContributionModel contributionModel(QSqlDatabase::database());
+  
+  contributionModel.setMemberId(1025);
+  
+  QSqlTableModel *model = contributionModel.getContributionTableModel();
+  QCOMPARE(model->rowCount(), 2);
+  
+  contributionModel.submit("20", "15", "bar");
+ 
+  QCOMPARE(model->rowCount(), 3);
+  
+  contributionModel.refresh();
+  QCOMPARE(contributionModel.getDonation(), QString("15"));
+  QCOMPARE(contributionModel.getFee(), QString("20"));
+  QCOMPARE(contributionModel.getInfo(), QString("bar"));
+  
+  // TODO Test auf ValidFrom mit QDate::currentDate()
+}
+
+
 }

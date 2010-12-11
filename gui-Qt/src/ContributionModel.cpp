@@ -34,7 +34,7 @@ namespace ClubFrontend
 {
 
 ContributionModel::ContributionModel(const QSqlDatabase& aDb):
-  model(new QSqlTableModel(this, aDb))
+  model(new QSqlTableModel(this, aDb)), memberId(0)
 {
   model->setTable(ContributionTable::TABLENAME);
   model->setHeaderData(ContributionTable::Fee, Qt::Horizontal, tr("Beitrag"));
@@ -54,6 +54,7 @@ void ContributionModel::setMemberId(const int aMemberId)
   model->setFilter(filter);
   model->setSort(ContributionTable::ValidFrom, Qt::DescendingOrder);
   refresh();
+  memberId = aMemberId;
 }
 
 void ContributionModel::refresh()
@@ -75,6 +76,32 @@ QString ContributionModel::getInfo() const
 {
   return returnValue(ContributionTable::Info).toString();
 }
+
+void ContributionModel::submit(const QString &aFee, const QString &aDonation, const QString &anInfo)
+{
+  QString fee = returnValue(ContributionTable::Fee).toString();
+  QString donation = returnValue(ContributionTable::Donation).toString();
+  
+  if(fee.compare(aFee) != 0 || donation.compare(aDonation) != 0)
+  {
+      QSqlRecord record = model->record();
+      record.setValue(ContributionTable::MemberId, memberId);
+      record.setValue(ContributionTable::Fee, QVariant(aFee));
+      record.setValue(ContributionTable::Donation, QVariant(aDonation));
+      record.setValue(ContributionTable::Info, QVariant(anInfo));
+      QDate date = QDate::currentDate();
+      record.setValue(ContributionTable::ValidFrom, QVariant(date.toString(Qt::ISODate)));
+      model->insertRecord(-1, record);
+  }
+  else
+  {
+      QSqlRecord record = model->record(0);
+      record.setValue(ContributionTable::Info, QVariant(anInfo));
+      model->setRecord(0,record);
+  }
+  model->submitAll();
+}
+
 
 QVariant ContributionModel::returnValue(int aColumn) const
 {
