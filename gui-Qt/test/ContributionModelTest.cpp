@@ -91,14 +91,24 @@ void ContributionModelTest::testNewFeeDonation()
   QSqlTableModel *model = contributionModel.getContributionTableModel();
   QCOMPARE(model->rowCount(), 2);
   
-  contributionModel.submit("20", "15", "bar");
+  contributionModel.submit("90", "50", "bar");
  
   QCOMPARE(model->rowCount(), 3);
   
   contributionModel.refresh();
-  QCOMPARE(contributionModel.getDonation(), QString("15"));
-  QCOMPARE(contributionModel.getFee(), QString("20"));
+  QCOMPARE(contributionModel.getDonation(), QString("50"));
+  QCOMPARE(contributionModel.getFee(), QString("90"));
   QCOMPARE(contributionModel.getInfo(), QString("bar"));
+  
+  const QString whereClause = QString(" where dorfmitglied_pkey=%1").arg(1025);
+  QSqlQuery query;
+  using ClubFrontend::ContributionTable;
+  query.exec("select * from " + ContributionTable::TABLENAME + whereClause + 
+    " order by " + ContributionTable::COLUMNNAME[ContributionTable::ValidFrom] + " desc");
+  query.next();
+  QCOMPARE(query.value(ContributionTable::Fee).toInt(), 90);
+  QCOMPARE(query.value(ContributionTable::Donation).toInt(), 50);
+  QCOMPARE(query.value(ContributionTable::Info).toString(), QString("bar"));
   
   // TODO Test auf ValidFrom mit QDate::currentDate()
 }

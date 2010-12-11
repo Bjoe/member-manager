@@ -111,7 +111,7 @@ void MemberDialog::showFee()
 void MemberDialog::submitContribution()
 {
   ContributionModel* model = memberDetailModel.getContributionModel();
-  model->submit(ui.fee->text(), ui.donation->text(), ui.info->toPlainText());
+  model->submit(ui.fee->text(), ui.donation->text(), ui.contributionInfo->text());
 }
 
 }

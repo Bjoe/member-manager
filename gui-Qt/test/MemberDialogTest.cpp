@@ -162,7 +162,8 @@ void MemberDialogTest::newMember()
 	QCOMPARE(query.value(AddressTable::Town).toString(), QString("Pegasus"));
 
 	using ClubFrontend::ContributionTable;
-	query.exec("select * from " + ContributionTable::TABLENAME + whereClause);
+	query.exec("select * from " + ContributionTable::TABLENAME + whereClause +
+	    " order by " + ContributionTable::COLUMNNAME[ContributionTable::ValidFrom] + " desc");
 	query.next();
 	QCOMPARE(query.value(ContributionTable::Fee).toInt(), 15);
 	QCOMPARE(query.value(ContributionTable::Donation).toInt(), 5);
@@ -255,9 +256,9 @@ void MemberDialogTest::changeMember()
 	QTest::keyClicks(entryDate, "15.07.06");
 
 	fee->clear();
-	QTest::keyClicks(fee, "16");
+	QTest::keyClicks(fee, "99");
 	donation->clear();
-	QTest::keyClicks(donation, "1");
+	QTest::keyClicks(donation, "100");
 	contributionInfo->clear();
 	QTest::keyClicks(contributionInfo, "Kohle");
 
@@ -286,8 +287,8 @@ void MemberDialogTest::changeMember()
 	QCOMPARE(email->text(), QString("foo@bar.tx"));
 	//QCOMPARE(entryDate->text(), QString("15.07.06"));
 	QCOMPARE(contributionInfo->text(), QString("Kohle"));
-	QCOMPARE(donation->text(), QString("1"));
-	QCOMPARE(fee->text(), QString("16"));
+	QCOMPARE(donation->text(), QString("100"));
+	QCOMPARE(fee->text(), QString("99"));
 	QCOMPARE(account->text(), QString("123456789"));
 	QCOMPARE(bankName->text(), QString("Galaxy"));
 	QCOMPARE(code->text(), QString("98765432"));
@@ -315,8 +316,8 @@ void MemberDialogTest::changeMember()
 	query.exec("select * from " + ContributionTable::TABLENAME + whereClause + 
 	  " order by " + ContributionTable::COLUMNNAME[ContributionTable::ValidFrom] + " desc");
 	query.next();
-	QCOMPARE(query.value(ContributionTable::Fee).toInt(), 16);
-	QCOMPARE(query.value(ContributionTable::Donation).toInt(), 1);
+	QCOMPARE(query.value(ContributionTable::Fee).toInt(), 99);
+	QCOMPARE(query.value(ContributionTable::Donation).toInt(), 100);
 	QCOMPARE(query.value(ContributionTable::Info).toString(), QString("Kohle"));
 
 	using ClubFrontend::BankAccountTable;
