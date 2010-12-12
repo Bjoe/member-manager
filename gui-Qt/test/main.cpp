@@ -27,6 +27,7 @@ Fehlende Features:
 #include "SaldoSumDialogTest.h"
 #include "ContributionDialogTest.h"
 #include "ContributionModelTest.h"
+#include "SummaryWindowTest.h"
 #include "TestData.h"
 
 #include <QtTest/QtTest>
@@ -82,6 +83,9 @@ int main(int argc, char* argv[])
     
     ClubFrontendTest::SaldoSumModelTest saldoSumModelTest;
     QTest::qExec(&saldoSumModelTest);
+    
+    ClubFrontendTest::SummaryWindowTest summaryTest;
+    QTest::qExec(&summaryTest);
 
 	return 0;
 }

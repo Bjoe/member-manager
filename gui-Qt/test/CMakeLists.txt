@@ -16,6 +16,7 @@ set(QT_FRONTEND_TEST_MOC_HEADERS
     SaldoSumDialogTest.h
     ContributionModelTest.h
     ContributionDialogTest.h
+    SummaryWindowTest.h
     TriggerThread.h
     )
 
@@ -35,6 +36,7 @@ set(QT_FRONTEND_TEST
     SaldoSumDialogTest.cpp
     ContributionModelTest.cpp
     ContributionDialogTest.cpp
+    SummaryWindowTest.cpp
     TriggerThread.cpp
     )
 

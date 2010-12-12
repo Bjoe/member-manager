@@ -6,6 +6,7 @@ set(QT_FRONTEND_MOC_HEADERS
     SaldoDialog.h
     SaldoSumDialog.h
     ContributionDialog.h
+    SummaryWindow.h
     )
 
 set(QT_FRONTEND_UI
@@ -15,6 +16,7 @@ set(QT_FRONTEND_UI
     SaldoDialog.ui
     SaldoSumDialog.ui
     ContributionDialog.ui
+    SummaryWindow.ui
     )
 
 set(QT_FRONTEND_SRC
@@ -32,6 +34,7 @@ set(QT_FRONTEND_SRC
     SaldoDialog.cpp
     SaldoSumDialog.cpp
     ContributionDialog.cpp
+    SummaryWindow.cpp
     )
 
 # Setze Sourcen fuer die tests
