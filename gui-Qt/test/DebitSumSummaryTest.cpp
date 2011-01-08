@@ -25,51 +25,35 @@
     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "SummaryWindowTest.h"
 
-#include "SummaryWindow.h"
+#include "DebitSumSummaryTest.h"
 
-#include <QtCore/QtCore>
-#include <QtGui>
+#include "DebitSumSummary.h"
+
+#include "TestData.h"
+#include "SummaryHandlerMock.h"
 
 namespace ClubFrontendTest
 {
   
-SummaryWindowTest::SummaryWindowTest() : isClicked(false)
-{}
-
-
-void SummaryWindowTest::testShowSummary()
+void DebitSumSummaryTest::initTestCase()
 {
-  ClubFrontend::SummaryWindow summary;
+  TestData testData;
   
-  summary.showSummary("foo");
-  
-  const QTextEdit *textEdit = summary.findChild<QTextEdit* >("textEdit");
-  
-  QCOMPARE(textEdit->toPlainText(), QString("foo"));
 }
-
-void SummaryWindowTest::testAddButton()
+  
+void DebitSumSummaryTest::testDebitSum()
 {
-  isClicked = false;
-  ClubFrontend::SummaryWindow summary;
-  
-  QPushButton *button = new QPushButton();
-  button->setObjectName("testButton");
-  button->connect(button, SIGNAL(clicked(bool)), this, SLOT(buttonClicked()));
-  summary.addButton(button);
-
-  QPushButton *testButton = summary.findChild<QPushButton* >("testButton");
-  QTest::mouseClick(testButton, Qt::LeftButton);
-  
-  QVERIFY(isClicked);
+    SummaryHandlerMock *handler = new SummaryHandlerMock();
+    
+    ClubFrontend::DebitSumSummary debitSum(handler);
+    
+    QPushButton *button = handler->getPushButton();
+    QVERIFY(button);
+    QCOMPARE(button->objectName(), QString("debitSumButton"));
+    button->click();
+    
+    QCOMPARE(handler->getText(), QString("foo"));
 }
-
-void SummaryWindowTest::buttonClicked()
-{
-  isClicked = true;
-}
-
-
+  
 }

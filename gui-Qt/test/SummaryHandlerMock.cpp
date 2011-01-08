@@ -25,51 +25,41 @@
     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "SummaryWindowTest.h"
 
-#include "SummaryWindow.h"
-
-#include <QtCore/QtCore>
-#include <QtGui>
+#include "SummaryHandlerMock.h"
 
 namespace ClubFrontendTest
 {
   
-SummaryWindowTest::SummaryWindowTest() : isClicked(false)
-{}
-
-
-void SummaryWindowTest::testShowSummary()
+SummaryHandlerMock::SummaryHandlerMock() :
+  button(0), text("")
 {
-  ClubFrontend::SummaryWindow summary;
-  
-  summary.showSummary("foo");
-  
-  const QTextEdit *textEdit = summary.findChild<QTextEdit* >("textEdit");
-  
-  QCOMPARE(textEdit->toPlainText(), QString("foo"));
+
 }
 
-void SummaryWindowTest::testAddButton()
+SummaryHandlerMock::~SummaryHandlerMock()
 {
-  isClicked = false;
-  ClubFrontend::SummaryWindow summary;
-  
-  QPushButton *button = new QPushButton();
-  button->setObjectName("testButton");
-  button->connect(button, SIGNAL(clicked(bool)), this, SLOT(buttonClicked()));
-  summary.addButton(button);
 
-  QPushButton *testButton = summary.findChild<QPushButton* >("testButton");
-  QTest::mouseClick(testButton, Qt::LeftButton);
-  
-  QVERIFY(isClicked);
 }
 
-void SummaryWindowTest::buttonClicked()
+void SummaryHandlerMock::addButton(QPushButton* aButton)
 {
-  isClicked = true;
+  button = aButton;
 }
 
+void SummaryHandlerMock::showSummary(const QString& aText)
+{
+  text = aText;
+}
+
+QPushButton* SummaryHandlerMock::getPushButton() const
+{
+  return button;
+}
+
+QString SummaryHandlerMock::getText() const
+{
+  return text;
+}
 
 }

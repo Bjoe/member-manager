@@ -29,13 +29,17 @@
 #ifndef SUMMARYWINDOW_H
 #define SUMMARYWINDOW_H
 
+#include <QtCore>
+#include <QtGui>
 #include <QtGui/QWidget>
 #include <ui_SummaryWindow.h>
+
+#include "SummaryHandler.h"
 
 namespace ClubFrontend
 {
 
-class SummaryWindow : public QWidget
+class SummaryWindow : public QWidget, public SummaryHandler
 {
   Q_OBJECT
   
@@ -43,7 +47,7 @@ class SummaryWindow : public QWidget
     SummaryWindow(QWidget *parent = 0);
     
     void showSummary(const QString &aText);
-    void connectButton(const char* aSender, const QObject* aReceiver);
+    void addButton(QPushButton *aButton);
     
   private:
     Ui::SummaryWindow ui;

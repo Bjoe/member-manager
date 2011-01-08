@@ -41,11 +41,17 @@ void SummaryWindow::showSummary(const QString& aText)
   ui.textEdit->setText(aText);
 }
 
-void SummaryWindow::connectButton(const char* aSender, const QObject* aReceiver)
+void SummaryWindow::addButton(QPushButton* aButton)
 {
-  QPushButton* sender = findChild<QPushButton* >(aSender);
-  connect(sender, SIGNAL(clicked(bool)), aReceiver, SLOT(buttonClicked()));
+  QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+  sizePolicy.setHorizontalStretch(0);
+  sizePolicy.setVerticalStretch(0);
+  sizePolicy.setHeightForWidth(aButton->sizePolicy().hasHeightForWidth());
+  aButton->setSizePolicy(sizePolicy);
+  
+  ui.verticalLayout->addWidget(aButton);
 }
+
 
   
 }

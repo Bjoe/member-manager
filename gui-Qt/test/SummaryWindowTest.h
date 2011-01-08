@@ -50,7 +50,7 @@ class SummaryWindowTest : public QObject
     
   private slots:
     void testShowSummary();
-    void testConnect();
+    void testAddButton();
 };
 
 }

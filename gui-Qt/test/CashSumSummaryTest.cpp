@@ -25,50 +25,34 @@
     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "SummaryWindowTest.h"
 
-#include "SummaryWindow.h"
+#include "CashSumSummaryTest.h"
 
-#include <QtCore/QtCore>
-#include <QtGui>
+#include "CashSumSummary.h"
+
+#include "TestData.h"
+#include "SummaryHandlerMock.h"
 
 namespace ClubFrontendTest
 {
   
-SummaryWindowTest::SummaryWindowTest() : isClicked(false)
-{}
-
-
-void SummaryWindowTest::testShowSummary()
+void CashSumSummaryTest::initTestCase()
 {
-  ClubFrontend::SummaryWindow summary;
-  
-  summary.showSummary("foo");
-  
-  const QTextEdit *textEdit = summary.findChild<QTextEdit* >("textEdit");
-  
-  QCOMPARE(textEdit->toPlainText(), QString("foo"));
+    TestData testData;
 }
 
-void SummaryWindowTest::testAddButton()
+void CashSumSummaryTest::testCashSum()
 {
-  isClicked = false;
-  ClubFrontend::SummaryWindow summary;
+  SummaryHandlerMock *handler = new SummaryHandlerMock();
   
-  QPushButton *button = new QPushButton();
-  button->setObjectName("testButton");
-  button->connect(button, SIGNAL(clicked(bool)), this, SLOT(buttonClicked()));
-  summary.addButton(button);
-
-  QPushButton *testButton = summary.findChild<QPushButton* >("testButton");
-  QTest::mouseClick(testButton, Qt::LeftButton);
+  ClubFrontend::CashSumSummary cashSum(handler);
   
-  QVERIFY(isClicked);
-}
-
-void SummaryWindowTest::buttonClicked()
-{
-  isClicked = true;
+  QPushButton *button = handler->getPushButton();
+  QVERIFY(button);
+  QCOMPARE(button->objectName(), QString("cashSumButton"));
+  button->click();
+  
+  QCOMPARE(handler->getText(), QString("foo"));
 }
 
 

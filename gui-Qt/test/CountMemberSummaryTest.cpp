@@ -25,51 +25,35 @@
     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "SummaryWindowTest.h"
 
-#include "SummaryWindow.h"
+#include "CountMemberSummaryTest.h"
 
-#include <QtCore/QtCore>
-#include <QtGui>
+#include "CountMemberSummary.h"
+
+#include "TestData.h"
+#include "SummaryHandlerMock.h"
 
 namespace ClubFrontendTest
 {
   
-SummaryWindowTest::SummaryWindowTest() : isClicked(false)
-{}
-
-
-void SummaryWindowTest::testShowSummary()
+void CountMemberSummaryTest::initTestCase()
 {
-  ClubFrontend::SummaryWindow summary;
-  
-  summary.showSummary("foo");
-  
-  const QTextEdit *textEdit = summary.findChild<QTextEdit* >("textEdit");
-  
-  QCOMPARE(textEdit->toPlainText(), QString("foo"));
+  TestData testData;
+  testData.createFakeMemberTable();
 }
 
-void SummaryWindowTest::testAddButton()
+void CountMemberSummaryTest::testCountMember()
 {
-  isClicked = false;
-  ClubFrontend::SummaryWindow summary;
+  SummaryHandlerMock *handler = new SummaryHandlerMock();
   
-  QPushButton *button = new QPushButton();
-  button->setObjectName("testButton");
-  button->connect(button, SIGNAL(clicked(bool)), this, SLOT(buttonClicked()));
-  summary.addButton(button);
-
-  QPushButton *testButton = summary.findChild<QPushButton* >("testButton");
-  QTest::mouseClick(testButton, Qt::LeftButton);
+  ClubFrontend::CountMemberSummary countMember(handler);
+    
+  QPushButton *button = handler->getPushButton();
+  QVERIFY(button);
+  QCOMPARE(button->objectName(), QString("countMemberButton"));
+  button->click();
   
-  QVERIFY(isClicked);
+  QCOMPARE(handler->getText(), QString("foo"));
 }
-
-void SummaryWindowTest::buttonClicked()
-{
-  isClicked = true;
-}
-
 
 }

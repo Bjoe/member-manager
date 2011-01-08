@@ -25,51 +25,28 @@
     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "SummaryWindowTest.h"
 
-#include "SummaryWindow.h"
+#include "CashSumSummary.h"
 
-#include <QtCore/QtCore>
-#include <QtGui>
-
-namespace ClubFrontendTest
+namespace ClubFrontend
 {
   
-SummaryWindowTest::SummaryWindowTest() : isClicked(false)
-{}
-
-
-void SummaryWindowTest::testShowSummary()
+CashSumSummary::CashSumSummary(SummaryHandler* aHandler, QObject* parent): 
+  QObject(parent), handler(aHandler), cashSumButton(new QPushButton())
 {
-  ClubFrontend::SummaryWindow summary;
+  cashSumButton->setObjectName(QString::fromUtf8("cashSumButton"));
+  cashSumButton->setText(tr("Gesamte Einahmen"));
   
-  summary.showSummary("foo");
-  
-  const QTextEdit *textEdit = summary.findChild<QTextEdit* >("textEdit");
-  
-  QCOMPARE(textEdit->toPlainText(), QString("foo"));
+  connect(cashSumButton, SIGNAL(clicked(bool)), this, SLOT(summaryResult()));
+
+  handler->addButton(cashSumButton);
 }
 
-void SummaryWindowTest::testAddButton()
+void CashSumSummary::summaryResult()
 {
-  isClicked = false;
-  ClubFrontend::SummaryWindow summary;
+  QString result("foo");
   
-  QPushButton *button = new QPushButton();
-  button->setObjectName("testButton");
-  button->connect(button, SIGNAL(clicked(bool)), this, SLOT(buttonClicked()));
-  summary.addButton(button);
-
-  QPushButton *testButton = summary.findChild<QPushButton* >("testButton");
-  QTest::mouseClick(testButton, Qt::LeftButton);
+  handler->showSummary(result);
+}
   
-  QVERIFY(isClicked);
-}
-
-void SummaryWindowTest::buttonClicked()
-{
-  isClicked = true;
-}
-
-
 }

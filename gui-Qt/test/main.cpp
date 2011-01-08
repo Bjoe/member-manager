@@ -28,6 +28,9 @@ Fehlende Features:
 #include "ContributionDialogTest.h"
 #include "ContributionModelTest.h"
 #include "SummaryWindowTest.h"
+#include "CashSumSummaryTest.h"
+#include "CountMemberSummaryTest.h"
+#include "DebitSumSummaryTest.h"
 #include "TestData.h"
 
 #include <QtTest/QtTest>
@@ -86,6 +89,15 @@ int main(int argc, char* argv[])
     
     ClubFrontendTest::SummaryWindowTest summaryTest;
     QTest::qExec(&summaryTest);
+    
+    ClubFrontendTest::CashSumSummaryTest cashTest;
+    QTest::qExec(&cashTest);
+    
+    ClubFrontendTest::DebitSumSummaryTest debitTest;
+    QTest::qExec(&debitTest);
+    
+    ClubFrontendTest::CountMemberSummaryTest countMemberTest;
+    QTest::qExec(&countMemberTest);
 
 	return 0;
 }

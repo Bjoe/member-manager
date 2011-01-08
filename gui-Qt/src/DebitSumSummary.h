@@ -25,51 +25,33 @@
     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "SummaryWindowTest.h"
 
-#include "SummaryWindow.h"
+#ifndef DEBITSUMSUMMARY_H
+#define DEBITSUMSUMMARY_H
 
-#include <QtCore/QtCore>
-#include <QtGui>
+#include <QtCore>
+#include <QPushButton>
 
-namespace ClubFrontendTest
+#include "SummaryHandler.h"
+
+namespace ClubFrontend
 {
-  
-SummaryWindowTest::SummaryWindowTest() : isClicked(false)
-{}
 
-
-void SummaryWindowTest::testShowSummary()
+class DebitSumSummary : public QObject
 {
-  ClubFrontend::SummaryWindow summary;
+  Q_OBJECT
   
-  summary.showSummary("foo");
-  
-  const QTextEdit *textEdit = summary.findChild<QTextEdit* >("textEdit");
-  
-  QCOMPARE(textEdit->toPlainText(), QString("foo"));
+  public:
+    DebitSumSummary(SummaryHandler *aHandler, QObject* parent = 0);
+    
+  private slots:
+    void summaryResult();
+    
+  private:
+    SummaryHandler *handler;
+    QPushButton *debitSumButton;
+};
+
 }
 
-void SummaryWindowTest::testAddButton()
-{
-  isClicked = false;
-  ClubFrontend::SummaryWindow summary;
-  
-  QPushButton *button = new QPushButton();
-  button->setObjectName("testButton");
-  button->connect(button, SIGNAL(clicked(bool)), this, SLOT(buttonClicked()));
-  summary.addButton(button);
-
-  QPushButton *testButton = summary.findChild<QPushButton* >("testButton");
-  QTest::mouseClick(testButton, Qt::LeftButton);
-  
-  QVERIFY(isClicked);
-}
-
-void SummaryWindowTest::buttonClicked()
-{
-  isClicked = true;
-}
-
-
-}
+#endif // DEBITSUMSUMMARY_H

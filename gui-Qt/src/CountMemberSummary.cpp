@@ -25,51 +25,28 @@
     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "SummaryWindowTest.h"
 
-#include "SummaryWindow.h"
+#include "CountMemberSummary.h"
 
-#include <QtCore/QtCore>
-#include <QtGui>
-
-namespace ClubFrontendTest
+namespace ClubFrontend
 {
   
-SummaryWindowTest::SummaryWindowTest() : isClicked(false)
-{}
-
-
-void SummaryWindowTest::testShowSummary()
+CountMemberSummary::CountMemberSummary(SummaryHandler* aHandler, QObject* parent): 
+  QObject(parent), countMemberButton(new QPushButton), handler(aHandler)
 {
-  ClubFrontend::SummaryWindow summary;
+  countMemberButton->setObjectName(QString::fromUtf8("countMemberButton"));
+  countMemberButton->setText(tr("Anzahl Mitglieder"));
   
-  summary.showSummary("foo");
+  connect(countMemberButton, SIGNAL(clicked()), this, SLOT(summaryResult()));
   
-  const QTextEdit *textEdit = summary.findChild<QTextEdit* >("textEdit");
-  
-  QCOMPARE(textEdit->toPlainText(), QString("foo"));
+  handler->addButton(countMemberButton);
 }
 
-void SummaryWindowTest::testAddButton()
+void CountMemberSummary::summaryResult()
 {
-  isClicked = false;
-  ClubFrontend::SummaryWindow summary;
-  
-  QPushButton *button = new QPushButton();
-  button->setObjectName("testButton");
-  button->connect(button, SIGNAL(clicked(bool)), this, SLOT(buttonClicked()));
-  summary.addButton(button);
+  QString result("foo");
 
-  QPushButton *testButton = summary.findChild<QPushButton* >("testButton");
-  QTest::mouseClick(testButton, Qt::LeftButton);
-  
-  QVERIFY(isClicked);
+  handler->showSummary(result);
 }
-
-void SummaryWindowTest::buttonClicked()
-{
-  isClicked = true;
-}
-
 
 }

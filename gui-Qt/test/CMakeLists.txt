@@ -17,6 +17,9 @@ set(QT_FRONTEND_TEST_MOC_HEADERS
     ContributionModelTest.h
     ContributionDialogTest.h
     SummaryWindowTest.h
+    CountMemberSummaryTest.h
+    DebitSumSummaryTest.h
+    CashSumSummaryTest.h
     TriggerThread.h
     )
 
@@ -37,7 +40,11 @@ set(QT_FRONTEND_TEST
     ContributionModelTest.cpp
     ContributionDialogTest.cpp
     SummaryWindowTest.cpp
+    CountMemberSummaryTest.cpp
+    DebitSumSummaryTest.cpp
+    CashSumSummaryTest.cpp
     TriggerThread.cpp
+    SummaryHandlerMock.cpp
     )
 
 # Setze src Verzeichniss

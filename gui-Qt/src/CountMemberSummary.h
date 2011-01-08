@@ -25,51 +25,33 @@
     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "SummaryWindowTest.h"
 
-#include "SummaryWindow.h"
+#ifndef COUNTMEMBERSUMMARY_H
+#define COUNTMEMBERSUMMARY_H
 
-#include <QtCore/QtCore>
-#include <QtGui>
+#include <QtCore>
+#include <QPushButton>
 
-namespace ClubFrontendTest
+#include "SummaryHandler.h"
+
+namespace ClubFrontend
 {
   
-SummaryWindowTest::SummaryWindowTest() : isClicked(false)
-{}
-
-
-void SummaryWindowTest::testShowSummary()
+class CountMemberSummary : public QObject
 {
-  ClubFrontend::SummaryWindow summary;
+  Q_OBJECT
   
-  summary.showSummary("foo");
+  public:
+    CountMemberSummary(SummaryHandler *aHandler, QObject* parent = 0);
   
-  const QTextEdit *textEdit = summary.findChild<QTextEdit* >("textEdit");
-  
-  QCOMPARE(textEdit->toPlainText(), QString("foo"));
-}
-
-void SummaryWindowTest::testAddButton()
-{
-  isClicked = false;
-  ClubFrontend::SummaryWindow summary;
-  
-  QPushButton *button = new QPushButton();
-  button->setObjectName("testButton");
-  button->connect(button, SIGNAL(clicked(bool)), this, SLOT(buttonClicked()));
-  summary.addButton(button);
-
-  QPushButton *testButton = summary.findChild<QPushButton* >("testButton");
-  QTest::mouseClick(testButton, Qt::LeftButton);
-  
-  QVERIFY(isClicked);
-}
-
-void SummaryWindowTest::buttonClicked()
-{
-  isClicked = true;
-}
-
+  private slots:
+    void summaryResult();
+    
+  private:
+    QPushButton *countMemberButton;
+    SummaryHandler* handler;
+};
 
 }
+
+#endif // COUNTMEMBERSUMMARY_H
