@@ -46,6 +46,8 @@ void CountMemberSummary::summaryResult()
 {
   QString result("foo");
 
+  // TODO QVector< Member > MemberModel.getSelectedMembers();
+
   handler->showSummary(result);
 }
 
