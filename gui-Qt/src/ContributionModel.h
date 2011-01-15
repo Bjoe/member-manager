@@ -47,8 +47,11 @@ class ContributionModel : public QObject
     QSqlTableModel* getContributionTableModel() const;
     
     QString getInfo() const;
+    QVariant getInfoValue() const;
     QString getDonation() const;
+    QVariant getDonationValue() const;
     QString getFee() const;
+    QVariant getFeeValue() const;
     
     void submit(const QString& aFee, const QString& aDonation, const QString& anInfo);
 
@@ -56,6 +59,7 @@ class ContributionModel : public QObject
     QVariant returnValue(int aColumn) const;
     
     QSqlTableModel* model;
+    QSqlRecord record;
     int memberId;
 };
 
