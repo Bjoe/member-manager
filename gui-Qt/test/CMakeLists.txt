@@ -48,6 +48,7 @@ set(QT_FRONTEND_TEST
     TriggerThread.cpp
     SummaryHandlerMock.cpp
     ReadSqlFile.cpp
+    DatabaseUtils.cpp
     )
 
 # Setze src Verzeichniss
