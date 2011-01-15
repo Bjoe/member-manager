@@ -20,6 +20,7 @@ set(QT_FRONTEND_TEST_MOC_HEADERS
     CountMemberSummaryTest.h
     DebitSumSummaryTest.h
     CashSumSummaryTest.h
+    MemberTest.h
     TriggerThread.h
     )
 
@@ -43,8 +44,10 @@ set(QT_FRONTEND_TEST
     CountMemberSummaryTest.cpp
     DebitSumSummaryTest.cpp
     CashSumSummaryTest.cpp
+    MemberTest.cpp
     TriggerThread.cpp
     SummaryHandlerMock.cpp
+    ReadSqlFile.cpp
     )
 
 # Setze src Verzeichniss

@@ -42,6 +42,7 @@ set(QT_FRONTEND_SRC
     CountMemberSummary.cpp
     CashSumSummary.cpp
     DebitSumSummary.cpp
+    Member.cpp
     )
 
 # Setze Sourcen fuer die tests
