@@ -27,6 +27,7 @@ private slots:
 	void testGetContributionModel();
 	void testGetRessourcenModel();
 	void testGetMemberModel();
+	void testGetMember();
 	void testSetMemberId();
 	void testNewMember();
 	void testDeleteMember();

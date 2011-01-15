@@ -12,6 +12,7 @@
 #include <QtSql>
 
 #include "ContributionModel.h"
+#include "Member.h"
 
 namespace ClubFrontend
 {
@@ -26,6 +27,8 @@ public:
 
 	void setMemberId(int id);
 	int getMemberId() const;
+	Member exportMember() const;
+	
 	int newMember();
 	void deleteMember();
 

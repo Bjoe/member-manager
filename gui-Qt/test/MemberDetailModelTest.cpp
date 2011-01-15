@@ -1,6 +1,7 @@
 #include "MemberDetailModelTest.h"
 
 #include "MemberDetailModel.h"
+#include "Member.h"
 
 #include "TestData.h"
 #include "DatabaseStructure.h"
@@ -79,6 +80,24 @@ void MemberDetailModelTest::testGetMemberModel()
 	QCOMPARE(model->rowCount(), 2);
 	QSqlRecord record = model->record(0);
 	QCOMPARE(record.value("name").toString(), QString("Kirk"));
+}
+
+void MemberDetailModelTest::testGetMember()
+{
+	ClubFrontend::MemberDetailModel memberModel(QSqlDatabase::database());
+	
+	memberModel.setMemberId(1025);
+	ClubFrontend::Member member = memberModel.exportMember();
+	
+	QCOMPARE(member.getMemberId(), 1025);
+	QCOMPARE(member.getName(), QString("Kirk"));
+	QCOMPARE(member.getFirstname(), QString("James T"));
+	QCOMPARE(member.getNickname(), QString("Capt. Kirk"));
+	float donation = 1;
+	QCOMPARE(member.getDonation(), donation);
+	float fee = 15;
+	QCOMPARE(member.getFee(), fee);
+	
 }
 
 void MemberDetailModelTest::testSetMemberId()

@@ -68,6 +68,20 @@ int MemberDetailModel::getMemberId() const
 	return id;
 }
 
+Member MemberDetailModel::exportMember() const
+{
+  QSqlRecord memberRecord = memberModel->record(0);
+  QVariant name = memberRecord.value(MemberTable::Name);
+  QVariant firstname = memberRecord.value(MemberTable::FirstName);
+  QVariant nickname = memberRecord.value(MemberTable::NickName);
+  QVariant fee = contributionModel->getFeeValue();
+  QVariant donation = contributionModel->getDonationValue();
+  
+  return Member(id, name.toString(), firstname.toString(), nickname.toString(),
+		donation.toFloat(), fee.toFloat());
+}
+
+// TODO Refactor: In DAO Klasse Refactoren
 int MemberDetailModel::newMember()
 {
 	// Dirty Hack um ein Neues Mitglied einzutragen.
@@ -86,6 +100,7 @@ int MemberDetailModel::newMember()
 	return newId;
 }
 
+// TODO Refactor: In DAO Klasse Refactoren
 int MemberDetailModel::insertNewMember(QSqlTableModel* aModel,
 		const int& aColumnId, const QVariant& aValue)
 {
@@ -98,6 +113,7 @@ int MemberDetailModel::insertNewMember(QSqlTableModel* aModel,
 	return row;
 }
 
+// TODO Refactor: In DAO Klasse Refactoren
 void MemberDetailModel::deleteMember()
 {
 	if (id == 0)
