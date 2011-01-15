@@ -9,11 +9,9 @@
 #define MEMBERMODEL_H_
 
 #include <QtCore>
-#include <QSqlDatabase>
-#include <QSqlTableModel>
-#include <QModelIndex>
+#include <QtSql>
 
-#include "MemberDetailModel.h"
+#include "Member.h"
 
 namespace ClubFrontend
 {
@@ -29,6 +27,7 @@ public:
 	void refresh();
 
 	int getMemberId(const QModelIndex& anIndex);
+	QVector< Member > * getSelectedMembers();
 
 	QString getLastError() const;
 	QSqlTableModel* getMemberTableModel() const;

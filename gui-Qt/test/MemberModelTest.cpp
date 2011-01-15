@@ -2,14 +2,12 @@
 
 #include "MemberModel.h"
 
+#include "Member.h"
 #include "TestData.h"
 #include "MemberDetailModel.h"
 
-#include <QSqlTableModel>
-#include <QSqlRecord>
-#include <QModelIndex>
-#include <QVariant>
-#include <QString>
+#include <QtCore>
+#include <QtSql>
 
 namespace ClubFrontendTest
 {
@@ -60,5 +58,15 @@ void MemberModelTest::testGetMemberId()
 
 	QCOMPARE(id, 1025);
 }
+
+void MemberModelTest::testGetSelectedMembers()
+{
+  ClubFrontend::MemberModel memberModel(QSqlDatabase::database());
+  
+  QVector< ClubFrontend::Member > *memberList = memberModel.getSelectedMembers();
+  
+  QCOMPARE(memberList->size(), 2);
+}
+
 
 }

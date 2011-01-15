@@ -6,8 +6,7 @@
  */
 #include "MemberModel.h"
 
-#include <QSqlRecord>
-
+#include "MemberDetailModel.h"
 #include "DatabaseStructure.h"
 
 namespace ClubFrontend
@@ -46,6 +45,23 @@ int MemberModel::getMemberId(const QModelIndex& anIndex)
 {
 	QSqlRecord record = model->record(anIndex.row());
 	return record.value(MemberTable::MemberId).toInt();
+}
+
+QVector< Member > * MemberModel::getSelectedMembers()
+{
+  int size = model->rowCount();
+  QVector< Member > *memberList = new QVector< Member >(size);
+  for(int i = 0; i < size; i++)
+  {
+    QSqlRecord record = model->record(i);
+    QVariant value = record.value(MemberTable::MemberId);
+
+    MemberDetailModel memberDetail;  
+    memberDetail.setMemberId(value.toInt());
+    Member member = memberDetail.exportMember();
+    memberList->replace(i, member);
+  }
+  return memberList;
 }
 
 QString MemberModel::getLastError() const
