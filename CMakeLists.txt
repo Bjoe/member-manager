@@ -19,4 +19,5 @@ ADD_DEFINITIONS( "-Wall -ansi" )
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON) 
 
-add_subdirectory(gui-Qt)
+add_subdirectory(src)
+add_subdirectory(test)
