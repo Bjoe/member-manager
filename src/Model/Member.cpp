@@ -25,40 +25,51 @@
     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "CashSumSummaryTest.h"
 
-#include "CashSumSummary.h"
+#include "Model/Member.h"
 
-#include "TestUtils/SummaryHandlerMock.h"
-
-#include "TestConfig.h"
-#include "TestUtils/DatabaseUtils.h"
-
-namespace ClubFrontendTest
-{
+namespace ClubFrontend {
   
-void CashSumSummaryTest::initTestCase()
+Member::Member() :
+  id(0), name(""), firstname(""), nickname(""), donation(0), fee(0)
 {
-    Utils::DatabaseUtils database(DATABASEDRIVER);
-    database.open(DATABASE);
-    database.read(SQLTESTFILE);
+
 }
-
-void CashSumSummaryTest::testCashSum()
+  
+Member::Member(const int anId, const QString& aName, const QString& aFirstname, const QString& aNickname, const float aDonation, const float aFee) :
+  id(anId), name(aName), firstname(aFirstname), nickname(aNickname), donation(aDonation), fee(aFee)
 {
-  SummaryHandlerMock *handler = new SummaryHandlerMock();
-  
-  ClubFrontend::CashSumSummary cashSum(handler);
-  
-  QPushButton *button = handler->getPushButton();
-  QVERIFY(button);
-  QCOMPARE(button->objectName(), QString("cashSumButton"));
-  button->click();
-  
-  QCOMPARE(handler->getText(), QString("foo"));
-}
 
 }
 
-QTEST_MAIN(ClubFrontendTest::CashSumSummaryTest)
-#include "CashSumSummaryTest.moc"
+int Member::getMemberId() const
+{
+  return id;
+}
+
+QString Member::getFirstname() const
+{
+  return firstname;
+}
+
+QString Member::getName() const
+{
+  return name;
+}
+
+QString Member::getNickname() const
+{
+  return nickname;
+}
+
+float Member::getDonation() const
+{
+  return donation;
+}
+
+float Member::getFee() const
+{
+  return fee;
+}
+
+}

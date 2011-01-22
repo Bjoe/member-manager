@@ -25,40 +25,35 @@
     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "CashSumSummaryTest.h"
 
-#include "CashSumSummary.h"
+#ifndef SUMMARYWINDOW_H
+#define SUMMARYWINDOW_H
 
-#include "TestUtils/SummaryHandlerMock.h"
+#include <QtCore>
+#include <QtGui>
+#include <QtGui/QWidget>
 
-#include "TestConfig.h"
-#include "TestUtils/DatabaseUtils.h"
+#include "ui_SummaryWindow.h"
 
-namespace ClubFrontendTest
+#include "SummaryHandler.h"
+
+namespace ClubFrontend
 {
-  
-void CashSumSummaryTest::initTestCase()
-{
-    Utils::DatabaseUtils database(DATABASEDRIVER);
-    database.open(DATABASE);
-    database.read(SQLTESTFILE);
-}
 
-void CashSumSummaryTest::testCashSum()
+class SummaryWindow : public QWidget, public SummaryHandler
 {
-  SummaryHandlerMock *handler = new SummaryHandlerMock();
+  Q_OBJECT
   
-  ClubFrontend::CashSumSummary cashSum(handler);
-  
-  QPushButton *button = handler->getPushButton();
-  QVERIFY(button);
-  QCOMPARE(button->objectName(), QString("cashSumButton"));
-  button->click();
-  
-  QCOMPARE(handler->getText(), QString("foo"));
-}
+  public:
+    SummaryWindow(QWidget *parent = 0);
+    
+    void showSummary(const QString &aText);
+    void addButton(QPushButton *aButton);
+    
+  private:
+    Ui::SummaryWindow ui;
+};
 
 }
 
-QTEST_MAIN(ClubFrontendTest::CashSumSummaryTest)
-#include "CashSumSummaryTest.moc"
+#endif // SUMMARYWINDOW_H

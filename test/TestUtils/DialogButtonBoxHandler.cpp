@@ -23,42 +23,36 @@
     ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
     (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
 */
 
-#include "CashSumSummaryTest.h"
+#include "TestUtils/DialogButtonBoxHandler.h"
 
-#include "CashSumSummary.h"
-
-#include "TestUtils/SummaryHandlerMock.h"
-
-#include "TestConfig.h"
-#include "TestUtils/DatabaseUtils.h"
+#include <QWidget>
+#include <QApplication>
+#include <QPushButton>
 
 namespace ClubFrontendTest
 {
-  
-void CashSumSummaryTest::initTestCase()
+
+DialogButtonBoxHandler::DialogButtonBoxHandler(QDialogButtonBox::StandardButton which) :
+  standardButton(which)
 {
-    Utils::DatabaseUtils database(DATABASEDRIVER);
-    database.open(DATABASE);
-    database.read(SQLTESTFILE);
 }
 
-void CashSumSummaryTest::testCashSum()
+void DialogButtonBoxHandler::handle()
 {
-  SummaryHandlerMock *handler = new SummaryHandlerMock();
-  
-  ClubFrontend::CashSumSummary cashSum(handler);
-  
-  QPushButton *button = handler->getPushButton();
-  QVERIFY(button);
-  QCOMPARE(button->objectName(), QString("cashSumButton"));
-  button->click();
-  
-  QCOMPARE(handler->getText(), QString("foo"));
-}
+	QWidget* widget = 0;
+	do
+	{
+		widget = QApplication::activeWindow();
+	} while (!widget);
+
+	QDialogButtonBox* buttonBox =
+		widget->findChild<QDialogButtonBox*> ();
+	QPushButton* button = buttonBox->button(standardButton);
+	button->click();
 
 }
 
-QTEST_MAIN(ClubFrontendTest::CashSumSummaryTest)
-#include "CashSumSummaryTest.moc"
+}

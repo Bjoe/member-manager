@@ -1,11 +1,11 @@
 #include <QtGui>
 #include <QtSql>
 
-#include "ConnectionDialog.h"
-#include "MemberDialog.h"
-#include "MemberModel.h"
-#include "KassaModel.h"
-#include "MainWindow.h"
+#include "Gui/ConnectionDialog.h"
+#include "Gui/MemberDialog.h"
+#include "Model/MemberModel.h"
+#include "Model/KassaModel.h"
+#include "Gui/MainWindow.h"
 
 int main(int argc, char *argv[])
 {

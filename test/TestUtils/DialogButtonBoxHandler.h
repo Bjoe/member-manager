@@ -23,42 +23,30 @@
     ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
     (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
 */
 
-#include "CashSumSummaryTest.h"
+#ifndef DIALOGBOXHANDLER_H
+#define DIALOGBOXHANDLER_H
 
-#include "CashSumSummary.h"
+#include <QDialogButtonBox>
 
-#include "TestUtils/SummaryHandlerMock.h"
-
-#include "TestConfig.h"
-#include "TestUtils/DatabaseUtils.h"
+#include "TestUtils/Handler.h"
 
 namespace ClubFrontendTest
 {
-  
-void CashSumSummaryTest::initTestCase()
+
+class DialogButtonBoxHandler: public Handler
 {
-    Utils::DatabaseUtils database(DATABASEDRIVER);
-    database.open(DATABASE);
-    database.read(SQLTESTFILE);
-}
+  public:
+    DialogButtonBoxHandler(QDialogButtonBox::StandardButton which = QDialogButtonBox::Yes);
 
-void CashSumSummaryTest::testCashSum()
-{
-  SummaryHandlerMock *handler = new SummaryHandlerMock();
-  
-  ClubFrontend::CashSumSummary cashSum(handler);
-  
-  QPushButton *button = handler->getPushButton();
-  QVERIFY(button);
-  QCOMPARE(button->objectName(), QString("cashSumButton"));
-  button->click();
-  
-  QCOMPARE(handler->getText(), QString("foo"));
-}
+    virtual void handle();
+
+  private:
+	QDialogButtonBox::StandardButton standardButton;
+};
 
 }
 
-QTEST_MAIN(ClubFrontendTest::CashSumSummaryTest)
-#include "CashSumSummaryTest.moc"
+#endif // DIALOGBOXHANDLER_H

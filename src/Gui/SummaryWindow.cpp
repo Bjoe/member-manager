@@ -25,40 +25,33 @@
     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "CashSumSummaryTest.h"
 
-#include "CashSumSummary.h"
+#include "Gui/SummaryWindow.h"
 
-#include "TestUtils/SummaryHandlerMock.h"
-
-#include "TestConfig.h"
-#include "TestUtils/DatabaseUtils.h"
-
-namespace ClubFrontendTest
+namespace ClubFrontend
 {
   
-void CashSumSummaryTest::initTestCase()
+SummaryWindow::SummaryWindow(QWidget* parent): QWidget(parent)
 {
-    Utils::DatabaseUtils database(DATABASEDRIVER);
-    database.open(DATABASE);
-    database.read(SQLTESTFILE);
+  ui.setupUi(this);
 }
 
-void CashSumSummaryTest::testCashSum()
+void SummaryWindow::showSummary(const QString& aText)
 {
-  SummaryHandlerMock *handler = new SummaryHandlerMock();
-  
-  ClubFrontend::CashSumSummary cashSum(handler);
-  
-  QPushButton *button = handler->getPushButton();
-  QVERIFY(button);
-  QCOMPARE(button->objectName(), QString("cashSumButton"));
-  button->click();
-  
-  QCOMPARE(handler->getText(), QString("foo"));
+  ui.textEdit->setText(aText);
 }
 
+void SummaryWindow::addButton(QPushButton* aButton)
+{
+  QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+  sizePolicy.setHorizontalStretch(0);
+  sizePolicy.setVerticalStretch(0);
+  sizePolicy.setHeightForWidth(aButton->sizePolicy().hasHeightForWidth());
+  aButton->setSizePolicy(sizePolicy);
+  
+  ui.verticalLayout->addWidget(aButton);
 }
 
-QTEST_MAIN(ClubFrontendTest::CashSumSummaryTest)
-#include "CashSumSummaryTest.moc"
+
+  
+}

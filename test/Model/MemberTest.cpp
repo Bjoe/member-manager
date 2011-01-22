@@ -25,40 +25,32 @@
     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "CashSumSummaryTest.h"
+#include "MemberTest.h"
 
-#include "CashSumSummary.h"
+#include "Model/Member.h"
 
-#include "TestUtils/SummaryHandlerMock.h"
+namespace ClubFrontendTest {
 
-#include "TestConfig.h"
-#include "TestUtils/DatabaseUtils.h"
-
-namespace ClubFrontendTest
+void MemberTest::testDefaultKonstruktor()
 {
-  
-void CashSumSummaryTest::initTestCase()
-{
-    Utils::DatabaseUtils database(DATABASEDRIVER);
-    database.open(DATABASE);
-    database.read(SQLTESTFILE);
+  ClubFrontend::Member member;
 }
-
-void CashSumSummaryTest::testCashSum()
+  
+void MemberTest::testMember()
 {
-  SummaryHandlerMock *handler = new SummaryHandlerMock();
-  
-  ClubFrontend::CashSumSummary cashSum(handler);
-  
-  QPushButton *button = handler->getPushButton();
-  QVERIFY(button);
-  QCOMPARE(button->objectName(), QString("cashSumButton"));
-  button->click();
-  
-  QCOMPARE(handler->getText(), QString("foo"));
+  float donation = 2.5;
+  float fee = 1.5;
+  ClubFrontend::Member member(1, "name", "firstname", "nickname",
+			     donation, fee);
+  QCOMPARE(member.getMemberId(), 1);
+  QCOMPARE(member.getName(), QString("name"));
+  QCOMPARE(member.getFirstname(), QString("firstname"));
+  QCOMPARE(member.getNickname(), QString("nickname"));
+  QCOMPARE(member.getDonation(), donation);
+  QCOMPARE(member.getFee(), fee);
 }
 
 }
 
-QTEST_MAIN(ClubFrontendTest::CashSumSummaryTest)
-#include "CashSumSummaryTest.moc"
+QTEST_MAIN(ClubFrontendTest::MemberTest)
+#include "MemberTest.moc"

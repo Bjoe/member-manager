@@ -23,42 +23,54 @@
     ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
     (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
 */
 
-#include "CashSumSummaryTest.h"
+#include "ContributionDialogTest.h"
 
-#include "CashSumSummary.h"
-
-#include "TestUtils/SummaryHandlerMock.h"
+#include "Gui/ContributionDialog.h"
 
 #include "TestConfig.h"
 #include "TestUtils/DatabaseUtils.h"
+#include "Model/DatabaseStructure.h"
+#include "Model/ContributionModel.h"
+
+#include <QSqlDatabase>
+#include <QTableView>
+#include <QModelIndex>
+#include <QAbstractItemModel>
+#include <QPoint>
+#include <QVariant>
+#include <QString>
 
 namespace ClubFrontendTest
 {
-  
-void CashSumSummaryTest::initTestCase()
+
+void ContributionDialogTest::initTestCase()
 {
     Utils::DatabaseUtils database(DATABASEDRIVER);
     database.open(DATABASE);
     database.read(SQLTESTFILE);
 }
 
-void CashSumSummaryTest::testCashSum()
+void ContributionDialogTest::testShowDialog()
 {
-  SummaryHandlerMock *handler = new SummaryHandlerMock();
-  
-  ClubFrontend::CashSumSummary cashSum(handler);
-  
-  QPushButton *button = handler->getPushButton();
-  QVERIFY(button);
-  QCOMPARE(button->objectName(), QString("cashSumButton"));
-  button->click();
-  
-  QCOMPARE(handler->getText(), QString("foo"));
+  ClubFrontend::ContributionModel contributionModel(QSqlDatabase::database());
+  contributionModel.setMemberId(1025);
+  ClubFrontend::ContributionDialog dialog(&contributionModel);
+
+  const QTableView* tableView = dialog.findChild<QTableView* >("contributionTableView");
+  const QAbstractItemModel* model = tableView->model();
+  QVERIFY(model != 0);
+  QCOMPARE(model->rowCount(), 2);
+  using ClubFrontend::ContributionTable;
+  const QModelIndex index = model->index(0, ContributionTable::ValidFrom);
+  const QVariant value = model->data(index);
+  QCOMPARE(value.toString(), QString("2007-05-01"));
 }
+
 
 }
 
-QTEST_MAIN(ClubFrontendTest::CashSumSummaryTest)
-#include "CashSumSummaryTest.moc"
+QTEST_MAIN(ClubFrontendTest::ContributionDialogTest)
+#include "ContributionDialogTest.moc"

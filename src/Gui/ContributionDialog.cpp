@@ -23,42 +23,31 @@
     ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
     (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
 */
 
-#include "CashSumSummaryTest.h"
+#include "Gui/ContributionDialog.h"
+#include "Model/DatabaseStructure.h"
 
-#include "CashSumSummary.h"
-
-#include "TestUtils/SummaryHandlerMock.h"
-
-#include "TestConfig.h"
-#include "TestUtils/DatabaseUtils.h"
-
-namespace ClubFrontendTest
+namespace ClubFrontend
 {
+
+ContributionDialog::ContributionDialog(ClubFrontend::ContributionModel* aContributionModel, QWidget* parent):
+  QDialog(parent), contributionModel(aContributionModel), ui()
+{
+  ui.setupUi(this);
+  ui.contributionTableView->setModel(contributionModel->getContributionTableModel());
   
-void CashSumSummaryTest::initTestCase()
-{
-    Utils::DatabaseUtils database(DATABASEDRIVER);
-    database.open(DATABASE);
-    database.read(SQLTESTFILE);
+  ui.contributionTableView->setColumnHidden(ContributionTable::ContributionId, true);
+  ui.contributionTableView->setColumnHidden(ContributionTable::MemberId, true);
+  ui.contributionTableView->setColumnHidden(ContributionTable::Debit, true);
+
+  ui.contributionTableView->resizeColumnsToContents();
 }
 
-void CashSumSummaryTest::testCashSum()
+ContributionDialog::~ContributionDialog()
 {
-  SummaryHandlerMock *handler = new SummaryHandlerMock();
-  
-  ClubFrontend::CashSumSummary cashSum(handler);
-  
-  QPushButton *button = handler->getPushButton();
-  QVERIFY(button);
-  QCOMPARE(button->objectName(), QString("cashSumButton"));
-  button->click();
-  
-  QCOMPARE(handler->getText(), QString("foo"));
+
 }
 
 }
-
-QTEST_MAIN(ClubFrontendTest::CashSumSummaryTest)
-#include "CashSumSummaryTest.moc"

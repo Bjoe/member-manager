@@ -1,48 +1,51 @@
 
 set(QT_MOC_HEADERS
-    MainWindow.h
-    MemberDialog.h
-    ConnectionDialog.h
-    SaldoDialog.h
-    SaldoSumDialog.h
-    ContributionDialog.h
-    SummaryWindow.h
+    Gui/MainWindow.h
+    Gui/MemberDialog.h
+    Gui/ConnectionDialog.h
+    Gui/SaldoDialog.h
+    Gui/SaldoSumDialog.h
+    Gui/ContributionDialog.h
+    Gui/SummaryWindow.h
+
     CountMemberSummary.h
     CashSumSummary.h
     DebitSumSummary.h
     )
 
 set(QT_UI
-    mainWindow.ui
-    memberDialog.ui
-    ConnectionDialog.ui
-    SaldoDialog.ui
-    SaldoSumDialog.ui
-    ContributionDialog.ui
-    SummaryWindow.ui
+    Gui/mainWindow.ui
+    Gui/memberDialog.ui
+    Gui/ConnectionDialog.ui
+    Gui/SaldoDialog.ui
+    Gui/SaldoSumDialog.ui
+    Gui/ContributionDialog.ui
+    Gui/SummaryWindow.ui
     )
 
 set(QT_SRCS
-    MainWindow.cpp
-    MemberDialog.cpp
-    MemberModel.cpp
-    KassaModel.cpp
-    SaldoModel.cpp
-    SaldoSumModel.cpp
-    ContributionModel.cpp
-    MemberDetailModel.cpp
-    MemberFilter.cpp
-    DatabaseStructure.cpp
-    ConnectionDialog.cpp
-    SaldoDialog.cpp
-    SaldoSumDialog.cpp
-    ContributionDialog.cpp
-    SummaryWindow.cpp
+    Gui/MainWindow.cpp
+    Gui/MemberDialog.cpp
+    Gui/ConnectionDialog.cpp
+    Gui/SaldoDialog.cpp
+    Gui/SaldoSumDialog.cpp
+    Gui/ContributionDialog.cpp
+    Gui/SummaryWindow.cpp
+
+    Model/MemberModel.cpp
+    Model/KassaModel.cpp
+    Model/SaldoModel.cpp
+    Model/SaldoSumModel.cpp
+    Model/ContributionModel.cpp
+    Model/MemberDetailModel.cpp
+    Model/MemberFilter.cpp
+    Model/Member.cpp
+    Model/DatabaseStructure.cpp
+
     SummaryHandler.cpp
     CountMemberSummary.cpp
     CashSumSummary.cpp
     DebitSumSummary.cpp
-    Member.cpp
     )
 
 # configure a header file to pass some of the CMake settings

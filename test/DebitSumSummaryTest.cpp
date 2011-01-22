@@ -31,8 +31,8 @@
 #include "DebitSumSummary.h"
 
 #include "TestConfig.h"
-#include "DatabaseUtils.h"
-#include "SummaryHandlerMock.h"
+#include "TestUtils/DatabaseUtils.h"
+#include "TestUtils/SummaryHandlerMock.h"
 
 namespace ClubFrontendTest
 {

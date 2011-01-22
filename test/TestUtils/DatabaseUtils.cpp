@@ -25,40 +25,47 @@
     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "CashSumSummaryTest.h"
 
-#include "CashSumSummary.h"
-
-#include "TestUtils/SummaryHandlerMock.h"
-
-#include "TestConfig.h"
 #include "TestUtils/DatabaseUtils.h"
 
-namespace ClubFrontendTest
+#include "TestUtils/ReadSqlFile.h"
+
+namespace Utils
 {
-  
-void CashSumSummaryTest::initTestCase()
+
+DatabaseUtils::DatabaseUtils(const QString& aType) :
+        database()
 {
-    Utils::DatabaseUtils database(DATABASEDRIVER);
-    database.open(DATABASE);
-    database.read(SQLTESTFILE);
+    database = QSqlDatabase::addDatabase(aType);
 }
 
-void CashSumSummaryTest::testCashSum()
+DatabaseUtils::~DatabaseUtils()
 {
-  SummaryHandlerMock *handler = new SummaryHandlerMock();
-  
-  ClubFrontend::CashSumSummary cashSum(handler);
-  
-  QPushButton *button = handler->getPushButton();
-  QVERIFY(button);
-  QCOMPARE(button->objectName(), QString("cashSumButton"));
-  button->click();
-  
-  QCOMPARE(handler->getText(), QString("foo"));
-}
 
 }
 
-QTEST_MAIN(ClubFrontendTest::CashSumSummaryTest)
-#include "CashSumSummaryTest.moc"
+bool DatabaseUtils::open(const QString& aDatabase)
+{
+    database.setDatabaseName(aDatabase);
+    if (!database.open())
+    {
+        QString msg = QString("%1").arg(database.lastError().text());
+        qWarning(msg.toAscii());
+        return false;
+    }
+    return true;
+}
+
+bool DatabaseUtils::read(const QString& aSqlFilename)
+{
+    ReadSqlFile readSqlFile(aSqlFilename, database);
+    if (!readSqlFile.open()) {
+        qWarning("Konnte SQL File nicht oeffnen.");
+        return false;
+    }
+
+    readSqlFile.read();
+    return true;
+}
+
+}

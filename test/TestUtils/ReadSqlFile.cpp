@@ -25,40 +25,65 @@
     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "CashSumSummaryTest.h"
 
-#include "CashSumSummary.h"
+#include "TestUtils/ReadSqlFile.h"
 
-#include "TestUtils/SummaryHandlerMock.h"
-
-#include "TestConfig.h"
-#include "TestUtils/DatabaseUtils.h"
-
-namespace ClubFrontendTest
+namespace Utils
 {
-  
-void CashSumSummaryTest::initTestCase()
+
+ReadSqlFile::ReadSqlFile(const QString aFilename, const QSqlDatabase &aDatabase) :
+  file(aFilename)
 {
-    Utils::DatabaseUtils database(DATABASEDRIVER);
-    database.open(DATABASE);
-    database.read(SQLTESTFILE);
 }
 
-void CashSumSummaryTest::testCashSum()
+ReadSqlFile::~ReadSqlFile()
 {
-  SummaryHandlerMock *handler = new SummaryHandlerMock();
+  file.close();
+}
+
+bool ReadSqlFile::open()
+{
+  return file.open(QIODevice::ReadOnly | QIODevice::Text);
+}
+
+bool ReadSqlFile::read()
+{
+  QTextStream stream(&file);
   
-  ClubFrontend::CashSumSummary cashSum(handler);
-  
-  QPushButton *button = handler->getPushButton();
-  QVERIFY(button);
-  QCOMPARE(button->objectName(), QString("cashSumButton"));
-  button->click();
-  
-  QCOMPARE(handler->getText(), QString("foo"));
+  QRegExp regex("(.*);");
+  QRegExp comment("(.*)--");
+  QString sql;
+  while(!stream.atEnd())
+  {
+    QString line = stream.readLine();
+    
+    if(line.contains(comment))
+    {
+      line = comment.cap(1);
+    }
+    
+    if(line.contains(regex))
+    {
+      QString grep = regex.cap(1);
+      sql.append(grep);
+      execStatement(sql);
+      sql.clear();
+    }
+    else
+    {
+      sql.append(line);
+    }
+  }
+}
+
+void ReadSqlFile::execStatement(const QString& aSql)
+{
+  QSqlQuery sqlQuery;
+  if(!sqlQuery.exec(aSql))
+  {
+    const QString msg = QString("%1\n%2").arg(sqlQuery.lastError().text()).arg(aSql);
+    qWarning(msg.toAscii());
+  }
 }
 
 }
-
-QTEST_MAIN(ClubFrontendTest::CashSumSummaryTest)
-#include "CashSumSummaryTest.moc"

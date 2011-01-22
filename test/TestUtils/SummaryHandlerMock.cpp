@@ -25,40 +25,41 @@
     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "CashSumSummaryTest.h"
-
-#include "CashSumSummary.h"
 
 #include "TestUtils/SummaryHandlerMock.h"
-
-#include "TestConfig.h"
-#include "TestUtils/DatabaseUtils.h"
 
 namespace ClubFrontendTest
 {
   
-void CashSumSummaryTest::initTestCase()
+SummaryHandlerMock::SummaryHandlerMock() :
+  button(0), text("")
 {
-    Utils::DatabaseUtils database(DATABASEDRIVER);
-    database.open(DATABASE);
-    database.read(SQLTESTFILE);
+
 }
 
-void CashSumSummaryTest::testCashSum()
+SummaryHandlerMock::~SummaryHandlerMock()
 {
-  SummaryHandlerMock *handler = new SummaryHandlerMock();
-  
-  ClubFrontend::CashSumSummary cashSum(handler);
-  
-  QPushButton *button = handler->getPushButton();
-  QVERIFY(button);
-  QCOMPARE(button->objectName(), QString("cashSumButton"));
-  button->click();
-  
-  QCOMPARE(handler->getText(), QString("foo"));
-}
 
 }
 
-QTEST_MAIN(ClubFrontendTest::CashSumSummaryTest)
-#include "CashSumSummaryTest.moc"
+void SummaryHandlerMock::addButton(QPushButton* aButton)
+{
+  button = aButton;
+}
+
+void SummaryHandlerMock::showSummary(const QString& aText)
+{
+  text = aText;
+}
+
+QPushButton* SummaryHandlerMock::getPushButton() const
+{
+  return button;
+}
+
+QString SummaryHandlerMock::getText() const
+{
+  return text;
+}
+
+}

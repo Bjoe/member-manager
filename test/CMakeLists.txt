@@ -16,10 +16,10 @@ configure_file (
 
 include_directories(../src ${CMAKE_CURRENT_BINARY_DIR}/../src)
 
-add_library(databaseUtilsLib STATIC DatabaseUtils.cpp ReadSqlFile.cpp)
-set(triggerThreadUtil TriggerThread.h)
+add_library(databaseUtilsLib STATIC TestUtils/DatabaseUtils.cpp TestUtils/ReadSqlFile.cpp)
+set(triggerThreadUtil TestUtils/TriggerThread.h)
 qt4_wrap_cpp(moc_triggerThreadUtil ${triggerThreadUtil})
-add_library(utilTestLib STATIC SummaryHandlerMock.cpp ${moc_triggerThreadUtil} TriggerThread.cpp DialogButtonBoxHandler.cpp)
+add_library(utilTestLib STATIC TestUtils/SummaryHandlerMock.cpp ${moc_triggerThreadUtil} TestUtils/TriggerThread.cpp TestUtils/DialogButtonBoxHandler.cpp)
 
 set(test_additional_lib
  memberManagerLib 
@@ -30,20 +30,9 @@ set(test_additional_lib
 set(test_additional
 )
 
-qt4_add_test(memberDetailModel MemberDetailModelTest.cpp)
-qt4_add_test(memberDialog MemberDetailModelTest.cpp)
-qt4_add_test(memberFilter MemberFilterTest.cpp)
-qt4_add_test(memberModel MemberModelTest.cpp)
-qt4_add_test(member MemberTest.cpp)
+add_subdirectory(Gui)
+add_subdirectory(Model)
+
 qt4_add_test(cashSumSummary CashSumSummaryTest.cpp)
-qt4_add_test(contributionDialog ContributionDialogTest.cpp)
-qt4_add_test(contributionModel ContributionModelTest.cpp)
-qt4_add_test(connectionDialog ConnectionDialogTest.cpp)
 qt4_add_test(countMemberSummary CountMemberSummaryTest.cpp)
 qt4_add_test(debitSumSummary DebitSumSummaryTest.cpp)
-qt4_add_test(kassaModel KassaModelTest.cpp)
-qt4_add_test(saldoDialog SaldoDialogTest.cpp)
-qt4_add_test(saldoSumModel SaldoSumModelTest.cpp)
-qt4_add_test(saldoModel SaldoModelTest.cpp)
-qt4_add_test(summaryWindow SummaryWindowTest.cpp)
-qt4_add_test(mainWindow MainWindowTest.cpp)

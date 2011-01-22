@@ -23,42 +23,33 @@
     ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
     (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
 */
 
-#include "CashSumSummaryTest.h"
+#ifndef CONTRIBUTIONDIALOG_H
+#define CONTRIBUTIONDIALOG_H
 
-#include "CashSumSummary.h"
+#include <QtGui/QDialog>
+#include "ui_ContributionDialog.h"
 
-#include "TestUtils/SummaryHandlerMock.h"
+#include "Model/ContributionModel.h"
 
-#include "TestConfig.h"
-#include "TestUtils/DatabaseUtils.h"
-
-namespace ClubFrontendTest
+namespace ClubFrontend
 {
-  
-void CashSumSummaryTest::initTestCase()
-{
-    Utils::DatabaseUtils database(DATABASEDRIVER);
-    database.open(DATABASE);
-    database.read(SQLTESTFILE);
-}
 
-void CashSumSummaryTest::testCashSum()
+class ContributionDialog : public QDialog
 {
-  SummaryHandlerMock *handler = new SummaryHandlerMock();
-  
-  ClubFrontend::CashSumSummary cashSum(handler);
-  
-  QPushButton *button = handler->getPushButton();
-  QVERIFY(button);
-  QCOMPARE(button->objectName(), QString("cashSumButton"));
-  button->click();
-  
-  QCOMPARE(handler->getText(), QString("foo"));
-}
+  Q_OBJECT
+
+  public:
+    ContributionDialog(ContributionModel *aContributionModel, QWidget* parent = 0);
+    ~ContributionDialog();
+
+  private:
+    Ui::ContributionDialogClass ui;
+    ContributionModel *contributionModel;
+};
 
 }
 
-QTEST_MAIN(ClubFrontendTest::CashSumSummaryTest)
-#include "CashSumSummaryTest.moc"
+#endif // CONTRIBUTIONDIALOG_H
