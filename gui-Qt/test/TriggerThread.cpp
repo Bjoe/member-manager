@@ -6,12 +6,6 @@
  */
 
 #include "TriggerThread.h"
-#include <QMutexLocker>
-#include <QWidget>
-#include <QDialogButtonBox>
-#include <QPushButton>
-#include <QCoreApplication>
-#include <QEventLoop>
 
 namespace ClubFrontendTest
 {

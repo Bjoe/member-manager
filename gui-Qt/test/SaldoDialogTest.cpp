@@ -2,7 +2,8 @@
 
 #include "SaldoDialog.h"
 
-#include "TestData.h"
+#include "TestConfig.h"
+#include "DatabaseUtils.h"
 #include "SaldoModel.h"
 
 #include <QSqlDatabase>
@@ -21,8 +22,9 @@ namespace ClubFrontendTest
 
     void SaldoDialogTest::initTestCase()
     {
-        TestData testData;
-        testData.createFakeBalanceTable();
+      Utils::DatabaseUtils database(DATABASEDRIVER);
+      database.open(DATABASE);
+      database.read(SQLTESTFILE);
     }
 
     void SaldoDialogTest::testShowDialog()
@@ -48,3 +50,6 @@ namespace ClubFrontendTest
 	QCOMPARE(sumLabel->text(), QString("Summe: -15"));
     }
 }
+
+QTEST_MAIN(ClubFrontendTest::SaldoDialogTest)
+#include "SaldoDialogTest.moc"

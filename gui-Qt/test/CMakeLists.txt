@@ -2,77 +2,48 @@
 find_package(Qt4 4.5.2 COMPONENTS QtTest REQUIRED)
 include(${QT_USE_FILE})
 
-set(QT_FRONTEND_TEST_MOC_HEADERS
-    MainWindowTest.h
-    MemberDialogTest.h
-    MemberModelTest.h
-    KassaModelTest.h
-    SaldoModelTest.h
-    SaldoSumModelTest.h
-    MemberDetailModelTest.h
-    MemberFilterTest.h
-    ConnectionDialogTest.h
-    SaldoDialogTest.h
-    SaldoSumDialogTest.h
-    ContributionModelTest.h
-    ContributionDialogTest.h
-    SummaryWindowTest.h
-    CountMemberSummaryTest.h
-    DebitSumSummaryTest.h
-    CashSumSummaryTest.h
-    MemberTest.h
-    TriggerThread.h
-    )
+# Test Konfigurationen
+set(DATABASEDRIVER QSQLITE)
+set(DATABASE dorfverw.dat)
+set(SQLTESTFILE "${CMAKE_CURRENT_SOURCE_DIR}/testdaten.sql")
 
-set(QT_FRONTEND_TEST
-    DialogButtonBoxHandler.cpp
-    TestData.cpp
-    MainWindowTest.cpp
-    MemberDialogTest.cpp
-    MemberModelTest.cpp
-    KassaModelTest.cpp
-    SaldoModelTest.cpp
-    SaldoSumModelTest.cpp
-    MemberDetailModelTest.cpp
-    MemberFilterTest.cpp
-    ConnectionDialogTest.cpp
-    SaldoDialogTest.cpp
-    SaldoSumDialogTest.cpp
-    ContributionModelTest.cpp
-    ContributionDialogTest.cpp
-    SummaryWindowTest.cpp
-    CountMemberSummaryTest.cpp
-    DebitSumSummaryTest.cpp
-    CashSumSummaryTest.cpp
-    MemberTest.cpp
-    TriggerThread.cpp
-    SummaryHandlerMock.cpp
-    ReadSqlFile.cpp
-    DatabaseUtils.cpp
-    )
+# configure a header file to pass some of the CMake settings
+# to the source code
+configure_file (
+  "${CMAKE_CURRENT_SOURCE_DIR}/TestConfig.h.in"
+  "${CMAKE_CURRENT_BINARY_DIR}/TestConfig.h"
+  )
 
-# Setze src Verzeichniss
-foreach(_current ${QT_FRONTEND_SRC})
-    set(QT_FRONTEND_SRC_DIR ${QT_FRONTEND_SRC_DIR} ../src/${_current})
-endforeach(_current ${QT_FRONTEND_SRC})
+include_directories(../src ${CMAKE_CURRENT_BINARY_DIR}/../src)
 
-foreach(_current ${QT_FRONTEND_MOC_HEADERS})
-    set(QT_FRONTEND_MOC_HEADERS_DIR ${QT_FRONTEND_MOC_HEADERS_DIR} ../src/${_current})
-endforeach(_current ${QT_FRONTEND_MOC_HEADERS})
+add_library(databaseUtilsLib STATIC DatabaseUtils.cpp ReadSqlFile.cpp)
+set(triggerThreadUtil TriggerThread.h)
+qt4_wrap_cpp(moc_triggerThreadUtil ${triggerThreadUtil})
+add_library(utilTestLib STATIC SummaryHandlerMock.cpp ${moc_triggerThreadUtil} TriggerThread.cpp DialogButtonBoxHandler.cpp)
 
-qt4_wrap_cpp(MOC_OUTFILES_TEST ${QT_FRONTEND_TEST_MOC_HEADERS} ${QT_FRONTEND_MOC_HEADERS_DIR})
+set(test_additional_lib
+ memberManagerLib 
+ databaseUtilsLib
+ utilTestLib
+)
 
+set(test_additional
+)
 
-foreach(_current ${QT_FRONTEND_UI})
-    set(QT_FRONTEND_UI_DIR ${QT_FRONTEND_UI_DIR} ../src/${_current})
-endforeach(_current ${QT_FRONTEND_UI})
-
-# Die ui_xxxx.h files werden im CMAKE_CURRENT_BINARY_DIR erzeugt.
-qt4_wrap_ui(UI_OUTFILES_TEST ${QT_FRONTEND_UI_DIR})
-include_directories(${CMAKE_CURRENT_BINARY_DIR} ../src)
-
-
-add_executable(Dorfverwaltung-GUI-Qt-Test main.cpp ${QT_FRONTEND_TEST} ${QT_FRONTEND_SRC_DIR} ${MOC_OUTFILES_TEST} ${UI_OUTFILES_TEST})
-target_link_libraries(Dorfverwaltung-GUI-Qt-Test ${QT_LIBRARIES})
-
-add_test(Dorfverwaltung-GUI-Qt-Test Dorfverwaltung-GUI-Qt-Test)
+qt4_add_test(memberDetailModel MemberDetailModelTest.cpp)
+qt4_add_test(memberDialog MemberDetailModelTest.cpp)
+qt4_add_test(memberFilter MemberFilterTest.cpp)
+qt4_add_test(memberModel MemberModelTest.cpp)
+qt4_add_test(member MemberTest.cpp)
+qt4_add_test(cashSumSummary CashSumSummaryTest.cpp)
+qt4_add_test(contributionDialog ContributionDialogTest.cpp)
+qt4_add_test(contributionModel ContributionModelTest.cpp)
+qt4_add_test(connectionDialog ConnectionDialogTest.cpp)
+qt4_add_test(countMemberSummary CountMemberSummaryTest.cpp)
+qt4_add_test(debitSumSummary DebitSumSummaryTest.cpp)
+qt4_add_test(kassaModel KassaModelTest.cpp)
+qt4_add_test(saldoDialog SaldoDialogTest.cpp)
+qt4_add_test(saldoSumModel SaldoSumModelTest.cpp)
+qt4_add_test(saldoModel SaldoModelTest.cpp)
+qt4_add_test(summaryWindow SummaryWindowTest.cpp)
+qt4_add_test(mainWindow MainWindowTest.cpp)

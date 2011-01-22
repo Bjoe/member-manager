@@ -28,7 +28,6 @@
 #ifndef SALDOSUMDIALOGTEST_H
 #define SALDOSUMDIALOGTEST_H
 
-#include <QObject>
 #include <QtTest/QtTest>
 
 namespace ClubFrontendTest

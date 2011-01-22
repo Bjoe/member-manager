@@ -8,7 +8,6 @@
 #ifndef KASSAMODELTEST_H_
 #define KASSAMODELTEST_H_
 
-#include <QObject>
 #include <QtTest/QtTest>
 
 namespace ClubFrontendTest

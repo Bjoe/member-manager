@@ -9,7 +9,8 @@
 
 #include "KassaModel.h"
 
-#include "TestData.h"
+#include "TestConfig.h"
+#include "DatabaseUtils.h"
 #include "DatabaseStructure.h"
 
 #include <QSqlTableModel>
@@ -21,8 +22,9 @@ namespace ClubFrontendTest
 
 void KassaModelTest::initTestCase()
 {
-	TestData testData;
-	testData.createFakeKassaTable();
+    Utils::DatabaseUtils database(DATABASEDRIVER);
+    database.open(DATABASE);
+    database.read(SQLTESTFILE);
 }
 
 void KassaModelTest::testModel()
@@ -37,3 +39,6 @@ void KassaModelTest::testModel()
 }
 
 }
+
+QTEST_MAIN(ClubFrontendTest::KassaModelTest)
+#include "KassaModelTest.moc"

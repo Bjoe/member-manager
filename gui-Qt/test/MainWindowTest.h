@@ -1,10 +1,8 @@
 #ifndef MAINWINDOWTEST_H
 #define MAINWINDOWTEST_H
 
-#include <QObject>
 #include <QtTest/QtTest>
 
-#include "MainWindow.h"
 #include "Handler.h"
 
 namespace ClubFrontendTest

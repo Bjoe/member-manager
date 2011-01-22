@@ -31,3 +31,6 @@ void MemberFilterTest::testSetDeletedFalse()
 }
 
 }
+
+QTEST_MAIN(ClubFrontendTest::MemberFilterTest)
+#include "MemberFilterTest.moc"

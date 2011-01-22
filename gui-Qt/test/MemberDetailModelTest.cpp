@@ -3,7 +3,8 @@
 #include "MemberDetailModel.h"
 #include "Member.h"
 
-#include "TestData.h"
+#include "TestConfig.h"
+#include "DatabaseUtils.h"
 #include "DatabaseStructure.h"
 
 #include <QDebug>
@@ -14,12 +15,9 @@ namespace ClubFrontendTest
 
 void MemberDetailModelTest::initTestCase()
 {
-	TestData testData;
-	testData.createFakeMemberTable();
-	testData.createFakeAdressTable();
-	testData.createFakeBankTable();
-	testData.createFakeContributionTable();
-	testData.createFakeRessourcenTable();
+    Utils::DatabaseUtils database(DATABASEDRIVER);
+    database.open(DATABASE);
+    database.read(SQLTESTFILE);
 }
 
 void MemberDetailModelTest::testGetLastError()
@@ -180,3 +178,6 @@ int MemberDetailModelTest::getMemberId(const QSqlTableModel* aModel,
 }
 
 }
+
+QTEST_MAIN(ClubFrontendTest::MemberDetailModelTest)
+#include "MemberDetailModelTest.moc"

@@ -1,5 +1,5 @@
 
-set(QT_FRONTEND_MOC_HEADERS
+set(QT_MOC_HEADERS
     MainWindow.h
     MemberDialog.h
     ConnectionDialog.h
@@ -12,7 +12,7 @@ set(QT_FRONTEND_MOC_HEADERS
     DebitSumSummary.h
     )
 
-set(QT_FRONTEND_UI
+set(QT_UI
     mainWindow.ui
     memberDialog.ui
     ConnectionDialog.ui
@@ -22,7 +22,7 @@ set(QT_FRONTEND_UI
     SummaryWindow.ui
     )
 
-set(QT_FRONTEND_SRC
+set(QT_SRCS
     MainWindow.cpp
     MemberDialog.cpp
     MemberModel.cpp
@@ -45,19 +45,22 @@ set(QT_FRONTEND_SRC
     Member.cpp
     )
 
-# Setze Sourcen fuer die tests
-set(QT_FRONTEND_MOC_HEADERS ${QT_FRONTEND_MOC_HEADERS} PARENT_SCOPE)
-set(QT_FRONTEND_UI ${QT_FRONTEND_UI} PARENT_SCOPE)
-set(QT_FRONTEND_SRC ${QT_FRONTEND_SRC} PARENT_SCOPE)
+# configure a header file to pass some of the CMake settings
+# to the source code
+configure_file (
+  "${CMAKE_CURRENT_SOURCE_DIR}/Config.h.in"
+  "${CMAKE_CURRENT_BINARY_DIR}/Config.h"
+  )
 
-
-qt4_wrap_cpp(MOC_OUTFILES ${QT_FRONTEND_MOC_HEADERS})
+qt4_wrap_cpp(MOC_OUTFILES ${QT_MOC_HEADERS})
 
 # Die ui_xxxx.h files werden im CMAKE_CURRENT_BINARY_DIR erzeugt.
-qt4_wrap_ui(UI_OUTFILES ${QT_FRONTEND_UI})
-include_directories(${CMAKE_CURRENT_BINARY_DIR})
+qt4_wrap_ui(UI_OUTFILES ${QT_UI})
 
+include(${QT_USE_FILE})
 
-add_executable(Dorfverwaltung-GUI-Qt main.cpp ${QT_FRONTEND_SRC} ${MOC_OUTFILES} ${UI_OUTFILES})
-target_link_libraries(Dorfverwaltung-GUI-Qt ${QT_LIBRARIES})
+add_library(memberManagerLib STATIC ${QT_SRCS} ${MOC_OUTFILES} ${UI_OUTFILES})
 
+add_executable(memberManager main.cpp)
+
+target_link_libraries(memberManager memberManagerLib ${QT_LIBRARIES})

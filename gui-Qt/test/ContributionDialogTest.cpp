@@ -30,7 +30,8 @@
 
 #include "ContributionDialog.h"
 
-#include "TestData.h"
+#include "TestConfig.h"
+#include "DatabaseUtils.h"
 #include "DatabaseStructure.h"
 #include "ContributionModel.h"
 
@@ -47,8 +48,9 @@ namespace ClubFrontendTest
 
 void ContributionDialogTest::initTestCase()
 {
-  TestData testData;
-  testData.createFakeContributionTable();
+    Utils::DatabaseUtils database(DATABASEDRIVER);
+    database.open(DATABASE);
+    database.read(SQLTESTFILE);
 }
 
 void ContributionDialogTest::testShowDialog()
@@ -69,3 +71,6 @@ void ContributionDialogTest::testShowDialog()
 
 
 }
+
+QTEST_MAIN(ClubFrontendTest::ContributionDialogTest)
+#include "ContributionDialogTest.moc"

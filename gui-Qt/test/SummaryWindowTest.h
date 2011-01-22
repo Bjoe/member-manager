@@ -29,7 +29,6 @@
 #ifndef SUMMARYWINDOWTEST_H
 #define SUMMARYWINDOWTEST_H
 
-#include <QObject>
 #include <QtTest/QtTest>
 
 namespace ClubFrontendTest

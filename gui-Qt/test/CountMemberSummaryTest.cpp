@@ -30,7 +30,8 @@
 
 #include "CountMemberSummary.h"
 
-#include "TestData.h"
+#include "TestConfig.h"
+#include "DatabaseUtils.h"
 #include "SummaryHandlerMock.h"
 
 namespace ClubFrontendTest
@@ -38,8 +39,9 @@ namespace ClubFrontendTest
   
 void CountMemberSummaryTest::initTestCase()
 {
-  TestData testData;
-  testData.createFakeMemberTable();
+    Utils::DatabaseUtils database(DATABASEDRIVER);
+    database.open(DATABASE);
+    database.read(SQLTESTFILE);
 }
 
 void CountMemberSummaryTest::testCountMember()
@@ -57,3 +59,6 @@ void CountMemberSummaryTest::testCountMember()
 }
 
 }
+
+QTEST_MAIN(ClubFrontendTest::CountMemberSummaryTest)
+#include "CountMemberSummaryTest.moc"

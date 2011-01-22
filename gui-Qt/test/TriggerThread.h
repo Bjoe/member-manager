@@ -8,11 +8,7 @@
 #ifndef TRIGGERTHREAD_H_
 #define TRIGGERTHREAD_H_
 
-#include <QThread>
-#include <QAction>
-#include <QMutex>
-#include <QWaitCondition>
-#include <QModelIndex>
+#include <QtCore>
 
 #include "Handler.h"
 

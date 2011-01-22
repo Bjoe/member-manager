@@ -8,7 +8,6 @@
 #ifndef SALDOMODELTEST_H_
 #define SALDOMODELTEST_H_
 
-#include <QObject>
 #include <QtTest/QtTest>
 
 namespace ClubFrontendTest

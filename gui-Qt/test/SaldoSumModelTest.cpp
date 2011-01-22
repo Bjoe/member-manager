@@ -29,7 +29,8 @@
 
 #include "SaldoSumModel.h"
 
-#include "TestData.h"
+#include "TestConfig.h"
+#include "DatabaseUtils.h"
 #include "DatabaseStructure.h"
 
 #include <QSqlDatabase>
@@ -44,10 +45,9 @@ namespace ClubFrontendTest
  
   void SaldoSumModelTest::initTestCase()
   {
-    TestData testData;
-    testData.createFakeMemberTable();
-    testData.createFakeRessourcenTable();
-    testData.createFakeBalanceTable();
+    Utils::DatabaseUtils database(DATABASEDRIVER);
+    database.open(DATABASE);
+    database.read(SQLTESTFILE);
   }
   
   void SaldoSumModelTest::testView()
@@ -60,3 +60,6 @@ namespace ClubFrontendTest
     QCOMPARE(variant.toString(), QString("Capt. Kirk"));
   }
 }
+
+QTEST_MAIN(ClubFrontendTest::SaldoSumModelTest)
+#include "SaldoSumModelTest.moc"

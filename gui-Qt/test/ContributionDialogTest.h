@@ -29,9 +29,7 @@
 #ifndef CONTRIBUTIONDIALOGTEST_H
 #define CONTRIBUTIONDIALOGTEST_H
 
-#include <QObject>
 #include <QtTest/QtTest>
-#include "ConnectionDialogTest.h"
 
 namespace ClubFrontendTest
 {

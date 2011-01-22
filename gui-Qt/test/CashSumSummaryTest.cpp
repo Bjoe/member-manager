@@ -25,20 +25,23 @@
     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #include "CashSumSummaryTest.h"
 
 #include "CashSumSummary.h"
 
-#include "TestData.h"
 #include "SummaryHandlerMock.h"
+
+#include "TestConfig.h"
+#include "DatabaseUtils.h"
 
 namespace ClubFrontendTest
 {
   
 void CashSumSummaryTest::initTestCase()
 {
-    TestData testData;
+    Utils::DatabaseUtils database(DATABASEDRIVER);
+    database.open(DATABASE);
+    database.read(SQLTESTFILE);
 }
 
 void CashSumSummaryTest::testCashSum()
@@ -55,5 +58,7 @@ void CashSumSummaryTest::testCashSum()
   QCOMPARE(handler->getText(), QString("foo"));
 }
 
-
 }
+
+QTEST_MAIN(ClubFrontendTest::CashSumSummaryTest)
+#include "CashSumSummaryTest.moc"

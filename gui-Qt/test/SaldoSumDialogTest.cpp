@@ -30,7 +30,8 @@
 #include "SaldoSumDialog.h"
 
 #include "SaldoSumModel.h"
-#include "TestData.h"
+#include "TestConfig.h"
+#include "DatabaseUtils.h"
 
 #include <QSqlDatabase>
 #include <QTableView>
@@ -41,10 +42,9 @@ namespace ClubFrontendTest
   
     void SaldoSumDialogTest::initTestCase()
     {
-        TestData testData;
-	testData.createFakeMemberTable();
-        testData.createFakeBalanceTable();
-	testData.createFakeRessourcenTable();
+      Utils::DatabaseUtils database(DATABASEDRIVER);
+      database.open(DATABASE);
+      database.read(SQLTESTFILE);
     }
 
     void SaldoSumDialogTest::testShowDialog()
@@ -59,3 +59,6 @@ namespace ClubFrontendTest
     }
   
 }
+
+QTEST_MAIN(ClubFrontendTest::SaldoSumDialogTest)
+#include "SaldoSumDialogTest.moc"

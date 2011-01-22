@@ -14,6 +14,7 @@ Fehlende Features:
 - DTAUS erstellen? Aq API?
 
 */
+/*
 #include "MemberModelTest.h"
 #include "KassaModelTest.h"
 #include "SaldoModelTest.h"
@@ -31,7 +32,10 @@ Fehlende Features:
 #include "CashSumSummaryTest.h"
 #include "CountMemberSummaryTest.h"
 #include "DebitSumSummaryTest.h"
+#include "MemberTest.h"
 #include "TestData.h"
+
+#include "DatabaseUtils.h"
 
 #include <QtTest/QtTest>
 
@@ -40,7 +44,7 @@ int main(int argc, char* argv[])
 	QApplication app(argc, argv);
 	app.setQuitOnLastWindowClosed(false);
 
-	QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+/*	QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
 	db.setDatabaseName("dorfverw.dat");
 	if (!db.open())
 	{
@@ -98,6 +102,14 @@ int main(int argc, char* argv[])
     
     ClubFrontendTest::CountMemberSummaryTest countMemberTest;
     QTest::qExec(&countMemberTest);
+    
+    ClubFrontendTest::MemberTest memberTest;
+    QTest::qExec(&memberTest);
+  
+    Utils::DatabaseUtils database("QSQLITE");
+    database.open("dorfverw.dat");
+    database.read("/home/joerg/Develope/C-Cpp/Dorfverwaltung/gui-Qt/test/testdaten.sql");
 
-	return 0;
+    return 0;
 }
+*/

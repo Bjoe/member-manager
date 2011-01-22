@@ -1,7 +1,10 @@
 
 #include "MainWindowTest.h"
 
-#include "TestData.h"
+#include "MainWindow.h"
+
+#include "TestConfig.h"
+#include "DatabaseUtils.h"
 #include "TriggerThread.h"
 #include "MemberModel.h"
 #include "DialogButtonBoxHandler.h"
@@ -30,9 +33,9 @@ namespace ClubFrontendTest
 
 void MainWindowTest::init()
 {
-	TestData testData;
-	testData.createFakeMemberTable();
-	testData.createFakeKassaTable();
+    Utils::DatabaseUtils database(DATABASEDRIVER);
+    database.open(DATABASE);
+    database.read(SQLTESTFILE);
 }
 
 void MainWindowTest::testNewMember()
@@ -241,3 +244,6 @@ void MainWindowTest::testCopyMailAdress()
 }
 
 }
+
+QTEST_MAIN(ClubFrontendTest::MainWindowTest)
+#include "MainWindowTest.moc"

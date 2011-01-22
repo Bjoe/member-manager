@@ -8,7 +8,6 @@
 #ifndef MEMBERMODELTEST_H_
 #define MEMBERMODELTEST_H_
 
-#include <QObject>
 #include <QtTest/QtTest>
 
 namespace ClubFrontendTest

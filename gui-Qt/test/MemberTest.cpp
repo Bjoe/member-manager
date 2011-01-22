@@ -25,13 +25,12 @@
     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #include "MemberTest.h"
 
 #include "Member.h"
 
 namespace ClubFrontendTest {
-  
+
 void MemberTest::testDefaultKonstruktor()
 {
   ClubFrontend::Member member;
@@ -52,3 +51,6 @@ void MemberTest::testMember()
 }
 
 }
+
+QTEST_MAIN(ClubFrontendTest::MemberTest)
+#include "MemberTest.moc"

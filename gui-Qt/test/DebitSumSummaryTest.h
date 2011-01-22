@@ -29,7 +29,6 @@
 #ifndef DEBITSUMSUMMARYTEST_H
 #define DEBITSUMSUMMARYTEST_H
 
-#include <QtCore>
 #include <QtTest/QtTest>
 
 namespace ClubFrontendTest

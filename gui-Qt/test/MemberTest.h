@@ -29,16 +29,16 @@
 #ifndef MEMBERTEST_H
 #define MEMBERTEST_H
 
-#include <QObject>
 #include <QtTest/QtTest>
 
-namespace ClubFrontendTest {
+namespace ClubFrontendTest
+{
 
 class MemberTest : public QObject
 {
-  Q_OBJECT
-  
-  private slots:
+    Q_OBJECT
+
+private slots:
     void testDefaultKonstruktor();
     void testMember();
 };
@@ -46,3 +46,4 @@ class MemberTest : public QObject
 }
 
 #endif // MEMBERTEST_H
+

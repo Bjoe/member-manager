@@ -29,7 +29,6 @@
 #ifndef CASHSUMSUMMARYTEST_H
 #define CASHSUMSUMMARYTEST_H
 
-#include <QObject>
 #include <QtTest/QtTest>
 
 namespace ClubFrontendTest

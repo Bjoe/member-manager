@@ -71,5 +71,7 @@ void SummaryWindowTest::buttonClicked()
   isClicked = true;
 }
 
-
 }
+
+QTEST_MAIN(ClubFrontendTest::SummaryWindowTest)
+#include "SummaryWindowTest.moc"

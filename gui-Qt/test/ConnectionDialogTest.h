@@ -8,7 +8,6 @@
 #ifndef CONNECTIONDIALOGTEST_H_
 #define CONNECTIONDIALOGTEST_H_
 
-#include <QObject>
 #include <QtTest/QtTest>
 
 namespace ClubFrontendTest

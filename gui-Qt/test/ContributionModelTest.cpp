@@ -30,7 +30,8 @@
 
 #include "ContributionModel.h"
 
-#include "TestData.h"
+#include "TestConfig.h"
+#include "DatabaseUtils.h"
 #include "DatabaseStructure.h"
 
 #include <QSqlTableModel>
@@ -42,8 +43,9 @@ namespace ClubFrontendTest
 
 void ContributionModelTest::initTestCase()
 {
-  TestData testData;
-  testData.createFakeContributionTable();
+    Utils::DatabaseUtils database(DATABASEDRIVER);
+    database.open(DATABASE);
+    database.read(SQLTESTFILE);
 }
 
 void ContributionModelTest::testModel()
@@ -113,5 +115,7 @@ void ContributionModelTest::testNewFeeDonation()
   // TODO Test auf ValidFrom mit QDate::currentDate()
 }
 
-
 }
+
+QTEST_MAIN(ClubFrontendTest::ContributionModelTest)
+#include "ContributionModelTest.moc"

@@ -4,7 +4,8 @@
 
 #include "MemberDetailModel.h"
 #include "DatabaseStructure.h"
-#include "TestData.h"
+#include "TestConfig.h"
+#include "DatabaseUtils.h"
 #include "TriggerThread.h"
 #include "DialogButtonBoxHandler.h"
 
@@ -22,12 +23,9 @@ namespace ClubFrontendTest
 
 void MemberDialogTest::initTestCase()
 {
-	TestData testData;
-	testData.createFakeMemberTable();
-	testData.createFakeAdressTable();
-	testData.createFakeBankTable();
-	testData.createFakeRessourcenTable();
-	testData.createFakeContributionTable();
+    Utils::DatabaseUtils database(DATABASEDRIVER);
+    database.open(DATABASE);
+    database.read(SQLTESTFILE);
 }
 
 void MemberDialogTest::showMember()
@@ -386,3 +384,6 @@ void MemberDialogTest::showfee()
 }
 
 }
+
+QTEST_MAIN(ClubFrontendTest::MemberDialogTest)
+#include "MemberDialogTest.moc"

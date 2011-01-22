@@ -3,7 +3,8 @@
 #include "MemberModel.h"
 
 #include "Member.h"
-#include "TestData.h"
+#include "TestConfig.h"
+#include "DatabaseUtils.h"
 #include "MemberDetailModel.h"
 
 #include <QtCore>
@@ -14,8 +15,9 @@ namespace ClubFrontendTest
 
 void MemberModelTest::initTestCase()
 {
-	TestData testData;
-	testData.createFakeMemberTable();
+    Utils::DatabaseUtils database(DATABASEDRIVER);
+    database.open(DATABASE);
+    database.read(SQLTESTFILE);
 }
 
 void MemberModelTest::testGetLastError()
@@ -70,3 +72,6 @@ void MemberModelTest::testGetSelectedMembers()
 
 
 }
+
+QTEST_MAIN(ClubFrontendTest::MemberModelTest)
+#include "MemberModelTest.moc"

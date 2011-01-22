@@ -121,3 +121,6 @@ void ConnectionDialogTest::testCancelButton()
 }
 
 }
+
+QTEST_MAIN(ClubFrontendTest::ConnectionDialogTest)
+#include "ConnectionDialogTest.moc"

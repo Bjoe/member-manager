@@ -9,7 +9,8 @@
 
 #include "SaldoModel.h"
 
-#include "TestData.h"
+#include "TestConfig.h"
+#include "DatabaseUtils.h"
 #include "DatabaseStructure.h"
 
 #include <QSqlTableModel>
@@ -21,8 +22,9 @@ namespace ClubFrontendTest
 
 void SaldoModelTest::initTestCase()
 {
-	TestData testData;
-	testData.createFakeBalanceTable();
+    Utils::DatabaseUtils database(DATABASEDRIVER);
+    database.open(DATABASE);
+    database.read(SQLTESTFILE);
 }
 
 void SaldoModelTest::testModel()
@@ -47,3 +49,6 @@ void SaldoModelTest::testAmount()
 }
 
 }
+
+QTEST_MAIN(ClubFrontendTest::SaldoModelTest)
+#include "SaldoModelTest.moc"

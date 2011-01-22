@@ -1,7 +1,6 @@
 #ifndef MEMBERDIALOGTEST_H
 #define MEMBERDIALOGTEST_H
 
-#include <QObject>
 #include <QtTest/QtTest>
 
 namespace ClubFrontendTest

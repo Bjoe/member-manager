@@ -30,7 +30,8 @@
 
 #include "DebitSumSummary.h"
 
-#include "TestData.h"
+#include "TestConfig.h"
+#include "DatabaseUtils.h"
 #include "SummaryHandlerMock.h"
 
 namespace ClubFrontendTest
@@ -38,8 +39,9 @@ namespace ClubFrontendTest
   
 void DebitSumSummaryTest::initTestCase()
 {
-  TestData testData;
-  
+    Utils::DatabaseUtils database(DATABASEDRIVER);
+    database.open(DATABASE);
+    database.read(SQLTESTFILE);
 }
   
 void DebitSumSummaryTest::testDebitSum()
@@ -57,3 +59,6 @@ void DebitSumSummaryTest::testDebitSum()
 }
   
 }
+
+QTEST_MAIN(ClubFrontendTest::DebitSumSummaryTest)
+#include "DebitSumSummaryTest.moc"

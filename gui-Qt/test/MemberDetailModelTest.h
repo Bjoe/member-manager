@@ -8,7 +8,6 @@
 #ifndef MEMBERDETAILMODELTEST_H_
 #define MEMBERDETAILMODELTEST_H_
 
-#include <QObject>
 #include <QtTest/QtTest>
 #include <QSqlTableModel>
 

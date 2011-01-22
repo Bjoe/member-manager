@@ -1,7 +1,6 @@
 #ifndef SALDODIALOGTEST_H
 #define SALDODIALOGTEST_H
 
-#include <QObject>
 #include <QtTest/QtTest>
 
 namespace ClubFrontendTest

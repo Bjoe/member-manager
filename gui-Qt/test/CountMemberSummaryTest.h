@@ -29,7 +29,6 @@
 #ifndef COUNTMEMBERSUMMARYTEST_H
 #define COUNTMEMBERSUMMARYTEST_H
 
-#include <QtCore>
 #include <QtTest/QtTest>
 
 namespace ClubFrontendTest
