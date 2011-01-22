@@ -51,7 +51,7 @@ set(QT_SRCS
 # configure a header file to pass some of the CMake settings
 # to the source code
 configure_file (
-  "${CMAKE_CURRENT_SOURCE_DIR}/Config.h.in"
+  "${PROJECT_SOURCE_DIR}/Config.h.in"
   "${CMAKE_CURRENT_BINARY_DIR}/Config.h"
   )
 

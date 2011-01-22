@@ -5,12 +5,12 @@ include(${QT_USE_FILE})
 # Test Konfigurationen
 set(DATABASEDRIVER QSQLITE)
 set(DATABASE dorfverw.dat)
-set(SQLTESTFILE "${CMAKE_CURRENT_SOURCE_DIR}/testdaten.sql")
+set(SQLTESTFILE "${PROJECT_SOURCE_DIR}/testdaten.sql")
 
 # configure a header file to pass some of the CMake settings
 # to the source code
 configure_file (
-  "${CMAKE_CURRENT_SOURCE_DIR}/TestConfig.h.in"
+  "${PROJECT_SOURCE_DIR}/TestConfig.h.in"
   "${CMAKE_CURRENT_BINARY_DIR}/TestConfig.h"
   )
 

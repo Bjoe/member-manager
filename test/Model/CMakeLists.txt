@@ -1,6 +1,6 @@
 
 configure_file (
-  "${CMAKE_CURRENT_SOURCE_DIR}/../TestConfig.h.in"
+  "${PROJECT_SOURCE_DIR}/TestConfig.h.in"
   "${CMAKE_CURRENT_BINARY_DIR}/TestConfig.h"
   )
 
