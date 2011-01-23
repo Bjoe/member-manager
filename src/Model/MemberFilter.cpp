@@ -11,20 +11,20 @@
 namespace ClubFrontend
 {
 
-void MemberFilter::setDeleted(const bool aBoolean)
+void MemberFilter::setDeleted ( const bool aBoolean )
 {
-	QString column = MemberTable::COLUMNNAME[MemberTable::Deleted];
-	QString deletedColumn(column + "='false'");
-	if (aBoolean)
-	{
-		deletedColumn = column + "='true'";
-	}
-	columns.append(deletedColumn);
+    QString column = MemberTable::COLUMNNAME[MemberTable::Deleted];
+    QString deletedColumn ( column + "='false'" );
+    if ( aBoolean )
+    {
+        deletedColumn = column + "='true'";
+    }
+    columns.append ( deletedColumn );
 }
 
 QString MemberFilter::getFilter() const
 {
-	return columns.join(" AND ");
+    return columns.join ( " AND " );
 }
 
 }

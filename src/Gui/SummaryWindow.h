@@ -42,15 +42,15 @@ namespace ClubFrontend
 
 class SummaryWindow : public QWidget, public SummaryHandler
 {
-  Q_OBJECT
-  
-  public:
-    SummaryWindow(QWidget *parent = 0);
-    
-    void showSummary(const QString &aText);
-    void addButton(QPushButton *aButton);
-    
-  private:
+    Q_OBJECT
+
+public:
+    SummaryWindow ( QWidget *parent = 0 );
+
+    void showSummary ( const QString &aText );
+    void addButton ( QPushButton *aButton );
+
+private:
     Ui::SummaryWindow ui;
 };
 

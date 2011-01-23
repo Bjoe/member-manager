@@ -33,98 +33,98 @@
 namespace ClubFrontend
 {
 
-ContributionModel::ContributionModel(const QSqlDatabase& aDb):
-  model(new QSqlTableModel(this, aDb)), record(), memberId(0)
+ContributionModel::ContributionModel ( const QSqlDatabase& aDb ) :
+        model ( new QSqlTableModel ( this, aDb ) ), record(), memberId ( 0 )
 {
-  record = model->record(0);
-  
-  model->setTable(ContributionTable::TABLENAME);
-  model->setHeaderData(ContributionTable::Fee, Qt::Horizontal, tr("Beitrag"));
-  model->setHeaderData(ContributionTable::Donation, Qt::Horizontal, tr("Spende"));
-  model->setHeaderData(ContributionTable::ValidFrom, Qt::Horizontal, tr("Gültig ab:"));
-  model->setHeaderData(ContributionTable::Info, Qt::Horizontal, tr("Info"));
+    record = model->record ( 0 );
+
+    model->setTable ( ContributionTable::TABLENAME );
+    model->setHeaderData ( ContributionTable::Fee, Qt::Horizontal, tr ( "Beitrag" ) );
+    model->setHeaderData ( ContributionTable::Donation, Qt::Horizontal, tr ( "Spende" ) );
+    model->setHeaderData ( ContributionTable::ValidFrom, Qt::Horizontal, tr ( "Gültig ab:" ) );
+    model->setHeaderData ( ContributionTable::Info, Qt::Horizontal, tr ( "Info" ) );
 }
 
 ContributionModel::~ContributionModel()
 {
 }
 
-void ContributionModel::setMemberId(const int aMemberId)
+void ContributionModel::setMemberId ( const int aMemberId )
 {
-  QString columname = ContributionTable::COLUMNNAME[ContributionTable::MemberId];
-  QString filter = QString(columname + " = %1").arg(aMemberId);
-  model->setFilter(filter);
-  model->setSort(ContributionTable::ValidFrom, Qt::DescendingOrder);
-  refresh();
-  memberId = aMemberId;
+    QString columname = ContributionTable::COLUMNNAME[ContributionTable::MemberId];
+    QString filter = QString ( columname + " = %1" ).arg ( aMemberId );
+    model->setFilter ( filter );
+    model->setSort ( ContributionTable::ValidFrom, Qt::DescendingOrder );
+    refresh();
+    memberId = aMemberId;
 }
 
 void ContributionModel::refresh()
 {
-  model->select();
-  record = model->record(0);
+    model->select();
+    record = model->record ( 0 );
 }
 
 QString ContributionModel::getDonation() const
 {
-  return getDonationValue().toString();
+    return getDonationValue().toString();
 }
 
 QVariant ContributionModel::getDonationValue() const
 {
-  return record.value(ContributionTable::Donation);
+    return record.value ( ContributionTable::Donation );
 }
 
 QString ContributionModel::getFee() const
 {
-  return getFeeValue().toString();
+    return getFeeValue().toString();
 }
 
 QVariant ContributionModel::getFeeValue() const
 {
-  return record.value(ContributionTable::Fee);
+    return record.value ( ContributionTable::Fee );
 }
 
 QString ContributionModel::getInfo() const
 {
-  return getInfoValue().toString();
+    return getInfoValue().toString();
 }
 
 QVariant ContributionModel::getInfoValue() const
 {
-  return record.value(ContributionTable::Info);
+    return record.value ( ContributionTable::Info );
 }
 
 
 // TODO Refactor: In DAO Klasse Refactoren
-void ContributionModel::submit(const QString &aFee, const QString &aDonation, const QString &anInfo)
+void ContributionModel::submit ( const QString &aFee, const QString &aDonation, const QString &anInfo )
 {
-  QString fee = getFee();
-  QString donation = getDonation();
-  
-  if(fee.compare(aFee) != 0 || donation.compare(aDonation) != 0)
-  {
-      QSqlRecord newRecord = model->record();
-      newRecord.setValue(ContributionTable::MemberId, memberId);
-      newRecord.setValue(ContributionTable::Fee, QVariant(aFee));
-      newRecord.setValue(ContributionTable::Donation, QVariant(aDonation));
-      newRecord.setValue(ContributionTable::Info, QVariant(anInfo));
-      QDate date = QDate::currentDate();
-      newRecord.setValue(ContributionTable::ValidFrom, QVariant(date.toString(Qt::ISODate)));
-      model->insertRecord(-1, newRecord);
-  }
-  else
-  {
-      record.setValue(ContributionTable::Info, QVariant(anInfo));
-      model->setRecord(0,record);
-  }
-  model->submitAll();
+    QString fee = getFee();
+    QString donation = getDonation();
+
+    if ( fee.compare ( aFee ) != 0 || donation.compare ( aDonation ) != 0 )
+    {
+        QSqlRecord newRecord = model->record();
+        newRecord.setValue ( ContributionTable::MemberId, memberId );
+        newRecord.setValue ( ContributionTable::Fee, QVariant ( aFee ) );
+        newRecord.setValue ( ContributionTable::Donation, QVariant ( aDonation ) );
+        newRecord.setValue ( ContributionTable::Info, QVariant ( anInfo ) );
+        QDate date = QDate::currentDate();
+        newRecord.setValue ( ContributionTable::ValidFrom, QVariant ( date.toString ( Qt::ISODate ) ) );
+        model->insertRecord ( -1, newRecord );
+    }
+    else
+    {
+        record.setValue ( ContributionTable::Info, QVariant ( anInfo ) );
+        model->setRecord ( 0,record );
+    }
+    model->submitAll();
 }
 
 // TODO Refactor: Model im Konstruktor uebergeben?!
 QSqlTableModel* ContributionModel::getContributionTableModel() const
 {
-  return model;
+    return model;
 }
 
 }

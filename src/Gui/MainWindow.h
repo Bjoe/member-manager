@@ -15,31 +15,31 @@ namespace ClubFrontend
 
 class MainWindow: public QMainWindow
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-	MainWindow(MemberModel& aMemberModel, KassaModel& aKassaModel,
-			QWidget* parent = 0);
+    MainWindow ( MemberModel& aMemberModel, KassaModel& aKassaModel,
+                 QWidget* parent = 0 );
 
 private slots:
-	void showDeletedMemberView();
-	void showMemberView();
-	void showKassaView();
-	void showSaldo();
-	// TODO neue View showSaldoSum() einbauen
-	void newMember();
-	void selectedMember();
-	void editMember(const QModelIndex& anIndex);
-	void copyMailAdress();
+    void showDeletedMemberView();
+    void showMemberView();
+    void showKassaView();
+    void showSaldo();
+    // TODO neue View showSaldoSum() einbauen
+    void newMember();
+    void selectedMember();
+    void editMember ( const QModelIndex& anIndex );
+    void copyMailAdress();
 
 private:
-	Ui::MainWindow ui;
-	MemberModel& memberModel;
-	KassaModel& kassaModel;
+    Ui::MainWindow ui;
+    MemberModel& memberModel;
+    KassaModel& kassaModel;
 
-	void showMembers(const bool aBoolean);
-	void showMemberDialog(MemberDetailModel& aModel);
-	QModelIndex getSelection() const;
+    void showMembers ( const bool aBoolean );
+    void showMemberDialog ( MemberDetailModel& aModel );
+    QModelIndex getSelection() const;
 };
 
 }

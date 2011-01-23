@@ -14,7 +14,7 @@ class SaldoDialog : public QDialog
     Q_OBJECT
 
 public:
-    SaldoDialog(SaldoModel& aSaldoModel, QWidget *parent = 0);
+    SaldoDialog ( SaldoModel& aSaldoModel, QWidget *parent = 0 );
     ~SaldoDialog();
 
 private:

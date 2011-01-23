@@ -33,10 +33,10 @@
 namespace Utils
 {
 
-DatabaseUtils::DatabaseUtils(const QString& aType) :
+DatabaseUtils::DatabaseUtils ( const QString& aType ) :
         database()
 {
-    database = QSqlDatabase::addDatabase(aType);
+    database = QSqlDatabase::addDatabase ( aType );
 }
 
 DatabaseUtils::~DatabaseUtils()
@@ -44,23 +44,24 @@ DatabaseUtils::~DatabaseUtils()
 
 }
 
-bool DatabaseUtils::open(const QString& aDatabase)
+bool DatabaseUtils::open ( const QString& aDatabase )
 {
-    database.setDatabaseName(aDatabase);
-    if (!database.open())
+    database.setDatabaseName ( aDatabase );
+    if ( !database.open() )
     {
-        QString msg = QString("%1").arg(database.lastError().text());
-        qWarning(msg.toAscii());
+        QString msg = QString ( "%1" ).arg ( database.lastError().text() );
+        qWarning ( msg.toAscii() );
         return false;
     }
     return true;
 }
 
-bool DatabaseUtils::read(const QString& aSqlFilename)
+bool DatabaseUtils::read ( const QString& aSqlFilename )
 {
-    ReadSqlFile readSqlFile(aSqlFilename, database);
-    if (!readSqlFile.open()) {
-        qWarning("Konnte SQL File nicht oeffnen.");
+    ReadSqlFile readSqlFile ( aSqlFilename, database );
+    if ( !readSqlFile.open() )
+    {
+        qWarning ( "Konnte SQL File nicht oeffnen." );
         return false;
     }
 

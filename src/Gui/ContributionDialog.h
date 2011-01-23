@@ -39,13 +39,13 @@ namespace ClubFrontend
 
 class ContributionDialog : public QDialog
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
-    ContributionDialog(ContributionModel *aContributionModel, QWidget* parent = 0);
+public:
+    ContributionDialog ( ContributionModel *aContributionModel, QWidget* parent = 0 );
     ~ContributionDialog();
 
-  private:
+private:
     Ui::ContributionDialogClass ui;
     ContributionModel *contributionModel;
 };

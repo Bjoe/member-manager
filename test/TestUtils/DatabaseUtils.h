@@ -39,11 +39,11 @@ class DatabaseUtils
 {
 
 public:
-    DatabaseUtils(const QString& aType  = "QSQLITE");
+    DatabaseUtils ( const QString& aType  = "QSQLITE" );
     virtual ~DatabaseUtils();
 
-    bool open(const QString& aDatabase);
-    bool read(const QString& aSqlFilename);
+    bool open ( const QString& aDatabase );
+    bool read ( const QString& aSqlFilename );
 
 private:
     QSqlDatabase database;

@@ -15,11 +15,11 @@ namespace ClubFrontendTest
 
 class MemberFilterTest: public QObject
 {
-Q_OBJECT
+    Q_OBJECT
 
 private slots:
-	void testSetDeleted();
-	void testSetDeletedFalse();
+    void testSetDeleted();
+    void testSetDeletedFalse();
 };
 
 }

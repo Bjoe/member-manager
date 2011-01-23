@@ -30,9 +30,9 @@
 
 namespace ClubFrontendTest
 {
-  
+
 SummaryHandlerMock::SummaryHandlerMock() :
-  button(0), text("")
+        button ( 0 ), text ( "" )
 {
 
 }
@@ -42,24 +42,24 @@ SummaryHandlerMock::~SummaryHandlerMock()
 
 }
 
-void SummaryHandlerMock::addButton(QPushButton* aButton)
+void SummaryHandlerMock::addButton ( QPushButton* aButton )
 {
-  button = aButton;
+    button = aButton;
 }
 
-void SummaryHandlerMock::showSummary(const QString& aText)
+void SummaryHandlerMock::showSummary ( const QString& aText )
 {
-  text = aText;
+    text = aText;
 }
 
 QPushButton* SummaryHandlerMock::getPushButton() const
 {
-  return button;
+    return button;
 }
 
 QString SummaryHandlerMock::getText() const
 {
-  return text;
+    return text;
 }
 
 }

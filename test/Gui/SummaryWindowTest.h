@@ -36,18 +36,18 @@ namespace ClubFrontendTest
 
 class SummaryWindowTest : public QObject
 {
-  Q_OBJECT
-  
-  public:
+    Q_OBJECT
+
+public:
     SummaryWindowTest();
-  
-  public slots:
+
+public slots:
     void buttonClicked();
-    
-  private:
+
+private:
     bool isClicked;
-    
-  private slots:
+
+private slots:
     void testShowSummary();
     void testAddButton();
 };

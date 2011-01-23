@@ -18,17 +18,17 @@ namespace ClubFrontend
 class SaldoModel: public QObject
 {
 public:
-	SaldoModel(const QSqlDatabase& aDb, const int aMemberId);
-	virtual ~SaldoModel();
+    SaldoModel ( const QSqlDatabase& aDb, const int aMemberId );
+    virtual ~SaldoModel();
 
-	void setMemberId(const int aMemberId);
-	float amount() const;
-	void refresh();
+    void setMemberId ( const int aMemberId );
+    float amount() const;
+    void refresh();
 
-	QSqlTableModel* getSaldoTableModel() const;
+    QSqlTableModel* getSaldoTableModel() const;
 
 private:
-	QSqlTableModel* model;
+    QSqlTableModel* model;
 };
 
 }

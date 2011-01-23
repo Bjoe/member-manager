@@ -17,26 +17,26 @@ namespace ClubFrontendTest
 
 class TriggerThread: public QThread
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-	TriggerThread(QObject *aParent, Handler* const anExecutor = 0, const QModelIndex& anIndex = QModelIndex());
-	virtual ~TriggerThread();
+    TriggerThread ( QObject *aParent, Handler* const anExecutor = 0, const QModelIndex& anIndex = QModelIndex() );
+    virtual ~TriggerThread();
 
-	void syncStart();
+    void syncStart();
 
 protected:
-	void run();
+    void run();
 
 signals:
-	void triggered();
-	void triggeredModelIndex(const QModelIndex& anIndex);
+    void triggered();
+    void triggeredModelIndex ( const QModelIndex& anIndex );
 
 private:
-	mutable QMutex mutex;
-	mutable QWaitCondition waitForThread;
-	Handler* const executor;
-	const QModelIndex& modelIndex;
+    mutable QMutex mutex;
+    mutable QWaitCondition waitForThread;
+    Handler* const executor;
+    const QModelIndex& modelIndex;
 };
 
 }

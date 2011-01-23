@@ -43,14 +43,14 @@ class SummaryHandlerMock : public ClubFrontend::SummaryHandler
 public:
     SummaryHandlerMock();
     virtual ~SummaryHandlerMock();
-    
-    virtual void addButton(QPushButton* aButton);
-    virtual void showSummary(const QString& aText);
-    
+
+    virtual void addButton ( QPushButton* aButton );
+    virtual void showSummary ( const QString& aText );
+
     QPushButton* getPushButton() const;
     QString getText() const;
-    
-  private:
+
+private:
     QPushButton *button;
     QString text;
 };

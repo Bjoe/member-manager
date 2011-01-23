@@ -12,32 +12,32 @@
 namespace ClubFrontend
 {
 
-KassaModel::KassaModel(const QSqlDatabase& aDb) :
-	model(new QSqlTableModel(this, aDb))
+KassaModel::KassaModel ( const QSqlDatabase& aDb ) :
+        model ( new QSqlTableModel ( this, aDb ) )
 {
-	model->setTable(KassaTable::TABLENAME);
-	setDefaultFilter();
-	refresh();
+    model->setTable ( KassaTable::TABLENAME );
+    setDefaultFilter();
+    refresh();
 }
 
 KassaModel::~KassaModel()
 {
-	delete model;
+    delete model;
 }
 
 void KassaModel::setDefaultFilter()
 {
-	model->setFilter(KassaTable::COLUMNNAME[KassaTable::deleted] + "='false'");
+    model->setFilter ( KassaTable::COLUMNNAME[KassaTable::deleted] + "='false'" );
 }
 
 void KassaModel::refresh()
 {
-	model->select();
+    model->select();
 }
 
 QSqlTableModel* KassaModel::getKassaTableModel() const
 {
-	return model;
+    return model;
 }
 
 }

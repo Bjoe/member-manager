@@ -36,29 +36,29 @@
 
 namespace ClubFrontendTest
 {
-  
+
 void CountMemberSummaryTest::initTestCase()
 {
-    Utils::DatabaseUtils database(DATABASEDRIVER);
-    database.open(DATABASE);
-    database.read(SQLTESTFILE);
+    Utils::DatabaseUtils database ( DATABASEDRIVER );
+    database.open ( DATABASE );
+    database.read ( SQLTESTFILE );
 }
 
 void CountMemberSummaryTest::testCountMember()
 {
-  SummaryHandlerMock *handler = new SummaryHandlerMock();
-  
-  ClubFrontend::CountMemberSummary countMember(handler);
-    
-  QPushButton *button = handler->getPushButton();
-  QVERIFY(button);
-  QCOMPARE(button->objectName(), QString("countMemberButton"));
-  button->click();
-  
-  QCOMPARE(handler->getText(), QString("foo"));
+    SummaryHandlerMock *handler = new SummaryHandlerMock();
+
+    ClubFrontend::CountMemberSummary countMember ( handler );
+
+    QPushButton *button = handler->getPushButton();
+    QVERIFY ( button );
+    QCOMPARE ( button->objectName(), QString ( "countMemberButton" ) );
+    button->click();
+
+    QCOMPARE ( handler->getText(), QString ( "foo" ) );
 }
 
 }
 
-QTEST_MAIN(ClubFrontendTest::CountMemberSummaryTest)
+QTEST_MAIN ( ClubFrontendTest::CountMemberSummaryTest )
 #include "CountMemberSummaryTest.moc"

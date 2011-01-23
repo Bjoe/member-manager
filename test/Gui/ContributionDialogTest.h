@@ -36,9 +36,9 @@ namespace ClubFrontendTest
 
 class ContributionDialogTest : public QObject
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  private slots:
+private slots:
     void initTestCase();
     void testShowDialog();
 };

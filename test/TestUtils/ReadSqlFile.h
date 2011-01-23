@@ -39,16 +39,16 @@ class ReadSqlFile
 {
 
 public:
-    ReadSqlFile(const QString aFilename, const QSqlDatabase &aDatabase = QSqlDatabase::database());
+    ReadSqlFile ( const QString aFilename, const QSqlDatabase &aDatabase = QSqlDatabase::database() );
     virtual ~ReadSqlFile();
-    
+
     bool open();
     bool read();
-    
+
 private:
     QFile file;
-    
-    void execStatement(const QString &aSql);
+
+    void execStatement ( const QString &aSql );
 };
 
 }

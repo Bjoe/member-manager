@@ -31,59 +31,59 @@
 namespace Utils
 {
 
-ReadSqlFile::ReadSqlFile(const QString aFilename, const QSqlDatabase &aDatabase) :
-  file(aFilename)
+ReadSqlFile::ReadSqlFile ( const QString aFilename, const QSqlDatabase &aDatabase ) :
+        file ( aFilename )
 {
 }
 
 ReadSqlFile::~ReadSqlFile()
 {
-  file.close();
+    file.close();
 }
 
 bool ReadSqlFile::open()
 {
-  return file.open(QIODevice::ReadOnly | QIODevice::Text);
+    return file.open ( QIODevice::ReadOnly | QIODevice::Text );
 }
 
 bool ReadSqlFile::read()
 {
-  QTextStream stream(&file);
-  
-  QRegExp regex("(.*);");
-  QRegExp comment("(.*)--");
-  QString sql;
-  while(!stream.atEnd())
-  {
-    QString line = stream.readLine();
-    
-    if(line.contains(comment))
+    QTextStream stream ( &file );
+
+    QRegExp regex ( "(.*);" );
+    QRegExp comment ( "(.*)--" );
+    QString sql;
+    while ( !stream.atEnd() )
     {
-      line = comment.cap(1);
+        QString line = stream.readLine();
+
+        if ( line.contains ( comment ) )
+        {
+            line = comment.cap ( 1 );
+        }
+
+        if ( line.contains ( regex ) )
+        {
+            QString grep = regex.cap ( 1 );
+            sql.append ( grep );
+            execStatement ( sql );
+            sql.clear();
+        }
+        else
+        {
+            sql.append ( line );
+        }
     }
-    
-    if(line.contains(regex))
-    {
-      QString grep = regex.cap(1);
-      sql.append(grep);
-      execStatement(sql);
-      sql.clear();
-    }
-    else
-    {
-      sql.append(line);
-    }
-  }
 }
 
-void ReadSqlFile::execStatement(const QString& aSql)
+void ReadSqlFile::execStatement ( const QString& aSql )
 {
-  QSqlQuery sqlQuery;
-  if(!sqlQuery.exec(aSql))
-  {
-    const QString msg = QString("%1\n%2").arg(sqlQuery.lastError().text()).arg(aSql);
-    qWarning(msg.toAscii());
-  }
+    QSqlQuery sqlQuery;
+    if ( !sqlQuery.exec ( aSql ) )
+    {
+        const QString msg = QString ( "%1\n%2" ).arg ( sqlQuery.lastError().text() ).arg ( aSql );
+        qWarning ( msg.toAscii() );
+    }
 }
 
 }

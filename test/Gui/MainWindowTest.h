@@ -10,25 +10,25 @@ namespace ClubFrontendTest
 
 class MainWindowTest: public QObject, public Handler
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-	virtual void handle();
+    virtual void handle();
 
 private slots:
-	void init();
+    void init();
 
-	void testNewMember();
-	void testEditMember();
-	void testSelectedMember();
-	void testMemberView();
-	void testDeletedMemberView();
-	void testShowKassaView();
-	void testShowSaldo();
-	void testCopyMailAdress();
+    void testNewMember();
+    void testEditMember();
+    void testSelectedMember();
+    void testMemberView();
+    void testDeletedMemberView();
+    void testShowKassaView();
+    void testShowSaldo();
+    void testCopyMailAdress();
 
 private:
-	QString id;
+    QString id;
 };
 
 }

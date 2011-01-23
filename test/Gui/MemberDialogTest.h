@@ -8,16 +8,16 @@ namespace ClubFrontendTest
 
 class MemberDialogTest: public QObject
 {
-Q_OBJECT
+    Q_OBJECT
 
 private slots:
-	void initTestCase();
-	void showMember();
-	void newMember();
-	void changeMember();
-	void newMemberDiscard();
-	void showSaldo();
-	void showfee();
+    void initTestCase();
+    void showMember();
+    void newMember();
+    void changeMember();
+    void newMemberDiscard();
+    void showSaldo();
+    void showfee();
 };
 
 }

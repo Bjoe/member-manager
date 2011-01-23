@@ -20,21 +20,21 @@ class MemberModel: public QObject
 {
 
 public:
-	MemberModel(const QSqlDatabase& aDb);
-	virtual ~MemberModel();
+    MemberModel ( const QSqlDatabase& aDb );
+    virtual ~MemberModel();
 
-	void setFilter(const QString aSqlFilter);
-	void refresh();
+    void setFilter ( const QString aSqlFilter );
+    void refresh();
 
-	int getMemberId(const QModelIndex& anIndex);
-	QVector< Member > * getSelectedMembers();
+    int getMemberId ( const QModelIndex& anIndex );
+    QVector< Member > * getSelectedMembers();
 
-	QString getLastError() const;
-	QSqlTableModel* getMemberTableModel() const;
+    QString getLastError() const;
+    QSqlTableModel* getMemberTableModel() const;
 
 private:
 
-	QSqlTableModel* const model;
+    QSqlTableModel* const model;
 };
 
 }

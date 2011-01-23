@@ -35,23 +35,24 @@
 namespace ClubFrontendTest
 {
 
-DialogButtonBoxHandler::DialogButtonBoxHandler(QDialogButtonBox::StandardButton which) :
-  standardButton(which)
+DialogButtonBoxHandler::DialogButtonBoxHandler ( QDialogButtonBox::StandardButton which ) :
+        standardButton ( which )
 {
 }
 
 void DialogButtonBoxHandler::handle()
 {
-	QWidget* widget = 0;
-	do
-	{
-		widget = QApplication::activeWindow();
-	} while (!widget);
+    QWidget* widget = 0;
+    do
+    {
+        widget = QApplication::activeWindow();
+    }
+    while ( !widget );
 
-	QDialogButtonBox* buttonBox =
-		widget->findChild<QDialogButtonBox*> ();
-	QPushButton* button = buttonBox->button(standardButton);
-	button->click();
+    QDialogButtonBox* buttonBox =
+        widget->findChild<QDialogButtonBox*> ();
+    QPushButton* button = buttonBox->button ( standardButton );
+    button->click();
 
 }
 

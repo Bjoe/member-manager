@@ -15,63 +15,63 @@ namespace ClubFrontendTest
 
 void MemberModelTest::initTestCase()
 {
-    Utils::DatabaseUtils database(DATABASEDRIVER);
-    database.open(DATABASE);
-    database.read(SQLTESTFILE);
+    Utils::DatabaseUtils database ( DATABASEDRIVER );
+    database.open ( DATABASE );
+    database.read ( SQLTESTFILE );
 }
 
 void MemberModelTest::testGetLastError()
 {
-	ClubFrontend::MemberModel dataSource(QSqlDatabase::database());
-	// Fehler Produzieren ? QCOMPARE(memberModel.getLastError(),QString());
+    ClubFrontend::MemberModel dataSource ( QSqlDatabase::database() );
+    // Fehler Produzieren ? QCOMPARE(memberModel.getLastError(),QString());
 }
 
 void MemberModelTest::testGetMemberModel()
 {
-	ClubFrontend::MemberModel dataSource(QSqlDatabase::database());
+    ClubFrontend::MemberModel dataSource ( QSqlDatabase::database() );
 
-	const QSqlTableModel* model = dataSource.getMemberTableModel();
-	QCOMPARE(model->rowCount(), 2);
-	QSqlRecord record = model->record(1);
-	QCOMPARE(record.value("name").toString(), QString("Spock"));
+    const QSqlTableModel* model = dataSource.getMemberTableModel();
+    QCOMPARE ( model->rowCount(), 2 );
+    QSqlRecord record = model->record ( 1 );
+    QCOMPARE ( record.value ( "name" ).toString(), QString ( "Spock" ) );
 }
 
 void MemberModelTest::testSetFilter()
 {
-	ClubFrontend::MemberModel memberModel(QSqlDatabase::database());
+    ClubFrontend::MemberModel memberModel ( QSqlDatabase::database() );
 
-	memberModel.setFilter("deleted='false'");
+    memberModel.setFilter ( "deleted='false'" );
 
-	const QSqlTableModel* model = memberModel.getMemberTableModel();
-	QCOMPARE(model->rowCount(), 1);
-	QSqlRecord record = model->record(0);
-	QCOMPARE(record.value("name").toString(), QString("Kirk"));
+    const QSqlTableModel* model = memberModel.getMemberTableModel();
+    QCOMPARE ( model->rowCount(), 1 );
+    QSqlRecord record = model->record ( 0 );
+    QCOMPARE ( record.value ( "name" ).toString(), QString ( "Kirk" ) );
 }
 
 void MemberModelTest::testGetMemberId()
 {
-	ClubFrontend::MemberModel memberModel(QSqlDatabase::database());
+    ClubFrontend::MemberModel memberModel ( QSqlDatabase::database() );
 
-	const QSqlTableModel* model = memberModel.getMemberTableModel();
+    const QSqlTableModel* model = memberModel.getMemberTableModel();
 
-	const QModelIndex index = model->index(0,5);
+    const QModelIndex index = model->index ( 0,5 );
 
-	const int id = memberModel.getMemberId(index);
+    const int id = memberModel.getMemberId ( index );
 
-	QCOMPARE(id, 1025);
+    QCOMPARE ( id, 1025 );
 }
 
 void MemberModelTest::testGetSelectedMembers()
 {
-  ClubFrontend::MemberModel memberModel(QSqlDatabase::database());
-  
-  QVector< ClubFrontend::Member > *memberList = memberModel.getSelectedMembers();
-  
-  QCOMPARE(memberList->size(), 2);
+    ClubFrontend::MemberModel memberModel ( QSqlDatabase::database() );
+
+    QVector< ClubFrontend::Member > *memberList = memberModel.getSelectedMembers();
+
+    QCOMPARE ( memberList->size(), 2 );
 }
 
 
 }
 
-QTEST_MAIN(ClubFrontendTest::MemberModelTest)
+QTEST_MAIN ( ClubFrontendTest::MemberModelTest )
 #include "MemberModelTest.moc"

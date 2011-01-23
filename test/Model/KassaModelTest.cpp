@@ -22,23 +22,23 @@ namespace ClubFrontendTest
 
 void KassaModelTest::initTestCase()
 {
-    Utils::DatabaseUtils database(DATABASEDRIVER);
-    database.open(DATABASE);
-    database.read(SQLTESTFILE);
+    Utils::DatabaseUtils database ( DATABASEDRIVER );
+    database.open ( DATABASE );
+    database.read ( SQLTESTFILE );
 }
 
 void KassaModelTest::testModel()
 {
-	ClubFrontend::KassaModel kassaModel(QSqlDatabase::database());
+    ClubFrontend::KassaModel kassaModel ( QSqlDatabase::database() );
 
-	const QSqlTableModel* model = kassaModel.getKassaTableModel();
-	QCOMPARE(model->rowCount(), 3);
-	QSqlRecord record = model->record(1);
-	using ClubFrontend::KassaTable;
-	QCOMPARE(record.value(KassaTable::betrag).toString(), QString("104.86"));
+    const QSqlTableModel* model = kassaModel.getKassaTableModel();
+    QCOMPARE ( model->rowCount(), 3 );
+    QSqlRecord record = model->record ( 1 );
+    using ClubFrontend::KassaTable;
+    QCOMPARE ( record.value ( KassaTable::betrag ).toString(), QString ( "104.86" ) );
 }
 
 }
 
-QTEST_MAIN(ClubFrontendTest::KassaModelTest)
+QTEST_MAIN ( ClubFrontendTest::KassaModelTest )
 #include "KassaModelTest.moc"

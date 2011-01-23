@@ -15,12 +15,12 @@ namespace ClubFrontendTest
 
 class SaldoModelTest: public QObject
 {
-Q_OBJECT
+    Q_OBJECT
 
 private slots:
-	void initTestCase();
-	void testModel();
-	void testAmount();
+    void initTestCase();
+    void testModel();
+    void testAmount();
 };
 
 }

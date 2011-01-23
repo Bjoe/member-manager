@@ -16,21 +16,21 @@ namespace ClubFrontendTest
 
 void MemberFilterTest::testSetDeleted()
 {
-	ClubFrontend::MemberFilter filter;
-	filter.setDeleted(true);
+    ClubFrontend::MemberFilter filter;
+    filter.setDeleted ( true );
 
-	QCOMPARE(filter.getFilter(), QString("deleted='true'"));
+    QCOMPARE ( filter.getFilter(), QString ( "deleted='true'" ) );
 }
 
 void MemberFilterTest::testSetDeletedFalse()
 {
-	ClubFrontend::MemberFilter filter;
-	filter.setDeleted(false);
+    ClubFrontend::MemberFilter filter;
+    filter.setDeleted ( false );
 
-	QCOMPARE(filter.getFilter(), QString("deleted='false'"));
+    QCOMPARE ( filter.getFilter(), QString ( "deleted='false'" ) );
 }
 
 }
 
-QTEST_MAIN(ClubFrontendTest::MemberFilterTest)
+QTEST_MAIN ( ClubFrontendTest::MemberFilterTest )
 #include "MemberFilterTest.moc"

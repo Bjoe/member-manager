@@ -15,15 +15,15 @@ namespace ClubFrontendTest
 
 class MemberModelTest: public QObject
 {
-Q_OBJECT
+    Q_OBJECT
 
 private slots:
-	void initTestCase();
-	void testGetLastError();
-	void testGetMemberModel();
-	void testSetFilter();
-	void testGetMemberId();
-	void testGetSelectedMembers();
+    void initTestCase();
+    void testGetLastError();
+    void testGetMemberModel();
+    void testSetFilter();
+    void testGetMemberId();
+    void testGetSelectedMembers();
 };
 
 }

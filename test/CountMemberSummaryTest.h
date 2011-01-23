@@ -36,9 +36,9 @@ namespace ClubFrontendTest
 
 class CountMemberSummaryTest : public QObject
 {
-  Q_OBJECT
-  
-  private slots:
+    Q_OBJECT
+
+private slots:
     void initTestCase();
     void testCountMember();
 };

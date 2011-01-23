@@ -16,23 +16,23 @@ namespace ClubFrontendTest
 
 class MemberDetailModelTest: public QObject
 {
-Q_OBJECT
+    Q_OBJECT
 
 private slots:
-	void initTestCase();
-	void testGetLastError();
-	void testGetAddressModel();
-	void testGetBankAccountModel();
-	void testGetContributionModel();
-	void testGetRessourcenModel();
-	void testGetMemberModel();
-	void testGetMember();
-	void testSetMemberId();
-	void testNewMember();
-	void testDeleteMember();
+    void initTestCase();
+    void testGetLastError();
+    void testGetAddressModel();
+    void testGetBankAccountModel();
+    void testGetContributionModel();
+    void testGetRessourcenModel();
+    void testGetMemberModel();
+    void testGetMember();
+    void testSetMemberId();
+    void testNewMember();
+    void testDeleteMember();
 
 private:
-	int getMemberId(const QSqlTableModel* aModel, const int& aColumnId);
+    int getMemberId ( const QSqlTableModel* aModel, const int& aColumnId );
 };
 
 }

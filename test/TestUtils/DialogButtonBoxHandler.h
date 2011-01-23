@@ -38,13 +38,13 @@ namespace ClubFrontendTest
 
 class DialogButtonBoxHandler: public Handler
 {
-  public:
-    DialogButtonBoxHandler(QDialogButtonBox::StandardButton which = QDialogButtonBox::Yes);
+public:
+    DialogButtonBoxHandler ( QDialogButtonBox::StandardButton which = QDialogButtonBox::Yes );
 
     virtual void handle();
 
-  private:
-	QDialogButtonBox::StandardButton standardButton;
+private:
+    QDialogButtonBox::StandardButton standardButton;
 };
 
 }

@@ -32,17 +32,17 @@
 namespace ClubFrontend
 {
 
-ContributionDialog::ContributionDialog(ClubFrontend::ContributionModel* aContributionModel, QWidget* parent):
-  QDialog(parent), contributionModel(aContributionModel), ui()
+ContributionDialog::ContributionDialog ( ClubFrontend::ContributionModel* aContributionModel, QWidget* parent ) :
+        QDialog ( parent ), contributionModel ( aContributionModel ), ui()
 {
-  ui.setupUi(this);
-  ui.contributionTableView->setModel(contributionModel->getContributionTableModel());
-  
-  ui.contributionTableView->setColumnHidden(ContributionTable::ContributionId, true);
-  ui.contributionTableView->setColumnHidden(ContributionTable::MemberId, true);
-  ui.contributionTableView->setColumnHidden(ContributionTable::Debit, true);
+    ui.setupUi ( this );
+    ui.contributionTableView->setModel ( contributionModel->getContributionTableModel() );
 
-  ui.contributionTableView->resizeColumnsToContents();
+    ui.contributionTableView->setColumnHidden ( ContributionTable::ContributionId, true );
+    ui.contributionTableView->setColumnHidden ( ContributionTable::MemberId, true );
+    ui.contributionTableView->setColumnHidden ( ContributionTable::Debit, true );
+
+    ui.contributionTableView->resizeColumnsToContents();
 }
 
 ContributionDialog::~ContributionDialog()

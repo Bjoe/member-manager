@@ -19,16 +19,16 @@ class KassaModel: public QObject
 {
 
 public:
-	KassaModel(const QSqlDatabase& aDb);
-	virtual ~KassaModel();
+    KassaModel ( const QSqlDatabase& aDb );
+    virtual ~KassaModel();
 
-	void setDefaultFilter();
-	void refresh();
+    void setDefaultFilter();
+    void refresh();
 
-	QSqlTableModel* getKassaTableModel() const;
+    QSqlTableModel* getKassaTableModel() const;
 
 private:
-	QSqlTableModel* model;
+    QSqlTableModel* model;
 };
 
 }

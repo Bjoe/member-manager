@@ -48,29 +48,29 @@ namespace ClubFrontendTest
 
 void ContributionDialogTest::initTestCase()
 {
-    Utils::DatabaseUtils database(DATABASEDRIVER);
-    database.open(DATABASE);
-    database.read(SQLTESTFILE);
+    Utils::DatabaseUtils database ( DATABASEDRIVER );
+    database.open ( DATABASE );
+    database.read ( SQLTESTFILE );
 }
 
 void ContributionDialogTest::testShowDialog()
 {
-  ClubFrontend::ContributionModel contributionModel(QSqlDatabase::database());
-  contributionModel.setMemberId(1025);
-  ClubFrontend::ContributionDialog dialog(&contributionModel);
+    ClubFrontend::ContributionModel contributionModel ( QSqlDatabase::database() );
+    contributionModel.setMemberId ( 1025 );
+    ClubFrontend::ContributionDialog dialog ( &contributionModel );
 
-  const QTableView* tableView = dialog.findChild<QTableView* >("contributionTableView");
-  const QAbstractItemModel* model = tableView->model();
-  QVERIFY(model != 0);
-  QCOMPARE(model->rowCount(), 2);
-  using ClubFrontend::ContributionTable;
-  const QModelIndex index = model->index(0, ContributionTable::ValidFrom);
-  const QVariant value = model->data(index);
-  QCOMPARE(value.toString(), QString("2007-05-01"));
+    const QTableView* tableView = dialog.findChild<QTableView* > ( "contributionTableView" );
+    const QAbstractItemModel* model = tableView->model();
+    QVERIFY ( model != 0 );
+    QCOMPARE ( model->rowCount(), 2 );
+    using ClubFrontend::ContributionTable;
+    const QModelIndex index = model->index ( 0, ContributionTable::ValidFrom );
+    const QVariant value = model->data ( index );
+    QCOMPARE ( value.toString(), QString ( "2007-05-01" ) );
 }
 
 
 }
 
-QTEST_MAIN(ClubFrontendTest::ContributionDialogTest)
+QTEST_MAIN ( ClubFrontendTest::ContributionDialogTest )
 #include "ContributionDialogTest.moc"

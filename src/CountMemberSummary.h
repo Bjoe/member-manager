@@ -36,18 +36,18 @@
 
 namespace ClubFrontend
 {
-  
+
 class CountMemberSummary : public QObject
 {
-  Q_OBJECT
-  
-  public:
-    CountMemberSummary(SummaryHandler *aHandler, QObject* parent = 0);
-  
-  private slots:
+    Q_OBJECT
+
+public:
+    CountMemberSummary ( SummaryHandler *aHandler, QObject* parent = 0 );
+
+private slots:
     void summaryResult();
-    
-  private:
+
+private:
     QPushButton *countMemberButton;
     SummaryHandler* handler;
 };

@@ -18,12 +18,12 @@ class MemberFilter
 {
 
 public:
-	void setDeleted(const bool aBoolean);
+    void setDeleted ( const bool aBoolean );
 
-	QString getFilter() const;
+    QString getFilter() const;
 
 private:
-	QStringList columns;
+    QStringList columns;
 };
 
 }

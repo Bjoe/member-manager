@@ -20,36 +20,36 @@ namespace ClubFrontend
 class MemberDetailModel: public QObject
 {
 public:
-	MemberDetailModel(const QSqlDatabase& aDb = QSqlDatabase::database());
-	virtual ~MemberDetailModel();
+    MemberDetailModel ( const QSqlDatabase& aDb = QSqlDatabase::database() );
+    virtual ~MemberDetailModel();
 
-	QString getLastError() const;
+    QString getLastError() const;
 
-	void setMemberId(int id);
-	int getMemberId() const;
-	Member exportMember() const;
-	
-	int newMember();
-	void deleteMember();
+    void setMemberId ( int id );
+    int getMemberId() const;
+    Member exportMember() const;
 
-	QSqlTableModel* getAddressTableModel() const;
-	QSqlTableModel* getBankAccountTableModel() const;
-	QSqlTableModel* getRessourcenTableModel() const;
-	QSqlTableModel* getMemberTableModel() const;
-	ContributionModel* getContributionModel() const;
+    int newMember();
+    void deleteMember();
+
+    QSqlTableModel* getAddressTableModel() const;
+    QSqlTableModel* getBankAccountTableModel() const;
+    QSqlTableModel* getRessourcenTableModel() const;
+    QSqlTableModel* getMemberTableModel() const;
+    ContributionModel* getContributionModel() const;
 
 private:
-	int insertNewMember(QSqlTableModel* aModel, const int& aColumnId,
-			const QVariant& aValue);
-	QSqlTableModel* setTableModel(const QString& aTableName,
-			QSqlTableModel* const aModel);
+    int insertNewMember ( QSqlTableModel* aModel, const int& aColumnId,
+                          const QVariant& aValue );
+    QSqlTableModel* setTableModel ( const QString& aTableName,
+                                    QSqlTableModel* const aModel );
 
-	QSqlTableModel* const addressModel;
-	QSqlTableModel* const bankAccountModel;
-	QSqlTableModel* const ressourcenModel;
-	QSqlTableModel* const memberModel;
-	ContributionModel* contributionModel;
-	int id;
+    QSqlTableModel* const addressModel;
+    QSqlTableModel* const bankAccountModel;
+    QSqlTableModel* const ressourcenModel;
+    QSqlTableModel* const memberModel;
+    ContributionModel* contributionModel;
+    int id;
 };
 
 }

@@ -36,29 +36,29 @@
 
 namespace ClubFrontendTest
 {
-  
+
 void DebitSumSummaryTest::initTestCase()
 {
-    Utils::DatabaseUtils database(DATABASEDRIVER);
-    database.open(DATABASE);
-    database.read(SQLTESTFILE);
+    Utils::DatabaseUtils database ( DATABASEDRIVER );
+    database.open ( DATABASE );
+    database.read ( SQLTESTFILE );
 }
-  
+
 void DebitSumSummaryTest::testDebitSum()
 {
     SummaryHandlerMock *handler = new SummaryHandlerMock();
-    
-    ClubFrontend::DebitSumSummary debitSum(handler);
-    
+
+    ClubFrontend::DebitSumSummary debitSum ( handler );
+
     QPushButton *button = handler->getPushButton();
-    QVERIFY(button);
-    QCOMPARE(button->objectName(), QString("debitSumButton"));
+    QVERIFY ( button );
+    QCOMPARE ( button->objectName(), QString ( "debitSumButton" ) );
     button->click();
-    
-    QCOMPARE(handler->getText(), QString("foo"));
-}
-  
+
+    QCOMPARE ( handler->getText(), QString ( "foo" ) );
 }
 
-QTEST_MAIN(ClubFrontendTest::DebitSumSummaryTest)
+}
+
+QTEST_MAIN ( ClubFrontendTest::DebitSumSummaryTest )
 #include "DebitSumSummaryTest.moc"

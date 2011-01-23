@@ -15,19 +15,19 @@ namespace ClubFrontendTest
 
 class ConnectionDialogTest: public QObject
 {
-Q_OBJECT
+    Q_OBJECT
 
 private slots:
-	void testGetUsername();
-	void testGetPassword();
-	void testGetDatebaseName();
-	void testGetHostname();
-	void testGetPort();
-	void testGetDriverName();
-	void testSetDriverName();
-	void testSetWrongDriverName();
-	void testOkButton();
-	void testCancelButton();
+    void testGetUsername();
+    void testGetPassword();
+    void testGetDatebaseName();
+    void testGetHostname();
+    void testGetPort();
+    void testGetDriverName();
+    void testSetDriverName();
+    void testSetWrongDriverName();
+    void testOkButton();
+    void testCancelButton();
 };
 
 }

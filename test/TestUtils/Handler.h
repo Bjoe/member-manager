@@ -14,14 +14,14 @@ namespace ClubFrontendTest
 class Handler
 {
 public:
-	Handler()
-	{
-	}
-	virtual ~Handler()
-	{
-	}
+    Handler()
+    {
+    }
+    virtual ~Handler()
+    {
+    }
 
-	virtual void handle() = 0;
+    virtual void handle() = 0;
 };
 
 }

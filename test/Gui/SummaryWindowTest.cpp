@@ -34,44 +34,44 @@
 
 namespace ClubFrontendTest
 {
-  
-SummaryWindowTest::SummaryWindowTest() : isClicked(false)
+
+SummaryWindowTest::SummaryWindowTest() : isClicked ( false )
 {}
 
 
 void SummaryWindowTest::testShowSummary()
 {
-  ClubFrontend::SummaryWindow summary;
-  
-  summary.showSummary("foo");
-  
-  const QTextEdit *textEdit = summary.findChild<QTextEdit* >("textEdit");
-  
-  QCOMPARE(textEdit->toPlainText(), QString("foo"));
+    ClubFrontend::SummaryWindow summary;
+
+    summary.showSummary ( "foo" );
+
+    const QTextEdit *textEdit = summary.findChild<QTextEdit* > ( "textEdit" );
+
+    QCOMPARE ( textEdit->toPlainText(), QString ( "foo" ) );
 }
 
 void SummaryWindowTest::testAddButton()
 {
-  isClicked = false;
-  ClubFrontend::SummaryWindow summary;
-  
-  QPushButton *button = new QPushButton();
-  button->setObjectName("testButton");
-  button->connect(button, SIGNAL(clicked(bool)), this, SLOT(buttonClicked()));
-  summary.addButton(button);
+    isClicked = false;
+    ClubFrontend::SummaryWindow summary;
 
-  QPushButton *testButton = summary.findChild<QPushButton* >("testButton");
-  QTest::mouseClick(testButton, Qt::LeftButton);
-  
-  QVERIFY(isClicked);
+    QPushButton *button = new QPushButton();
+    button->setObjectName ( "testButton" );
+    button->connect ( button, SIGNAL ( clicked ( bool ) ), this, SLOT ( buttonClicked() ) );
+    summary.addButton ( button );
+
+    QPushButton *testButton = summary.findChild<QPushButton* > ( "testButton" );
+    QTest::mouseClick ( testButton, Qt::LeftButton );
+
+    QVERIFY ( isClicked );
 }
 
 void SummaryWindowTest::buttonClicked()
 {
-  isClicked = true;
+    isClicked = true;
 }
 
 }
 
-QTEST_MAIN(ClubFrontendTest::SummaryWindowTest)
+QTEST_MAIN ( ClubFrontendTest::SummaryWindowTest )
 #include "SummaryWindowTest.moc"
