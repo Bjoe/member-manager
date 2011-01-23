@@ -8,6 +8,7 @@ Einige Todos:
 - Refactor: GUI Anpassen.
 - Einpaar Denglisch Datenbankfelder auf Englisch Refactoren.
 - Einige unsinnige Datenbankfelder rauswerfen und Tabellen mergen. (Wird erst nach der ersten lauffaehigen Version umgesetzt)
+- Compiler Warnungen Fixen!
 
 Fehlende Features:
 - Moeglichkeit Bankeinzug auszusetzen
