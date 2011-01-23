@@ -14,8 +14,8 @@ set(QT_MOC_HEADERS
     )
 
 set(QT_UI
-    Gui/mainWindow.ui
-    Gui/memberDialog.ui
+    Gui/MainWindow.ui
+    Gui/MemberDialog.ui
     Gui/ConnectionDialog.ui
     Gui/SaldoDialog.ui
     Gui/SaldoSumDialog.ui
