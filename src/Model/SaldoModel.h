@@ -11,6 +11,7 @@
 #include <QtCore>
 #include <QSqlDatabase>
 #include <QSqlTableModel>
+#include <QTableView>
 
 namespace ClubFrontend
 {
@@ -25,7 +26,7 @@ public:
     float amount() const;
     void refresh();
 
-    QSqlTableModel* getSaldoTableModel() const;
+    void setTableView ( QTableView* aTableView ) const;
 
 private:
     QSqlTableModel* model;

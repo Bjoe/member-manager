@@ -31,7 +31,8 @@ void SaldoModelTest::testModel()
 {
     ClubFrontend::SaldoModel saldoModel ( QSqlDatabase::database(), 1025 );
 
-    const QSqlTableModel* model = saldoModel.getSaldoTableModel();
+    const QSqlTableModel* model = saldoModel.findChild<QSqlTableModel* > ( "model" );
+    QVERIFY ( model );
     QCOMPARE ( model->rowCount(), 2 );
     QSqlRecord record = model->record ( 0 );
     using ClubFrontend::SaldoTable;

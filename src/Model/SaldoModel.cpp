@@ -20,6 +20,7 @@ namespace ClubFrontend
 SaldoModel::SaldoModel ( const QSqlDatabase& aDb, const int aMemberId ) :
         model ( new QSqlTableModel ( this, aDb ) )
 {
+    model->setObjectName ( "model" );
     model->setTable ( SaldoTable::TABLENAME );
     model->setHeaderData ( SaldoTable::betrag, Qt::Horizontal, tr ( "Betrag" ) );
     model->setHeaderData ( SaldoTable::datum, Qt::Horizontal, tr ( "Valuta Datum" ) );
@@ -59,9 +60,13 @@ void SaldoModel::refresh()
     model->select();
 }
 
-QSqlTableModel* SaldoModel::getSaldoTableModel() const
+void SaldoModel::setTableView ( QTableView* aTableView ) const
 {
-    return model;
+    aTableView->setModel ( model );
+    aTableView->setColumnHidden ( SaldoTable::saldo_pkey, true );
+    aTableView->setColumnHidden ( SaldoTable::dorfmitglied_pkey, true );
+
+    aTableView->sortByColumn ( SaldoTable::saldo_pkey, Qt::DescendingOrder );
 }
 
 }
