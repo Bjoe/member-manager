@@ -64,7 +64,7 @@ void ContributionModel::setMemberId ( const int aMemberId )
 
 int ContributionModel::insertMemberId ( const QVariant& aMemberId )
 {
-    model->setFilter("");
+    model->setFilter ( "" );
     model->select();
     Model::TableDao tableDao;
     int row = tableDao.insertNewRow ( model, ContributionTable::MemberId, aMemberId );
@@ -134,7 +134,7 @@ void ContributionModel::submit ( const QString &aFee, const QString &aDonation, 
     model->submitAll();
 }
 
-void ContributionModel::setTableView ( QTableView* aTableView ) const
+void ContributionModel::initTableView ( QTableView* aTableView ) const
 {
     aTableView->setModel ( model );
 

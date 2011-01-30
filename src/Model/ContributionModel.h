@@ -46,7 +46,7 @@ public:
     int insertMemberId ( const QVariant& aMemberId );
     void refresh();
 
-    void setTableView ( QTableView* aTableView ) const;
+    void initTableView ( QTableView* aTableView ) const;
 
     QString getInfo() const;
     QVariant getInfoValue() const;

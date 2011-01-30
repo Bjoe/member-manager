@@ -35,7 +35,7 @@ ContributionDialog::ContributionDialog ( ClubFrontend::ContributionModel* aContr
         QDialog ( parent ), contributionModel ( aContributionModel ), ui()
 {
     ui.setupUi ( this );
-    contributionModel->setTableView( ui.contributionTableView );
+    contributionModel->initTableView( ui.contributionTableView );
 
     ui.contributionTableView->resizeColumnsToContents();
 }
