@@ -143,10 +143,4 @@ void ContributionModel::setTableView ( QTableView* aTableView ) const
     aTableView->setColumnHidden ( ContributionTable::Debit, true );
 }
 
-// TODO Refactor: Model im Konstruktor uebergeben?!
-QSqlTableModel* ContributionModel::getContributionTableModel() const
-{
-    return model;
-}
-
 }

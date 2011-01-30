@@ -40,7 +40,7 @@ QSqlTableModel* MemberDetailModel::setTableModel ( const QString& aTableName,
 
 QString MemberDetailModel::getLastError() const
 {
-    // TODO besser model->lastError()
+    //! \todo besser model->lastError()
     QSqlDatabase db = QSqlDatabase::database();
     return db.lastError().text();
 }
@@ -81,7 +81,7 @@ Member MemberDetailModel::exportMember() const
                     donation.toFloat(), fee.toFloat() );
 }
 
-// TODO Refactor: In DAO Klasse Refactoren
+//! \todo Refactor: In DAO Klasse Refactoren
 int MemberDetailModel::newMember()
 {
     // Dirty Hack um ein Neues Mitglied einzutragen.
@@ -92,7 +92,7 @@ int MemberDetailModel::newMember()
 
     insertNewMember ( addressModel, AddressTable::MemberId, valueId );
     insertNewMember ( bankAccountModel, BankAccountTable::MemberId, valueId );
-    insertNewMember ( contributionModel->getContributionTableModel(), ContributionTable::MemberId, valueId );
+    contributionModel->insertMemberId( valueId );
     insertNewMember ( ressourcenModel, RessourcenTable::MemberId, valueId );
 
     int newId = valueId.toInt();
@@ -100,7 +100,7 @@ int MemberDetailModel::newMember()
     return newId;
 }
 
-// TODO Refactor: In DAO Klasse Refactoren
+//! \todo Refactor: In DAO Klasse Refactoren
 int MemberDetailModel::insertNewMember ( QSqlTableModel* aModel,
         const int& aColumnId, const QVariant& aValue )
 {
@@ -113,7 +113,7 @@ int MemberDetailModel::insertNewMember ( QSqlTableModel* aModel,
     return row;
 }
 
-// TODO Refactor: In DAO Klasse Refactoren
+//! \todo Refactor: In DAO Klasse Refactoren
 void MemberDetailModel::deleteMember()
 {
     if ( id == 0 )

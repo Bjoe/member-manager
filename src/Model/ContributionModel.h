@@ -47,7 +47,6 @@ public:
     void refresh();
 
     void setTableView ( QTableView* aTableView ) const;
-    QSqlTableModel* getContributionTableModel() const;
 
     QString getInfo() const;
     QVariant getInfoValue() const;
