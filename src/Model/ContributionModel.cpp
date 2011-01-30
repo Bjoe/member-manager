@@ -29,6 +29,7 @@
 #include "ContributionModel.h"
 
 #include "Model/DatabaseStructure.h"
+#include "Model/TableDao.h"
 
 namespace ClubFrontend
 {
@@ -50,6 +51,7 @@ ContributionModel::~ContributionModel()
 {
 }
 
+//! \todo Refactor selectMemberId
 void ContributionModel::setMemberId ( const int aMemberId )
 {
     QString columname = ContributionTable::COLUMNNAME[ContributionTable::MemberId];
@@ -58,6 +60,13 @@ void ContributionModel::setMemberId ( const int aMemberId )
     model->setSort ( ContributionTable::ValidFrom, Qt::DescendingOrder );
     refresh();
     memberId = aMemberId;
+}
+
+void ContributionModel::insertMemberId ( const int aMemberId )
+{
+    Model::TableDao tableDao;
+    tableDao.insertNewRow ( model, ContributionTable::MemberId, QVariant ( memberId ) );
+    setMemberId ( aMemberId );
 }
 
 void ContributionModel::refresh()
@@ -125,7 +134,7 @@ void ContributionModel::submit ( const QString &aFee, const QString &aDonation, 
 void ContributionModel::setTableView ( QTableView* aTableView ) const
 {
     aTableView->setModel ( model );
-    
+
     aTableView->setColumnHidden ( ContributionTable::ContributionId, true );
     aTableView->setColumnHidden ( ContributionTable::MemberId, true );
     aTableView->setColumnHidden ( ContributionTable::Debit, true );

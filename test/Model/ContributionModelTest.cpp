@@ -53,8 +53,8 @@ void ContributionModelTest::testModel()
     ClubFrontend::ContributionModel contributionModel ( QSqlDatabase::database() );
 
     contributionModel.setMemberId ( 1025 );
-    const QSqlTableModel* model = contributionModel.findChild<QSqlTableModel* >( "model" );
-    QVERIFY( model );
+    const QSqlTableModel* model = contributionModel.findChild<QSqlTableModel* > ( "model" );
+    QVERIFY ( model );
     QCOMPARE ( model->rowCount(), 2 );
     QSqlRecord record = model->record ( 0 );
     using ClubFrontend::ContributionTable;
@@ -91,8 +91,8 @@ void ContributionModelTest::testNewFeeDonation()
 
     contributionModel.setMemberId ( 1025 );
 
-    QSqlTableModel *model = contributionModel.findChild<QSqlTableModel* >( "model" );
-    QVERIFY( model );
+    QSqlTableModel *model = contributionModel.findChild<QSqlTableModel* > ( "model" );
+    QVERIFY ( model );
     QCOMPARE ( model->rowCount(), 2 );
 
     contributionModel.submit ( "90", "50", "bar" );
@@ -114,8 +114,23 @@ void ContributionModelTest::testNewFeeDonation()
     QCOMPARE ( query.value ( ContributionTable::Donation ).toInt(), 50 );
     QCOMPARE ( query.value ( ContributionTable::Info ).toString(), QString ( "bar" ) );
 
-    // \todo Test auf ValidFrom mit QDate::currentDate()
+    //! \todo Test auf ValidFrom mit QDate::currentDate()
 }
+
+void ContributionModelTest::testNewMemberId()
+{
+    QSqlTableModel* tableModel = new QSqlTableModel();
+    tableModel->setTable ( ClubFrontend::ContributionTable::TABLENAME );
+    tableModel->select();
+    QCOMPARE ( tableModel->rowCount(), 3 );
+
+    ClubFrontend::ContributionModel contributionModel ( QSqlDatabase::database() );
+    contributionModel.insertMemberId ( 9999 );
+
+    tableModel->select();
+    QCOMPARE ( tableModel->rowCount(), 4 );
+}
+
 
 }
 

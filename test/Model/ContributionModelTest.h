@@ -44,6 +44,7 @@ private slots:
     void testGetColumns();
     void testChangeInfo();
     void testNewFeeDonation();
+    void testNewMemberId();
 };
 
 }
