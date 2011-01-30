@@ -79,16 +79,8 @@ void MainWindow::showMembers ( const bool aBoolean )
     MemberFilter filter;
     filter.setDeleted ( aBoolean );
     memberModel.setFilter ( filter.getFilter() );
-    ui.tableView->setModel ( memberModel.getMemberTableModel() );
-    ui.tableView->sortByColumn ( MemberTable::MemberId, Qt::AscendingOrder );
+    memberModel.initTableView ( ui.tableView );
     ui.tableView->resizeColumnsToContents();
-    ui.tableView->setColumnHidden ( MemberTable::Deleted, true );
-    ui.tableView->setColumnHidden ( MemberTable::FOO_CCC, true );
-    ui.tableView->setColumnHidden ( MemberTable::FOO_ChaosNr, true );
-    ui.tableView->setColumnHidden ( MemberTable::FOO_ClubAdress, true );
-    ui.tableView->setColumnHidden ( MemberTable::FOO_Einzug, true );
-    ui.tableView->setColumnHidden ( MemberTable::FOO_intern, true );
-    ui.tableView->setColumnHidden ( MemberTable::FOO_Shell, true );
 
     ui.tableView->addAction ( ui.actionEditMember );
     ui.tableView->addAction ( ui.actionCopyMailAdr );

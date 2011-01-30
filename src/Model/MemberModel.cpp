@@ -15,6 +15,7 @@ namespace ClubFrontend
 MemberModel::MemberModel ( const QSqlDatabase& aDb ) :
         model ( new QSqlTableModel ( this, aDb ) )
 {
+    model->setObjectName ( "model" );
     model->setTable ( MemberTable::TABLENAME );
     model->setHeaderData ( MemberTable::MemberId, Qt::Horizontal, tr ( "Nr." ) );
     model->setHeaderData ( MemberTable::FirstName, Qt::Horizontal, tr ( "Vorname" ) );
@@ -69,9 +70,18 @@ QString MemberModel::getLastError() const
     return model->lastError().text();
 }
 
-QSqlTableModel* MemberModel::getMemberTableModel() const
+void MemberModel::initTableView ( QTableView* aTableView ) const
 {
-    return model;
+    aTableView->setModel ( model );
+    aTableView->setColumnHidden ( MemberTable::Deleted, true );
+    aTableView->setColumnHidden ( MemberTable::FOO_CCC, true );
+    aTableView->setColumnHidden ( MemberTable::FOO_ChaosNr, true );
+    aTableView->setColumnHidden ( MemberTable::FOO_ClubAdress, true );
+    aTableView->setColumnHidden ( MemberTable::FOO_Einzug, true );
+    aTableView->setColumnHidden ( MemberTable::FOO_intern, true );
+    aTableView->setColumnHidden ( MemberTable::FOO_Shell, true );
+
+    aTableView->sortByColumn ( MemberTable::MemberId, Qt::AscendingOrder );
 }
 
 }

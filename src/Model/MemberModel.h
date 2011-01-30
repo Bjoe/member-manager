@@ -10,6 +10,7 @@
 
 #include <QtCore>
 #include <QtSql>
+#include <QTableView>
 
 #include "Model/Member.h"
 
@@ -30,10 +31,9 @@ public:
     QVector< Member > * getSelectedMembers();
 
     QString getLastError() const;
-    QSqlTableModel* getMemberTableModel() const;
+    void initTableView ( QTableView* aTableView ) const;
 
 private:
-
     QSqlTableModel* const model;
 };
 
