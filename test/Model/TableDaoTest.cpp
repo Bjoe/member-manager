@@ -28,10 +28,38 @@
 
 #include "TableDaoTest.h"
 
+#include "Model/TableDao.h"
+
+#include "TestConfig.h"
+#include "Model/DatabaseStructure.h"
+#include "TestUtils/DatabaseUtils.h"
+
 namespace ClubFrontendTest
 {
 namespace Model
 {
+
+void TableDaoTest::initTestCase()
+{
+    Utils::DatabaseUtils database ( DATABASEDRIVER );
+    database.open ( DATABASE );
+    database.read ( SQLTESTFILE );
+}
+
+void TableDaoTest::testInsertNewRow()
+{
+    QSqlTableModel* model = new QSqlTableModel();
+    model->setTable ( ClubFrontend::SaldoTable::TABLENAME );
+    model->select();
+    int size = model->rowCount();
+
+    QVariant id ( 999 );
+
+    ClubFrontend::Model::TableDao tableDao;
+    tableDao.insertNewRow ( model, ClubFrontend::SaldoTable::dorfmitglied_pkey, id );
+
+    QCOMPARE ( model->rowCount(), ( size + 1 ) );
+}
 
 }
 }
