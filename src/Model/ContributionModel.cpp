@@ -62,11 +62,14 @@ void ContributionModel::setMemberId ( const int aMemberId )
     memberId = aMemberId;
 }
 
-void ContributionModel::insertMemberId ( const int aMemberId )
+int ContributionModel::insertMemberId ( const QVariant& aMemberId )
 {
+    model->setFilter("");
+    model->select();
     Model::TableDao tableDao;
-    tableDao.insertNewRow ( model, ContributionTable::MemberId, QVariant ( memberId ) );
-    setMemberId ( aMemberId );
+    int row = tableDao.insertNewRow ( model, ContributionTable::MemberId, aMemberId );
+    setMemberId ( aMemberId.toInt() );
+    return row;
 }
 
 void ContributionModel::refresh()

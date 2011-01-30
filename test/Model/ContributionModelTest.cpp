@@ -37,6 +37,7 @@
 #include <QSqlTableModel>
 #include <QSqlRecord>
 #include <QString>
+#include <QVariant>
 
 namespace ClubFrontendTest
 {
@@ -125,10 +126,18 @@ void ContributionModelTest::testNewMemberId()
     QCOMPARE ( tableModel->rowCount(), 3 );
 
     ClubFrontend::ContributionModel contributionModel ( QSqlDatabase::database() );
-    contributionModel.insertMemberId ( 9999 );
+    QVariant id ( 123 );
+    int row = contributionModel.insertMemberId ( id );
+    QCOMPARE ( row , 3 );
 
     tableModel->select();
     QCOMPARE ( tableModel->rowCount(), 4 );
+    const QString whereClause = QString ( " where dorfmitglied_pkey=%1" ).arg ( 123 );
+    QSqlQuery query;
+    using ClubFrontend::ContributionTable;
+    query.exec ( "select * from " + ContributionTable::TABLENAME + whereClause );
+    query.next();
+    QCOMPARE ( query.value ( ContributionTable::MemberId ).toInt(), 123 );
 }
 
 

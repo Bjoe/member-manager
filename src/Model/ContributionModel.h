@@ -43,7 +43,7 @@ public:
     virtual ~ContributionModel();
 
     void setMemberId ( const int aMemberId );
-    void insertMemberId ( const int aMemberId );
+    int insertMemberId ( const QVariant& aMemberId );
     void refresh();
 
     void setTableView ( QTableView* aTableView ) const;
