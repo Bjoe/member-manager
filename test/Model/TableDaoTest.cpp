@@ -30,6 +30,7 @@
 
 #include "Model/TableDao.h"
 
+#include <QtSql>
 #include "TestConfig.h"
 #include "Model/DatabaseStructure.h"
 #include "TestUtils/DatabaseUtils.h"
@@ -48,17 +49,24 @@ void TableDaoTest::initTestCase()
 
 void TableDaoTest::testInsertNewRow()
 {
+    using ClubFrontend::SaldoTable;
     QSqlTableModel* model = new QSqlTableModel();
-    model->setTable ( ClubFrontend::SaldoTable::TABLENAME );
+    model->setTable ( SaldoTable::TABLENAME );
     model->select();
     int size = model->rowCount();
 
-    QVariant id ( 999 );
+    QVariant id ( 123 );
 
     ClubFrontend::Model::TableDao tableDao;
-    tableDao.insertNewRow ( model, ClubFrontend::SaldoTable::dorfmitglied_pkey, id );
+    int row = tableDao.insertNewRow ( model, SaldoTable::dorfmitglied_pkey, id );
+    QCOMPARE ( row, 2 );
 
     QCOMPARE ( model->rowCount(), ( size + 1 ) );
+    const QString whereClause = QString ( " where dorfmitglied_pkey=%1" ).arg ( 123 );
+    QSqlQuery query;
+    query.exec ( "select * from " + SaldoTable::TABLENAME + whereClause );
+    query.next();
+    QCOMPARE ( query.value ( SaldoTable::dorfmitglied_pkey ).toInt(), 123 );
 }
 
 }

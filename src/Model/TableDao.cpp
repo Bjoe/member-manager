@@ -35,7 +35,7 @@ namespace Model
 {
 
 int TableDao::insertNewRow ( QSqlTableModel* aModel,
-                             const int& aColumn, const QVariant& aValue )
+                             int aColumn, const QVariant& aValue )
 {
     QSqlRecord record = aModel->record();
     record.setValue ( aColumn, aValue );
