@@ -60,7 +60,7 @@ void SaldoModel::refresh()
     model->select();
 }
 
-void SaldoModel::setTableView ( QTableView* aTableView ) const
+void SaldoModel::initTableView ( QTableView* aTableView ) const
 {
     aTableView->setModel ( model );
     aTableView->setColumnHidden ( SaldoTable::saldo_pkey, true );

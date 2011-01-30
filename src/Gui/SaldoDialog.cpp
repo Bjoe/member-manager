@@ -7,7 +7,7 @@ SaldoDialog::SaldoDialog ( SaldoModel& aSaldoModel, QWidget *parent )
         : QDialog ( parent ), saldoModel ( aSaldoModel ), ui()
 {
     ui.setupUi ( this );
-    saldoModel.setTableView ( ui.saldoTableView );
+    saldoModel.initTableView ( ui.saldoTableView );
     ui.saldoTableView->resizeColumnsToContents();
 
     float sum = saldoModel.amount();
