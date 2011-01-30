@@ -3,7 +3,7 @@
 
 #include <QDialog>
 #include <QDataWidgetMapper>
-#include "ui_memberDialog.h"
+#include "ui_MemberDialog.h"
 #include "Model/MemberDetailModel.h"
 
 namespace ClubFrontend

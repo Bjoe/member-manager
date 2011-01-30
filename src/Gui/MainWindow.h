@@ -5,7 +5,7 @@
 #include <QMainWindow>
 #include <QModelIndex>
 
-#include "ui_mainWindow.h"
+#include "ui_MainWindow.h"
 #include "Model/MemberModel.h"
 #include "Model/KassaModel.h"
 #include "Model/MemberDetailModel.h"
