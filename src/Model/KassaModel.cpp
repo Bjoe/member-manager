@@ -36,7 +36,7 @@ void KassaModel::refresh()
     model->select();
 }
 
-void KassaModel::setTableView ( QTableView* aTableView ) const
+void KassaModel::initTableView ( QTableView* aTableView ) const
 {
     aTableView->setModel ( model );
     aTableView->setColumnHidden ( KassaTable::kasse_pkey, true );

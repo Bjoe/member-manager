@@ -26,7 +26,7 @@ public:
     void setDefaultFilter();
     void refresh();
 
-    void setTableView ( QTableView* aTableView ) const;
+    void initTableView ( QTableView* aTableView ) const;
 
 private:
     QSqlTableModel* model;

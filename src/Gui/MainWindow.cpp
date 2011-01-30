@@ -114,7 +114,7 @@ void MainWindow::showKassaView()
     ui.actionShowMember->setChecked ( false );
     ui.actionShowKassa->setChecked ( true );
 
-    kassaModel.setTableView ( ui.tableView );
+    kassaModel.initTableView ( ui.tableView );
     ui.tableView->resizeColumnsToContents();
 }
 
