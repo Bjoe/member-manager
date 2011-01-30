@@ -50,7 +50,7 @@ void MemberDetailModelTest::testGetContributionModel()
 {
     ClubFrontend::MemberDetailModel dataSource ( QSqlDatabase::database() );
 
-    const QSqlTableModel* model = dataSource.getContributionModel()->getContributionTableModel();
+    const QSqlTableModel* model = dataSource.getContributionModel()->findChild<QSqlTableModel* > ( "model" );
     QCOMPARE ( model->rowCount(), 0 );
 
     dataSource.setMemberId ( 1025 );
@@ -106,7 +106,7 @@ void MemberDetailModelTest::testSetMemberId()
         dataSource.getRessourcenTableModel();
     const QSqlTableModel* addressModel = dataSource.getAddressTableModel();
     const QSqlTableModel* contributionModel =
-        dataSource.getContributionModel()->getContributionTableModel();
+        dataSource.getContributionModel()->findChild<QSqlTableModel* > ( "model" );
     const QSqlTableModel* accountModel = dataSource.getBankAccountTableModel();
     const QSqlTableModel* memberModel = dataSource.getMemberTableModel();
 
@@ -147,7 +147,9 @@ void MemberDetailModelTest::testNewMember()
                              ClubFrontend::AddressTable::MemberId ), id );
     QCOMPARE ( getMemberId ( memberDetailModel.getBankAccountTableModel(),
                              ClubFrontend::BankAccountTable::MemberId ), id );
-    QCOMPARE ( getMemberId ( memberDetailModel.getContributionModel()->getContributionTableModel(),
+    const ClubFrontend::ContributionModel* contributionModel = memberDetailModel.getContributionModel();
+    const QSqlTableModel* contributionTableModel = contributionModel->findChild<QSqlTableModel* > ( "model" );
+    QCOMPARE ( getMemberId ( contributionTableModel,
                              ClubFrontend::ContributionTable::MemberId ), id );
     QCOMPARE ( getMemberId ( memberDetailModel.getRessourcenTableModel(),
                              ClubFrontend::RessourcenTable::MemberId ), id );
