@@ -54,7 +54,7 @@ void SaldoSumModelTest::testView()
 {
     ClubFrontend::SaldoSumModel saldoSumModel ( QSqlDatabase::database() );
     QTableView* view = new QTableView();
-    saldoSumModel.setTableView ( view );
+    saldoSumModel.initTableView ( view );
     QAbstractItemModel* model = view->model();
     QVariant variant = model->data ( model->index ( 0,1 ) );
     QCOMPARE ( variant.toString(), QString ( "Capt. Kirk" ) );

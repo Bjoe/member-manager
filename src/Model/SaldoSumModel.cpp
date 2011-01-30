@@ -57,7 +57,7 @@ SaldoSumModel::SaldoSumModel ( const QSqlDatabase & aDb )
     model->setQuery ( query, aDb );
 }
 
-void SaldoSumModel::setTableView ( QTableView* const aView )
+void SaldoSumModel::initTableView ( QTableView* const aView )
 {
     aView->setModel ( model );
     aView->setColumnHidden ( 5, true );

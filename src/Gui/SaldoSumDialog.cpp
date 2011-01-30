@@ -37,7 +37,7 @@ SaldoSumDialog::SaldoSumDialog ( SaldoSumModel& aModel, QWidget* aParent )
 {
     ui.setupUi ( this );
 
-    aModel.setTableView ( ui.tableView );
+    aModel.initTableView ( ui.tableView );
 }
 
 }

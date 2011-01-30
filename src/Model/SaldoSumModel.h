@@ -41,7 +41,7 @@ class SaldoSumModel : public QObject
 public:
     SaldoSumModel ( const QSqlDatabase& aDb );
 
-    void setTableView ( QTableView* const aView );
+    void initTableView ( QTableView* const aView );
 
 private:
     QSqlQueryModel* model;
