@@ -42,6 +42,7 @@ set(QT_SRCS
     Model/Member.cpp
     Model/DatabaseStructure.cpp
     Model/MemberDao.cpp
+    Model/TableDao.cpp
 
     SummaryHandler.cpp
     CountMemberSummary.cpp
