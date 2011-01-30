@@ -31,6 +31,7 @@
 
 #include <QtCore>
 #include <QtSql>
+#include <QTableView>
 
 namespace ClubFrontend
 {
@@ -44,6 +45,7 @@ public:
     void setMemberId ( const int aMemberId );
     void refresh();
 
+    void setTableView ( QTableView* aTableView ) const;
     QSqlTableModel* getContributionTableModel() const;
 
     QString getInfo() const;

@@ -53,7 +53,8 @@ void ContributionModelTest::testModel()
     ClubFrontend::ContributionModel contributionModel ( QSqlDatabase::database() );
 
     contributionModel.setMemberId ( 1025 );
-    const QSqlTableModel* model = contributionModel.getContributionTableModel();
+    const QSqlTableModel* model = contributionModel.findChild<QSqlTableModel* >( "model" );
+    QVERIFY( model );
     QCOMPARE ( model->rowCount(), 2 );
     QSqlRecord record = model->record ( 0 );
     using ClubFrontend::ContributionTable;
@@ -90,7 +91,8 @@ void ContributionModelTest::testNewFeeDonation()
 
     contributionModel.setMemberId ( 1025 );
 
-    QSqlTableModel *model = contributionModel.getContributionTableModel();
+    QSqlTableModel *model = contributionModel.findChild<QSqlTableModel* >( "model" );
+    QVERIFY( model );
     QCOMPARE ( model->rowCount(), 2 );
 
     contributionModel.submit ( "90", "50", "bar" );
@@ -112,7 +114,7 @@ void ContributionModelTest::testNewFeeDonation()
     QCOMPARE ( query.value ( ContributionTable::Donation ).toInt(), 50 );
     QCOMPARE ( query.value ( ContributionTable::Info ).toString(), QString ( "bar" ) );
 
-    // TODO Test auf ValidFrom mit QDate::currentDate()
+    // \todo Test auf ValidFrom mit QDate::currentDate()
 }
 
 }

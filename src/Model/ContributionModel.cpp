@@ -36,6 +36,7 @@ namespace ClubFrontend
 ContributionModel::ContributionModel ( const QSqlDatabase& aDb ) :
         model ( new QSqlTableModel ( this, aDb ) ), record(), memberId ( 0 )
 {
+    model->setObjectName ( "model" );
     record = model->record ( 0 );
 
     model->setTable ( ContributionTable::TABLENAME );
@@ -119,6 +120,15 @@ void ContributionModel::submit ( const QString &aFee, const QString &aDonation, 
         model->setRecord ( 0,record );
     }
     model->submitAll();
+}
+
+void ContributionModel::setTableView ( QTableView* aTableView ) const
+{
+    aTableView->setModel ( model );
+    
+    aTableView->setColumnHidden ( ContributionTable::ContributionId, true );
+    aTableView->setColumnHidden ( ContributionTable::MemberId, true );
+    aTableView->setColumnHidden ( ContributionTable::Debit, true );
 }
 
 // TODO Refactor: Model im Konstruktor uebergeben?!
