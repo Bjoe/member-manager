@@ -122,11 +122,8 @@ void MainWindow::showKassaView()
     ui.actionShowMember->setChecked ( false );
     ui.actionShowKassa->setChecked ( true );
 
-    ui.tableView->setModel ( kassaModel.getKassaTableModel() );
-    ui.tableView->sortByColumn ( KassaTable::kasse_pkey, Qt::DescendingOrder );
+    kassaModel.setTableView ( ui.tableView );
     ui.tableView->resizeColumnsToContents();
-    ui.tableView->setColumnHidden ( KassaTable::kasse_pkey, true );
-    ui.tableView->setColumnHidden ( KassaTable::deleted, true );
 }
 
 void MainWindow::showMemberDialog ( MemberDetailModel& aModel )

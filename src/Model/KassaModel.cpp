@@ -16,6 +16,7 @@ KassaModel::KassaModel ( const QSqlDatabase& aDb ) :
         model ( new QSqlTableModel ( this, aDb ) )
 {
     model->setTable ( KassaTable::TABLENAME );
+    model->setObjectName ( "model" );
     setDefaultFilter();
     refresh();
 }
@@ -35,9 +36,13 @@ void KassaModel::refresh()
     model->select();
 }
 
-QSqlTableModel* KassaModel::getKassaTableModel() const
+void KassaModel::setTableView ( QTableView* aTableView ) const
 {
-    return model;
+    aTableView->setModel ( model );
+    aTableView->setColumnHidden ( KassaTable::kasse_pkey, true );
+    aTableView->setColumnHidden ( KassaTable::deleted, true );
+
+    aTableView->sortByColumn ( KassaTable::kasse_pkey, Qt::DescendingOrder );
 }
 
 }

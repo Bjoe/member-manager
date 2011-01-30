@@ -31,7 +31,8 @@ void KassaModelTest::testModel()
 {
     ClubFrontend::KassaModel kassaModel ( QSqlDatabase::database() );
 
-    const QSqlTableModel* model = kassaModel.getKassaTableModel();
+    const QSqlTableModel* model = kassaModel.findChild<QSqlTableModel* > ( "model" );
+    QVERIFY ( model );
     QCOMPARE ( model->rowCount(), 3 );
     QSqlRecord record = model->record ( 1 );
     using ClubFrontend::KassaTable;
