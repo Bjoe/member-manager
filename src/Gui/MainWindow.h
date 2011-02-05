@@ -30,8 +30,7 @@ private slots:
     void newMember();
     void selectedMember();
     void editMember ( const QModelIndex& anIndex );
-    void copyMailAdress();
-
+    
 private:
     Ui::MainWindow ui;
     MemberModel& memberModel;

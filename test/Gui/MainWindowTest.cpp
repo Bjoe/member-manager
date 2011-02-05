@@ -222,28 +222,6 @@ void MainWindowTest::testShowKassaView()
     QCOMPARE ( value.toString(), QString ( "" ) );
 }
 
-void MainWindowTest::testCopyMailAdress()
-{
-    ClubFrontend::KassaModel kassaModel ( QSqlDatabase::database() );
-    ClubFrontend::MemberModel memberModel ( QSqlDatabase::database() );
-    ClubFrontend::MainWindow mainWindow ( memberModel, kassaModel );
-
-    QTableView* view = mainWindow.findChild<QTableView* > ( "tableView" );
-    QItemSelectionModel* selectionModel = view->selectionModel();
-    QAbstractItemModel* model = view->model();
-    QModelIndex index = model->index ( 0,3 );
-    QItemSelection selection ( index, index );
-    selectionModel->select ( selection, QItemSelectionModel::Select );
-
-    TriggerThread thread ( this );
-    connect ( &thread, SIGNAL ( triggered() ), &mainWindow, SLOT ( copyMailAdress() ) );
-    thread.syncStart();
-
-    QClipboard* clipboard = QApplication::clipboard();
-    QString emailAdr = clipboard->text();
-    QCOMPARE ( emailAdr, QString ( "fooo@baaar.xx" ) );
-}
-
 }
 
 QTEST_MAIN ( ClubFrontendTest::MainWindowTest )

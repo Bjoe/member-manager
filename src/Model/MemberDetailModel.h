@@ -38,7 +38,6 @@ public:
     void initRessourcenMapper(QDataWidgetMapper* aMapper) const;
     void initMemberMapper(QDataWidgetMapper* aMapper) const;
 
-    QSqlTableModel* getRessourcenTableModel() const;
     ContributionModel* getContributionModel() const;
 
 private:

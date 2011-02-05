@@ -25,7 +25,6 @@ private slots:
     void testDeletedMemberView();
     void testShowKassaView();
     void testShowSaldo();
-    void testCopyMailAdress();
 
 private:
     QString id;

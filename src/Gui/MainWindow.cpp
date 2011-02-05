@@ -35,8 +35,6 @@ MainWindow::MainWindow ( MemberModel& aMemberModel, KassaModel& aKassaModel,
               SLOT ( newMember() ) );
     connect ( ui.actionEditMember, SIGNAL ( triggered() ), this,
               SLOT ( selectedMember() ) );
-    connect ( ui.actionCopyMailAdr, SIGNAL ( triggered() ), this,
-              SLOT ( copyMailAdress() ) );
     connect ( ui.actionShowSaldo, SIGNAL ( triggered() ), this,
               SLOT ( showSaldo() ) );
 }
@@ -135,21 +133,6 @@ void MainWindow::showSaldo()
     SaldoDialog dialog ( model, this );
     dialog.show();
     dialog.exec();
-}
-
-void MainWindow::copyMailAdress()
-{
-    int id = memberModel.getMemberId ( getSelection() );
-
-    MemberDetailModel memberDetailModel ( QSqlDatabase::database() );
-    memberDetailModel.setMemberId ( id );
-    QSqlTableModel* resourcenModel = memberDetailModel.getRessourcenTableModel();
-    QSqlRecord record = resourcenModel->record ( 0 );
-    QVariant value = record.value ( RessourcenTable::EmailAdress );
-    QString emailAdr = value.toString();
-
-    QClipboard* clipboard = QApplication::clipboard();
-    clipboard->setText ( emailAdr );
 }
 
 QModelIndex MainWindow::getSelection() const

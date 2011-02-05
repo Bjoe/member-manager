@@ -166,11 +166,6 @@ void MemberDetailModel::initRessourcenMapper ( QDataWidgetMapper* aMapper ) cons
     aMapper->setModel ( ressourcenModel );
 }
 
-QSqlTableModel* MemberDetailModel::getRessourcenTableModel() const
-{
-    return ressourcenModel;
-}
-
 ContributionModel* MemberDetailModel::getContributionModel() const
 {
     return contributionModel;
