@@ -8,21 +8,23 @@
 
 namespace ClubFrontend
 {
+namespace Gui
+{
 
 class SaldoDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    SaldoDialog ( SaldoModel& aSaldoModel, QWidget *parent = 0 );
+    SaldoDialog ( Model::SaldoModel& aSaldoModel, QWidget *parent = 0 );
     ~SaldoDialog();
 
 private:
     Ui::SaldoDialogClass ui;
-    SaldoModel& saldoModel;
+    Model::SaldoModel& saldoModel;
 };
 
 }
+}
 
 #endif // SALDODIALOG_H
-

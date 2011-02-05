@@ -30,6 +30,8 @@
 
 namespace ClubFrontendTest
 {
+namespace Utils
+{
 
 SummaryHandlerMock::SummaryHandlerMock() :
         button ( 0 ), text ( "" )
@@ -62,4 +64,5 @@ QString SummaryHandlerMock::getText() const
     return text;
 }
 
+}
 }

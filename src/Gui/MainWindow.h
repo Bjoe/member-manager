@@ -12,13 +12,15 @@
 
 namespace ClubFrontend
 {
+namespace Gui
+{
 
 class MainWindow: public QMainWindow
 {
     Q_OBJECT
 
 public:
-    MainWindow ( MemberModel& aMemberModel, KassaModel& aKassaModel,
+    MainWindow ( Model::MemberModel& aMemberModel, Model::KassaModel& aKassaModel,
                  QWidget* parent = 0 );
 
 private slots:
@@ -30,17 +32,18 @@ private slots:
     void newMember();
     void selectedMember();
     void editMember ( const QModelIndex& anIndex );
-    
+
 private:
     Ui::MainWindow ui;
-    MemberModel& memberModel;
-    KassaModel& kassaModel;
+    Model::MemberModel& memberModel;
+    Model::KassaModel& kassaModel;
 
     void showMembers ( const bool aBoolean );
-    void showMemberDialog ( MemberDetailModel& aModel );
+    void showMemberDialog ( Model::MemberDetailModel& aModel );
     QModelIndex getSelection() const;
 };
 
+}
 }
 
 #endif // MAINWINDOW_H

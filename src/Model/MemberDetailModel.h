@@ -17,6 +17,8 @@
 
 namespace ClubFrontend
 {
+namespace Model
+{
 
 class MemberDetailModel: public QObject
 {
@@ -32,11 +34,11 @@ public:
 
     int newMember();
     void deleteMember();
-    
-    void initAddressMapper(QDataWidgetMapper* aMapper) const;
-    void initBankAccountMapper(QDataWidgetMapper* aMapper) const;
-    void initRessourcenMapper(QDataWidgetMapper* aMapper) const;
-    void initMemberMapper(QDataWidgetMapper* aMapper) const;
+
+    void initAddressMapper ( QDataWidgetMapper* aMapper ) const;
+    void initBankAccountMapper ( QDataWidgetMapper* aMapper ) const;
+    void initRessourcenMapper ( QDataWidgetMapper* aMapper ) const;
+    void initMemberMapper ( QDataWidgetMapper* aMapper ) const;
 
     ContributionModel* getContributionModel() const;
 
@@ -54,6 +56,7 @@ private:
     int id;
 };
 
+}
 }
 
 #endif /* MEMBERDETAILMODEL_H_ */

@@ -33,7 +33,7 @@
 
 #include "TestUtils/Handler.h"
 
-namespace ClubFrontendTest
+namespace Utils
 {
 
 class DialogButtonBoxHandler: public Handler

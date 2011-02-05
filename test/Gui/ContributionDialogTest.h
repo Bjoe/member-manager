@@ -33,6 +33,8 @@
 
 namespace ClubFrontendTest
 {
+namespace Gui
+{
 
 class ContributionDialogTest : public QObject
 {
@@ -43,6 +45,7 @@ private slots:
     void testShowDialog();
 };
 
+}
 }
 
 #endif // CONTRIBUTIONDIALOGTEST_H

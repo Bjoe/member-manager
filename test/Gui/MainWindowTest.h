@@ -7,8 +7,10 @@
 
 namespace ClubFrontendTest
 {
+namespace Gui
+{
 
-class MainWindowTest: public QObject, public Handler
+class MainWindowTest: public QObject, public Utils::Handler
 {
     Q_OBJECT
 
@@ -30,6 +32,7 @@ private:
     QString id;
 };
 
+}
 }
 
 #endif

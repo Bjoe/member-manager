@@ -10,7 +10,9 @@
 
 namespace ClubFrontend
 {
-
+namespace Model
+{
+  
 MemberDetailModel::MemberDetailModel ( const QSqlDatabase& aDb ) :
         addressModel ( new QSqlTableModel ( this, aDb ) ), bankAccountModel (
             new QSqlTableModel ( this, aDb ) ), ressourcenModel ( new QSqlTableModel (
@@ -171,4 +173,5 @@ ContributionModel* MemberDetailModel::getContributionModel() const
     return contributionModel;
 }
 
+}
 }

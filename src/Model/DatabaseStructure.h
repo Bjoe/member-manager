@@ -13,6 +13,8 @@
 
 namespace ClubFrontend
 {
+namespace Model
+{
 
 class AddressTable
 {
@@ -133,6 +135,7 @@ public:
     static const QStringList COLUMNNAME;
 };
 
+}
 }
 
 #endif /* DATABASESTRUCTURE_H_ */

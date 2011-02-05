@@ -39,6 +39,8 @@
 
 namespace ClubFrontendTest
 {
+namespace Gui
+{
 
 void SaldoSumDialogTest::initTestCase()
 {
@@ -59,6 +61,7 @@ void SaldoSumDialogTest::testShowDialog()
 }
 
 }
+}
 
-QTEST_MAIN ( ClubFrontendTest::SaldoSumDialogTest )
+QTEST_MAIN ( ClubFrontendTest::Gui::SaldoSumDialogTest )
 #include "SaldoSumDialogTest.moc"

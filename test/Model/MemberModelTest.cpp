@@ -12,6 +12,8 @@
 
 namespace ClubFrontendTest
 {
+namespace Model
+{
 
 void MemberModelTest::initTestCase()
 {
@@ -22,15 +24,15 @@ void MemberModelTest::initTestCase()
 
 void MemberModelTest::testGetLastError()
 {
-    ClubFrontend::MemberModel dataSource ( QSqlDatabase::database() );
+    ClubFrontend::Model::MemberModel dataSource ( QSqlDatabase::database() );
     // Fehler Produzieren ? QCOMPARE(memberModel.getLastError(),QString());
 }
 
 void MemberModelTest::testGetMemberModel()
 {
-    ClubFrontend::MemberModel dataSource ( QSqlDatabase::database() );
+    ClubFrontend::Model::MemberModel dataSource ( QSqlDatabase::database() );
 
-    const QSqlTableModel* model = dataSource.findChild<QSqlTableModel* >( "model" );
+    const QSqlTableModel* model = dataSource.findChild<QSqlTableModel* > ( "model" );
     QCOMPARE ( model->rowCount(), 2 );
     QSqlRecord record = model->record ( 1 );
     QCOMPARE ( record.value ( "name" ).toString(), QString ( "Spock" ) );
@@ -38,11 +40,11 @@ void MemberModelTest::testGetMemberModel()
 
 void MemberModelTest::testSetFilter()
 {
-    ClubFrontend::MemberModel memberModel ( QSqlDatabase::database() );
+    ClubFrontend::Model::MemberModel memberModel ( QSqlDatabase::database() );
 
     memberModel.setFilter ( "deleted='false'" );
 
-    const QSqlTableModel* model = memberModel.findChild<QSqlTableModel* >( "model" );
+    const QSqlTableModel* model = memberModel.findChild<QSqlTableModel* > ( "model" );
     QCOMPARE ( model->rowCount(), 1 );
     QSqlRecord record = model->record ( 0 );
     QCOMPARE ( record.value ( "name" ).toString(), QString ( "Kirk" ) );
@@ -50,9 +52,9 @@ void MemberModelTest::testSetFilter()
 
 void MemberModelTest::testGetMemberId()
 {
-    ClubFrontend::MemberModel memberModel ( QSqlDatabase::database() );
+    ClubFrontend::Model::MemberModel memberModel ( QSqlDatabase::database() );
 
-    const QSqlTableModel* model = memberModel.findChild<QSqlTableModel* >( "model" );
+    const QSqlTableModel* model = memberModel.findChild<QSqlTableModel* > ( "model" );
 
     const QModelIndex index = model->index ( 0,5 );
 
@@ -63,15 +65,15 @@ void MemberModelTest::testGetMemberId()
 
 void MemberModelTest::testGetSelectedMembers()
 {
-    ClubFrontend::MemberModel memberModel ( QSqlDatabase::database() );
+    ClubFrontend::Model::MemberModel memberModel ( QSqlDatabase::database() );
 
     QVector< ClubFrontend::Member > *memberList = memberModel.getSelectedMembers();
 
     QCOMPARE ( memberList->size(), 2 );
 }
 
-
+}
 }
 
-QTEST_MAIN ( ClubFrontendTest::MemberModelTest )
+QTEST_MAIN ( ClubFrontendTest::Model::MemberModelTest )
 #include "MemberModelTest.moc"

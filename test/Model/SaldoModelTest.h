@@ -12,7 +12,9 @@
 
 namespace ClubFrontendTest
 {
-
+namespace Model
+{
+  
 class SaldoModelTest: public QObject
 {
     Q_OBJECT
@@ -23,6 +25,7 @@ private slots:
     void testAmount();
 };
 
+}
 }
 
 #endif /* SALDOMODELTEST_H_ */

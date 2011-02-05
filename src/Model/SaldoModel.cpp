@@ -16,7 +16,9 @@
 
 namespace ClubFrontend
 {
-
+namespace Model
+{
+  
 SaldoModel::SaldoModel ( const QSqlDatabase& aDb, const int aMemberId ) :
         model ( new QSqlTableModel ( this, aDb ) )
 {
@@ -69,4 +71,5 @@ void SaldoModel::initTableView ( QTableView* aTableView ) const
     aTableView->sortByColumn ( SaldoTable::saldo_pkey, Qt::DescendingOrder );
 }
 
+}
 }

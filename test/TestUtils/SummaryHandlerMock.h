@@ -36,6 +36,8 @@
 
 namespace ClubFrontendTest
 {
+namespace Utils
+{
 
 class SummaryHandlerMock : public ClubFrontend::SummaryHandler
 {
@@ -55,6 +57,7 @@ private:
     QString text;
 };
 
+}
 }
 
 #endif // SUMMARYHANDLERMOCK_H

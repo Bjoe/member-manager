@@ -5,6 +5,8 @@
 
 namespace ClubFrontendTest
 {
+namespace Gui
+{
 
 class MemberDialogTest: public QObject
 {
@@ -20,6 +22,7 @@ private slots:
     void showfee();
 };
 
+}
 }
 
 #endif // MEMBERDIALOGTEST_H

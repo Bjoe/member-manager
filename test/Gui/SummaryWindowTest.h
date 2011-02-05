@@ -33,6 +33,8 @@
 
 namespace ClubFrontendTest
 {
+namespace Gui
+{
 
 class SummaryWindowTest : public QObject
 {
@@ -52,6 +54,7 @@ private slots:
     void testAddButton();
 };
 
+}
 }
 
 #endif // SUMMARYWINDOWTEST_H

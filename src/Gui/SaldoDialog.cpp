@@ -2,8 +2,10 @@
 
 namespace ClubFrontend
 {
+namespace Gui
+{
 
-SaldoDialog::SaldoDialog ( SaldoModel& aSaldoModel, QWidget *parent )
+SaldoDialog::SaldoDialog ( Model::SaldoModel& aSaldoModel, QWidget *parent )
         : QDialog ( parent ), saldoModel ( aSaldoModel ), ui()
 {
     ui.setupUi ( this );
@@ -23,4 +25,5 @@ SaldoDialog::~SaldoDialog()
 {
 }
 
+}
 }

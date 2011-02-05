@@ -31,6 +31,8 @@
 
 namespace ClubFrontend
 {
+namespace Model
+{
 
 SaldoSumModel::SaldoSumModel ( const QSqlDatabase & aDb )
         : model ( new QSqlQueryModel ( this ) )
@@ -61,5 +63,7 @@ void SaldoSumModel::initTableView ( QTableView* const aView )
 {
     aView->setModel ( model );
     aView->setColumnHidden ( 5, true );
+}
+
 }
 }

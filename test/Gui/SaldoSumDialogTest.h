@@ -32,6 +32,8 @@
 
 namespace ClubFrontendTest
 {
+namespace Gui
+{
 
 class SaldoSumDialogTest : public QObject
 {
@@ -42,6 +44,7 @@ private slots:
     void testShowDialog();
 };
 
+}
 }
 
 #endif	/* // SALDOSUMDIALOGTEST_H */

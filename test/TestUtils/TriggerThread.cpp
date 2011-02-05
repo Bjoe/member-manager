@@ -7,9 +7,9 @@
 
 #include "TestUtils/TriggerThread.h"
 
-namespace ClubFrontendTest
+namespace Utils
 {
-
+  
 TriggerThread::TriggerThread ( QObject *aParent, Handler* const anExecutor,
                                const QModelIndex& anIndex ) :
         QThread ( aParent ), mutex(), waitForThread(), executor ( anExecutor ),

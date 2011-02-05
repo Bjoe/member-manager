@@ -27,7 +27,7 @@ int main ( int argc, char *argv[] )
     QVariant hostname = settings.value ( hostnameKey );
     QVariant port = settings.value ( portKey );
 
-    ClubFrontend::ConnectionDialog dialog;
+    ClubFrontend::Gui::ConnectionDialog dialog;
     dialog.setDriver ( driver.toString() );
     dialog.setDatabaseName ( databasename.toString() );
     dialog.setUsername ( username.toString() );
@@ -61,9 +61,9 @@ int main ( int argc, char *argv[] )
     settings.setValue ( hostnameKey, dialog.getHostname() );
     settings.setValue ( portKey, dialog.getPort() );
 
-    ClubFrontend::MemberModel memberModel ( db );
-    ClubFrontend::KassaModel kassaModel ( db );
-    ClubFrontend::MainWindow* mainWindow = new ClubFrontend::MainWindow (
+    ClubFrontend::Model::MemberModel memberModel ( db );
+    ClubFrontend::Model::KassaModel kassaModel ( db );
+    ClubFrontend::Gui::MainWindow* mainWindow = new ClubFrontend::Gui::MainWindow (
         memberModel, kassaModel );
     mainWindow->show();
 

@@ -30,6 +30,8 @@
 
 namespace ClubFrontend
 {
+namespace Gui
+{
 
 SummaryWindow::SummaryWindow ( QWidget* parent ) : QWidget ( parent )
 {
@@ -52,6 +54,5 @@ void SummaryWindow::addButton ( QPushButton* aButton )
     ui.verticalLayout->addWidget ( aButton );
 }
 
-
-
+}
 }

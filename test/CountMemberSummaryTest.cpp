@@ -39,14 +39,14 @@ namespace ClubFrontendTest
 
 void CountMemberSummaryTest::initTestCase()
 {
-    Utils::DatabaseUtils database ( DATABASEDRIVER );
+    ::Utils::DatabaseUtils database ( DATABASEDRIVER );
     database.open ( DATABASE );
     database.read ( SQLTESTFILE );
 }
 
 void CountMemberSummaryTest::testCountMember()
 {
-    SummaryHandlerMock *handler = new SummaryHandlerMock();
+    Utils::SummaryHandlerMock *handler = new Utils::SummaryHandlerMock();
 
     ClubFrontend::CountMemberSummary countMember ( handler );
 

@@ -11,6 +11,8 @@
 
 namespace ClubFrontend
 {
+namespace Model
+{
 
 KassaModel::KassaModel ( const QSqlDatabase& aDb ) :
         model ( new QSqlTableModel ( this, aDb ) )
@@ -45,4 +47,5 @@ void KassaModel::initTableView ( QTableView* aTableView ) const
     aTableView->sortByColumn ( KassaTable::kasse_pkey, Qt::DescendingOrder );
 }
 
+}
 }

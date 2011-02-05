@@ -19,6 +19,8 @@
 
 namespace ClubFrontendTest
 {
+namespace Model
+{
 
 void KassaModelTest::initTestCase()
 {
@@ -29,17 +31,18 @@ void KassaModelTest::initTestCase()
 
 void KassaModelTest::testModel()
 {
-    ClubFrontend::KassaModel kassaModel ( QSqlDatabase::database() );
+    ClubFrontend::Model::KassaModel kassaModel ( QSqlDatabase::database() );
 
     const QSqlTableModel* model = kassaModel.findChild<QSqlTableModel* > ( "model" );
     QVERIFY ( model );
     QCOMPARE ( model->rowCount(), 3 );
     QSqlRecord record = model->record ( 1 );
-    using ClubFrontend::KassaTable;
+    using ClubFrontend::Model::KassaTable;
     QCOMPARE ( record.value ( KassaTable::betrag ).toString(), QString ( "104.86" ) );
 }
 
 }
+}
 
-QTEST_MAIN ( ClubFrontendTest::KassaModelTest )
+QTEST_MAIN ( ClubFrontendTest::Model::KassaModelTest )
 #include "KassaModelTest.moc"

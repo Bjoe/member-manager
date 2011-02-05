@@ -19,6 +19,8 @@
 
 namespace ClubFrontendTest
 {
+namespace Model
+{
 
 void SaldoModelTest::initTestCase()
 {
@@ -29,20 +31,20 @@ void SaldoModelTest::initTestCase()
 
 void SaldoModelTest::testModel()
 {
-    ClubFrontend::SaldoModel saldoModel ( QSqlDatabase::database(), 1025 );
+    ClubFrontend::Model::SaldoModel saldoModel ( QSqlDatabase::database(), 1025 );
 
     const QSqlTableModel* model = saldoModel.findChild<QSqlTableModel* > ( "model" );
     QVERIFY ( model );
     QCOMPARE ( model->rowCount(), 2 );
     QSqlRecord record = model->record ( 0 );
-    using ClubFrontend::SaldoTable;
+    using ClubFrontend::Model::SaldoTable;
     QCOMPARE ( record.value ( SaldoTable::bezeichnung ).toString(), QString ( "Start Saldo" ) );
     QCOMPARE ( record.value ( SaldoTable::betrag ).toString(), QString ( "0" ) );
 }
 
 void SaldoModelTest::testAmount()
 {
-    ClubFrontend::SaldoModel saldoModel ( QSqlDatabase::database(), 1025 );
+    ClubFrontend::Model::SaldoModel saldoModel ( QSqlDatabase::database(), 1025 );
 
     float sum = saldoModel.amount();
     float expected = -15;
@@ -50,6 +52,7 @@ void SaldoModelTest::testAmount()
 }
 
 }
+}
 
-QTEST_MAIN ( ClubFrontendTest::SaldoModelTest )
+QTEST_MAIN ( ClubFrontendTest::Model::SaldoModelTest )
 #include "SaldoModelTest.moc"

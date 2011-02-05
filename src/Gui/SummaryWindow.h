@@ -39,6 +39,8 @@
 
 namespace ClubFrontend
 {
+namespace Gui
+{
 
 class SummaryWindow : public QWidget, public SummaryHandler
 {
@@ -54,6 +56,7 @@ private:
     Ui::SummaryWindow ui;
 };
 
+}
 }
 
 #endif // SUMMARYWINDOW_H

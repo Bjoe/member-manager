@@ -6,6 +6,8 @@
 
 namespace ClubFrontend
 {
+namespace Gui
+{
 
 class ConnectionDialog: public QDialog
 {
@@ -31,6 +33,7 @@ private:
     Ui::ConnectionDialogClass ui;
 };
 
+}
 }
 
 #endif // CONNECTIONDIALOG_H

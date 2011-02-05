@@ -35,6 +35,8 @@
 
 namespace ClubFrontend
 {
+namespace Model
+{
 
 class ContributionModel : public QObject
 {
@@ -65,6 +67,7 @@ private:
     int memberId;
 };
 
+}
 }
 
 #endif // CONTRIBUTIONMODEL_H

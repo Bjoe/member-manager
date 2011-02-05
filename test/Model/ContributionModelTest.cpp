@@ -41,7 +41,9 @@
 
 namespace ClubFrontendTest
 {
-
+namespace Model
+{
+  
 void ContributionModelTest::initTestCase()
 {
     Utils::DatabaseUtils database ( DATABASEDRIVER );
@@ -51,21 +53,21 @@ void ContributionModelTest::initTestCase()
 
 void ContributionModelTest::testModel()
 {
-    ClubFrontend::ContributionModel contributionModel ( QSqlDatabase::database() );
+    ClubFrontend::Model::ContributionModel contributionModel ( QSqlDatabase::database() );
 
     contributionModel.setMemberId ( 1025 );
     const QSqlTableModel* model = contributionModel.findChild<QSqlTableModel* > ( "model" );
     QVERIFY ( model );
     QCOMPARE ( model->rowCount(), 2 );
     QSqlRecord record = model->record ( 0 );
-    using ClubFrontend::ContributionTable;
+    using ClubFrontend::Model::ContributionTable;
     QCOMPARE ( record.value ( ContributionTable::Info ).toString(), QString ( "Beitragsaenderung" ) );
     QCOMPARE ( record.value ( ContributionTable::Fee ).toString(), QString ( "15" ) );
 }
 
 void ContributionModelTest::testGetColumns()
 {
-    ClubFrontend::ContributionModel contributionModel ( QSqlDatabase::database() );
+    ClubFrontend::Model::ContributionModel contributionModel ( QSqlDatabase::database() );
 
     contributionModel.setMemberId ( 1025 );
     QCOMPARE ( contributionModel.getInfo(), QString ( "Beitragsaenderung" ) );
@@ -75,7 +77,7 @@ void ContributionModelTest::testGetColumns()
 
 void ContributionModelTest::testChangeInfo()
 {
-    ClubFrontend::ContributionModel contributionModel ( QSqlDatabase::database() );
+    ClubFrontend::Model::ContributionModel contributionModel ( QSqlDatabase::database() );
 
     contributionModel.setMemberId ( 1025 );
 
@@ -88,7 +90,7 @@ void ContributionModelTest::testChangeInfo()
 
 void ContributionModelTest::testNewFeeDonation()
 {
-    ClubFrontend::ContributionModel contributionModel ( QSqlDatabase::database() );
+    ClubFrontend::Model::ContributionModel contributionModel ( QSqlDatabase::database() );
 
     contributionModel.setMemberId ( 1025 );
 
@@ -107,7 +109,7 @@ void ContributionModelTest::testNewFeeDonation()
 
     const QString whereClause = QString ( " where dorfmitglied_pkey=%1" ).arg ( 1025 );
     QSqlQuery query;
-    using ClubFrontend::ContributionTable;
+    using ClubFrontend::Model::ContributionTable;
     query.exec ( "select * from " + ContributionTable::TABLENAME + whereClause +
                  " order by " + ContributionTable::COLUMNNAME[ContributionTable::ValidFrom] + " desc" );
     query.next();
@@ -121,11 +123,11 @@ void ContributionModelTest::testNewFeeDonation()
 void ContributionModelTest::testNewMemberId()
 {
     QSqlTableModel* tableModel = new QSqlTableModel();
-    tableModel->setTable ( ClubFrontend::ContributionTable::TABLENAME );
+    tableModel->setTable ( ClubFrontend::Model::ContributionTable::TABLENAME );
     tableModel->select();
     QCOMPARE ( tableModel->rowCount(), 3 );
 
-    ClubFrontend::ContributionModel contributionModel ( QSqlDatabase::database() );
+    ClubFrontend::Model::ContributionModel contributionModel ( QSqlDatabase::database() );
     QVariant id ( 123 );
     int row = contributionModel.insertMemberId ( id );
     QCOMPARE ( row , 3 );
@@ -134,14 +136,14 @@ void ContributionModelTest::testNewMemberId()
     QCOMPARE ( tableModel->rowCount(), 4 );
     const QString whereClause = QString ( " where dorfmitglied_pkey=%1" ).arg ( 123 );
     QSqlQuery query;
-    using ClubFrontend::ContributionTable;
+    using ClubFrontend::Model::ContributionTable;
     query.exec ( "select * from " + ContributionTable::TABLENAME + whereClause );
     query.next();
     QCOMPARE ( query.value ( ContributionTable::MemberId ).toInt(), 123 );
 }
 
-
+}
 }
 
-QTEST_MAIN ( ClubFrontendTest::ContributionModelTest )
+QTEST_MAIN ( ClubFrontendTest::Model::ContributionModelTest )
 #include "ContributionModelTest.moc"

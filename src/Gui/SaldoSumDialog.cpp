@@ -31,8 +31,10 @@
 
 namespace ClubFrontend
 {
-
-SaldoSumDialog::SaldoSumDialog ( SaldoSumModel& aModel, QWidget* aParent )
+namespace Gui
+{
+  
+SaldoSumDialog::SaldoSumDialog ( Model::SaldoSumModel& aModel, QWidget* aParent )
         : QDialog ( aParent )
 {
     ui.setupUi ( this );
@@ -40,4 +42,5 @@ SaldoSumDialog::SaldoSumDialog ( SaldoSumModel& aModel, QWidget* aParent )
     aModel.initTableView ( ui.tableView );
 }
 
+}
 }

@@ -16,8 +16,10 @@
 
 namespace ClubFrontend
 {
+namespace Gui
+{
 
-MainWindow::MainWindow ( MemberModel& aMemberModel, KassaModel& aKassaModel,
+MainWindow::MainWindow ( Model::MemberModel& aMemberModel, Model::KassaModel& aKassaModel,
                          QWidget* parent ) :
         QMainWindow ( parent ), ui(), memberModel ( aMemberModel ), kassaModel (
             aKassaModel )
@@ -41,7 +43,7 @@ MainWindow::MainWindow ( MemberModel& aMemberModel, KassaModel& aKassaModel,
 
 void MainWindow::newMember()
 {
-    MemberDetailModel model;
+    Model::MemberDetailModel model;
     model.newMember();
 
     showMemberDialog ( model );
@@ -56,7 +58,7 @@ void MainWindow::editMember ( const QModelIndex& anIndex )
 {
     int id = memberModel.getMemberId ( anIndex );
 
-    MemberDetailModel model;
+    Model::MemberDetailModel model;
     model.setMemberId ( id );
 
     showMemberDialog ( model );
@@ -74,7 +76,7 @@ void MainWindow::showMemberView()
 
 void MainWindow::showMembers ( const bool aBoolean )
 {
-    MemberFilter filter;
+    Model::MemberFilter filter;
     filter.setDeleted ( aBoolean );
     memberModel.setFilter ( filter.getFilter() );
     memberModel.initTableView ( ui.tableView );
@@ -116,7 +118,7 @@ void MainWindow::showKassaView()
     ui.tableView->resizeColumnsToContents();
 }
 
-void MainWindow::showMemberDialog ( MemberDetailModel& aModel )
+void MainWindow::showMemberDialog ( Model::MemberDetailModel& aModel )
 {
     MemberDialog dialog ( aModel, this );
     dialog.show();
@@ -129,7 +131,7 @@ void MainWindow::showSaldo()
 {
     int id = memberModel.getMemberId ( getSelection() );
 
-    SaldoModel model ( QSqlDatabase::database(), id );
+    Model::SaldoModel model ( QSqlDatabase::database(), id );
     SaldoDialog dialog ( model, this );
     dialog.show();
     dialog.exec();
@@ -142,4 +144,5 @@ QModelIndex MainWindow::getSelection() const
     return indexes.first();
 }
 
+}
 }

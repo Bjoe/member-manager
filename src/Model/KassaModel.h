@@ -15,6 +15,8 @@
 
 namespace ClubFrontend
 {
+namespace Model
+{
 
 class KassaModel: public QObject
 {
@@ -32,6 +34,7 @@ private:
     QSqlTableModel* model;
 };
 
+}
 }
 
 #endif /* KASSAMODEL_H_ */

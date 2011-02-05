@@ -4,7 +4,9 @@
 
 namespace ClubFrontend
 {
-
+namespace Gui
+{
+  
 ConnectionDialog::ConnectionDialog ( QWidget *parent ) :
         QDialog ( parent )
 {
@@ -78,4 +80,5 @@ void ConnectionDialog::setPort ( const int& aPort )
     ui.port->setValue ( aPort );
 }
 
+}
 }

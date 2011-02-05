@@ -30,8 +30,10 @@
 
 namespace ClubFrontend
 {
-
-ContributionDialog::ContributionDialog ( ClubFrontend::ContributionModel* aContributionModel, QWidget* parent ) :
+namespace Gui
+{
+  
+ContributionDialog::ContributionDialog ( Model::ContributionModel* aContributionModel, QWidget* parent ) :
         QDialog ( parent ), contributionModel ( aContributionModel ), ui()
 {
     ui.setupUi ( this );
@@ -45,4 +47,5 @@ ContributionDialog::~ContributionDialog()
 
 }
 
+}
 }

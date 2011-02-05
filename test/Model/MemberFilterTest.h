@@ -12,7 +12,9 @@
 
 namespace ClubFrontendTest
 {
-
+namespace Model
+{
+  
 class MemberFilterTest: public QObject
 {
     Q_OBJECT
@@ -22,6 +24,7 @@ private slots:
     void testSetDeletedFalse();
 };
 
+}
 }
 
 #endif /* MEMBERFILTERTEST_H_ */

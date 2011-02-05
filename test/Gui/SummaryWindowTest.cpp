@@ -34,6 +34,8 @@
 
 namespace ClubFrontendTest
 {
+namespace Gui
+{
 
 SummaryWindowTest::SummaryWindowTest() : isClicked ( false )
 {}
@@ -41,7 +43,7 @@ SummaryWindowTest::SummaryWindowTest() : isClicked ( false )
 
 void SummaryWindowTest::testShowSummary()
 {
-    ClubFrontend::SummaryWindow summary;
+    ClubFrontend::Gui::SummaryWindow summary;
 
     summary.showSummary ( "foo" );
 
@@ -53,7 +55,7 @@ void SummaryWindowTest::testShowSummary()
 void SummaryWindowTest::testAddButton()
 {
     isClicked = false;
-    ClubFrontend::SummaryWindow summary;
+    ClubFrontend::Gui::SummaryWindow summary;
 
     QPushButton *button = new QPushButton();
     button->setObjectName ( "testButton" );
@@ -72,6 +74,7 @@ void SummaryWindowTest::buttonClicked()
 }
 
 }
+}
 
-QTEST_MAIN ( ClubFrontendTest::SummaryWindowTest )
+QTEST_MAIN ( ClubFrontendTest::Gui::SummaryWindowTest )
 #include "SummaryWindowTest.moc"

@@ -9,8 +9,10 @@
 
 namespace ClubFrontend
 {
-
-MemberDialog::MemberDialog ( MemberDetailModel& aMemberDetailModel,
+namespace Gui
+{
+  
+MemberDialog::MemberDialog ( Model::MemberDetailModel& aMemberDetailModel,
                              QWidget* parent ) :
         QDialog ( parent ), memberDetailModel ( aMemberDetailModel ), memberMapper (
             new QDataWidgetMapper ( this ) ), addressMapper ( new QDataWidgetMapper (
@@ -25,35 +27,35 @@ MemberDialog::MemberDialog ( MemberDetailModel& aMemberDetailModel,
 
     memberDetailModel.initMemberMapper(memberMapper);
     memberMapper->setSubmitPolicy ( QDataWidgetMapper::ManualSubmit );
-    memberMapper->addMapping ( ui.firstName, MemberTable::FirstName );
-    memberMapper->addMapping ( ui.memberName, MemberTable::Name );
-    memberMapper->addMapping ( ui.nickname, MemberTable::NickName );
-    memberMapper->addMapping ( ui.entryDate, MemberTable::EntryDate );
-    memberMapper->addMapping ( ui.info, MemberTable::Info );
+    memberMapper->addMapping ( ui.firstName, Model::MemberTable::FirstName );
+    memberMapper->addMapping ( ui.memberName, Model::MemberTable::Name );
+    memberMapper->addMapping ( ui.nickname, Model::MemberTable::NickName );
+    memberMapper->addMapping ( ui.entryDate, Model::MemberTable::EntryDate );
+    memberMapper->addMapping ( ui.info, Model::MemberTable::Info );
     memberMapper->toFirst();
 
     memberDetailModel.initAddressMapper(addressMapper);
     addressMapper->setSubmitPolicy ( QDataWidgetMapper::ManualSubmit );
-    addressMapper->addMapping ( ui.city, AddressTable::Town );
-    addressMapper->addMapping ( ui.street, AddressTable::Street );
-    addressMapper->addMapping ( ui.zipcode, AddressTable::ZipCode );
+    addressMapper->addMapping ( ui.city, Model::AddressTable::Town );
+    addressMapper->addMapping ( ui.street, Model::AddressTable::Street );
+    addressMapper->addMapping ( ui.zipcode, Model::AddressTable::ZipCode );
     addressMapper->toFirst();
 
     memberDetailModel.initBankAccountMapper(bankMapper);
     bankMapper->setSubmitPolicy ( QDataWidgetMapper::ManualSubmit );
-    bankMapper->addMapping ( ui.account, BankAccountTable::AccountNr );
-    bankMapper->addMapping ( ui.code, BankAccountTable::Code );
-    bankMapper->addMapping ( ui.bankName, BankAccountTable::BankName );
+    bankMapper->addMapping ( ui.account, Model::BankAccountTable::AccountNr );
+    bankMapper->addMapping ( ui.code, Model::BankAccountTable::Code );
+    bankMapper->addMapping ( ui.bankName, Model::BankAccountTable::BankName );
     bankMapper->toFirst();
 
-    ContributionModel* model = memberDetailModel.getContributionModel();
+    Model::ContributionModel* model = memberDetailModel.getContributionModel();
     ui.contributionInfo->setText ( model->getInfo() );
     ui.donation->setText ( model->getDonation() );
     ui.fee->setText ( model->getFee() );;
 
     memberDetailModel.initRessourcenMapper(ressourcenMapper);
     ressourcenMapper->setSubmitPolicy ( QDataWidgetMapper::ManualSubmit );
-    ressourcenMapper->addMapping ( ui.email, RessourcenTable::EmailAdress );
+    ressourcenMapper->addMapping ( ui.email, Model::RessourcenTable::EmailAdress );
     ressourcenMapper->toFirst();
 
     connect ( ui.buttonBox, SIGNAL ( accepted() ), memberMapper, SLOT ( submit() ) );
@@ -93,7 +95,7 @@ void MemberDialog::deleteMember()
 
 void MemberDialog::showSaldo()
 {
-    SaldoModel model ( QSqlDatabase::database(), memberDetailModel.getMemberId() );
+    Model::SaldoModel model ( QSqlDatabase::database(), memberDetailModel.getMemberId() );
     SaldoDialog dialog ( model, this );
 
     dialog.exec();
@@ -101,7 +103,7 @@ void MemberDialog::showSaldo()
 
 void MemberDialog::showFee()
 {
-    ContributionModel* model = memberDetailModel.getContributionModel();
+    Model::ContributionModel* model = memberDetailModel.getContributionModel();
     ContributionDialog dialog ( model, this );
 
     dialog.exec();
@@ -109,8 +111,9 @@ void MemberDialog::showFee()
 
 void MemberDialog::submitContribution()
 {
-    ContributionModel* model = memberDetailModel.getContributionModel();
+    Model::ContributionModel* model = memberDetailModel.getContributionModel();
     model->submit ( ui.fee->text(), ui.donation->text(), ui.contributionInfo->text() );
 }
 
+}
 }

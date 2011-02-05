@@ -32,7 +32,7 @@
 #include <QApplication>
 #include <QPushButton>
 
-namespace ClubFrontendTest
+namespace Utils
 {
 
 DialogButtonBoxHandler::DialogButtonBoxHandler ( QDialogButtonBox::StandardButton which ) :

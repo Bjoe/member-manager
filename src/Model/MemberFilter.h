@@ -13,6 +13,8 @@
 
 namespace ClubFrontend
 {
+namespace Model
+{
 
 class MemberFilter
 {
@@ -26,6 +28,7 @@ private:
     QStringList columns;
 };
 
+}
 }
 
 #endif /* MEMBERFILTER_H_ */

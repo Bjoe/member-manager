@@ -30,6 +30,8 @@
 
 namespace ClubFrontendTest
 {
+namespace Gui
+{
 
 void MainWindowTest::init()
 {
@@ -40,13 +42,13 @@ void MainWindowTest::init()
 
 void MainWindowTest::testNewMember()
 {
-    ClubFrontend::KassaModel kassaModel ( QSqlDatabase::database() );
-    ClubFrontend::MemberModel memberModel ( QSqlDatabase::database() );
-    ClubFrontend::MainWindow mainWindow ( memberModel, kassaModel );
+    ClubFrontend::Model::KassaModel kassaModel ( QSqlDatabase::database() );
+    ClubFrontend::Model::MemberModel memberModel ( QSqlDatabase::database() );
+    ClubFrontend::Gui::MainWindow mainWindow ( memberModel, kassaModel );
 
     QAction* actionNewMember = mainWindow.findChild<QAction*> (
                                    "actionNewMember" );
-    TriggerThread thread ( this, this );
+    Utils::TriggerThread thread ( this, this );
     connect ( &thread, SIGNAL ( triggered() ), actionNewMember, SLOT ( trigger() ) );
     thread.syncStart();
 
@@ -63,15 +65,15 @@ void MainWindowTest::testNewMember()
 
 void MainWindowTest::testEditMember()
 {
-    ClubFrontend::KassaModel kassaModel ( QSqlDatabase::database() );
-    ClubFrontend::MemberModel memberModel ( QSqlDatabase::database() );
-    ClubFrontend::MainWindow mainWindow ( memberModel, kassaModel );
+    ClubFrontend::Model::KassaModel kassaModel ( QSqlDatabase::database() );
+    ClubFrontend::Model::MemberModel memberModel ( QSqlDatabase::database() );
+    ClubFrontend::Gui::MainWindow mainWindow ( memberModel, kassaModel );
 
     QTableView* view = mainWindow.findChild<QTableView* > ( "tableView" );
     QAbstractItemModel* model = view->model();
     QModelIndex index = model->index ( 0, 3 );
 
-    TriggerThread thread ( this, this, index );
+    Utils::TriggerThread thread ( this, this, index );
     connect ( &thread, SIGNAL ( triggeredModelIndex ( const QModelIndex& ) ), &mainWindow, SLOT ( editMember ( const QModelIndex& ) ) );
     thread.syncStart();
 
@@ -80,9 +82,9 @@ void MainWindowTest::testEditMember()
 
 void MainWindowTest::testSelectedMember()
 {
-    ClubFrontend::KassaModel kassaModel ( QSqlDatabase::database() );
-    ClubFrontend::MemberModel memberModel ( QSqlDatabase::database() );
-    ClubFrontend::MainWindow mainWindow ( memberModel, kassaModel );
+    ClubFrontend::Model::KassaModel kassaModel ( QSqlDatabase::database() );
+    ClubFrontend::Model::MemberModel memberModel ( QSqlDatabase::database() );
+    ClubFrontend::Gui::MainWindow mainWindow ( memberModel, kassaModel );
 
     QTableView* view = mainWindow.findChild<QTableView* > ( "tableView" );
     QItemSelectionModel* selectionModel = view->selectionModel();
@@ -91,7 +93,7 @@ void MainWindowTest::testSelectedMember()
     QItemSelection selection ( index, index );
     selectionModel->select ( selection, QItemSelectionModel::Select );
 
-    TriggerThread thread ( this, this );
+    Utils::TriggerThread thread ( this, this );
     connect ( &thread, SIGNAL ( triggered() ), &mainWindow, SLOT ( selectedMember() ) );
     thread.syncStart();
 
@@ -100,9 +102,9 @@ void MainWindowTest::testSelectedMember()
 
 void MainWindowTest::testShowSaldo()
 {
-    ClubFrontend::KassaModel kassaModel ( QSqlDatabase::database() );
-    ClubFrontend::MemberModel memberModel ( QSqlDatabase::database() );
-    ClubFrontend::MainWindow mainWindow ( memberModel, kassaModel );
+    ClubFrontend::Model::KassaModel kassaModel ( QSqlDatabase::database() );
+    ClubFrontend::Model::MemberModel memberModel ( QSqlDatabase::database() );
+    ClubFrontend::Gui::MainWindow mainWindow ( memberModel, kassaModel );
 
     QTableView* view = mainWindow.findChild<QTableView* > ( "tableView" );
     QItemSelectionModel* selectionModel = view->selectionModel();
@@ -111,8 +113,8 @@ void MainWindowTest::testShowSaldo()
     QItemSelection selection ( index, index );
     selectionModel->select ( selection, QItemSelectionModel::Select );
 
-    DialogButtonBoxHandler handler ( QDialogButtonBox::Close );
-    TriggerThread thread ( this, &handler );
+    Utils::DialogButtonBoxHandler handler ( QDialogButtonBox::Close );
+    Utils::TriggerThread thread ( this, &handler );
     connect ( &thread, SIGNAL ( triggered() ), &mainWindow, SLOT ( showSaldo() ) );
     thread.syncStart();
 }
@@ -139,9 +141,9 @@ void MainWindowTest::handle()
 
 void MainWindowTest::testMemberView()
 {
-    ClubFrontend::KassaModel kassaModel ( QSqlDatabase::database() );
-    ClubFrontend::MemberModel memberModel ( QSqlDatabase::database() );
-    ClubFrontend::MainWindow mainWindow ( memberModel, kassaModel );
+    ClubFrontend::Model::KassaModel kassaModel ( QSqlDatabase::database() );
+    ClubFrontend::Model::MemberModel memberModel ( QSqlDatabase::database() );
+    ClubFrontend::Gui::MainWindow mainWindow ( memberModel, kassaModel );
 
     QAction* actionSelectMember = mainWindow.findChild<QAction*> (
                                       "actionShowMember" );
@@ -167,9 +169,9 @@ void MainWindowTest::testMemberView()
 
 void MainWindowTest::testDeletedMemberView()
 {
-    ClubFrontend::KassaModel kassaModel ( QSqlDatabase::database() );
-    ClubFrontend::MemberModel memberModel ( QSqlDatabase::database() );
-    ClubFrontend::MainWindow mainWindow ( memberModel, kassaModel );
+    ClubFrontend::Model::KassaModel kassaModel ( QSqlDatabase::database() );
+    ClubFrontend::Model::MemberModel memberModel ( QSqlDatabase::database() );
+    ClubFrontend::Gui::MainWindow mainWindow ( memberModel, kassaModel );
 
     QAction* actionShowDeletedMember = mainWindow.findChild<QAction*> (
                                            "actionShowDeletedMember" );
@@ -195,9 +197,9 @@ void MainWindowTest::testDeletedMemberView()
 
 void MainWindowTest::testShowKassaView()
 {
-    ClubFrontend::KassaModel kassaModel ( QSqlDatabase::database() );
-    ClubFrontend::MemberModel memberModel ( QSqlDatabase::database() );
-    ClubFrontend::MainWindow mainWindow ( memberModel, kassaModel );
+    ClubFrontend::Model::KassaModel kassaModel ( QSqlDatabase::database() );
+    ClubFrontend::Model::MemberModel memberModel ( QSqlDatabase::database() );
+    ClubFrontend::Gui::MainWindow mainWindow ( memberModel, kassaModel );
 
     QAction* actionShowKassa = mainWindow.findChild<QAction*> (
                                    "actionShowKassa" );
@@ -223,6 +225,7 @@ void MainWindowTest::testShowKassaView()
 }
 
 }
+}
 
-QTEST_MAIN ( ClubFrontendTest::MainWindowTest )
+QTEST_MAIN ( ClubFrontendTest::Gui::MainWindowTest )
 #include "MainWindowTest.moc"

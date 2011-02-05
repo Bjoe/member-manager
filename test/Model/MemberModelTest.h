@@ -12,6 +12,8 @@
 
 namespace ClubFrontendTest
 {
+namespace Model
+{
 
 class MemberModelTest: public QObject
 {
@@ -26,6 +28,7 @@ private slots:
     void testGetSelectedMembers();
 };
 
+}
 }
 
 #endif /* MEMBERMODELTEST_H_ */

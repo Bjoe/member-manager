@@ -49,7 +49,7 @@ void TableDaoTest::initTestCase()
 
 void TableDaoTest::testInsertNewRow()
 {
-    using ClubFrontend::SaldoTable;
+    using ClubFrontend::Model::SaldoTable;
     QSqlTableModel* model = new QSqlTableModel();
     model->setTable ( SaldoTable::TABLENAME );
     model->select();

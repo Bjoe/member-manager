@@ -1,6 +1,5 @@
 /*! \mainpage TODO
  * 
- * \todo Clubfrontend namespace weiter in Model und Gui aufteilen.
  * \todo Source Dokumentieren mit Doxygen.
  * \todo Refactor: QTableView den Model uebergeben.
  * \todo Refactor: Model Klassen duerfen keine QTableModel mehr ausgeben.

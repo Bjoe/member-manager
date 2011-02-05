@@ -13,10 +13,12 @@
 
 namespace ClubFrontendTest
 {
+namespace Gui
+{
 
 void ConnectionDialogTest::testGetUsername()
 {
-    ClubFrontend::ConnectionDialog dialog;
+    ClubFrontend::Gui::ConnectionDialog dialog;
     dialog.setUsername ( "bj" );
 
     QLineEdit* username = dialog.findChild<QLineEdit*> ( "username" );
@@ -27,7 +29,7 @@ void ConnectionDialogTest::testGetUsername()
 
 void ConnectionDialogTest::testGetPassword()
 {
-    ClubFrontend::ConnectionDialog dialog;
+    ClubFrontend::Gui::ConnectionDialog dialog;
 
     QLineEdit* password = dialog.findChild<QLineEdit*> ( "passwd" );
     QTest::keyClicks ( password, "1234" );
@@ -37,7 +39,7 @@ void ConnectionDialogTest::testGetPassword()
 
 void ConnectionDialogTest::testGetDatebaseName()
 {
-    ClubFrontend::ConnectionDialog dialog;
+    ClubFrontend::Gui::ConnectionDialog dialog;
     dialog.setDatabaseName ( "Data" );
 
     QLineEdit* databaseName = dialog.findChild<QLineEdit*> ( "databaseName" );
@@ -48,7 +50,7 @@ void ConnectionDialogTest::testGetDatebaseName()
 
 void ConnectionDialogTest::testGetHostname()
 {
-    ClubFrontend::ConnectionDialog dialog;
+    ClubFrontend::Gui::ConnectionDialog dialog;
     dialog.setHostname ( "Foo" );
 
     QLineEdit* hostname = dialog.findChild<QLineEdit*> ( "hostname" );
@@ -59,7 +61,7 @@ void ConnectionDialogTest::testGetHostname()
 
 void ConnectionDialogTest::testGetDriverName()
 {
-    ClubFrontend::ConnectionDialog dialog;
+    ClubFrontend::Gui::ConnectionDialog dialog;
     QComboBox* driverName = dialog.findChild<QComboBox*> ( "driver" );
 
     QCOMPARE ( dialog.getDriver(), QString ( "QSQLITE" ) );
@@ -67,7 +69,7 @@ void ConnectionDialogTest::testGetDriverName()
 
 void ConnectionDialogTest::testSetDriverName()
 {
-    ClubFrontend::ConnectionDialog dialog;
+    ClubFrontend::Gui::ConnectionDialog dialog;
     dialog.setDriver ( "QSQLITE" );
 
     QComboBox* driverName = dialog.findChild<QComboBox*> ( "driver" );
@@ -77,7 +79,7 @@ void ConnectionDialogTest::testSetDriverName()
 
 void ConnectionDialogTest::testSetWrongDriverName()
 {
-    ClubFrontend::ConnectionDialog dialog;
+    ClubFrontend::Gui::ConnectionDialog dialog;
     dialog.setDriver ( "FOO" );
 
     QComboBox* driverName = dialog.findChild<QComboBox*> ( "driver" );
@@ -87,7 +89,7 @@ void ConnectionDialogTest::testSetWrongDriverName()
 
 void ConnectionDialogTest::testGetPort()
 {
-    ClubFrontend::ConnectionDialog dialog;
+    ClubFrontend::Gui::ConnectionDialog dialog;
     QSpinBox* port = dialog.findChild<QSpinBox*> ( "port" );
 
     QTest::keyClicks ( port, "23" );
@@ -97,7 +99,7 @@ void ConnectionDialogTest::testGetPort()
 
 void ConnectionDialogTest::testOkButton()
 {
-    ClubFrontend::ConnectionDialog dialog;
+    ClubFrontend::Gui::ConnectionDialog dialog;
     QDialogButtonBox* buttonBox = dialog.findChild<QDialogButtonBox *> (
                                       "buttonBox" );
 
@@ -109,7 +111,7 @@ void ConnectionDialogTest::testOkButton()
 
 void ConnectionDialogTest::testCancelButton()
 {
-    ClubFrontend::ConnectionDialog dialog;
+    ClubFrontend::Gui::ConnectionDialog dialog;
     QDialogButtonBox* buttonBox = dialog.findChild<QDialogButtonBox *> (
                                       "buttonBox" );
 
@@ -121,6 +123,7 @@ void ConnectionDialogTest::testCancelButton()
 }
 
 }
+}
 
-QTEST_MAIN ( ClubFrontendTest::ConnectionDialogTest )
+QTEST_MAIN ( ClubFrontendTest::Gui::ConnectionDialogTest )
 #include "ConnectionDialogTest.moc"

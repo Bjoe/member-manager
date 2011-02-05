@@ -10,6 +10,8 @@
 
 namespace ClubFrontend
 {
+namespace Model
+{
 
 void MemberFilter::setDeleted ( const bool aBoolean )
 {
@@ -27,4 +29,5 @@ QString MemberFilter::getFilter() const
     return columns.join ( " AND " );
 }
 
+}
 }

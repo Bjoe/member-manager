@@ -42,6 +42,8 @@
 
 namespace ClubFrontendTest
 {
+namespace Model
+{
 
 void SaldoSumModelTest::initTestCase()
 {
@@ -52,14 +54,16 @@ void SaldoSumModelTest::initTestCase()
 
 void SaldoSumModelTest::testView()
 {
-    ClubFrontend::SaldoSumModel saldoSumModel ( QSqlDatabase::database() );
+    ClubFrontend::Model::SaldoSumModel saldoSumModel ( QSqlDatabase::database() );
     QTableView* view = new QTableView();
     saldoSumModel.initTableView ( view );
     QAbstractItemModel* model = view->model();
     QVariant variant = model->data ( model->index ( 0,1 ) );
     QCOMPARE ( variant.toString(), QString ( "Capt. Kirk" ) );
 }
+
+}
 }
 
-QTEST_MAIN ( ClubFrontendTest::SaldoSumModelTest )
+QTEST_MAIN ( ClubFrontendTest::Model::SaldoSumModelTest )
 #include "SaldoSumModelTest.moc"

@@ -13,10 +13,12 @@
 
 namespace ClubFrontendTest
 {
-
+namespace Model
+{
+  
 void MemberFilterTest::testSetDeleted()
 {
-    ClubFrontend::MemberFilter filter;
+    ClubFrontend::Model::MemberFilter filter;
     filter.setDeleted ( true );
 
     QCOMPARE ( filter.getFilter(), QString ( "deleted='true'" ) );
@@ -24,13 +26,14 @@ void MemberFilterTest::testSetDeleted()
 
 void MemberFilterTest::testSetDeletedFalse()
 {
-    ClubFrontend::MemberFilter filter;
+    ClubFrontend::Model::MemberFilter filter;
     filter.setDeleted ( false );
 
     QCOMPARE ( filter.getFilter(), QString ( "deleted='false'" ) );
 }
 
 }
+}
 
-QTEST_MAIN ( ClubFrontendTest::MemberFilterTest )
+QTEST_MAIN ( ClubFrontendTest::Model::MemberFilterTest )
 #include "MemberFilterTest.moc"

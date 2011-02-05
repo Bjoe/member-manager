@@ -16,7 +16,9 @@
 
 namespace ClubFrontend
 {
-
+namespace Model
+{
+  
 class MemberModel: public QObject
 {
 
@@ -37,6 +39,7 @@ private:
     QSqlTableModel* const model;
 };
 
+}
 }
 
 #endif /* MEMBERMODEL_H_ */

@@ -35,7 +35,9 @@
 
 namespace ClubFrontend
 {
-
+namespace Model
+{
+  
 class SaldoSumModel : public QObject
 {
 public:
@@ -47,6 +49,7 @@ private:
     QSqlQueryModel* model;
 };
 
+}
 }
 
 #endif	/* // SALDOSUMMODEL_H */

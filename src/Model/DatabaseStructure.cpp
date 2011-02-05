@@ -8,6 +8,8 @@
 
 namespace ClubFrontend
 {
+namespace Model
+{
 
 const QString AddressTable::TABLENAME = "adresse";
 
@@ -40,4 +42,5 @@ const QString SaldoTable::TABLENAME = "saldo";
 const QStringList SaldoTable::COLUMNNAME = QStringList() << "saldo_pkey"
         << "dorfmitglied_pkey" << "betrag" << "datum" << "bezeichnung"
         << "barkonto" << "konten" << "kasse_pkey" << "info";
+}
 }

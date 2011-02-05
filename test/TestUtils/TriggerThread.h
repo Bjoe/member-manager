@@ -12,7 +12,7 @@
 
 #include "TestUtils/Handler.h"
 
-namespace ClubFrontendTest
+namespace Utils
 {
 
 class TriggerThread: public QThread

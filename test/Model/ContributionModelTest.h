@@ -33,7 +33,9 @@
 
 namespace ClubFrontendTest
 {
-
+namespace Model
+{
+  
 class ContributionModelTest : public QObject
 {
     Q_OBJECT
@@ -47,6 +49,7 @@ private slots:
     void testNewMemberId();
 };
 
+}
 }
 
 #endif // CONTRIBUTIONMODELTEST_H

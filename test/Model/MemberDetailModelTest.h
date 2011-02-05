@@ -13,7 +13,9 @@
 
 namespace ClubFrontendTest
 {
-
+namespace Model
+{
+  
 class MemberDetailModelTest: public QObject
 {
     Q_OBJECT
@@ -34,6 +36,7 @@ private:
     int getMemberId ( const QSqlTableModel* aModel, const int& aColumnId );
 };
 
+}
 }
 
 #endif /* MEMBERDETAILMODELTEST_H_ */

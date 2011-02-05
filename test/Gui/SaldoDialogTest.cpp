@@ -19,6 +19,8 @@
 
 namespace ClubFrontendTest
 {
+namespace Gui
+{
 
 void SaldoDialogTest::initTestCase()
 {
@@ -29,8 +31,8 @@ void SaldoDialogTest::initTestCase()
 
 void SaldoDialogTest::testShowDialog()
 {
-    ClubFrontend::SaldoModel saldoModel ( QSqlDatabase::database(), 1025 );
-    ClubFrontend::SaldoDialog dialog ( saldoModel );
+    ClubFrontend::Model::SaldoModel saldoModel ( QSqlDatabase::database(), 1025 );
+    ClubFrontend::Gui::SaldoDialog dialog ( saldoModel );
 
     QTableView* tableView = dialog.findChild<QTableView* > ( "saldoTableView" );
     const QAbstractItemModel* model = tableView->model();
@@ -43,13 +45,15 @@ void SaldoDialogTest::testShowDialog()
 
 void SaldoDialogTest::testShowSum()
 {
-    ClubFrontend::SaldoModel saldoModel ( QSqlDatabase::database(), 1025 );
-    ClubFrontend::SaldoDialog dialog ( saldoModel );
+    ClubFrontend::Model::SaldoModel saldoModel ( QSqlDatabase::database(), 1025 );
+    ClubFrontend::Gui::SaldoDialog dialog ( saldoModel );
 
     QLabel* sumLabel = dialog.findChild<QLabel* > ( "sumLabel" );
     QCOMPARE ( sumLabel->text(), QString ( "Summe: -15" ) );
 }
+
+}
 }
 
-QTEST_MAIN ( ClubFrontendTest::SaldoDialogTest )
+QTEST_MAIN ( ClubFrontendTest::Gui::SaldoDialogTest )
 #include "SaldoDialogTest.moc"

@@ -33,6 +33,8 @@
 
 namespace ClubFrontend
 {
+namespace Model
+{
 
 ContributionModel::ContributionModel ( const QSqlDatabase& aDb ) :
         model ( new QSqlTableModel ( this, aDb ) ), record(), memberId ( 0 )
@@ -143,4 +145,5 @@ void ContributionModel::initTableView ( QTableView* aTableView ) const
     aTableView->setColumnHidden ( ContributionTable::Debit, true );
 }
 
+}
 }

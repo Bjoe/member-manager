@@ -20,6 +20,8 @@
 
 namespace ClubFrontendTest
 {
+namespace Gui
+{
 
 void MemberDialogTest::initTestCase()
 {
@@ -30,9 +32,9 @@ void MemberDialogTest::initTestCase()
 
 void MemberDialogTest::showMember()
 {
-    ClubFrontend::MemberDetailModel detailModel;
+    ClubFrontend::Model::MemberDetailModel detailModel;
     detailModel.setMemberId ( 1025 );
-    ClubFrontend::MemberDialog dialog ( detailModel );
+    ClubFrontend::Gui::MemberDialog dialog ( detailModel );
 
     QLabel* memberId = dialog.findChild<QLabel*> ( "memberId" );
     QCOMPARE ( memberId->text(), QString ( "1025" ) );
@@ -86,9 +88,9 @@ void MemberDialogTest::showMember()
 
 void MemberDialogTest::newMember()
 {
-    ClubFrontend::MemberDetailModel detailModel;
+    ClubFrontend::Model::MemberDetailModel detailModel;
     int id = detailModel.newMember();
-    ClubFrontend::MemberDialog dialog ( detailModel );
+    ClubFrontend::Gui::MemberDialog dialog ( detailModel );
 
     QLineEdit* memberName = dialog.findChild<QLineEdit*> ( "memberName" );
     QTest::keyClicks ( memberName, "Mc Kay" );
@@ -143,7 +145,7 @@ void MemberDialogTest::newMember()
 
     const QString whereClause = QString ( " where dorfmitglied_pkey=%1" ).arg ( id );
 
-    using ClubFrontend::MemberTable;
+    using ClubFrontend::Model::MemberTable;
     QSqlQuery query;
     query.exec ( "select * from " + MemberTable::TABLENAME + whereClause );
     query.next();
@@ -152,14 +154,14 @@ void MemberDialogTest::newMember()
     QCOMPARE ( query.value ( MemberTable::NickName ).toString(), QString ( "Rod" ) );
     QCOMPARE ( query.value ( MemberTable::Info ).toString(), QString ( "Foo" ) );
 
-    using ClubFrontend::AddressTable;
+    using ClubFrontend::Model::AddressTable;
     query.exec ( "select * from " + AddressTable::TABLENAME + whereClause );
     query.next();
     QCOMPARE ( query.value ( AddressTable::Street ).toString(), QString ( "Atlantis" ) );
     QCOMPARE ( query.value ( AddressTable::ZipCode ).toString(), QString ( "40215" ) );
     QCOMPARE ( query.value ( AddressTable::Town ).toString(), QString ( "Pegasus" ) );
 
-    using ClubFrontend::ContributionTable;
+    using ClubFrontend::Model::ContributionTable;
     query.exec ( "select * from " + ContributionTable::TABLENAME + whereClause +
                  " order by " + ContributionTable::COLUMNNAME[ContributionTable::ValidFrom] + " desc" );
     query.next();
@@ -167,14 +169,14 @@ void MemberDialogTest::newMember()
     QCOMPARE ( query.value ( ContributionTable::Donation ).toInt(), 5 );
     QCOMPARE ( query.value ( ContributionTable::Info ).toString(), QString ( "Info" ) );
 
-    using ClubFrontend::BankAccountTable;
+    using ClubFrontend::Model::BankAccountTable;
     query.exec ( "select * from " + BankAccountTable::TABLENAME + whereClause );
     query.next();
     QCOMPARE ( query.value ( BankAccountTable::Code ).toInt(), 98765432 );
     QCOMPARE ( query.value ( BankAccountTable::AccountNr ).toInt(), 123454321 );
     QCOMPARE ( query.value ( BankAccountTable::BankName ).toString(), QString ( "Galaxy Bank" ) );
 
-    using ClubFrontend::RessourcenTable;
+    using ClubFrontend::Model::RessourcenTable;
     query.exec ( "select * from " + RessourcenTable::TABLENAME + whereClause );
     query.next();
     QCOMPARE ( query.value ( RessourcenTable::EmailAdress ).toString(), QString ( "rod@atlantis.pegasus" ) );
@@ -182,9 +184,9 @@ void MemberDialogTest::newMember()
 
 void MemberDialogTest::changeMember()
 {
-    ClubFrontend::MemberDetailModel detailModel;
+    ClubFrontend::Model::MemberDetailModel detailModel;
     detailModel.setMemberId ( 1025 );
-    ClubFrontend::MemberDialog dialog ( detailModel );
+    ClubFrontend::Gui::MemberDialog dialog ( detailModel );
 
     QLabel* id = dialog.findChild<QLabel *> ( "memberId" );
     QCOMPARE ( id->text(), QString ( "1025" ) );
@@ -294,7 +296,7 @@ void MemberDialogTest::changeMember()
 
     const QString whereClause ( " where dorfmitglied_pkey=1025" );
 
-    using ClubFrontend::MemberTable;
+    using ClubFrontend::Model::MemberTable;
     QSqlQuery query;
     query.exec ( "select * from " + MemberTable::TABLENAME + whereClause );
     query.next();
@@ -303,14 +305,14 @@ void MemberDialogTest::changeMember()
     QCOMPARE ( query.value ( MemberTable::NickName ).toString(), QString ( "Captain" ) );
     QCOMPARE ( query.value ( MemberTable::Info ).toString(), QString ( "Lalala" ) );
 
-    using ClubFrontend::AddressTable;
+    using ClubFrontend::Model::AddressTable;
     query.exec ( "select * from " + AddressTable::TABLENAME + whereClause );
     query.next();
     QCOMPARE ( query.value ( AddressTable::Street ).toString(), QString ( "NCC-1701" ) );
     QCOMPARE ( query.value ( AddressTable::ZipCode ).toString(), QString ( "98765" ) );
     QCOMPARE ( query.value ( AddressTable::Town ).toString(), QString ( "Dtown" ) );
 
-    using ClubFrontend::ContributionTable;
+    using ClubFrontend::Model::ContributionTable;
     query.exec ( "select * from " + ContributionTable::TABLENAME + whereClause +
                  " order by " + ContributionTable::COLUMNNAME[ContributionTable::ValidFrom] + " desc" );
     query.next();
@@ -318,14 +320,14 @@ void MemberDialogTest::changeMember()
     QCOMPARE ( query.value ( ContributionTable::Donation ).toInt(), 100 );
     QCOMPARE ( query.value ( ContributionTable::Info ).toString(), QString ( "Kohle" ) );
 
-    using ClubFrontend::BankAccountTable;
+    using ClubFrontend::Model::BankAccountTable;
     query.exec ( "select * from " + BankAccountTable::TABLENAME + whereClause );
     query.next();
     QCOMPARE ( query.value ( BankAccountTable::Code ).toInt(), 98765432 );
     QCOMPARE ( query.value ( BankAccountTable::AccountNr ).toInt(), 123456789 );
     QCOMPARE ( query.value ( BankAccountTable::BankName ).toString(), QString ( "Galaxy" ) );
 
-    using ClubFrontend::RessourcenTable;
+    using ClubFrontend::Model::RessourcenTable;
     query.exec ( "select * from " + RessourcenTable::TABLENAME + whereClause );
     query.next();
     QCOMPARE ( query.value ( RessourcenTable::EmailAdress ).toString(), QString ( "foo@bar.tx" ) );
@@ -333,23 +335,23 @@ void MemberDialogTest::changeMember()
 
 void MemberDialogTest::newMemberDiscard()
 {
-    ClubFrontend::MemberDetailModel detailModel;
+    ClubFrontend::Model::MemberDetailModel detailModel;
     int id = detailModel.newMember();
-    ClubFrontend::MemberDialog dialog ( detailModel );
+    ClubFrontend::Gui::MemberDialog dialog ( detailModel );
 
     QDialogButtonBox* buttonBox = dialog.findChild<QDialogButtonBox*> (
                                       "buttonBox" );
     QPushButton* discardButton = buttonBox->button ( QDialogButtonBox::Discard );
 
-    DialogButtonBoxHandler handler;
+    Utils::DialogButtonBoxHandler handler;
 
-    TriggerThread thread ( this, &handler );
+    Utils::TriggerThread thread ( this, &handler );
     connect ( &thread, SIGNAL ( triggered() ), discardButton, SLOT ( click() ) );
     thread.syncStart();
 
     const QString whereClause = QString ( " where dorfmitglied_pkey=%1" ).arg ( id );
 
-    using ClubFrontend::MemberTable;
+    using ClubFrontend::Model::MemberTable;
     QSqlQuery query;
     query.exec ( "select * from " + MemberTable::TABLENAME + whereClause );
     QVERIFY ( !query.next() );
@@ -357,12 +359,12 @@ void MemberDialogTest::newMemberDiscard()
 
 void MemberDialogTest::showSaldo()
 {
-    ClubFrontend::MemberDetailModel detailModel;
+    ClubFrontend::Model::MemberDetailModel detailModel;
     detailModel.setMemberId ( 1025 );
-    ClubFrontend::MemberDialog dialog ( detailModel );
+    ClubFrontend::Gui::MemberDialog dialog ( detailModel );
 
-    DialogButtonBoxHandler handler ( QDialogButtonBox::Close );
-    TriggerThread thread ( this, &handler );
+    Utils::DialogButtonBoxHandler handler ( QDialogButtonBox::Close );
+    Utils::TriggerThread thread ( this, &handler );
 
     QPushButton* saldoButton = dialog.findChild<QPushButton* > ( "saldoButton" );
     connect ( &thread, SIGNAL ( triggered() ), saldoButton, SLOT ( click() ) );
@@ -371,12 +373,12 @@ void MemberDialogTest::showSaldo()
 
 void MemberDialogTest::showfee()
 {
-    ClubFrontend::MemberDetailModel detailModel;
+    ClubFrontend::Model::MemberDetailModel detailModel;
     detailModel.setMemberId ( 1025 );
-    ClubFrontend::MemberDialog dialog ( detailModel );
+    ClubFrontend::Gui::MemberDialog dialog ( detailModel );
 
-    DialogButtonBoxHandler handler ( QDialogButtonBox::Close );
-    TriggerThread thread ( this, &handler );
+    Utils::DialogButtonBoxHandler handler ( QDialogButtonBox::Close );
+    Utils::TriggerThread thread ( this, &handler );
 
     QPushButton* feeButton = dialog.findChild<QPushButton* > ( "feeButton" );
     connect ( &thread, SIGNAL ( triggered() ), feeButton, SLOT ( click() ) );
@@ -384,6 +386,7 @@ void MemberDialogTest::showfee()
 }
 
 }
+}
 
-QTEST_MAIN ( ClubFrontendTest::MemberDialogTest )
+QTEST_MAIN ( ClubFrontendTest::Gui::MemberDialogTest )
 #include "MemberDialogTest.moc"

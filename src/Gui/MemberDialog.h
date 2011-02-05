@@ -8,13 +8,15 @@
 
 namespace ClubFrontend
 {
-
+namespace Gui
+{
+  
 class MemberDialog: public QDialog
 {
     Q_OBJECT
 
 public:
-    MemberDialog ( MemberDetailModel& aMemberDetailModel, QWidget* parent = 0 );
+    MemberDialog ( Model::MemberDetailModel& aMemberDetailModel, QWidget* parent = 0 );
     virtual ~MemberDialog();
 
 private slots:
@@ -24,7 +26,7 @@ private slots:
     void submitContribution();
 
 private:
-    MemberDetailModel& memberDetailModel;
+    Model::MemberDetailModel& memberDetailModel;
     QDataWidgetMapper* const memberMapper;
     QDataWidgetMapper* const addressMapper;
     QDataWidgetMapper* const bankMapper;
@@ -33,6 +35,7 @@ private:
     Ui::MemberDialog ui;
 };
 
+}
 }
 
 #endif // MEMBERDIALOG_H

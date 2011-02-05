@@ -35,18 +35,21 @@
 
 namespace ClubFrontend
 {
-
+namespace Gui
+{
+  
 class SaldoSumDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    SaldoSumDialog ( ClubFrontend::SaldoSumModel& aModel, QWidget* aParent = 0 );
+    SaldoSumDialog ( Model::SaldoSumModel& aModel, QWidget* aParent = 0 );
 
 private:
     Ui::SaldoSumDialog ui;
 };
 
+}
 }
 
 #endif	/* // SALDOSUMDIALOG_H */

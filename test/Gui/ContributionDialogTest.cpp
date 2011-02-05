@@ -45,6 +45,8 @@
 
 namespace ClubFrontendTest
 {
+namespace Gui
+{
 
 void ContributionDialogTest::initTestCase()
 {
@@ -55,15 +57,15 @@ void ContributionDialogTest::initTestCase()
 
 void ContributionDialogTest::testShowDialog()
 {
-    ClubFrontend::ContributionModel contributionModel ( QSqlDatabase::database() );
+    ClubFrontend::Model::ContributionModel contributionModel ( QSqlDatabase::database() );
     contributionModel.setMemberId ( 1025 );
-    ClubFrontend::ContributionDialog dialog ( &contributionModel );
+    ClubFrontend::Gui::ContributionDialog dialog ( &contributionModel );
 
     const QTableView* tableView = dialog.findChild<QTableView* > ( "contributionTableView" );
     const QAbstractItemModel* model = tableView->model();
     QVERIFY ( model != 0 );
     QCOMPARE ( model->rowCount(), 2 );
-    using ClubFrontend::ContributionTable;
+    using ClubFrontend::Model::ContributionTable;
     const QModelIndex index = model->index ( 0, ContributionTable::ValidFrom );
     const QVariant value = model->data ( index );
     QCOMPARE ( value.toString(), QString ( "2007-05-01" ) );
@@ -71,6 +73,7 @@ void ContributionDialogTest::testShowDialog()
 
 
 }
+}
 
-QTEST_MAIN ( ClubFrontendTest::ContributionDialogTest )
+QTEST_MAIN ( ClubFrontendTest::Gui::ContributionDialogTest )
 #include "ContributionDialogTest.moc"

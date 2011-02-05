@@ -12,6 +12,8 @@
 
 namespace ClubFrontendTest
 {
+namespace Gui
+{
 
 class ConnectionDialogTest: public QObject
 {
@@ -30,6 +32,7 @@ private slots:
     void testCancelButton();
 };
 
+}
 }
 
 #endif /* CONNECTIONDIALOGTEST_H_ */

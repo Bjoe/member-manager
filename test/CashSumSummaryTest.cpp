@@ -39,14 +39,14 @@ namespace ClubFrontendTest
 
 void CashSumSummaryTest::initTestCase()
 {
-    Utils::DatabaseUtils database ( DATABASEDRIVER );
+    ::Utils::DatabaseUtils database ( DATABASEDRIVER );
     database.open ( DATABASE );
     database.read ( SQLTESTFILE );
 }
 
 void CashSumSummaryTest::testCashSum()
 {
-    SummaryHandlerMock *handler = new SummaryHandlerMock();
+    Utils::SummaryHandlerMock *handler = new Utils::SummaryHandlerMock();
 
     ClubFrontend::CashSumSummary cashSum ( handler );
 

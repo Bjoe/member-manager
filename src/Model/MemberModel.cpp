@@ -11,7 +11,9 @@
 
 namespace ClubFrontend
 {
-
+namespace Model
+{
+  
 MemberModel::MemberModel ( const QSqlDatabase& aDb ) :
         model ( new QSqlTableModel ( this, aDb ) )
 {
@@ -84,4 +86,5 @@ void MemberModel::initTableView ( QTableView* aTableView ) const
     aTableView->sortByColumn ( MemberTable::MemberId, Qt::AscendingOrder );
 }
 
+}
 }
