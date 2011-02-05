@@ -20,7 +20,6 @@ class MemberDetailModelTest: public QObject
 
 private slots:
     void initTestCase();
-    void testGetLastError();
     void testGetAddressModel();
     void testGetBankAccountModel();
     void testGetContributionModel();

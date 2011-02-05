@@ -23,7 +23,7 @@ MemberDialog::MemberDialog ( MemberDetailModel& aMemberDetailModel,
     id.setNum ( memberDetailModel.getMemberId() );
     ui.memberId->setText ( id );
 
-    memberMapper->setModel ( memberDetailModel.getMemberTableModel() );
+    memberDetailModel.initMemberMapper(memberMapper);
     memberMapper->setSubmitPolicy ( QDataWidgetMapper::ManualSubmit );
     memberMapper->addMapping ( ui.firstName, MemberTable::FirstName );
     memberMapper->addMapping ( ui.memberName, MemberTable::Name );
@@ -32,15 +32,14 @@ MemberDialog::MemberDialog ( MemberDetailModel& aMemberDetailModel,
     memberMapper->addMapping ( ui.info, MemberTable::Info );
     memberMapper->toFirst();
 
-    addressMapper->setModel ( memberDetailModel.getAddressTableModel() );
+    memberDetailModel.initAddressMapper(addressMapper);
     addressMapper->setSubmitPolicy ( QDataWidgetMapper::ManualSubmit );
     addressMapper->addMapping ( ui.city, AddressTable::Town );
-
     addressMapper->addMapping ( ui.street, AddressTable::Street );
     addressMapper->addMapping ( ui.zipcode, AddressTable::ZipCode );
     addressMapper->toFirst();
 
-    bankMapper->setModel ( memberDetailModel.getBankAccountTableModel() );
+    memberDetailModel.initBankAccountMapper(bankMapper);
     bankMapper->setSubmitPolicy ( QDataWidgetMapper::ManualSubmit );
     bankMapper->addMapping ( ui.account, BankAccountTable::AccountNr );
     bankMapper->addMapping ( ui.code, BankAccountTable::Code );
@@ -52,7 +51,7 @@ MemberDialog::MemberDialog ( MemberDetailModel& aMemberDetailModel,
     ui.donation->setText ( model->getDonation() );
     ui.fee->setText ( model->getFee() );;
 
-    ressourcenMapper->setModel ( memberDetailModel.getRessourcenTableModel() );
+    memberDetailModel.initRessourcenMapper(ressourcenMapper);
     ressourcenMapper->setSubmitPolicy ( QDataWidgetMapper::ManualSubmit );
     ressourcenMapper->addMapping ( ui.email, RessourcenTable::EmailAdress );
     ressourcenMapper->toFirst();

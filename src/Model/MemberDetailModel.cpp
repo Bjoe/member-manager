@@ -35,6 +35,7 @@ QSqlTableModel* MemberDetailModel::setTableModel ( const QString& aTableName,
         QSqlTableModel* const aModel )
 {
     aModel->setTable ( aTableName );
+    aModel->setObjectName ( aTableName );
     aModel->select();
 }
 
@@ -92,7 +93,7 @@ int MemberDetailModel::newMember()
 
     insertNewMember ( addressModel, AddressTable::MemberId, valueId );
     insertNewMember ( bankAccountModel, BankAccountTable::MemberId, valueId );
-    contributionModel->insertMemberId( valueId );
+    contributionModel->insertMemberId ( valueId );
     insertNewMember ( ressourcenModel, RessourcenTable::MemberId, valueId );
 
     int newId = valueId.toInt();
@@ -145,24 +146,29 @@ void MemberDetailModel::deleteMember()
     }
 }
 
-QSqlTableModel* MemberDetailModel::getAddressTableModel() const
+void MemberDetailModel::initAddressMapper ( QDataWidgetMapper* aMapper ) const
 {
-    return addressModel;
+    aMapper->setModel ( addressModel );
 }
 
-QSqlTableModel* MemberDetailModel::getBankAccountTableModel() const
+void MemberDetailModel::initBankAccountMapper ( QDataWidgetMapper* aMapper ) const
 {
-    return bankAccountModel;
+    aMapper->setModel ( bankAccountModel );
+}
+
+void MemberDetailModel::initMemberMapper ( QDataWidgetMapper* aMapper ) const
+{
+    aMapper->setModel ( memberModel );
+}
+
+void MemberDetailModel::initRessourcenMapper ( QDataWidgetMapper* aMapper ) const
+{
+    aMapper->setModel ( ressourcenModel );
 }
 
 QSqlTableModel* MemberDetailModel::getRessourcenTableModel() const
 {
     return ressourcenModel;
-}
-
-QSqlTableModel* MemberDetailModel::getMemberTableModel() const
-{
-    return memberModel;
 }
 
 ContributionModel* MemberDetailModel::getContributionModel() const

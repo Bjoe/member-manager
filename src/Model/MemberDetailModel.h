@@ -10,6 +10,7 @@
 
 #include <QtCore>
 #include <QtSql>
+#include <QtGui>
 
 #include "Model/ContributionModel.h"
 #include "Member.h"
@@ -31,11 +32,13 @@ public:
 
     int newMember();
     void deleteMember();
+    
+    void initAddressMapper(QDataWidgetMapper* aMapper) const;
+    void initBankAccountMapper(QDataWidgetMapper* aMapper) const;
+    void initRessourcenMapper(QDataWidgetMapper* aMapper) const;
+    void initMemberMapper(QDataWidgetMapper* aMapper) const;
 
-    QSqlTableModel* getAddressTableModel() const;
-    QSqlTableModel* getBankAccountTableModel() const;
     QSqlTableModel* getRessourcenTableModel() const;
-    QSqlTableModel* getMemberTableModel() const;
     ContributionModel* getContributionModel() const;
 
 private:
