@@ -39,7 +39,7 @@ namespace Model
 ContributionModel::ContributionModel ( const QSqlDatabase& aDb ) :
         model ( new QSqlTableModel ( this, aDb ) ), record(), memberId ( 0 )
 {
-    model->setObjectName ( "model" );
+    model->setObjectName ( ContributionTable::TABLENAME );
     record = model->record ( 0 );
 
     model->setTable ( ContributionTable::TABLENAME );

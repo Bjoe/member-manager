@@ -33,11 +33,11 @@ void SaldoModelTest::testModel()
 {
     ClubFrontend::Model::SaldoModel saldoModel ( QSqlDatabase::database(), 1025 );
 
-    const QSqlTableModel* model = saldoModel.findChild<QSqlTableModel* > ( "model" );
+    using ClubFrontend::Model::SaldoTable;
+    const QSqlTableModel* model = saldoModel.findChild<QSqlTableModel* > ( SaldoTable::TABLENAME );
     QVERIFY ( model );
     QCOMPARE ( model->rowCount(), 2 );
     QSqlRecord record = model->record ( 0 );
-    using ClubFrontend::Model::SaldoTable;
     QCOMPARE ( record.value ( SaldoTable::bezeichnung ).toString(), QString ( "Start Saldo" ) );
     QCOMPARE ( record.value ( SaldoTable::betrag ).toString(), QString ( "0" ) );
 }

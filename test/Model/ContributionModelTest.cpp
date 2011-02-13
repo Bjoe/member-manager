@@ -43,7 +43,7 @@ namespace ClubFrontendTest
 {
 namespace Model
 {
-  
+
 void ContributionModelTest::initTestCase()
 {
     Utils::DatabaseUtils database ( DATABASEDRIVER );
@@ -56,11 +56,11 @@ void ContributionModelTest::testModel()
     ClubFrontend::Model::ContributionModel contributionModel ( QSqlDatabase::database() );
 
     contributionModel.setMemberId ( 1025 );
-    const QSqlTableModel* model = contributionModel.findChild<QSqlTableModel* > ( "model" );
+    using ClubFrontend::Model::ContributionTable;
+    const QSqlTableModel* model = contributionModel.findChild<QSqlTableModel* > ( ContributionTable::TABLENAME );
     QVERIFY ( model );
     QCOMPARE ( model->rowCount(), 2 );
     QSqlRecord record = model->record ( 0 );
-    using ClubFrontend::Model::ContributionTable;
     QCOMPARE ( record.value ( ContributionTable::Info ).toString(), QString ( "Beitragsaenderung" ) );
     QCOMPARE ( record.value ( ContributionTable::Fee ).toString(), QString ( "15" ) );
 }
@@ -94,7 +94,8 @@ void ContributionModelTest::testNewFeeDonation()
 
     contributionModel.setMemberId ( 1025 );
 
-    QSqlTableModel *model = contributionModel.findChild<QSqlTableModel* > ( "model" );
+    using ClubFrontend::Model::ContributionTable;
+    QSqlTableModel *model = contributionModel.findChild<QSqlTableModel* > ( ContributionTable::TABLENAME );
     QVERIFY ( model );
     QCOMPARE ( model->rowCount(), 2 );
 
@@ -109,7 +110,6 @@ void ContributionModelTest::testNewFeeDonation()
 
     const QString whereClause = QString ( " where dorfmitglied_pkey=%1" ).arg ( 1025 );
     QSqlQuery query;
-    using ClubFrontend::Model::ContributionTable;
     query.exec ( "select * from " + ContributionTable::TABLENAME + whereClause +
                  " order by " + ContributionTable::COLUMNNAME[ContributionTable::ValidFrom] + " desc" );
     query.next();

@@ -13,11 +13,11 @@ namespace ClubFrontend
 {
 namespace Model
 {
-  
+
 MemberModel::MemberModel ( const QSqlDatabase& aDb ) :
         model ( new QSqlTableModel ( this, aDb ) )
 {
-    model->setObjectName ( "model" );
+    model->setObjectName ( MemberTable::TABLENAME );
     model->setTable ( MemberTable::TABLENAME );
     model->setHeaderData ( MemberTable::MemberId, Qt::Horizontal, tr ( "Nr." ) );
     model->setHeaderData ( MemberTable::FirstName, Qt::Horizontal, tr ( "Vorname" ) );

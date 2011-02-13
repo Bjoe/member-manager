@@ -18,7 +18,7 @@ KassaModel::KassaModel ( const QSqlDatabase& aDb ) :
         model ( new QSqlTableModel ( this, aDb ) )
 {
     model->setTable ( KassaTable::TABLENAME );
-    model->setObjectName ( "model" );
+    model->setObjectName ( KassaTable::TABLENAME );
     setDefaultFilter();
     refresh();
 }

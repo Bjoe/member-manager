@@ -33,11 +33,11 @@ void KassaModelTest::testModel()
 {
     ClubFrontend::Model::KassaModel kassaModel ( QSqlDatabase::database() );
 
-    const QSqlTableModel* model = kassaModel.findChild<QSqlTableModel* > ( "model" );
+    using ClubFrontend::Model::KassaTable;
+    const QSqlTableModel* model = kassaModel.findChild<QSqlTableModel* > ( KassaTable::TABLENAME );
     QVERIFY ( model );
     QCOMPARE ( model->rowCount(), 3 );
     QSqlRecord record = model->record ( 1 );
-    using ClubFrontend::Model::KassaTable;
     QCOMPARE ( record.value ( KassaTable::betrag ).toString(), QString ( "104.86" ) );
 }
 

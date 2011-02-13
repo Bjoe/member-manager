@@ -18,11 +18,11 @@ namespace ClubFrontend
 {
 namespace Model
 {
-  
+
 SaldoModel::SaldoModel ( const QSqlDatabase& aDb, const int aMemberId ) :
         model ( new QSqlTableModel ( this, aDb ) )
 {
-    model->setObjectName ( "model" );
+    model->setObjectName ( SaldoTable::TABLENAME );
     model->setTable ( SaldoTable::TABLENAME );
     model->setHeaderData ( SaldoTable::betrag, Qt::Horizontal, tr ( "Betrag" ) );
     model->setHeaderData ( SaldoTable::datum, Qt::Horizontal, tr ( "Valuta Datum" ) );
