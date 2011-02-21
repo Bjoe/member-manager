@@ -5,9 +5,9 @@
 #include "Model/MemberDetailModel.h"
 #include "Model/DatabaseStructure.h"
 #include "TestConfig.h"
-#include "TestUtils/DatabaseUtils.h"
-#include "TestUtils/TriggerThread.h"
-#include "TestUtils/DialogButtonBoxHandler.h"
+#include <DatabaseUtils.h>
+#include <TriggerThread.h>
+#include <DialogButtonBoxHandler.h>
 
 #include <QLabel>
 #include <QLineEdit>
@@ -25,7 +25,7 @@ namespace Gui
 
 void MemberDialogTest::initTestCase()
 {
-    Utils::DatabaseUtils database ( DATABASEDRIVER );
+    TestUtils::Database::DatabaseUtils database ( DATABASEDRIVER );
     database.open ( DATABASE );
     database.read ( SQLTESTFILE );
 }
@@ -343,9 +343,9 @@ void MemberDialogTest::newMemberDiscard()
                                       "buttonBox" );
     QPushButton* discardButton = buttonBox->button ( QDialogButtonBox::Discard );
 
-    Utils::DialogButtonBoxHandler handler;
+    TestUtils::Gui::DialogButtonBoxHandler handler;
 
-    Utils::TriggerThread thread ( this, &handler );
+    TestUtils::TriggerThread thread ( this, &handler );
     connect ( &thread, SIGNAL ( triggered() ), discardButton, SLOT ( click() ) );
     thread.syncStart();
 
@@ -363,8 +363,8 @@ void MemberDialogTest::showSaldo()
     detailModel.setMemberId ( 1025 );
     ClubFrontend::Gui::MemberDialog dialog ( detailModel );
 
-    Utils::DialogButtonBoxHandler handler ( QDialogButtonBox::Close );
-    Utils::TriggerThread thread ( this, &handler );
+    TestUtils::Gui::DialogButtonBoxHandler handler ( QDialogButtonBox::Close );
+    TestUtils::TriggerThread thread ( this, &handler );
 
     QPushButton* saldoButton = dialog.findChild<QPushButton* > ( "saldoButton" );
     connect ( &thread, SIGNAL ( triggered() ), saldoButton, SLOT ( click() ) );
@@ -377,8 +377,8 @@ void MemberDialogTest::showfee()
     detailModel.setMemberId ( 1025 );
     ClubFrontend::Gui::MemberDialog dialog ( detailModel );
 
-    Utils::DialogButtonBoxHandler handler ( QDialogButtonBox::Close );
-    Utils::TriggerThread thread ( this, &handler );
+    TestUtils::Gui::DialogButtonBoxHandler handler ( QDialogButtonBox::Close );
+    TestUtils::TriggerThread thread ( this, &handler );
 
     QPushButton* feeButton = dialog.findChild<QPushButton* > ( "feeButton" );
     connect ( &thread, SIGNAL ( triggered() ), feeButton, SLOT ( click() ) );

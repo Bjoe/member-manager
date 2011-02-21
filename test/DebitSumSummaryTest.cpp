@@ -31,7 +31,7 @@
 #include "DebitSumSummary.h"
 
 #include "TestConfig.h"
-#include "TestUtils/DatabaseUtils.h"
+#include <DatabaseUtils.h>
 #include "TestUtils/SummaryHandlerMock.h"
 
 namespace ClubFrontendTest
@@ -39,7 +39,7 @@ namespace ClubFrontendTest
 
 void DebitSumSummaryTest::initTestCase()
 {
-    ::Utils::DatabaseUtils database ( DATABASEDRIVER );
+    TestUtils::Database::DatabaseUtils database ( DATABASEDRIVER );
     database.open ( DATABASE );
     database.read ( SQLTESTFILE );
 }

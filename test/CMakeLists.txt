@@ -2,6 +2,10 @@
 find_package(Qt4 4.5.2 COMPONENTS QtTest REQUIRED)
 include(${QT_USE_FILE})
 
+find_library(TESTUTILS_LIB qttestutils)
+find_library(TESTUTILS_DATABASELIB qtdatabasetestutils)
+find_path(TESTUTILS_INC NAMES TriggerThread.h DatabaseUtils.h DialogButtonBoxHandler.h Handler.h)
+
 # Test Konfigurationen
 set(DATABASEDRIVER QSQLITE)
 set(DATABASE dorfverw.dat)
@@ -14,17 +18,12 @@ configure_file (
   "${CMAKE_CURRENT_BINARY_DIR}/TestConfig.h"
   )
 
-include_directories(../src ${CMAKE_CURRENT_BINARY_DIR}/../src)
-
-add_library(databaseUtilsLib STATIC TestUtils/DatabaseUtils.cpp TestUtils/ReadSqlFile.cpp)
-set(triggerThreadUtil TestUtils/TriggerThread.h)
-qt4_wrap_cpp(moc_triggerThreadUtil ${triggerThreadUtil})
-add_library(utilTestLib STATIC TestUtils/SummaryHandlerMock.cpp ${moc_triggerThreadUtil} TestUtils/TriggerThread.cpp TestUtils/DialogButtonBoxHandler.cpp)
+include_directories(../src ${CMAKE_CURRENT_BINARY_DIR}/../src ${TESTUTILS_INC})
 
 set(test_additional_lib
- memberManagerLib 
- databaseUtilsLib
- utilTestLib
+ memberManagerLib
+ ${TESTUTILS_LIB}
+ ${TESTUTILS_DATABASELIB}
 )
 
 set(test_additional
@@ -33,6 +32,6 @@ set(test_additional
 add_subdirectory(Gui)
 add_subdirectory(Model)
 
-qt4_add_test(cashSumSummary CashSumSummaryTest.cpp)
-qt4_add_test(countMemberSummary CountMemberSummaryTest.cpp)
-qt4_add_test(debitSumSummary DebitSumSummaryTest.cpp)
+qt4_add_test(cashSumSummary CashSumSummaryTest.cpp TestUtils/SummaryHandlerMock.cpp)
+qt4_add_test(countMemberSummary CountMemberSummaryTest.cpp TestUtils/SummaryHandlerMock.cpp)
+qt4_add_test(debitSumSummary DebitSumSummaryTest.cpp TestUtils/SummaryHandlerMock.cpp)

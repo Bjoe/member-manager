@@ -3,7 +3,7 @@
 #include "Gui/SaldoDialog.h"
 
 #include "TestConfig.h"
-#include "TestUtils/DatabaseUtils.h"
+#include <DatabaseUtils.h>
 #include "Model/SaldoModel.h"
 
 #include <QSqlDatabase>
@@ -24,7 +24,7 @@ namespace Gui
 
 void SaldoDialogTest::initTestCase()
 {
-    Utils::DatabaseUtils database ( DATABASEDRIVER );
+    TestUtils::Database::DatabaseUtils database ( DATABASEDRIVER );
     database.open ( DATABASE );
     database.read ( SQLTESTFILE );
 }

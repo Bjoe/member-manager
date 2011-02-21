@@ -33,7 +33,7 @@
 #include <QtSql>
 #include "TestConfig.h"
 #include "Model/DatabaseStructure.h"
-#include "TestUtils/DatabaseUtils.h"
+#include <DatabaseUtils.h>
 
 namespace ClubFrontendTest
 {
@@ -42,7 +42,7 @@ namespace Model
 
 void TableDaoTest::initTestCase()
 {
-    Utils::DatabaseUtils database ( DATABASEDRIVER );
+    TestUtils::Database::DatabaseUtils database ( DATABASEDRIVER );
     database.open ( DATABASE );
     database.read ( SQLTESTFILE );
 }

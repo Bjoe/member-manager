@@ -10,7 +10,7 @@
 #include "Model/KassaModel.h"
 
 #include "TestConfig.h"
-#include "TestUtils/DatabaseUtils.h"
+#include <DatabaseUtils.h>
 #include "Model/DatabaseStructure.h"
 
 #include <QSqlTableModel>
@@ -24,7 +24,7 @@ namespace Model
 
 void KassaModelTest::initTestCase()
 {
-    Utils::DatabaseUtils database ( DATABASEDRIVER );
+    TestUtils::Database::DatabaseUtils database ( DATABASEDRIVER );
     database.open ( DATABASE );
     database.read ( SQLTESTFILE );
 }

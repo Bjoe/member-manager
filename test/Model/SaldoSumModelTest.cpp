@@ -30,7 +30,7 @@
 #include "Model/SaldoSumModel.h"
 
 #include "TestConfig.h"
-#include "TestUtils/DatabaseUtils.h"
+#include <DatabaseUtils.h>
 #include "Model/DatabaseStructure.h"
 
 #include <QSqlDatabase>
@@ -47,7 +47,7 @@ namespace Model
 
 void SaldoSumModelTest::initTestCase()
 {
-    Utils::DatabaseUtils database ( DATABASEDRIVER );
+    TestUtils::Database::DatabaseUtils database ( DATABASEDRIVER );
     database.open ( DATABASE );
     database.read ( SQLTESTFILE );
 }

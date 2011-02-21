@@ -4,9 +4,9 @@
 #include "Gui/MainWindow.h"
 
 #include "TestConfig.h"
-#include "TestUtils/DatabaseUtils.h"
-#include "TestUtils/TriggerThread.h"
-#include "TestUtils/DialogButtonBoxHandler.h"
+#include <DatabaseUtils.h>
+#include <TriggerThread.h>
+#include <DialogButtonBoxHandler.h>
 #include "Model/MemberModel.h"
 
 #include <QTableView>
@@ -35,7 +35,7 @@ namespace Gui
 
 void MainWindowTest::init()
 {
-    Utils::DatabaseUtils database ( DATABASEDRIVER );
+    TestUtils::Database::DatabaseUtils database ( DATABASEDRIVER );
     database.open ( DATABASE );
     database.read ( SQLTESTFILE );
 }
@@ -48,7 +48,7 @@ void MainWindowTest::testNewMember()
 
     QAction* actionNewMember = mainWindow.findChild<QAction*> (
                                    "actionNewMember" );
-    Utils::TriggerThread thread ( this, this );
+    TestUtils::TriggerThread thread ( this, this );
     connect ( &thread, SIGNAL ( triggered() ), actionNewMember, SLOT ( trigger() ) );
     thread.syncStart();
 
@@ -73,7 +73,7 @@ void MainWindowTest::testEditMember()
     QAbstractItemModel* model = view->model();
     QModelIndex index = model->index ( 0, 3 );
 
-    Utils::TriggerThread thread ( this, this, index );
+    TestUtils::TriggerThread thread ( this, this, index );
     connect ( &thread, SIGNAL ( triggeredModelIndex ( const QModelIndex& ) ), &mainWindow, SLOT ( editMember ( const QModelIndex& ) ) );
     thread.syncStart();
 
@@ -93,7 +93,7 @@ void MainWindowTest::testSelectedMember()
     QItemSelection selection ( index, index );
     selectionModel->select ( selection, QItemSelectionModel::Select );
 
-    Utils::TriggerThread thread ( this, this );
+    TestUtils::TriggerThread thread ( this, this );
     connect ( &thread, SIGNAL ( triggered() ), &mainWindow, SLOT ( selectedMember() ) );
     thread.syncStart();
 
@@ -113,8 +113,8 @@ void MainWindowTest::testShowSaldo()
     QItemSelection selection ( index, index );
     selectionModel->select ( selection, QItemSelectionModel::Select );
 
-    Utils::DialogButtonBoxHandler handler ( QDialogButtonBox::Close );
-    Utils::TriggerThread thread ( this, &handler );
+    TestUtils::Gui::DialogButtonBoxHandler handler ( QDialogButtonBox::Close );
+    TestUtils::TriggerThread thread ( this, &handler );
     connect ( &thread, SIGNAL ( triggered() ), &mainWindow, SLOT ( showSaldo() ) );
     thread.syncStart();
 }

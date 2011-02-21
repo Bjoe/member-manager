@@ -31,7 +31,7 @@
 #include "Model/ContributionModel.h"
 
 #include "TestConfig.h"
-#include "TestUtils/DatabaseUtils.h"
+#include <DatabaseUtils.h>
 #include "Model/DatabaseStructure.h"
 
 #include <QSqlTableModel>
@@ -46,7 +46,7 @@ namespace Model
 
 void ContributionModelTest::initTestCase()
 {
-    Utils::DatabaseUtils database ( DATABASEDRIVER );
+    TestUtils::Database::DatabaseUtils database ( DATABASEDRIVER );
     database.open ( DATABASE );
     database.read ( SQLTESTFILE );
 }

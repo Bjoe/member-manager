@@ -3,14 +3,14 @@
 
 #include <QtTest/QtTest>
 
-#include "TestUtils/Handler.h"
+#include <Handler.h>
 
 namespace ClubFrontendTest
 {
 namespace Gui
 {
 
-class MainWindowTest: public QObject, public Utils::Handler
+class MainWindowTest: public QObject, public TestUtils::Handler
 {
     Q_OBJECT
 

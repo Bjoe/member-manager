@@ -31,7 +31,7 @@
 #include "Gui/ContributionDialog.h"
 
 #include "TestConfig.h"
-#include "TestUtils/DatabaseUtils.h"
+#include <DatabaseUtils.h>
 #include "Model/DatabaseStructure.h"
 #include "Model/ContributionModel.h"
 
@@ -50,7 +50,7 @@ namespace Gui
 
 void ContributionDialogTest::initTestCase()
 {
-    Utils::DatabaseUtils database ( DATABASEDRIVER );
+    TestUtils::Database::DatabaseUtils database ( DATABASEDRIVER );
     database.open ( DATABASE );
     database.read ( SQLTESTFILE );
 }

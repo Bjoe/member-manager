@@ -4,7 +4,7 @@
 #include "Model/Member.h"
 
 #include "TestConfig.h"
-#include "TestUtils/DatabaseUtils.h"
+#include <DatabaseUtils.h>
 #include "Model/DatabaseStructure.h"
 
 #include <QDebug>
@@ -17,7 +17,7 @@ namespace Model
 
 void MemberDetailModelTest::initTestCase()
 {
-    Utils::DatabaseUtils database ( DATABASEDRIVER );
+    TestUtils::Database::DatabaseUtils database ( DATABASEDRIVER );
     database.open ( DATABASE );
     database.read ( SQLTESTFILE );
 }

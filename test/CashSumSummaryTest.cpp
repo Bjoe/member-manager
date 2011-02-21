@@ -32,14 +32,14 @@
 #include "TestUtils/SummaryHandlerMock.h"
 
 #include "TestConfig.h"
-#include "TestUtils/DatabaseUtils.h"
+#include <DatabaseUtils.h>
 
 namespace ClubFrontendTest
 {
 
 void CashSumSummaryTest::initTestCase()
 {
-    ::Utils::DatabaseUtils database ( DATABASEDRIVER );
+    TestUtils::Database::DatabaseUtils database ( DATABASEDRIVER );
     database.open ( DATABASE );
     database.read ( SQLTESTFILE );
 }
