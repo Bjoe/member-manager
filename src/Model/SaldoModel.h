@@ -1,10 +1,3 @@
-/*
- * SaldoModel.h
- *
- *  Created on: Oct 9, 2010
- *      Author: joerg
- */
-
 #ifndef SALDOMODEL_H_
 #define SALDOMODEL_H_
 

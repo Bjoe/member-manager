@@ -1,10 +1,3 @@
-/*
- * KassaModelTest.h
- *
- *  Created on: Oct 3, 2010
- *      Author: joerg
- */
-
 #ifndef KASSAMODELTEST_H_
 #define KASSAMODELTEST_H_
 

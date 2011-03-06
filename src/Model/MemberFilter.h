@@ -1,10 +1,3 @@
-/*
- * MemberFilter.h
- *
- *  Created on: Jul 6, 2010
- *      Author: joerg
- */
-
 #ifndef MEMBERFILTER_H_
 #define MEMBERFILTER_H_
 

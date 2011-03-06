@@ -1,10 +1,3 @@
-/*
- * MemberDetailModel.cpp
- *
- *  Created on: Jul 17, 2010
- *      Author: joerg
- */
-
 #include "Model/MemberDetailModel.h"
 #include "Model/DatabaseStructure.h"
 

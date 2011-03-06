@@ -1,10 +1,3 @@
-/*
- * KassaModel.h
- *
- *  Created on: Oct 3, 2010
- *      Author: joerg
- */
-
 #ifndef KASSAMODEL_H_
 #define KASSAMODEL_H_
 

@@ -1,10 +1,3 @@
-/*
- * MemberModel.h
- *
- *  Created on: Mar 23, 2010
- *      Author: joerg
- */
-
 #ifndef MEMBERMODEL_H_
 #define MEMBERMODEL_H_
 

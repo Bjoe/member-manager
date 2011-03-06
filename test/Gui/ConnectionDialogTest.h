@@ -1,10 +1,3 @@
-/*
- * ConnectionDialogTest.h
- *
- *  Created on: Aug 11, 2010
- *      Author: joerg
- */
-
 #ifndef CONNECTIONDIALOGTEST_H_
 #define CONNECTIONDIALOGTEST_H_
 

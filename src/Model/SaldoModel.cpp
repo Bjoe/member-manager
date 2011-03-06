@@ -1,10 +1,3 @@
-/*
- * SaldoModel.cpp
- *
- *  Created on: Oct 9, 2010
- *      Author: joerg
- */
-
 #include "Model/SaldoModel.h"
 
 #include "Model/DatabaseStructure.h"

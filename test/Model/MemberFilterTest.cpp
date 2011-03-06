@@ -1,10 +1,3 @@
-/*
- * MemberFilterTest.cpp
- *
- *  Created on: Jul 6, 2010
- *      Author: joerg
- */
-
 #include "MemberFilterTest.h"
 
 #include "Model/MemberFilter.h"

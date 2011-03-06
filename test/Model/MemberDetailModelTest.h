@@ -1,10 +1,3 @@
-/*
- * MemberDetailModelTest.h
- *
- *  Created on: Jul 17, 2010
- *      Author: joerg
- */
-
 #ifndef MEMBERDETAILMODELTEST_H_
 #define MEMBERDETAILMODELTEST_H_
 

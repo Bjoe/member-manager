@@ -1,10 +1,3 @@
-/*
- * KassaModelTest.cpp
- *
- *  Created on: Oct 3, 2010
- *      Author: joerg
- */
-
 #include "KassaModelTest.h"
 
 #include "Model/KassaModel.h"

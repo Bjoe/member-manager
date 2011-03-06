@@ -1,10 +1,3 @@
-/*
- * ConnectionDialogTest.cpp
- *
- *  Created on: Aug 11, 2010
- *      Author: joerg
- */
-
 #include "ConnectionDialogTest.h"
 
 #include "Gui/ConnectionDialog.h"

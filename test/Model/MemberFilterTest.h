@@ -1,10 +1,3 @@
-/*
- * MemberFilterTest.h
- *
- *  Created on: Jul 6, 2010
- *      Author: joerg
- */
-
 #ifndef MEMBERFILTERTEST_H_
 #define MEMBERFILTERTEST_H_
 

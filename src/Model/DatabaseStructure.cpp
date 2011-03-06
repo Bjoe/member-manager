@@ -1,9 +1,3 @@
-/*
- * DatabaseStructure.cpp
- *
- *  Created on: Jul 23, 2010
- *      Author: joerg
- */
 #include "Model/DatabaseStructure.h"
 
 namespace ClubFrontend

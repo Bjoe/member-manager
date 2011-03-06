@@ -1,10 +1,3 @@
-/*
- * MemberModelTest.h
- *
- *  Created on: Mar 23, 2010
- *      Author: joerg
- */
-
 #ifndef MEMBERMODELTEST_H_
 #define MEMBERMODELTEST_H_
 

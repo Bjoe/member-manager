@@ -1,10 +1,3 @@
-/*
- * MemberFilter.cpp
- *
- *  Created on: Jul 6, 2010
- *      Author: joerg
- */
-
 #include "Model/MemberFilter.h"
 #include "Model/DatabaseStructure.h"
 

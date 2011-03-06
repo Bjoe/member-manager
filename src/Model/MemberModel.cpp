@@ -1,9 +1,3 @@
-/*
- * MemberModel.cpp
- *
- *  Created on: Mar 23, 2010
- *      Author: joerg
- */
 #include "MemberModel.h"
 
 #include "Model/MemberDetailModel.h"

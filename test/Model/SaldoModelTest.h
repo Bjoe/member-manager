@@ -1,10 +1,3 @@
-/*
- * SaldoModelTest.h
- *
- *  Created on: Oct 9, 2010
- *      Author: joerg
- */
-
 #ifndef SALDOMODELTEST_H_
 #define SALDOMODELTEST_H_
 

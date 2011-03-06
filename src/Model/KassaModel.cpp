@@ -1,10 +1,3 @@
-/*
- * KassaModel.cpp
- *
- *  Created on: Oct 3, 2010
- *      Author: joerg
- */
-
 #include "Model/KassaModel.h"
 
 #include "Model/DatabaseStructure.h"

@@ -1,10 +1,3 @@
-/*
- * DatabaseStructure.h
- *
- *  Created on: Jul 22, 2010
- *      Author: joerg
- */
-
 #ifndef DATABASESTRUCTURE_H_
 #define DATABASESTRUCTURE_H_
 

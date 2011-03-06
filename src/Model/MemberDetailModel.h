@@ -1,10 +1,3 @@
-/*
- * MemberDetailModel.h
- *
- *  Created on: Jul 17, 2010
- *      Author: joerg
- */
-
 #ifndef MEMBERDETAILMODEL_H_
 #define MEMBERDETAILMODEL_H_
 

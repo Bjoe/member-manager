@@ -1,10 +1,3 @@
-/*
- * SaldoModelTest.cpp
- *
- *  Created on: Oct 9, 2010
- *      Author: joerg
- */
-
 #include "SaldoModelTest.h"
 
 #include "Model/SaldoModel.h"
