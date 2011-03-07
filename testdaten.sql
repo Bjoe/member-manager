@@ -114,16 +114,16 @@ INSERT INTO kasse (
             zwbudatum60, zwischensaldo60, zwshkenn62, zwbudatum62, zwischensaldo62,
             valutadatum, buchungsdatum, shkenn, betrag, bankbuschl,
             fremdblz, fremdktnr, fremdname, bezeichnung, erfasst)
-     VALUES (1,'false','',1,1,'credit',date('2006-01-12'),3519.92,'credit',date('2006-01-23'),3423.02,date('2006-01-23'),date('2006-01-23'),'debit',34.90,5,
-               37010050,5820507,'ISH NRW GMBH','LASTSCHRIFT  KDNR 4039458011 RGN 2495227','false');
+     VALUES (1,'false','',1,1,'credit',date('2006-01-12'),519.92,'credit',date('2006-01-23'),423.02,date('2006-01-23'),date('2006-01-23'),'debit',34.90,5,
+               58010050,7624502,'INTERNET GMBH','LASTSCHRIFT  KDNR 1234 RGN 987','false');
 
 INSERT INTO kasse (
             kasse_pkey, deleted, einlesedatum, einleseid, auszug, zwshkenn60,
             zwbudatum60, zwischensaldo60, zwshkenn62, zwbudatum62, zwischensaldo62,
             valutadatum, buchungsdatum, shkenn, betrag, bankbuschl,
             fremdblz, fremdktnr, fremdname, bezeichnung, erfasst)
-    VALUES (2,'true','',1,1,'credit',date('2006-01-12'),3519.92,'credit',date('2006-01-23'),3423.02,date('2006-01-23'),date('2006-01-23')
-              ,'debit',62.00,5,30050110,10012433,'STADTWERKE DUESSELDORF AG','LASTSCHRIFT  313001563692 VK020009330101 ABSCHLAG FAELLIG 23.01.06 FUERSTENWALL 232','false');
+    VALUES (2,'true','',1,1,'credit',date('2006-01-12'),519.92,'credit',date('2006-01-23'),423.02,date('2006-01-23'),date('2006-01-23')
+              ,'debit',62.00,5,10090110,30092423,'WERKE AG','LASTSCHRIFT  2837572829 VK98765432 ABSCHLAG FAELLIG 23.01.06 HANSAALLEE 123','false');
 
 
 INSERT INTO kasse (
@@ -131,8 +131,8 @@ INSERT INTO kasse (
                     zwbudatum60, zwischensaldo60, zwshkenn62, zwbudatum62, zwischensaldo62,
                     valutadatum, buchungsdatum, shkenn, betrag, bankbuschl,
                     fremdblz, fremdktnr, fremdname, bezeichnung, erfasst)
-            VALUES (3,'false','',1,1,'credit',date('2006-01-23'),3423.02,'credit',date('2006-01-27'),3318.16,date('2006-01-27'),date('2006-01-27'),'debit',104.86,820,30050110,21236716,'BOEHME, JOERG-CHRISTIAN',
-        'UMBUCHUNG  ATELCO RECHNUNG VOM 12.1.06 LIEFERSCHNR. L4592165 DATUM 27.01.2006, 00.50 UHR 1.TAN 783978','false'
+            VALUES (3,'false','',1,1,'credit',date('2006-01-23'),423.02,'credit',date('2006-01-27'),318.16,date('2006-01-27'),date('2006-01-27'),'debit',104.86,820,40020150,82938216,'MUELLER, MUSTERMANN',
+        'UMBUCHUNG  SHOP RECHNUNG VOM 12.1.06 LIEFERSCHNR. L123456 DATUM 27.01.2006, 00.50 UHR 1.TAN 987654','false'
         );
 
 
@@ -141,8 +141,8 @@ INSERT INTO kasse (
                     zwbudatum60, zwischensaldo60, zwshkenn62, zwbudatum62, zwischensaldo62,
                     valutadatum, buchungsdatum, shkenn, betrag, bankbuschl,
                     fremdblz, fremdktnr, fremdname, bezeichnung, erfasst)
-            VALUES (4,'false','',1,1,'credit',date('2006-01-27'),3318.16,'credit',date('2006-01-31'),
-        3374.56,date('2006-02-01'),date('2006-01-31'),'debit',4.74,805,30050110,0,'-',
+            VALUES (4,'false','',1,1,'credit',date('2006-01-27'),318.16,'credit',date('2006-01-31'),
+        374.56,date('2006-02-01'),date('2006-01-31'),'debit',4.74,805,80020510,0,'-',
         'ABSCHLUSS  Abrechnung 30.01.2006 siehe Anlage','false');
 
 
