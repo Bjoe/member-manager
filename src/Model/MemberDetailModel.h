@@ -38,7 +38,7 @@ public:
 private:
     int insertNewMember ( QSqlTableModel* aModel, const int& aColumnId,
                           const QVariant& aValue );
-    QSqlTableModel* setTableModel ( const QString& aTableName,
+    void setTableModel ( const QString& aTableName,
                                     QSqlTableModel* const aModel );
 
     QSqlTableModel* const addressModel;

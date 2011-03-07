@@ -26,7 +26,7 @@ MemberDetailModel::~MemberDetailModel()
     delete memberModel;
 }
 
-QSqlTableModel* MemberDetailModel::setTableModel ( const QString& aTableName,
+void MemberDetailModel::setTableModel ( const QString& aTableName,
         QSqlTableModel* const aModel )
 {
     aModel->setTable ( aTableName );
