@@ -1,19 +1,18 @@
 /*! \mainpage TODO
  * 
- * \todo Source Dokumentieren mit Doxygen.
- * \todo Refactor: QTableView den Model uebergeben.
- * \todo Refactor: Model Klassen duerfen keine QTableModel mehr ausgeben.
- * \todo Refactor: Namespace eventuell den Verzeichniss Unterteilungen anpassen.
- * \todo Refactor: GUI Anpassen.
- * \todo Einpaar Denglisch Datenbankfelder auf Englisch Refactoren.
- * \todo Einige unsinnige Datenbankfelder rauswerfen und Tabellen mergen. (Wird erst nach der ersten lauffaehigen Version umgesetzt)
  * \todo Compiler Warnungen Fixen!
  * \todo Test Warnungen Fixen: connection 'qt_sql_default_connection' is still in use, all queries will cease to work.
+ * \todo Refactor: MainWindow.ui Anpassen.
+ * \todo Einpaar Denglische Datenbankfelder und member attribute auf Englisch Refactoren.
+ * \todo Einige unsinnige Datenbankfelder rauswerfen und Tabellen mergen. Wird erst nach der ersten lauffaehigen Version umgesetzt damit Parrallel mit der alten Perl Applikation weiter gearbeitet werden kann.
+ * \todo Code Dokumentieren mit Doxygen.
  * 
- * \todo Moeglichkeit Bankeinzug auszusetzen
- * \todo Gesamt Status uebersicht ueber den Verein: Gesamt Einahemen, Gesamt Mitglieder etc.
- * \todo Wie sollen die Umsaetze eingelesen werden? Per KMyMoney oder Aq API einbinden?
- * \todo Matchen der Umsaetze und auf die Mitgliedskonten buchen.
- * \todo DTAUS erstellen? Aq API?
+ * \todo Welche Open Source License ?
+ * \todo Fehlermelungen in Statusleiste Anzeigen.
+ * \todo Moeglichkeit Bankeinzug fuer ein Mitglied auszusetzen
+ * \todo Gesamt Status uebersicht ueber den Verein: Gesamt Einahemen, gesamt Mitglieder etc.
+ * \todo Wie sollen die SWIFT MT940 Transaktionsdaten eingelesen werden? AqBanking API einbinden?
+ * \todo Matchen der SWIFT Transaktionen und auf die Mitgliedskonten buchen.
+ * \todo DTAUS fuer Einzuege erstellen. AqBanking API benutzen?
  *  
  */
