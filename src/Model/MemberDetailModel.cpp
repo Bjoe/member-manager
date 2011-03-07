@@ -20,10 +20,6 @@ MemberDetailModel::MemberDetailModel ( const QSqlDatabase& aDb ) :
 
 MemberDetailModel::~MemberDetailModel()
 {
-    delete addressModel;
-    delete bankAccountModel;
-    delete ressourcenModel;
-    delete memberModel;
 }
 
 void MemberDetailModel::setTableModel ( const QString& aTableName,
