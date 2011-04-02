@@ -73,7 +73,7 @@ Member MemberDetailModel::exportMember() const
                     donation.toFloat(), fee.toFloat() );
 }
 
-//! \todo Refactor: In DAO Klasse Refactoren
+//! \todo Refactor: In MemberDAO Klasse Refactoren
 int MemberDetailModel::newMember()
 {
     // Dirty Hack um ein Neues Mitglied einzutragen.
@@ -92,7 +92,7 @@ int MemberDetailModel::newMember()
     return newId;
 }
 
-//! \todo Refactor: In DAO Klasse Refactoren
+//! \todo Refactor: In DAO Klasse Refactoren. Ist in TableDAO
 int MemberDetailModel::insertNewMember ( QSqlTableModel* aModel,
         const int& aColumnId, const QVariant& aValue )
 {
@@ -105,7 +105,7 @@ int MemberDetailModel::insertNewMember ( QSqlTableModel* aModel,
     return row;
 }
 
-//! \todo Refactor: In DAO Klasse Refactoren
+//! \todo Refactor: In DAO Klasse Refactoren. Ist in MemberDao
 void MemberDetailModel::deleteMember()
 {
     if ( id == 0 )

@@ -11,6 +11,7 @@ namespace Model
 class MemberDao
 {
 public:
+    void deleteMember(int anId);
 };
 
 }
