@@ -6,6 +6,9 @@ namespace Model
 {
 
 const QString AddressTable::TABLENAME = "adresse";
+const QStringList AddressTable::COLUMNNAME = QStringList()
+        << "adresse_pkey" << "dorfmitglied_pkey" << "strasse"
+        << "plz" << "ort";
 
 const QString ContributionTable::TABLENAME = "beitragstab";
 const QStringList ContributionTable::COLUMNNAME = QStringList()
@@ -15,13 +18,17 @@ const QStringList ContributionTable::COLUMNNAME = QStringList()
 const QString MemberTable::TABLENAME = "dorfmitglied";
 const QStringList MemberTable::COLUMNNAME = QStringList()
         << "dorfmitglied_pkey" << "deleted" << "vorname" << "name"
-        << "nickname";
+        << "nickname" << "FOO" << "FOO" << "FOO" << "FOO" << "FOO" << "FOO"
+        << "eintrittsdatum" << "info";
 
 const QString RessourcenTable::TABLENAME = "kommunikation";
 const QStringList RessourcenTable::COLUMNNAME = QStringList()
         << "kommunikation_pkey" << "dorfmitglied_pkey" << "email";
 
 const QString BankAccountTable::TABLENAME = "kontodaten";
+const QStringList BankAccountTable::COLUMNNAME = QStringList()
+        << "kontodaten_pkey" << "dorfmitglied_pkey" << "kontonr"
+        << "bank" << "blz";
 
 const QString KassaTable::TABLENAME = "kasse";
 const QStringList KassaTable::COLUMNNAME = QStringList() << "kasse_pkey"

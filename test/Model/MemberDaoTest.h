@@ -14,6 +14,7 @@ class MemberDaoTest : public QObject
 
 private slots:
     void initTestCase();
+    void testNewMember();
     void testDeleteMember();
 };
 

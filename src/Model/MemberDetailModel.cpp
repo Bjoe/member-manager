@@ -1,5 +1,7 @@
 #include "Model/MemberDetailModel.h"
 #include "Model/DatabaseStructure.h"
+#include "Model/TableDao.h"
+#include "Model/MemberDao.h"
 
 namespace ClubFrontend
 {
@@ -73,39 +75,28 @@ Member MemberDetailModel::exportMember() const
                     donation.toFloat(), fee.toFloat() );
 }
 
-//! \todo Refactor: In MemberDAO Klasse Refactoren
+//! \todo Refactor: Ist in MemberDao
 int MemberDetailModel::newMember()
 {
+    TableDao dao;
+
     // Dirty Hack um ein Neues Mitglied einzutragen.
     QVariant variant ( true );
-    int row = insertNewMember ( memberModel, MemberTable::Deleted, variant );
+    int row = dao.insertNewRow( memberModel, MemberTable::Deleted, variant );
     QSqlRecord record = memberModel->record ( row );
     QVariant valueId = record.value ( MemberTable::MemberId );
 
-    insertNewMember ( addressModel, AddressTable::MemberId, valueId );
-    insertNewMember ( bankAccountModel, BankAccountTable::MemberId, valueId );
+    dao.insertNewRow( addressModel, AddressTable::MemberId, valueId );
+    dao.insertNewRow( bankAccountModel, BankAccountTable::MemberId, valueId );
     contributionModel->insertMemberId ( valueId );
-    insertNewMember ( ressourcenModel, RessourcenTable::MemberId, valueId );
+    dao.insertNewRow( ressourcenModel, RessourcenTable::MemberId, valueId );
 
     int newId = valueId.toInt();
     setMemberId ( newId );
     return newId;
 }
 
-//! \todo Refactor: In DAO Klasse Refactoren. Ist in TableDAO
-int MemberDetailModel::insertNewMember ( QSqlTableModel* aModel,
-        const int& aColumnId, const QVariant& aValue )
-{
-    QSqlRecord record = aModel->record();
-    record.setValue ( aColumnId, aValue );
-    int row = aModel->rowCount();
-    aModel->insertRow ( row );
-    aModel->setRecord ( row, record );
-    aModel->submitAll();
-    return row;
-}
-
-//! \todo Refactor: In DAO Klasse Refactoren. Ist in MemberDao
+//! \todo Refactor: Ist in MemberDao
 void MemberDetailModel::deleteMember()
 {
     if ( id == 0 )

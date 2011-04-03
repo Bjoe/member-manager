@@ -17,6 +17,7 @@ public:
     {
         AddressId, MemberId, Street, ZipCode, Town
     };
+    static const QStringList COLUMNNAME;
 };
 
 class ContributionTable
@@ -72,6 +73,7 @@ public:
     {
         BankAccountId, MemberId, AccountNr, BankName, Code
     };
+    static const QStringList COLUMNNAME;
 };
 
 class KassaTable

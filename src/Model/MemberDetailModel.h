@@ -36,8 +36,6 @@ public:
     ContributionModel* getContributionModel() const;
 
 private:
-    int insertNewMember ( QSqlTableModel* aModel, const int& aColumnId,
-                          const QVariant& aValue );
     void setTableModel ( const QString& aTableName,
                                     QSqlTableModel* const aModel );
 
