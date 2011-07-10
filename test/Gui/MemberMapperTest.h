@@ -1,5 +1,5 @@
-#ifndef MEMBERDIALOGTEST_H
-#define MEMBERDIALOGTEST_H
+#ifndef MEMBERMAPPERTEST_H
+#define MEMBERMAPPERTEST_H
 
 #include <QtTest/QtTest>
 
@@ -8,7 +8,7 @@ namespace ClubFrontendTest
 namespace Gui
 {
 
-class MemberDialogTest: public QObject
+class MemberMapperTest : public QObject
 {
     Q_OBJECT
 
@@ -17,12 +17,9 @@ private slots:
     void showMember();
     void newMember();
     void changeMember();
-    void newMemberDiscard();
-    void showSaldo();
-    void showfee();
 };
 
 }
 }
 
-#endif // MEMBERDIALOGTEST_H
+#endif // MEMBERMAPPERTEST_H

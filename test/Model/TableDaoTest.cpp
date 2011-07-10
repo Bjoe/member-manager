@@ -5,7 +5,7 @@
 #include <QtSql>
 #include "TestConfig.h"
 #include "Model/DatabaseStructure.h"
-#include <DatabaseUtils.h>
+#include "database/databaseutil.h"
 
 namespace ClubFrontendTest
 {
@@ -14,7 +14,7 @@ namespace Model
 
 void TableDaoTest::initTestCase()
 {
-    TestUtils::Database::DatabaseUtils database ( DATABASEDRIVER );
+    qttestutil::database::DatabaseUtil database ( DATABASEDRIVER );
     database.open ( DATABASE );
     database.read ( SQLTESTFILE );
 }

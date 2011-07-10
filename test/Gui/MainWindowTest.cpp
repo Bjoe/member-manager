@@ -4,28 +4,14 @@
 #include "Gui/MainWindow.h"
 
 #include "TestConfig.h"
-#include <DatabaseUtils.h>
-#include <TriggerThread.h>
-#include <DialogButtonBoxHandler.h>
+#include "database/databaseutil.h"
+#include "triggerthread.h"
+#include "gui/dialogbuttonboxhandler.h"
 #include "Model/MemberModel.h"
 
-#include <QTableView>
-#include <QSqlTableModel>
-#include <QModelIndex>
-#include <QAbstractItemModel>
-#include <QVariant>
-#include <QAction>
-#include <QDialogButtonBox>
-#include <QPushButton>
-#include <QApplication>
-#include <QSqlTableModel>
-#include <QModelIndex>
-#include <QItemSelection>
-#include <QItemSelectionModel>
-#include <QClipboard>
-#include <QApplication>
-#include <QLabel>
-
+#include <QtSql>
+#include <QtGui>
+#include <QTest>
 #include <QDebug>
 
 namespace ClubFrontendTest
@@ -35,22 +21,18 @@ namespace Gui
 
 void MainWindowTest::init()
 {
-    TestUtils::Database::DatabaseUtils database ( DATABASEDRIVER );
+    qttestutil::database::DatabaseUtil database ( DATABASEDRIVER );
     database.open ( DATABASE );
     database.read ( SQLTESTFILE );
 }
 
 void MainWindowTest::testNewMember()
 {
-    ClubFrontend::Model::KassaModel kassaModel ( QSqlDatabase::database() );
-    ClubFrontend::Model::MemberModel memberModel ( QSqlDatabase::database() );
-    ClubFrontend::Gui::MainWindow mainWindow ( memberModel, kassaModel );
+    ClubFrontend::Gui::MainWindow mainWindow ( QSqlDatabase::database() );
 
     QAction* actionNewMember = mainWindow.findChild<QAction*> (
                                    "actionNewMember" );
-    TestUtils::TriggerThread thread ( this, this );
-    connect ( &thread, SIGNAL ( triggered() ), actionNewMember, SLOT ( trigger() ) );
-    thread.syncStart();
+    actionNewMember->trigger();
 
     QAction* actionShowDeletedMember = mainWindow.findChild<QAction*> (
                                            "actionShowDeletedMember" );
@@ -59,32 +41,12 @@ void MainWindowTest::testNewMember()
     QTableView* view = mainWindow.findChild<QTableView* > ( "tableView" );
     QAbstractItemModel* model = view->model();
     QCOMPARE ( model->rowCount(), 2 );
-
-    QCOMPARE ( id, QString ( "1027" ) );
 }
 
-void MainWindowTest::testEditMember()
-{
-    ClubFrontend::Model::KassaModel kassaModel ( QSqlDatabase::database() );
-    ClubFrontend::Model::MemberModel memberModel ( QSqlDatabase::database() );
-    ClubFrontend::Gui::MainWindow mainWindow ( memberModel, kassaModel );
-
-    QTableView* view = mainWindow.findChild<QTableView* > ( "tableView" );
-    QAbstractItemModel* model = view->model();
-    QModelIndex index = model->index ( 0, 3 );
-
-    TestUtils::TriggerThread thread ( this, this, index );
-    connect ( &thread, SIGNAL ( triggeredModelIndex ( const QModelIndex& ) ), &mainWindow, SLOT ( editMember ( const QModelIndex& ) ) );
-    thread.syncStart();
-
-    QCOMPARE ( id, QString ( "1025" ) );
-}
 
 void MainWindowTest::testSelectedMember()
 {
-    ClubFrontend::Model::KassaModel kassaModel ( QSqlDatabase::database() );
-    ClubFrontend::Model::MemberModel memberModel ( QSqlDatabase::database() );
-    ClubFrontend::Gui::MainWindow mainWindow ( memberModel, kassaModel );
+    ClubFrontend::Gui::MainWindow mainWindow ( QSqlDatabase::database() );
 
     QTableView* view = mainWindow.findChild<QTableView* > ( "tableView" );
     QItemSelectionModel* selectionModel = view->selectionModel();
@@ -93,18 +55,13 @@ void MainWindowTest::testSelectedMember()
     QItemSelection selection ( index, index );
     selectionModel->select ( selection, QItemSelectionModel::Select );
 
-    TestUtils::TriggerThread thread ( this, this );
-    connect ( &thread, SIGNAL ( triggered() ), &mainWindow, SLOT ( selectedMember() ) );
-    thread.syncStart();
-
-    QCOMPARE ( id, QString ( "1025" ) );
+    QLabel *memberId = mainWindow.findChild<QLabel* >( "memberId" );
+    QCOMPARE (memberId->text() , QString ( "1025" ) );
 }
 
 void MainWindowTest::testShowSaldo()
 {
-    ClubFrontend::Model::KassaModel kassaModel ( QSqlDatabase::database() );
-    ClubFrontend::Model::MemberModel memberModel ( QSqlDatabase::database() );
-    ClubFrontend::Gui::MainWindow mainWindow ( memberModel, kassaModel );
+    ClubFrontend::Gui::MainWindow mainWindow ( QSqlDatabase::database() );
 
     QTableView* view = mainWindow.findChild<QTableView* > ( "tableView" );
     QItemSelectionModel* selectionModel = view->selectionModel();
@@ -113,8 +70,8 @@ void MainWindowTest::testShowSaldo()
     QItemSelection selection ( index, index );
     selectionModel->select ( selection, QItemSelectionModel::Select );
 
-    TestUtils::Gui::DialogButtonBoxHandler handler ( QDialogButtonBox::Close );
-    TestUtils::TriggerThread thread ( this, &handler );
+    qttestutil::gui::DialogButtonBoxHandler handler ( QDialogButtonBox::Close );
+    qttestutil::TriggerThread thread ( this, &handler );
     connect ( &thread, SIGNAL ( triggered() ), &mainWindow, SLOT ( showSaldo() ) );
     thread.syncStart();
 }
@@ -141,9 +98,7 @@ void MainWindowTest::handle()
 
 void MainWindowTest::testMemberView()
 {
-    ClubFrontend::Model::KassaModel kassaModel ( QSqlDatabase::database() );
-    ClubFrontend::Model::MemberModel memberModel ( QSqlDatabase::database() );
-    ClubFrontend::Gui::MainWindow mainWindow ( memberModel, kassaModel );
+    ClubFrontend::Gui::MainWindow mainWindow ( QSqlDatabase::database() );
 
     QAction* actionSelectMember = mainWindow.findChild<QAction*> (
                                       "actionShowMember" );
@@ -163,15 +118,13 @@ void MainWindowTest::testMemberView()
     QVariant value = model->data ( index );
     QCOMPARE ( value.toInt(),1025 );
 
-    // XXX QTest::mouseClick(view, Qt::LeftButton, Qt::NoModifier, QPoint(0,0));
-    // XXX QModelIndex index = view->currentIndex();
+    // \todo QTest::mouseClick(view, Qt::LeftButton, Qt::NoModifier, QPoint(0,0));
+    // \todo QModelIndex index = view->currentIndex();
 }
 
 void MainWindowTest::testDeletedMemberView()
 {
-    ClubFrontend::Model::KassaModel kassaModel ( QSqlDatabase::database() );
-    ClubFrontend::Model::MemberModel memberModel ( QSqlDatabase::database() );
-    ClubFrontend::Gui::MainWindow mainWindow ( memberModel, kassaModel );
+    ClubFrontend::Gui::MainWindow mainWindow ( QSqlDatabase::database() );
 
     QAction* actionShowDeletedMember = mainWindow.findChild<QAction*> (
                                            "actionShowDeletedMember" );
@@ -191,37 +144,8 @@ void MainWindowTest::testDeletedMemberView()
     QVariant value = model->data ( index );
     QCOMPARE ( value.toInt(),1026 );
 
-    // XXX QTest::mouseClick(view, Qt::LeftButton, Qt::NoModifier, QPoint(0,0));
-    // XXX QModelIndex index = view->currentIndex();
-}
-
-void MainWindowTest::testShowKassaView()
-{
-    ClubFrontend::Model::KassaModel kassaModel ( QSqlDatabase::database() );
-    ClubFrontend::Model::MemberModel memberModel ( QSqlDatabase::database() );
-    ClubFrontend::Gui::MainWindow mainWindow ( memberModel, kassaModel );
-
-    QAction* actionShowKassa = mainWindow.findChild<QAction*> (
-                                   "actionShowKassa" );
-    actionShowKassa->trigger();
-
-    QAction* actionSelectMember = mainWindow.findChild<QAction*> (
-                                      "actionShowMember" );
-    QVERIFY ( !actionSelectMember->isChecked() );
-
-    QAction* actionShowDeletedMember = mainWindow.findChild<QAction*> (
-                                           "actionShowDeletedMember" );
-    QVERIFY ( !actionShowDeletedMember->isChecked() );
-
-    QTableView* view = mainWindow.findChild<QTableView*> ( "tableView" );
-
-    QModelIndex index = view->indexAt ( QPoint ( 0, 0 ) );
-    QVERIFY ( index.isValid() );
-    const QAbstractItemModel * model = index.model();
-    QVERIFY ( model != 0 );
-    QCOMPARE ( model->rowCount(), 3 );
-    QVariant value = model->data ( index );
-    QCOMPARE ( value.toString(), QString ( "" ) );
+    // \todo QTest::mouseClick(view, Qt::LeftButton, Qt::NoModifier, QPoint(0,0));
+    // \todo QModelIndex index = view->currentIndex();
 }
 
 }

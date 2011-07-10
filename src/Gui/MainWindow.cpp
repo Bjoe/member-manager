@@ -1,67 +1,64 @@
-
 #include "Gui/MainWindow.h"
-#include "Model/MemberFilter.h"
-#include "Gui/MemberDialog.h"
-#include "Model/MemberDetailModel.h"
-#include "Gui/SaldoDialog.h"
-#include "Model/DatabaseStructure.h"
 
-#include <QModelIndexList>
-#include <QSqlTableModel>
-#include <QSqlRecord>
-#include <QClipboard>
-#include <QItemSelectionModel>
-#include <QVariant>
-#include <QString>
+#include "Model/MemberFilter.h"
+#include "Gui/SaldoDialog.h"
 
 namespace ClubFrontend
 {
 namespace Gui
 {
 
-MainWindow::MainWindow ( Model::MemberModel& aMemberModel, Model::KassaModel& aKassaModel,
+MainWindow::MainWindow ( const QSqlDatabase & aDatabase,
                          QWidget* parent ) :
-        QMainWindow ( parent ), ui(), memberModel ( aMemberModel ), kassaModel (
-            aKassaModel )
+        QMainWindow ( parent ), ui(), memberModel ( aDatabase ), memberMapper(&ui)
 {
     ui.setupUi ( this );
+    memberMapper.initUi();
+
     showMembers ( false );
 
-    connect ( ui.actionShowDeletedMember, SIGNAL ( triggered() ), this,
+    connect ( ui.actionShowDeletedMember, SIGNAL ( triggered() ),
               SLOT ( showDeletedMemberView() ) );
-    connect ( ui.actionShowMember, SIGNAL ( triggered() ), this,
-              SLOT ( showMemberView() ) );
-    connect ( ui.actionShowKassa, SIGNAL ( triggered() ), this,
-              SLOT ( showKassaView() ) );
-    connect ( ui.actionNewMember, SIGNAL ( triggered() ), this,
+    connect ( ui.actionNewMember, SIGNAL ( triggered() ),
               SLOT ( newMember() ) );
-    connect ( ui.actionEditMember, SIGNAL ( triggered() ), this,
-              SLOT ( selectedMember() ) );
-    connect ( ui.actionShowSaldo, SIGNAL ( triggered() ), this,
+    connect ( ui.actionShowSaldo, SIGNAL ( triggered() ),
               SLOT ( showSaldo() ) );
+
+//    connect ( ui.tableView->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
+ //            SLOT(updateMemberMapper()));
+    connect ( ui.tableView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
+              SLOT(updateMemberMapper()));
 }
 
 void MainWindow::newMember()
 {
-    Model::MemberDetailModel model;
-    model.newMember();
-
-    showMemberDialog ( model );
+    // \todo Refactor to MemberMapper
+    memberMapper.newMember();
 }
 
-void MainWindow::selectedMember()
+void MainWindow::updateMemberMapper()
 {
-    editMember ( getSelection() );
+    int id = getSelection();
+    memberMapper.map(id);
 }
 
-void MainWindow::editMember ( const QModelIndex& anIndex )
+void MainWindow::showSaldo()
 {
-    int id = memberModel.getMemberId ( anIndex );
+    int id = getSelection();
 
-    Model::MemberDetailModel model;
-    model.setMemberId ( id );
+    // \todo Refactor: SaldoModel in SaldoDialog!
+    Model::SaldoModel model ( QSqlDatabase::database(), id );
+    SaldoDialog dialog ( model, this );
+    dialog.show();
+    dialog.exec();
+}
 
-    showMemberDialog ( model );
+int MainWindow::getSelection() const
+{
+    QItemSelectionModel* selectionModel = ui.tableView->selectionModel();
+    QModelIndexList indexes = selectionModel->selectedIndexes();
+    QModelIndex index = indexes.first();
+    return memberModel.getMemberId( index );
 }
 
 void MainWindow::showDeletedMemberView()
@@ -82,7 +79,6 @@ void MainWindow::showMembers ( const bool aBoolean )
     memberModel.initTableView ( ui.tableView );
     ui.tableView->resizeColumnsToContents();
 
-    ui.tableView->addAction ( ui.actionEditMember );
     ui.tableView->addAction ( ui.actionCopyMailAdr );
     ui.tableView->addAction ( ui.actionShowSaldo );
 
@@ -90,58 +86,12 @@ void MainWindow::showMembers ( const bool aBoolean )
     {
         ui.actionShowDeletedMember->setChecked ( true );
         ui.actionShowMember->setChecked ( false );
-        ui.actionShowKassa->setChecked ( false );
     }
     else
     {
         ui.actionShowDeletedMember->setChecked ( false );
         ui.actionShowMember->setChecked ( true );
-        ui.actionShowKassa->setChecked ( false );
     }
-    connect ( ui.tableView, SIGNAL ( doubleClicked ( const QModelIndex& ) ), this,
-              SLOT ( editMember ( const QModelIndex& ) ), Qt::UniqueConnection );
-}
-
-void MainWindow::showKassaView()
-{
-    disconnect ( ui.tableView, SIGNAL ( doubleClicked ( const QModelIndex& ) ), this,
-                 SLOT ( editMember ( const QModelIndex& ) ) );
-    ui.tableView->removeAction ( ui.actionEditMember );
-    ui.tableView->removeAction ( ui.actionCopyMailAdr );
-    ui.tableView->removeAction ( ui.actionShowSaldo );
-
-    ui.actionShowDeletedMember->setChecked ( false );
-    ui.actionShowMember->setChecked ( false );
-    ui.actionShowKassa->setChecked ( true );
-
-    kassaModel.initTableView ( ui.tableView );
-    ui.tableView->resizeColumnsToContents();
-}
-
-void MainWindow::showMemberDialog ( Model::MemberDetailModel& aModel )
-{
-    MemberDialog dialog ( aModel, this );
-    dialog.show();
-    dialog.exec();
-
-    memberModel.refresh();
-}
-
-void MainWindow::showSaldo()
-{
-    int id = memberModel.getMemberId ( getSelection() );
-
-    Model::SaldoModel model ( QSqlDatabase::database(), id );
-    SaldoDialog dialog ( model, this );
-    dialog.show();
-    dialog.exec();
-}
-
-QModelIndex MainWindow::getSelection() const
-{
-    QItemSelectionModel* selectionModel = ui.tableView->selectionModel();
-    QModelIndexList indexes = selectionModel->selectedIndexes();
-    return indexes.first();
 }
 
 }

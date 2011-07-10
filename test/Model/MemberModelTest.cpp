@@ -2,10 +2,9 @@
 
 #include "Model/MemberModel.h"
 
-#include "Model/Member.h"
+#include "Member.h"
 #include "TestConfig.h"
-#include <DatabaseUtils.h>
-#include "Model/MemberDetailModel.h"
+#include "database/databaseutil.h"
 #include "Model/DatabaseStructure.h"
 
 #include <QtCore>
@@ -18,7 +17,7 @@ namespace Model
 
 void MemberModelTest::initTestCase()
 {
-    TestUtils::Database::DatabaseUtils database ( DATABASEDRIVER );
+    qttestutil::database::DatabaseUtil database ( DATABASEDRIVER );
     database.open ( DATABASE );
     database.read ( SQLTESTFILE );
 }
@@ -62,15 +61,6 @@ void MemberModelTest::testGetMemberId()
     const int id = memberModel.getMemberId ( index );
 
     QCOMPARE ( id, 1025 );
-}
-
-void MemberModelTest::testGetSelectedMembers()
-{
-    ClubFrontend::Model::MemberModel memberModel ( QSqlDatabase::database() );
-
-    QVector< ClubFrontend::Member > *memberList = memberModel.getSelectedMembers();
-
-    QCOMPARE ( memberList->size(), 2 );
 }
 
 }

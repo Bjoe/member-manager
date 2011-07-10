@@ -1,148 +1,156 @@
-#include "MemberDialogTest.h"
+#include "MemberMapperTest.h"
 
-#include "Gui/MemberDialog.h"
+#include "Gui/MemberMapper.h"
+#include "Gui/MainWindow.h"
 
-#include "Model/MemberDetailModel.h"
 #include "Model/DatabaseStructure.h"
-#include "TestConfig.h"
-#include <DatabaseUtils.h>
-#include <TriggerThread.h>
-#include <DialogButtonBoxHandler.h>
 
-#include <QLabel>
-#include <QLineEdit>
-#include <QPlainTextEdit>
-#include <QSqlQuery>
-#include <QString>
-#include <QPushButton>
-#include <QDialogButtonBox>
-#include <QMessageBox>
+#include "TestConfig.h"
+#include "Gui/MemberMapper.h"
+#include "database/databaseutil.h"
+#include "ui_MainWindow.h"
+#include "Member.h"
+
+#include <QtCore>
+#include <QtSql>
+#include <QtGui>
 
 namespace ClubFrontendTest
 {
 namespace Gui
 {
 
-void MemberDialogTest::initTestCase()
+void MemberMapperTest::initTestCase()
 {
-    TestUtils::Database::DatabaseUtils database ( DATABASEDRIVER );
+    qttestutil::database::DatabaseUtil database ( DATABASEDRIVER );
     database.open ( DATABASE );
     database.read ( SQLTESTFILE );
 }
 
-void MemberDialogTest::showMember()
+void MemberMapperTest::showMember()
 {
-    ClubFrontend::Model::MemberDetailModel detailModel;
-    detailModel.setMemberId ( 1025 );
-    ClubFrontend::Gui::MemberDialog dialog ( detailModel );
+    Ui::MainWindow mainWindow;
+    ClubFrontend::Gui::MemberMapper memberMapper(&mainWindow);
+    QMainWindow window;
+    mainWindow.setupUi(&window);
+    memberMapper.initUi();
 
-    QLabel* memberId = dialog.findChild<QLabel*> ( "memberId" );
+    memberMapper.map(1025);
+
+    QLabel* memberId = mainWindow.memberId;
     QCOMPARE ( memberId->text(), QString ( "1025" ) );
 
-    QLineEdit* firstName = dialog.findChild<QLineEdit*> ( "firstName" );
+    QLineEdit* firstName = mainWindow.firstName;
     QCOMPARE ( firstName->text(), QString ( "James T" ) );
 
-    QLineEdit* memberName = dialog.findChild<QLineEdit*> ( "memberName" );
+    QLineEdit* memberName = mainWindow.memberName;
     QCOMPARE ( memberName->text(), QString ( "Kirk" ) );
 
-    QLineEdit* nickname = dialog.findChild<QLineEdit*> ( "nickname" );
+    QLineEdit* nickname = mainWindow.nickname;
     QCOMPARE ( nickname->text(), QString ( "Capt. Kirk" ) );
 
-    QPlainTextEdit* info = dialog.findChild<QPlainTextEdit*> ( "info" );
+    QPlainTextEdit* info = mainWindow.info;
     QCOMPARE ( info->toPlainText(), QString ( "" ) );
 
-    QLineEdit* city = dialog.findChild<QLineEdit*> ( "city" );
+    QLineEdit* city = mainWindow.city;
     QCOMPARE ( city->text(), QString ( "Bloedeldorf" ) );
 
-    QLineEdit* street = dialog.findChild<QLineEdit*> ( "street" );
+    QLineEdit* street = mainWindow.street;
     QCOMPARE ( street->text(), QString ( "Industriestr. 23" ) );
 
-    QLineEdit* zipcode = dialog.findChild<QLineEdit*> ( "zipcode" );
+    QLineEdit* zipcode = mainWindow.zipcode;
     QCOMPARE ( zipcode->text(), QString ( "90546" ) );
 
-    QLineEdit* email = dialog.findChild<QLineEdit*> ( "email" );
+    QLineEdit* email = mainWindow.email;
     QCOMPARE ( email->text(), QString ( "fooo@baaar.xx" ) );
 
-    QDateEdit* entryDate = dialog.findChild<QDateEdit*> ( "entryDate" );
+    QDateEdit* entryDate = mainWindow.entryDate;
     QCOMPARE ( entryDate->text(), QString ( "24.04.01" ) );
 
-    QLineEdit* contributionInfo = dialog.findChild<QLineEdit*> (
-                                      "contributionInfo" );
+    QLineEdit* contributionInfo = mainWindow.contributionInfo;
     QCOMPARE ( contributionInfo->text(), QString ( "Beitragsaenderung" ) );
 
-    QLineEdit* donation = dialog.findChild<QLineEdit*> ( "donation" );
+    QLineEdit* donation = mainWindow.donation;
     QCOMPARE ( donation->text(), QString ( "1" ) );
 
-    QLineEdit* fee = dialog.findChild<QLineEdit*> ( "fee" );
+    QLineEdit* fee = mainWindow.fee;
     QCOMPARE ( fee->text(), QString ( "15" ) );
 
-    QLineEdit* account = dialog.findChild<QLineEdit*> ( "account" );
+    QLineEdit* account = mainWindow.account;
     QCOMPARE ( account->text(), QString ( "12234569" ) );
 
-    QLineEdit* code = dialog.findChild<QLineEdit*> ( "code" );
+    QLineEdit* code = mainWindow.code;
     QCOMPARE ( code->text(), QString ( "9004010" ) );
 
-    QLineEdit* bankName = dialog.findChild<QLineEdit*> ( "bankName" );
+    QLineEdit* bankName = mainWindow.bankName;
     QCOMPARE ( bankName->text(), QString ( "sparstrumpf" ) );
 }
 
-void MemberDialogTest::newMember()
+void MemberMapperTest::newMember()
 {
-    ClubFrontend::Model::MemberDetailModel detailModel;
-    int id = detailModel.newMember();
-    ClubFrontend::Gui::MemberDialog dialog ( detailModel );
+    Ui::MainWindow mainWindow;
+    ClubFrontend::Gui::MemberMapper memberMapper(&mainWindow);
+    QMainWindow window;
+    mainWindow.setupUi(&window);
+    memberMapper.initUi();
 
-    QLineEdit* memberName = dialog.findChild<QLineEdit*> ( "memberName" );
+    memberMapper.newMember();
+
+    QLabel* memberId = mainWindow.memberId;
+    QString strId = memberId->text();
+    QCOMPARE ( strId, QString ( "1027" ) );
+
+    QLineEdit* memberName = mainWindow.memberName;
     QTest::keyClicks ( memberName, "Mc Kay" );
 
-    QLineEdit* firstName = dialog.findChild<QLineEdit*> ( "firstName" );
+    QLineEdit* firstName = mainWindow.firstName;
+    firstName->clear();
     QTest::keyClicks ( firstName, "Rodney" );
 
-    QLineEdit* nickname = dialog.findChild<QLineEdit*> ( "nickname" );
+    QLineEdit* nickname = mainWindow.nickname;
     QTest::keyClicks ( nickname, "Rod" );
 
-    QLineEdit* street = dialog.findChild<QLineEdit*> ( "street" );
+    QLineEdit* street = mainWindow.street;
     QTest::keyClicks ( street, "Atlantis" );
 
-    QLineEdit* city = dialog.findChild<QLineEdit*> ( "city" );
+    QLineEdit* city = mainWindow.city;
     QTest::keyClicks ( city, "Pegasus" );
 
-    QLineEdit* zipcode = dialog.findChild<QLineEdit*> ( "zipcode" );
+    QLineEdit* zipcode = mainWindow.zipcode;
     QTest::keyClicks ( zipcode, "40215" );
 
-    QLineEdit* email = dialog.findChild<QLineEdit*> ( "email" );
+    QLineEdit* email = mainWindow.email;
     QTest::keyClicks ( email, "rod@atlantis.pegasus" );
 
-    QDateEdit* entryDate = dialog.findChild<QDateEdit*> ( "entryDate" );
+    QDateEdit* entryDate = mainWindow.entryDate;
     QTest::keyClicks ( entryDate, "01.01.09" );
 
-    QLineEdit* fee = dialog.findChild<QLineEdit*> ( "fee" );
+    QLineEdit* fee = mainWindow.fee;
     QTest::keyClicks ( fee, "15" );
 
-    QLineEdit* donation = dialog.findChild<QLineEdit*> ( "donation" );
+    QLineEdit* donation = mainWindow.donation;
     QTest::keyClicks ( donation, "5" );
 
-    QLineEdit* contributionInfo = dialog.findChild<QLineEdit*> (
-                                      "contributionInfo" );
+    QLineEdit* contributionInfo = mainWindow.contributionInfo;
     QTest::keyClicks ( contributionInfo, "Info" );
 
-    QLineEdit* account = dialog.findChild<QLineEdit*> ( "account" );
+    QLineEdit* account = mainWindow.account;
     QTest::keyClicks ( account, "123454321" );
 
-    QLineEdit* bankName = dialog.findChild<QLineEdit*> ( "bankName" );
+    QLineEdit* bankName = mainWindow.bankName;
     QTest::keyClicks ( bankName, "Galaxy Bank" );
 
-    QLineEdit* code = dialog.findChild<QLineEdit*> ( "code" );
+    QLineEdit* code = mainWindow.code;
     QTest::keyClicks ( code, "98765432" );
 
-    QPlainTextEdit* info = dialog.findChild<QPlainTextEdit*> ( "info" );
+    QPlainTextEdit* info = mainWindow.info;
     QTest::keyClicks ( info, "Foo" );
 
-    QDialogButtonBox* buttonBox = dialog.findChild<QDialogButtonBox*> (
-                                      "buttonBox" );
+    QDialogButtonBox* buttonBox = mainWindow.buttonBox;
     QPushButton* saveButton = buttonBox->button ( QDialogButtonBox::SaveAll );
     QTest::mouseClick ( saveButton, Qt::LeftButton );
 
+    int id = strId.toInt();
     const QString whereClause = QString ( " where dorfmitglied_pkey=%1" ).arg ( id );
 
     using ClubFrontend::Model::MemberTable;
@@ -182,59 +190,62 @@ void MemberDialogTest::newMember()
     QCOMPARE ( query.value ( RessourcenTable::EmailAdress ).toString(), QString ( "rod@atlantis.pegasus" ) );
 }
 
-void MemberDialogTest::changeMember()
+void MemberMapperTest::changeMember()
 {
-    ClubFrontend::Model::MemberDetailModel detailModel;
-    detailModel.setMemberId ( 1025 );
-    ClubFrontend::Gui::MemberDialog dialog ( detailModel );
+    Ui::MainWindow mainWindow;
+    ClubFrontend::Gui::MemberMapper memberMapper(&mainWindow);
+    QMainWindow window;
+    mainWindow.setupUi(&window);
+    memberMapper.initUi();
 
-    QLabel* id = dialog.findChild<QLabel *> ( "memberId" );
+    memberMapper.map(1025);
+
+    QLabel* id = mainWindow.memberId;
     QCOMPARE ( id->text(), QString ( "1025" ) );
 
-    QLineEdit* firstName = dialog.findChild<QLineEdit*> ( "firstName" );
+    QLineEdit* firstName = mainWindow.firstName;
     QCOMPARE ( firstName->text(), QString ( "James T" ) );
 
-    QLineEdit* memberName = dialog.findChild<QLineEdit*> ( "memberName" );
+    QLineEdit* memberName = mainWindow.memberName;
     QCOMPARE ( memberName->text(), QString ( "Kirk" ) );
 
-    QLineEdit* nickname = dialog.findChild<QLineEdit*> ( "nickname" );
+    QLineEdit* nickname = mainWindow.nickname;
     QCOMPARE ( nickname->text(), QString ( "Capt. Kirk" ) );
 
-    QPlainTextEdit* info = dialog.findChild<QPlainTextEdit*> ( "info" );
+    QPlainTextEdit* info = mainWindow.info;
     QCOMPARE ( info->toPlainText(), QString ( "" ) );
 
-    QLineEdit* city = dialog.findChild<QLineEdit*> ( "city" );
+    QLineEdit* city = mainWindow.city;
     QCOMPARE ( city->text(), QString ( "Bloedeldorf" ) );
 
-    QLineEdit* street = dialog.findChild<QLineEdit*> ( "street" );
+    QLineEdit* street = mainWindow.street;
     QCOMPARE ( street->text(), QString ( "Industriestr. 23" ) );
 
-    QLineEdit* zipcode = dialog.findChild<QLineEdit*> ( "zipcode" );
+    QLineEdit* zipcode = mainWindow.zipcode;
     QCOMPARE ( zipcode->text(), QString ( "90546" ) );
 
-    QLineEdit* email = dialog.findChild<QLineEdit*> ( "email" );
+    QLineEdit* email = mainWindow.email;
     QCOMPARE ( email->text(), QString ( "fooo@baaar.xx" ) );
 
-    QDateEdit* entryDate = dialog.findChild<QDateEdit*> ( "entryDate" );
+    QDateEdit* entryDate = mainWindow.entryDate;
     QCOMPARE ( entryDate->text(), QString ( "24.04.01" ) );
 
-    QLineEdit* contributionInfo = dialog.findChild<QLineEdit*> (
-                                      "contributionInfo" );
+    QLineEdit* contributionInfo = mainWindow.contributionInfo;
     QCOMPARE ( contributionInfo->text(), QString ( "Beitragsaenderung" ) );
 
-    QLineEdit* donation = dialog.findChild<QLineEdit*> ( "donation" );
+    QLineEdit* donation = mainWindow.donation;
     QCOMPARE ( donation->text(), QString ( "1" ) );
 
-    QLineEdit* fee = dialog.findChild<QLineEdit*> ( "fee" );
+    QLineEdit* fee = mainWindow.fee;
     QCOMPARE ( fee->text(), QString ( "15" ) );
 
-    QLineEdit* account = dialog.findChild<QLineEdit*> ( "account" );
+    QLineEdit* account = mainWindow.account;
     QCOMPARE ( account->text(), QString ( "12234569" ) );
 
-    QLineEdit* code = dialog.findChild<QLineEdit*> ( "code" );
+    QLineEdit* code = mainWindow.code;
     QCOMPARE ( code->text(), QString ( "9004010" ) );
 
-    QLineEdit* bankName = dialog.findChild<QLineEdit*> ( "bankName" );
+    QLineEdit* bankName = mainWindow.bankName;
     QCOMPARE ( bankName->text(), QString ( "sparstrumpf" ) );
 
     memberName->clear();
@@ -272,8 +283,7 @@ void MemberDialogTest::changeMember()
     info->clear();
     QTest::keyClicks ( info, "Lalala" );
 
-    QDialogButtonBox* buttonBox = dialog.findChild<QDialogButtonBox*> (
-                                      "buttonBox" );
+    QDialogButtonBox* buttonBox = mainWindow.buttonBox;
     QPushButton* saveButton = buttonBox->button ( QDialogButtonBox::SaveAll );
     QTest::mouseClick ( saveButton, Qt::LeftButton );
 
@@ -333,60 +343,8 @@ void MemberDialogTest::changeMember()
     QCOMPARE ( query.value ( RessourcenTable::EmailAdress ).toString(), QString ( "foo@bar.tx" ) );
 }
 
-void MemberDialogTest::newMemberDiscard()
-{
-    ClubFrontend::Model::MemberDetailModel detailModel;
-    int id = detailModel.newMember();
-    ClubFrontend::Gui::MemberDialog dialog ( detailModel );
-
-    QDialogButtonBox* buttonBox = dialog.findChild<QDialogButtonBox*> (
-                                      "buttonBox" );
-    QPushButton* discardButton = buttonBox->button ( QDialogButtonBox::Discard );
-
-    TestUtils::Gui::DialogButtonBoxHandler handler;
-
-    TestUtils::TriggerThread thread ( this, &handler );
-    connect ( &thread, SIGNAL ( triggered() ), discardButton, SLOT ( click() ) );
-    thread.syncStart();
-
-    const QString whereClause = QString ( " where dorfmitglied_pkey=%1" ).arg ( id );
-
-    using ClubFrontend::Model::MemberTable;
-    QSqlQuery query;
-    query.exec ( "select * from " + MemberTable::TABLENAME + whereClause );
-    QVERIFY ( !query.next() );
-}
-
-void MemberDialogTest::showSaldo()
-{
-    ClubFrontend::Model::MemberDetailModel detailModel;
-    detailModel.setMemberId ( 1025 );
-    ClubFrontend::Gui::MemberDialog dialog ( detailModel );
-
-    TestUtils::Gui::DialogButtonBoxHandler handler ( QDialogButtonBox::Close );
-    TestUtils::TriggerThread thread ( this, &handler );
-
-    QPushButton* saldoButton = dialog.findChild<QPushButton* > ( "saldoButton" );
-    connect ( &thread, SIGNAL ( triggered() ), saldoButton, SLOT ( click() ) );
-    thread.syncStart();
-}
-
-void MemberDialogTest::showfee()
-{
-    ClubFrontend::Model::MemberDetailModel detailModel;
-    detailModel.setMemberId ( 1025 );
-    ClubFrontend::Gui::MemberDialog dialog ( detailModel );
-
-    TestUtils::Gui::DialogButtonBoxHandler handler ( QDialogButtonBox::Close );
-    TestUtils::TriggerThread thread ( this, &handler );
-
-    QPushButton* feeButton = dialog.findChild<QPushButton* > ( "feeButton" );
-    connect ( &thread, SIGNAL ( triggered() ), feeButton, SLOT ( click() ) );
-    thread.syncStart();
-}
-
 }
 }
 
-QTEST_MAIN ( ClubFrontendTest::Gui::MemberDialogTest )
-#include "MemberDialogTest.moc"
+QTEST_MAIN(ClubFrontendTest::Gui::MemberMapperTest)
+#include "MemberMapperTest.moc"

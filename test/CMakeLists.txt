@@ -1,10 +1,12 @@
 
-find_package(Qt4 4.5.2 COMPONENTS QtTest REQUIRED)
-include(${QT_USE_FILE})
+# The following are required to uses Dart and the Cdash dashboard
+enable_testing(true)
+#include(CTest)
 
-find_library(TESTUTILS_LIB qttestutils)
-find_library(TESTUTILS_DATABASELIB qtdatabasetestutils)
-find_path(TESTUTILS_INC NAMES TriggerThread.h DatabaseUtils.h DialogButtonBoxHandler.h Handler.h)
+find_package(QtTestUtil)
+
+find_package(Qt4 4.7.3 COMPONENTS QtTest REQUIRED)
+include(${QT_USE_FILE})
 
 # Test Konfigurationen
 set(DATABASEDRIVER QSQLITE)
@@ -18,12 +20,11 @@ configure_file (
   "${CMAKE_CURRENT_BINARY_DIR}/TestConfig.h"
   )
 
-include_directories(../src ${CMAKE_CURRENT_BINARY_DIR}/../src ${TESTUTILS_INC})
+include_directories(../src ${CMAKE_CURRENT_BINARY_DIR}/../src ${QT_TEST_UTIL_INCLUDE_DIR})
 
 set(test_additional_lib
  memberManagerLib
- ${TESTUTILS_LIB}
- ${TESTUTILS_DATABASELIB}
+ ${QT_TEST_UTIL_LIBRARIES}
 )
 
 set(test_additional
@@ -32,6 +33,7 @@ set(test_additional
 add_subdirectory(Gui)
 add_subdirectory(Model)
 
+qt4_add_test(member MemberTest.cpp)
 qt4_add_test(cashSumSummary CashSumSummaryTest.cpp TestUtils/SummaryHandlerMock.cpp)
 qt4_add_test(countMemberSummary CountMemberSummaryTest.cpp TestUtils/SummaryHandlerMock.cpp)
 qt4_add_test(debitSumSummary DebitSumSummaryTest.cpp TestUtils/SummaryHandlerMock.cpp)

@@ -5,7 +5,7 @@
 #include <QtSql>
 #include <QTableView>
 
-#include "Model/Member.h"
+#include "Member.h"
 
 namespace ClubFrontend
 {
@@ -22,8 +22,7 @@ public:
     void setFilter ( const QString aSqlFilter );
     void refresh();
 
-    int getMemberId ( const QModelIndex& anIndex );
-    QVector< Member > * getSelectedMembers();
+    int getMemberId ( const QModelIndex& anIndex ) const;
 
     QString getLastError() const;
     void initTableView ( QTableView* aTableView ) const;

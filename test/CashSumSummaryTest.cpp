@@ -5,14 +5,14 @@
 #include "TestUtils/SummaryHandlerMock.h"
 
 #include "TestConfig.h"
-#include <DatabaseUtils.h>
+#include "database/databaseutil.h"
 
 namespace ClubFrontendTest
 {
 
 void CashSumSummaryTest::initTestCase()
 {
-    TestUtils::Database::DatabaseUtils database ( DATABASEDRIVER );
+    qttestutil::database::DatabaseUtil database ( DATABASEDRIVER );
     database.open ( DATABASE );
     database.read ( SQLTESTFILE );
 }

@@ -2,9 +2,6 @@
 #include <QtSql>
 
 #include "Gui/ConnectionDialog.h"
-#include "Gui/MemberDialog.h"
-#include "Model/MemberModel.h"
-#include "Model/KassaModel.h"
 #include "Gui/MainWindow.h"
 
 int main ( int argc, char *argv[] )
@@ -61,10 +58,8 @@ int main ( int argc, char *argv[] )
     settings.setValue ( hostnameKey, dialog.getHostname() );
     settings.setValue ( portKey, dialog.getPort() );
 
-    ClubFrontend::Model::MemberModel memberModel ( db );
-    ClubFrontend::Model::KassaModel kassaModel ( db );
     ClubFrontend::Gui::MainWindow* mainWindow = new ClubFrontend::Gui::MainWindow (
-        memberModel, kassaModel );
+        db );
     mainWindow->show();
 
     return app.exec();

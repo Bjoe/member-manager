@@ -1,7 +1,7 @@
 
 set(QT_MOC_HEADERS
     Gui/MainWindow.h
-    Gui/MemberDialog.h
+    Gui/MemberMapper.h
     Gui/ConnectionDialog.h
     Gui/SaldoDialog.h
     Gui/SaldoSumDialog.h
@@ -15,7 +15,6 @@ set(QT_MOC_HEADERS
 
 set(QT_UI
     Gui/MainWindow.ui
-    Gui/MemberDialog.ui
     Gui/ConnectionDialog.ui
     Gui/SaldoDialog.ui
     Gui/SaldoSumDialog.ui
@@ -25,7 +24,7 @@ set(QT_UI
 
 set(QT_SRCS
     Gui/MainWindow.cpp
-    Gui/MemberDialog.cpp
+    Gui/MemberMapper.cpp
     Gui/ConnectionDialog.cpp
     Gui/SaldoDialog.cpp
     Gui/SaldoSumDialog.cpp
@@ -37,13 +36,12 @@ set(QT_SRCS
     Model/SaldoModel.cpp
     Model/SaldoSumModel.cpp
     Model/ContributionModel.cpp
-    Model/MemberDetailModel.cpp
     Model/MemberFilter.cpp
-    Model/Member.cpp
     Model/DatabaseStructure.cpp
     Model/MemberDao.cpp
     Model/TableDao.cpp
 
+    Member.cpp
     SummaryHandler.cpp
     CountMemberSummary.cpp
     CashSumSummary.cpp

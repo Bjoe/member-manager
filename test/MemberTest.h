@@ -11,7 +11,7 @@ class MemberTest : public QObject
     Q_OBJECT
 
 private slots:
-    void testDefaultKonstruktor();
+    void initTestCase();
     void testMember();
 };
 
