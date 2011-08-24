@@ -1,3 +1,4 @@
+DROP TABLE adresse;
 
 CREATE TABLE adresse (
 adresse_pkey INTEGER PRIMARY KEY AUTOINCREMENT, 
@@ -14,7 +15,7 @@ VALUES (2,1025,'Industriestr. 23',90546,'Bloedeldorf');
 
 
 
-
+DROP TABLE barkonto;
 
 CREATE TABLE barkonto (
 konto integer,
@@ -24,7 +25,7 @@ CONSTRAINT barkonto_konto_key UNIQUE (konto));
 
 
 
-
+DROP TABLE beitragstab;
 
 CREATE TABLE beitragstab (
   beitragstab_pkey INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -49,7 +50,7 @@ INSERT INTO beitragstab(
 
 
 
-
+DROP TABLE dorfmitglied;
 
 CREATE TABLE dorfmitglied (
   dorfmitglied_pkey INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -80,7 +81,7 @@ INSERT INTO dorfmitglied (
 
 
 
-
+DROP TABLE kasse;
 
 CREATE TABLE kasse (
   kasse_pkey INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -146,7 +147,7 @@ INSERT INTO kasse (
 
 
 
-
+DROP TABLE kommunikation;
 
 CREATE TABLE kommunikation (
                   kommunikation_pkey INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -162,7 +163,7 @@ INSERT INTO kommunikation (
 
 
 
-
+DROP TABLE konten;
 
 CREATE TABLE konten (
                   kenz smallint,
@@ -171,7 +172,7 @@ CREATE TABLE konten (
 
 
 
-
+DROP TABLE kontodaten;
 
 CREATE TABLE kontodaten (
                   kontodaten_pkey INTEGER PRIMARY KEY AUTOINCREMENT, 
@@ -187,7 +188,7 @@ VALUES (1,1025,12234569,'sparstrumpf',9004010);
 
 
 
-
+DROP TABLE saldo;
 
 CREATE TABLE saldo (
                   saldo_pkey INTEGER PRIMARY KEY AUTOINCREMENT,

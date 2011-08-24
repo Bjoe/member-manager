@@ -17,6 +17,8 @@ MainWindow::MainWindow(const QSqlDatabase &aDatabase,
 
     showMembers(false);
 
+    connect(ui.actionShowMember, SIGNAL(triggered()),
+            SLOT(showMemberView()));
     connect(ui.actionShowDeletedMember, SIGNAL(triggered()),
             SLOT(showDeletedMemberView()));
     connect(ui.actionNewMember, SIGNAL(triggered()),
@@ -27,7 +29,7 @@ MainWindow::MainWindow(const QSqlDatabase &aDatabase,
 //    connect ( ui.tableView->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
 //            SLOT(updateMemberMapper()));
     connect(ui.tableView->selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
-            SLOT(updateMemberMapper()));
+            SLOT(updateMemberMapper(QItemSelection, QItemSelection)));
 }
 
 void MainWindow::newMember()
@@ -36,29 +38,35 @@ void MainWindow::newMember()
     memberMapper.newMember();
 }
 
-void MainWindow::updateMemberMapper()
+void MainWindow::updateMemberMapper(const QItemSelection &aSelected, const QItemSelection &aDeselected)
 {
     int id = getSelection();
+    // \todo if id == 0 clear memberMapper
     memberMapper.map(id);
 }
 
 void MainWindow::showSaldo()
 {
     int id = getSelection();
-
-    // \todo Refactor: SaldoModel in SaldoDialog!
-    Model::SaldoModel model(QSqlDatabase::database(), id);
-    SaldoDialog dialog(model, this);
-    dialog.show();
-    dialog.exec();
+    if(id > 0) {
+        // \todo Refactor: SaldoModel in SaldoDialog!
+        Model::SaldoModel model(QSqlDatabase::database(), id);
+        SaldoDialog dialog(model, this);
+        dialog.show();
+        dialog.exec();
+    }
 }
 
 int MainWindow::getSelection() const
 {
     QItemSelectionModel *selectionModel = ui.tableView->selectionModel();
     QModelIndexList indexes = selectionModel->selectedIndexes();
-    QModelIndex index = indexes.first();
-    return memberModel.getMemberId(index);
+    int id = 0;
+    if(indexes.size() > 0) {
+        QModelIndex index = indexes.first();
+        id = memberModel.getMemberId(index);
+    }
+    return id;
 }
 
 void MainWindow::showDeletedMemberView()
@@ -73,6 +81,11 @@ void MainWindow::showMemberView()
 
 void MainWindow::showMembers(const bool aBoolean)
 {
+    QItemSelectionModel *selectionModel = ui.tableView->selectionModel();
+    if(selectionModel) {
+        selectionModel->clearSelection();
+    }
+
     Model::MemberFilter filter;
     filter.setDeleted(aBoolean);
     memberModel.setFilter(filter.getFilter());
