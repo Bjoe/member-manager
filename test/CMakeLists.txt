@@ -16,8 +16,8 @@ set(SQLTESTFILE "${PROJECT_SOURCE_DIR}/testdaten.sql")
 # configure a header file to pass some of the CMake settings
 # to the source code
 configure_file (
-  "${PROJECT_SOURCE_DIR}/TestConfig.h.in"
-  "${CMAKE_CURRENT_BINARY_DIR}/TestConfig.h"
+  "${PROJECT_SOURCE_DIR}/testconfig.h.in"
+  "${CMAKE_CURRENT_BINARY_DIR}/testconfig.h"
   )
 
 include_directories(../src ${CMAKE_CURRENT_BINARY_DIR}/../src ${QT_TEST_UTIL_INCLUDE_DIR})
@@ -30,10 +30,10 @@ set(test_additional_lib
 set(test_additional
 )
 
-add_subdirectory(Gui)
-add_subdirectory(Model)
+add_subdirectory(gui)
+add_subdirectory(model)
 
-qt4_add_test(member MemberTest.cpp)
-qt4_add_test(cashSumSummary CashSumSummaryTest.cpp TestUtils/SummaryHandlerMock.cpp)
-qt4_add_test(countMemberSummary CountMemberSummaryTest.cpp TestUtils/SummaryHandlerMock.cpp)
-qt4_add_test(debitSumSummary DebitSumSummaryTest.cpp TestUtils/SummaryHandlerMock.cpp)
+qt4_add_test(member membertest.cpp)
+qt4_add_test(cashsumsummary cashsumsummarytest.cpp testutil/summaryhandlermock.cpp)
+qt4_add_test(countmembersummary countmembersummarytest.cpp testutil/summaryhandlermock.cpp)
+qt4_add_test(debitsumsummary debitsumsummarytest.cpp testutil/summaryhandlermock.cpp)

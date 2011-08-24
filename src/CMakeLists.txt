@@ -1,58 +1,58 @@
 
 set(QT_MOC_HEADERS
-    Gui/MainWindow.h
-    Gui/MemberMapper.h
-    Gui/ConnectionDialog.h
-    Gui/SaldoDialog.h
-    Gui/SaldoSumDialog.h
-    Gui/ContributionDialog.h
-    Gui/SummaryWindow.h
+    gui/mainwindow.h
+    gui/membermapper.h
+    gui/connectiondialog.h
+    gui/saldodialog.h
+    gui/saldosumdialog.h
+    gui/contributiondialog.h
+    gui/summarywindow.h
 
-    CountMemberSummary.h
-    CashSumSummary.h
-    DebitSumSummary.h
+    countmembersummary.h
+    cashsumsummary.h
+    debitsumsummary.h
     )
 
 set(QT_UI
-    Gui/MainWindow.ui
-    Gui/ConnectionDialog.ui
-    Gui/SaldoDialog.ui
-    Gui/SaldoSumDialog.ui
-    Gui/ContributionDialog.ui
-    Gui/SummaryWindow.ui
+    gui/mainwindow.ui
+    gui/connectiondialog.ui
+    gui/saldodialog.ui
+    gui/saldosumdialog.ui
+    gui/contributiondialog.ui
+    gui/summarywindow.ui
     )
 
 set(QT_SRCS
-    Gui/MainWindow.cpp
-    Gui/MemberMapper.cpp
-    Gui/ConnectionDialog.cpp
-    Gui/SaldoDialog.cpp
-    Gui/SaldoSumDialog.cpp
-    Gui/ContributionDialog.cpp
-    Gui/SummaryWindow.cpp
+    gui/mainwindow.cpp
+    gui/membermapper.cpp
+    gui/connectiondialog.cpp
+    gui/saldodialog.cpp
+    gui/saldosumdialog.cpp
+    gui/contributiondialog.cpp
+    gui/summarywindow.cpp
 
-    Model/MemberModel.cpp
-    Model/KassaModel.cpp
-    Model/SaldoModel.cpp
-    Model/SaldoSumModel.cpp
-    Model/ContributionModel.cpp
-    Model/MemberFilter.cpp
-    Model/DatabaseStructure.cpp
-    Model/MemberDao.cpp
-    Model/TableDao.cpp
+    model/membermodel.cpp
+    model/kassamodel.cpp
+    model/saldomodel.cpp
+    model/saldosummodel.cpp
+    model/contributionmodel.cpp
+    model/memberfilter.cpp
+    model/databasestructure.cpp
+    model/memberdao.cpp
+    model/tabledao.cpp
 
-    Member.cpp
-    SummaryHandler.cpp
-    CountMemberSummary.cpp
-    CashSumSummary.cpp
-    DebitSumSummary.cpp
+    member.cpp
+    summaryhandler.cpp
+    countmembersummary.cpp
+    cashsumsummary.cpp
+    debitsumsummary.cpp
     )
 
 # configure a header file to pass some of the CMake settings
 # to the source code
 configure_file (
-  "${PROJECT_SOURCE_DIR}/Config.h.in"
-  "${CMAKE_CURRENT_BINARY_DIR}/Config.h"
+  "${PROJECT_SOURCE_DIR}/config.h.in"
+  "${CMAKE_CURRENT_BINARY_DIR}/config.h"
   )
 
 qt4_wrap_cpp(MOC_OUTFILES ${QT_MOC_HEADERS})

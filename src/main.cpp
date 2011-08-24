@@ -1,8 +1,8 @@
 #include <QtGui>
 #include <QtSql>
 
-#include "Gui/ConnectionDialog.h"
-#include "Gui/MainWindow.h"
+#include "gui/connectiondialog.h"
+#include "gui/mainwindow.h"
 
 int main ( int argc, char *argv[] )
 {
