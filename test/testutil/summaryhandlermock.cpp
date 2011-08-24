@@ -6,7 +6,7 @@ namespace Utils
 {
 
 SummaryHandlerMock::SummaryHandlerMock() :
-        button ( 0 ), text ( "" )
+    button(0), text("")
 {
 
 }
@@ -16,17 +16,17 @@ SummaryHandlerMock::~SummaryHandlerMock()
 
 }
 
-void SummaryHandlerMock::addButton ( QPushButton* aButton )
+void SummaryHandlerMock::addButton(QPushButton *aButton)
 {
     button = aButton;
 }
 
-void SummaryHandlerMock::showSummary ( const QString& aText )
+void SummaryHandlerMock::showSummary(const QString &aText)
 {
     text = aText;
 }
 
-QPushButton* SummaryHandlerMock::getPushButton() const
+QPushButton * SummaryHandlerMock::getPushButton() const
 {
     return button;
 }

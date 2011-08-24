@@ -13,14 +13,14 @@ namespace Model
 class ContributionModel : public QObject
 {
 public:
-    ContributionModel ( const QSqlDatabase& aDb );
+    ContributionModel(const QSqlDatabase &aDb);
     virtual ~ContributionModel();
 
-    void setMemberId ( const int aMemberId );
-    int insertMemberId ( const QVariant& aMemberId );
+    void setMemberId(const int aMemberId);
+    int insertMemberId(const QVariant &aMemberId);
     void refresh();
 
-    void initTableView ( QTableView* aTableView ) const;
+    void initTableView(QTableView *aTableView) const;
 
     QString getInfo() const;
     QVariant getInfoValue() const;
@@ -29,12 +29,12 @@ public:
     QString getFee() const;
     QVariant getFeeValue() const;
 
-    void submit ( const QString& aFee, const QString& aDonation, const QString& anInfo );
+    void submit(const QString &aFee, const QString &aDonation, const QString &anInfo);
 
 private:
-    QVariant returnValue ( int aColumn ) const;
+    QVariant returnValue(int aColumn) const;
 
-    QSqlTableModel* model;
+    QSqlTableModel *model;
     QSqlRecord record;
     int memberId;
 };

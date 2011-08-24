@@ -13,8 +13,7 @@ class AddressTable
 {
 public:
     static const QString TABLENAME;
-    enum column
-    {
+    enum column {
         AddressId, MemberId, Street, ZipCode, Town
     };
     static const QStringList COLUMNNAME;
@@ -24,8 +23,7 @@ class ContributionTable
 {
 public:
     static const QString TABLENAME;
-    enum column
-    {
+    enum column {
         ContributionId, MemberId, Fee, Donation, Debit, ValidFrom, Info
     };
     static const QStringList COLUMNNAME;
@@ -35,8 +33,7 @@ class MemberTable
 {
 public:
     static const QString TABLENAME;
-    enum column
-    {
+    enum column {
         MemberId,
         Deleted,
         FirstName,
@@ -58,8 +55,7 @@ class RessourcenTable
 {
 public:
     static const QString TABLENAME;
-    enum column
-    {
+    enum column {
         RessoucenId, MemberId, EmailAdress, FOO_KeyName, FOO_PublicKey
     };
     static const QStringList COLUMNNAME;
@@ -69,8 +65,7 @@ class BankAccountTable
 {
 public:
     static const QString TABLENAME;
-    enum column
-    {
+    enum column {
         BankAccountId, MemberId, AccountNr, BankName, Code
     };
     static const QStringList COLUMNNAME;
@@ -80,8 +75,7 @@ class KassaTable
 {
 public:
     static const QString TABLENAME;
-    enum column
-    {
+    enum column {
         kasse_pkey,
         deleted,
         einlesedatum,
@@ -115,8 +109,7 @@ class SaldoTable
 {
 public:
     static const QString TABLENAME;
-    enum column
-    {
+    enum column {
         saldo_pkey,
         dorfmitglied_pkey,
         betrag,

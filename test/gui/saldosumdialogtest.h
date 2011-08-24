@@ -20,4 +20,4 @@ private slots:
 }
 }
 
-#endif	/* // SALDOSUMDIALOGTEST_H */
+#endif  /* // SALDOSUMDIALOGTEST_H */

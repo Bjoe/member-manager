@@ -10,13 +10,13 @@ namespace ClubFrontend
 {
 namespace Gui
 {
-  
+
 class ContributionDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    ContributionDialog ( Model::ContributionModel *aContributionModel, QWidget* parent = 0 );
+    ContributionDialog(Model::ContributionModel *aContributionModel, QWidget *parent = 0);
     ~ContributionDialog();
 
 private:

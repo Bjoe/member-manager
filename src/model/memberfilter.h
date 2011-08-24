@@ -13,7 +13,7 @@ class MemberFilter
 {
 
 public:
-    void setDeleted ( const bool aBoolean );
+    void setDeleted(const bool aBoolean);
 
     QString getFilter() const;
 

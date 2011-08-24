@@ -10,7 +10,7 @@ namespace Model
 class TableDao
 {
 public:
-    int insertNewRow ( QSqlTableModel* aModel, int aColumn, const QVariant& aValue );
+    int insertNewRow(QSqlTableModel *aModel, int aColumn, const QVariant &aValue);
 
 };
 

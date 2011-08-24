@@ -29,10 +29,10 @@ private:
 
     Member member;
     const Ui::MainWindow *ui;
-    QDataWidgetMapper* const memberMapper;
-    QDataWidgetMapper* const addressMapper;
-    QDataWidgetMapper* const bankMapper;
-    QDataWidgetMapper* const ressourcenMapper;
+    QDataWidgetMapper * const memberMapper;
+    QDataWidgetMapper * const addressMapper;
+    QDataWidgetMapper * const bankMapper;
+    QDataWidgetMapper * const ressourcenMapper;
 };
 
 }

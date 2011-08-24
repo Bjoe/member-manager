@@ -7,11 +7,11 @@ namespace ClubFrontend
 namespace Model
 {
 
-KassaModel::KassaModel ( const QSqlDatabase& aDb ) :
-        model ( new QSqlTableModel ( this, aDb ) )
+KassaModel::KassaModel(const QSqlDatabase &aDb) :
+    model(new QSqlTableModel(this, aDb))
 {
-    model->setTable ( KassaTable::TABLENAME );
-    model->setObjectName ( KassaTable::TABLENAME );
+    model->setTable(KassaTable::TABLENAME);
+    model->setObjectName(KassaTable::TABLENAME);
     setDefaultFilter();
     refresh();
 }
@@ -23,7 +23,7 @@ KassaModel::~KassaModel()
 
 void KassaModel::setDefaultFilter()
 {
-    model->setFilter ( KassaTable::COLUMNNAME[KassaTable::deleted] + "='false'" );
+    model->setFilter(KassaTable::COLUMNNAME[KassaTable::deleted] + "='false'");
 }
 
 void KassaModel::refresh()
@@ -31,13 +31,13 @@ void KassaModel::refresh()
     model->select();
 }
 
-void KassaModel::initTableView ( QTableView* aTableView ) const
+void KassaModel::initTableView(QTableView *aTableView) const
 {
-    aTableView->setModel ( model );
-    aTableView->setColumnHidden ( KassaTable::kasse_pkey, true );
-    aTableView->setColumnHidden ( KassaTable::deleted, true );
+    aTableView->setModel(model);
+    aTableView->setColumnHidden(KassaTable::kasse_pkey, true);
+    aTableView->setColumnHidden(KassaTable::deleted, true);
 
-    aTableView->sortByColumn ( KassaTable::kasse_pkey, Qt::DescendingOrder );
+    aTableView->sortByColumn(KassaTable::kasse_pkey, Qt::DescendingOrder);
 }
 
 }

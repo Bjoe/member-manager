@@ -11,24 +11,24 @@ namespace ClubFrontend
 {
 namespace Model
 {
-  
+
 class MemberModel: public QObject
 {
 
 public:
-    MemberModel ( const QSqlDatabase& aDb );
+    MemberModel(const QSqlDatabase &aDb);
     virtual ~MemberModel();
 
-    void setFilter ( const QString aSqlFilter );
+    void setFilter(const QString aSqlFilter);
     void refresh();
 
-    int getMemberId ( const QModelIndex& anIndex ) const;
+    int getMemberId(const QModelIndex &anIndex) const;
 
     QString getLastError() const;
-    void initTableView ( QTableView* aTableView ) const;
+    void initTableView(QTableView *aTableView) const;
 
 private:
-    QSqlTableModel* const model;
+    QSqlTableModel * const model;
 };
 
 }

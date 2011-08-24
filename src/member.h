@@ -36,29 +36,29 @@ public:
     float getFeeAsFloat() const;
     QString getContributionInfo() const;
 
-    Model::ContributionModel* getContributionModel() const;
-    Model::SaldoModel* getSaldoModel() const;
+    Model::ContributionModel * getContributionModel() const;
+    Model::SaldoModel * getSaldoModel() const;
 
-    void initAddressMapper ( QDataWidgetMapper* aMapper ) const;
-    void initBankAccountMapper ( QDataWidgetMapper* aMapper ) const;
-    void initRessourcenMapper ( QDataWidgetMapper* aMapper ) const;
-    void initMemberMapper ( QDataWidgetMapper* aMapper ) const;
+    void initAddressMapper(QDataWidgetMapper *aMapper) const;
+    void initBankAccountMapper(QDataWidgetMapper *aMapper) const;
+    void initRessourcenMapper(QDataWidgetMapper *aMapper) const;
+    void initMemberMapper(QDataWidgetMapper *aMapper) const;
 
     void submitContribution(const QString &aFee, const QString &aDonation, const QString &anInfo);
 
 private:
     void initModels();
-    void initTableModel ( const QString &aTablename, QSqlTableModel* const aModel);
+    void initTableModel(const QString &aTablename, QSqlTableModel * const aModel);
     QString getValue(const QSqlTableModel *aModel, int aColumn) const;
 
     int id;
 
-    QSqlTableModel* addressModel;
-    QSqlTableModel* bankAccountModel;
-    QSqlTableModel* ressourcenModel;
-    QSqlTableModel* memberModel;
-    Model::ContributionModel* contributionModel;
-    Model::SaldoModel* saldoModel;
+    QSqlTableModel *addressModel;
+    QSqlTableModel *bankAccountModel;
+    QSqlTableModel *ressourcenModel;
+    QSqlTableModel *memberModel;
+    Model::ContributionModel *contributionModel;
+    Model::SaldoModel *saldoModel;
 
 };
 

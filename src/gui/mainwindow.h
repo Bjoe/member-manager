@@ -17,8 +17,8 @@ class MainWindow: public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow ( const QSqlDatabase &aDatabase,
-                 QWidget* parent = 0 );
+    MainWindow(const QSqlDatabase &aDatabase,
+               QWidget *parent = 0);
 
 private slots:
     void showDeletedMemberView();
@@ -32,7 +32,7 @@ private:
     Gui::MemberMapper memberMapper;
     Model::MemberModel memberModel;
 
-    void showMembers ( const bool aBoolean );
+    void showMembers(const bool aBoolean);
     int getSelection() const;
 };
 

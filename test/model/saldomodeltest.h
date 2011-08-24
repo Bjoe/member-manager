@@ -7,7 +7,7 @@ namespace ClubFrontendTest
 {
 namespace Model
 {
-  
+
 class SaldoModelTest: public QObject
 {
     Q_OBJECT

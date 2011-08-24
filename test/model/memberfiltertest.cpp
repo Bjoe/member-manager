@@ -8,25 +8,25 @@ namespace ClubFrontendTest
 {
 namespace Model
 {
-  
+
 void MemberFilterTest::testSetDeleted()
 {
     ClubFrontend::Model::MemberFilter filter;
-    filter.setDeleted ( true );
+    filter.setDeleted(true);
 
-    QCOMPARE ( filter.getFilter(), QString ( "deleted='true'" ) );
+    QCOMPARE(filter.getFilter(), QString("deleted='true'"));
 }
 
 void MemberFilterTest::testSetDeletedFalse()
 {
     ClubFrontend::Model::MemberFilter filter;
-    filter.setDeleted ( false );
+    filter.setDeleted(false);
 
-    QCOMPARE ( filter.getFilter(), QString ( "deleted='false'" ) );
+    QCOMPARE(filter.getFilter(), QString("deleted='false'"));
 }
 
 }
 }
 
-QTEST_MAIN ( ClubFrontendTest::Model::MemberFilterTest )
+QTEST_MAIN(ClubFrontendTest::Model::MemberFilterTest)
 #include "memberfiltertest.moc"

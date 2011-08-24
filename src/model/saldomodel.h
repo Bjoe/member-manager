@@ -10,21 +10,21 @@ namespace ClubFrontend
 {
 namespace Model
 {
-  
+
 class SaldoModel: public QObject
 {
 public:
-    SaldoModel ( const QSqlDatabase& aDb, const int aMemberId );
+    SaldoModel(const QSqlDatabase &aDb, const int aMemberId);
     virtual ~SaldoModel();
 
-    void setMemberId ( const int aMemberId );
+    void setMemberId(const int aMemberId);
     float amount() const;
     void refresh();
 
-    void initTableView ( QTableView* aTableView ) const;
+    void initTableView(QTableView *aTableView) const;
 
 private:
-    QSqlTableModel* model;
+    QSqlTableModel *model;
 };
 
 }

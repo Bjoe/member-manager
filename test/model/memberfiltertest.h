@@ -7,7 +7,7 @@ namespace ClubFrontendTest
 {
 namespace Model
 {
-  
+
 class MemberFilterTest: public QObject
 {
     Q_OBJECT

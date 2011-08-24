@@ -14,14 +14,14 @@ class CountMemberSummary : public QObject
     Q_OBJECT
 
 public:
-    CountMemberSummary ( SummaryHandler *aHandler, QObject* parent = 0 );
+    CountMemberSummary(SummaryHandler *aHandler, QObject *parent = 0);
 
 private slots:
     void summaryResult();
 
 private:
     QPushButton *countMemberButton;
-    SummaryHandler* handler;
+    SummaryHandler *handler;
 };
 
 }

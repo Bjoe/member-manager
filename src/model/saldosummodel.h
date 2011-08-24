@@ -10,19 +10,19 @@ namespace ClubFrontend
 {
 namespace Model
 {
-  
+
 class SaldoSumModel : public QObject
 {
 public:
-    SaldoSumModel ( const QSqlDatabase& aDb );
+    SaldoSumModel(const QSqlDatabase &aDb);
 
-    void initTableView ( QTableView* const aView );
+    void initTableView(QTableView * const aView);
 
 private:
-    QSqlQueryModel* model;
+    QSqlQueryModel *model;
 };
 
 }
 }
 
-#endif	/* // SALDOSUMMODEL_H */
+#endif  /* // SALDOSUMMODEL_H */

@@ -17,25 +17,25 @@ namespace Model
 
 void KassaModelTest::initTestCase()
 {
-    qttestutil::database::DatabaseUtil database ( DATABASEDRIVER );
-    database.open ( DATABASE );
-    database.read ( SQLTESTFILE );
+    qttestutil::database::DatabaseUtil database(DATABASEDRIVER);
+    database.open(DATABASE);
+    database.read(SQLTESTFILE);
 }
 
 void KassaModelTest::testModel()
 {
-    ClubFrontend::Model::KassaModel kassaModel ( QSqlDatabase::database() );
+    ClubFrontend::Model::KassaModel kassaModel(QSqlDatabase::database());
 
     using ClubFrontend::Model::KassaTable;
-    const QSqlTableModel* model = kassaModel.findChild<QSqlTableModel* > ( KassaTable::TABLENAME );
-    QVERIFY ( model );
-    QCOMPARE ( model->rowCount(), 3 );
-    QSqlRecord record = model->record ( 1 );
-    QCOMPARE ( record.value ( KassaTable::betrag ).toString(), QString ( "104.86" ) );
+    const QSqlTableModel *model = kassaModel.findChild<QSqlTableModel *> (KassaTable::TABLENAME);
+    QVERIFY(model);
+    QCOMPARE(model->rowCount(), 3);
+    QSqlRecord record = model->record(1);
+    QCOMPARE(record.value(KassaTable::betrag).toString(), QString("104.86"));
 }
 
 }
 }
 
-QTEST_MAIN ( ClubFrontendTest::Model::KassaModelTest )
+QTEST_MAIN(ClubFrontendTest::Model::KassaModelTest)
 #include "kassamodeltest.moc"

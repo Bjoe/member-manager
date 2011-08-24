@@ -13,8 +13,8 @@ class SummaryHandler
 public:
     virtual ~SummaryHandler() {}
 
-    virtual void showSummary ( const QString &aText ) = 0;
-    virtual void addButton ( QPushButton *aButton ) = 0;
+    virtual void showSummary(const QString &aText) = 0;
+    virtual void addButton(QPushButton *aButton) = 0;
 };
 
 }
