@@ -1,4 +1,6 @@
 
 // the configured options and settings
-#define MemberManager_VERSION_MAJOR @Tutorial_VERSION_MAJOR@
-#define MemberManager_VERSION_MINOR @Tutorial_VERSION_MINOR@
+
+#define MemberManager_VERSION_MAJOR @MemberManager_VERSION_MAJOR@
+#define MemberManager_VERSION_MINOR @MemberManager_VERSION_MINOR@
+#define MemberManager_VERSION_PATCH @MemberManager_VERSION_PATCH@
