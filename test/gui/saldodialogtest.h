@@ -14,6 +14,7 @@ class SaldoDialogTest : public QObject
 
 private slots:
     void initTestCase();
+    void testShowNothing();
     void testShowDialog();
     void testShowSum();
 };

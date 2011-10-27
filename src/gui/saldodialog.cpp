@@ -5,8 +5,8 @@ namespace ClubFrontend
 namespace Gui
 {
 
-SaldoDialog::SaldoDialog(Model::SaldoModel &aSaldoModel, QWidget *parent)
-    : QDialog(parent), saldoModel(aSaldoModel), ui()
+SaldoDialog::SaldoDialog(QWidget *parent)
+    : QDialog(parent), saldoModel(), ui()
 {
     ui.setupUi(this);
     saldoModel.initTableView(ui.saldoTableView);
@@ -25,4 +25,15 @@ SaldoDialog::~SaldoDialog()
 }
 
 }
+}
+
+void ClubFrontend::Gui::SaldoDialog::showSaldo(int anId)
+{
+    if(anId > 0) {
+        saldoModel.setMemberId(anId);
+        saldoModel.refresh();
+        show();
+        exec();
+    }
+
 }

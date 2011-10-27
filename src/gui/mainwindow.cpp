@@ -21,21 +21,17 @@ MainWindow::MainWindow(const QSqlDatabase &aDatabase,
             SLOT(showMemberView()));
     connect(ui.actionShowDeletedMember, SIGNAL(triggered()),
             SLOT(showDeletedMemberView()));
-    connect(ui.actionNewMember, SIGNAL(triggered()),
+    connect(ui.actionNewMember, SIGNAL(triggered()), &memberMapper,
             SLOT(newMember()));
     connect(ui.actionShowSaldo, SIGNAL(triggered()),
+            SLOT(showSaldo()));
+    connect(ui.saldoButton, SIGNAL(clicked()),
             SLOT(showSaldo()));
 
 //    connect ( ui.tableView->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
 //            SLOT(updateMemberMapper()));
     connect(ui.tableView->selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
             SLOT(updateMemberMapper(QItemSelection, QItemSelection)));
-}
-
-void MainWindow::newMember()
-{
-    // \todo Refactor to MemberMapper
-    memberMapper.newMember();
 }
 
 void MainWindow::updateMemberMapper(const QItemSelection &aSelected, const QItemSelection &aDeselected)
@@ -47,14 +43,8 @@ void MainWindow::updateMemberMapper(const QItemSelection &aSelected, const QItem
 
 void MainWindow::showSaldo()
 {
-    int id = getSelection();
-    if(id > 0) {
-        // \todo Refactor: SaldoModel in SaldoDialog!
-        Model::SaldoModel model(QSqlDatabase::database(), id);
-        SaldoDialog dialog(model, this);
-        dialog.show();
-        dialog.exec();
-    }
+    SaldoDialog dialog(this);
+    dialog.showSaldo(getSelection());
 }
 
 int MainWindow::getSelection() const

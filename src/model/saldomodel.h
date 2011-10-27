@@ -14,7 +14,7 @@ namespace Model
 class SaldoModel: public QObject
 {
 public:
-    SaldoModel(const QSqlDatabase &aDb, const int aMemberId);
+    SaldoModel(const QSqlDatabase &aDb = QSqlDatabase::database());
     virtual ~SaldoModel();
 
     void setMemberId(const int aMemberId);

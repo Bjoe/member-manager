@@ -24,7 +24,6 @@ private slots:
     void showDeletedMemberView();
     void showMemberView();
     void showSaldo();
-    void newMember();
     void updateMemberMapper(const QItemSelection &aSelected, const QItemSelection &aDeselected);
 
 private:

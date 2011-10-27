@@ -12,8 +12,8 @@ namespace ClubFrontend
 namespace Model
 {
 
-SaldoModel::SaldoModel(const QSqlDatabase &aDb, const int aMemberId) :
-    model(new QSqlTableModel(this, aDb))
+SaldoModel::SaldoModel(const QSqlDatabase &aDb) :
+    model(new QSqlTableModel(this))
 {
     model->setObjectName(SaldoTable::TABLENAME);
     model->setTable(SaldoTable::TABLENAME);
@@ -24,8 +24,6 @@ SaldoModel::SaldoModel(const QSqlDatabase &aDb, const int aMemberId) :
     model->setHeaderData(SaldoTable::konten, Qt::Horizontal, tr("Konten"));
     model->setHeaderData(SaldoTable::kasse_pkey, Qt::Horizontal, tr("Kassa Id"));
     model->setHeaderData(SaldoTable::info, Qt::Horizontal, tr("Info"));
-    setMemberId(aMemberId);
-    refresh();
 }
 
 SaldoModel::~SaldoModel()

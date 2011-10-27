@@ -24,7 +24,9 @@ void SaldoModelTest::initTestCase()
 
 void SaldoModelTest::testModel()
 {
-    ClubFrontend::Model::SaldoModel saldoModel(QSqlDatabase::database(), 1025);
+    ClubFrontend::Model::SaldoModel saldoModel(QSqlDatabase::database());
+    saldoModel.setMemberId(1025);
+    saldoModel.refresh();
 
     using ClubFrontend::Model::SaldoTable;
     const QSqlTableModel *model = saldoModel.findChild<QSqlTableModel *> (SaldoTable::TABLENAME);
@@ -37,7 +39,9 @@ void SaldoModelTest::testModel()
 
 void SaldoModelTest::testAmount()
 {
-    ClubFrontend::Model::SaldoModel saldoModel(QSqlDatabase::database(), 1025);
+    ClubFrontend::Model::SaldoModel saldoModel(QSqlDatabase::database());
+    saldoModel.setMemberId(1025);
+    saldoModel.refresh();
 
     float sum = saldoModel.amount();
     float expected = -15;

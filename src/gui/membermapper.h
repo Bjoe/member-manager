@@ -18,8 +18,10 @@ public:
     explicit MemberMapper(const Ui::MainWindow *anUi, QObject *parent = 0);
     void initUi();
 
-    void newMember();
     void map(int anId);
+
+public slots:
+    void newMember();
 
 private slots:
     void submitContribution();
