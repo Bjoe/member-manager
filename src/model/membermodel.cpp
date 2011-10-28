@@ -17,7 +17,6 @@ MemberModel::MemberModel(const QSqlDatabase &aDb) :
     model->setHeaderData(MemberTable::Name, Qt::Horizontal, tr("Name"));
     model->setHeaderData(MemberTable::NickName, Qt::Horizontal, tr("Nickname"));
     model->setHeaderData(MemberTable::EntryDate, Qt::Horizontal, tr("Eintritts Datum"));
-    model->setHeaderData(MemberTable::Info, Qt::Horizontal, tr("Info"));
     refresh();
 }
 
@@ -52,6 +51,7 @@ void MemberModel::initTableView(QTableView *aTableView) const
 {
     aTableView->setModel(model);
     aTableView->setColumnHidden(MemberTable::Deleted, true);
+    aTableView->setColumnHidden(MemberTable::Info, true);
     aTableView->setColumnHidden(MemberTable::FOO_CCC, true);
     aTableView->setColumnHidden(MemberTable::FOO_ChaosNr, true);
     aTableView->setColumnHidden(MemberTable::FOO_ClubAdress, true);

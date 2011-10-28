@@ -6,14 +6,23 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1054</width>
-    <height>810</height>
+    <width>634</width>
+    <height>502</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Member Manager</string>
+  </property>
+  <property name="animated">
+   <bool>false</bool>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
      <widget class="QTableView" name="tableView">
@@ -43,271 +52,304 @@
       </attribute>
      </widget>
     </item>
-    <item row="1" column="0">
-     <widget class="QWidget" name="memberWidget" native="true">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
+    <item row="0" column="2">
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="maximumSize">
+       <size>
+        <width>450</width>
+        <height>16777215</height>
+       </size>
       </property>
-      <layout class="QFormLayout" name="formLayout_7">
-       <item row="1" column="1">
-        <widget class="QDialogButtonBox" name="buttonBox">
-         <property name="standardButtons">
-          <set>QDialogButtonBox::Close|QDialogButtonBox::Discard|QDialogButtonBox::SaveAll</set>
-         </property>
-         <property name="centerButtons">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QPushButton" name="saldoButton">
-         <property name="text">
-          <string>Saldo Anzeigen</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0" colspan="2">
-        <widget class="QTabWidget" name="tabWidget">
-         <property name="currentIndex">
-          <number>0</number>
-         </property>
-         <widget class="QWidget" name="name">
-          <attribute name="title">
-           <string>Name</string>
-          </attribute>
-          <layout class="QVBoxLayout" name="verticalLayout">
-           <item>
-            <widget class="QGroupBox" name="groupBox">
-             <property name="title">
-              <string>Allgemeine Daten</string>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="name">
+       <attribute name="title">
+        <string>Name</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QGroupBox" name="commonGroupBox">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>150</height>
+           </size>
+          </property>
+          <property name="title">
+           <string>Allgemeine Daten</string>
+          </property>
+          <layout class="QFormLayout" name="commonLayout">
+           <property name="fieldGrowthPolicy">
+            <enum>QFormLayout::ExpandingFieldsGrow</enum>
+           </property>
+           <item row="0" column="0">
+            <widget class="QLabel" name="memberIdLabel">
+             <property name="enabled">
+              <bool>true</bool>
              </property>
-             <layout class="QFormLayout" name="formLayout">
-              <property name="fieldGrowthPolicy">
-               <enum>QFormLayout::ExpandingFieldsGrow</enum>
-              </property>
-              <item row="0" column="0">
-               <widget class="QLabel" name="memberIdLabel">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
-                <property name="text">
-                 <string>Mitgliedsnummer</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="0">
-               <widget class="QLabel" name="memberNameLabel">
-                <property name="text">
-                 <string>&amp;Name</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <widget class="QLineEdit" name="memberName"/>
-              </item>
-              <item row="2" column="0">
-               <widget class="QLabel" name="firstNameLabel">
-                <property name="text">
-                 <string>&amp;Vorname</string>
-                </property>
-                <property name="buddy">
-                 <cstring>firstName</cstring>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="1">
-               <widget class="QLineEdit" name="firstName"/>
-              </item>
-              <item row="3" column="0">
-               <widget class="QLabel" name="nicknameLabel">
-                <property name="text">
-                 <string>Nic&amp;kname</string>
-                </property>
-                <property name="buddy">
-                 <cstring>nickname</cstring>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="1">
-               <widget class="QLineEdit" name="nickname"/>
-              </item>
-              <item row="0" column="1">
-               <widget class="QLabel" name="memberId">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="text">
-                 <string>0</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
+             <property name="text">
+              <string>Mitgliedsnummer</string>
+             </property>
             </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLabel" name="memberId">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>0</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="memberNameLabel">
+             <property name="text">
+              <string>&amp;Name</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QLineEdit" name="memberName"/>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="firstNameLabel">
+             <property name="text">
+              <string>&amp;Vorname</string>
+             </property>
+             <property name="buddy">
+              <cstring>firstName</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QLineEdit" name="firstName"/>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="nicknameLabel">
+             <property name="text">
+              <string>Nic&amp;kname</string>
+             </property>
+             <property name="buddy">
+              <cstring>nickname</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QLineEdit" name="nickname"/>
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="adress">
-          <attribute name="title">
+        </item>
+        <item>
+         <widget class="QGroupBox" name="addressGroupBox">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>150</height>
+           </size>
+          </property>
+          <property name="title">
            <string>Adresse</string>
-          </attribute>
-          <layout class="QVBoxLayout" name="verticalLayout_2">
-           <item>
-            <widget class="QGroupBox" name="groupBox_2">
-             <property name="title">
-              <string>Adresse</string>
+          </property>
+          <layout class="QFormLayout" name="addressLayout">
+           <item row="0" column="0">
+            <widget class="QLabel" name="streetLabel">
+             <property name="text">
+              <string>&amp;Straße</string>
              </property>
-             <layout class="QFormLayout" name="formLayout_2">
-              <item row="0" column="0">
-               <widget class="QLabel" name="streetLabel">
-                <property name="text">
-                 <string>&amp;Straße</string>
-                </property>
-                <property name="buddy">
-                 <cstring>street</cstring>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QLineEdit" name="street"/>
-              </item>
-              <item row="1" column="0">
-               <widget class="QLabel" name="cityLabel">
-                <property name="text">
-                 <string>St&amp;adt</string>
-                </property>
-                <property name="buddy">
-                 <cstring>city</cstring>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <widget class="QLineEdit" name="city"/>
-              </item>
-              <item row="2" column="0">
-               <widget class="QLabel" name="zipcodeLabel">
-                <property name="text">
-                 <string>&amp;Postleitzahl</string>
-                </property>
-                <property name="buddy">
-                 <cstring>zipcode</cstring>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="1">
-               <widget class="QLineEdit" name="zipcode"/>
-              </item>
-             </layout>
+             <property name="buddy">
+              <cstring>street</cstring>
+             </property>
             </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLineEdit" name="street"/>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="cityLabel">
+             <property name="text">
+              <string>St&amp;adt</string>
+             </property>
+             <property name="buddy">
+              <cstring>city</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QLineEdit" name="city"/>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="zipcodeLabel">
+             <property name="text">
+              <string>&amp;Postleitzahl</string>
+             </property>
+             <property name="buddy">
+              <cstring>zipcode</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QLineEdit" name="zipcode"/>
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="etc">
-          <attribute name="title">
+        </item>
+        <item>
+         <widget class="QGroupBox" name="otherGroupBox">
+          <property name="title">
            <string>Sonstiges</string>
-          </attribute>
-          <layout class="QVBoxLayout" name="verticalLayout_3">
-           <item>
-            <widget class="QGroupBox" name="groupBox_3">
-             <property name="title">
-              <string>Sonstiges</string>
+          </property>
+          <layout class="QFormLayout" name="otherLayout">
+           <item row="0" column="0">
+            <widget class="QLabel" name="emailLabel">
+             <property name="text">
+              <string>&amp;Email</string>
              </property>
-             <layout class="QFormLayout" name="formLayout_3">
-              <item row="0" column="0">
-               <widget class="QLabel" name="emailLabel">
-                <property name="text">
-                 <string>&amp;Email</string>
-                </property>
-                <property name="buddy">
-                 <cstring>email</cstring>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QLineEdit" name="email"/>
-              </item>
-              <item row="1" column="0">
-               <widget class="QLabel" name="entryDateLabel">
-                <property name="text">
-                 <string>Eintritts &amp;Datum</string>
-                </property>
-                <property name="buddy">
-                 <cstring>entryDate</cstring>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <widget class="QDateEdit" name="entryDate">
-                <property name="date">
-                 <date>
-                  <year>2009</year>
-                  <month>12</month>
-                  <day>8</day>
-                 </date>
-                </property>
-                <property name="calendarPopup">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-             </layout>
+             <property name="buddy">
+              <cstring>email</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLineEdit" name="email"/>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="entryDateLabel">
+             <property name="text">
+              <string>Eintritts &amp;Datum</string>
+             </property>
+             <property name="buddy">
+              <cstring>entryDate</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QDateEdit" name="entryDate">
+             <property name="date">
+              <date>
+               <year>2009</year>
+               <month>12</month>
+               <day>8</day>
+              </date>
+             </property>
+             <property name="calendarPopup">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="contribution">
-          <attribute name="title">
-           <string>Beitrag</string>
-          </attribute>
-          <layout class="QVBoxLayout" name="verticalLayout_4">
-           <item>
-            <widget class="QGroupBox" name="groupBox_6">
-             <property name="title">
-              <string>Beiträge</string>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="contribution">
+       <attribute name="title">
+        <string>Beitrag</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="contributionVerticalLayout">
+        <item>
+         <widget class="QGroupBox" name="contributionGroupBox">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>150</height>
+           </size>
+          </property>
+          <property name="title">
+           <string>Beiträge</string>
+          </property>
+          <layout class="QFormLayout" name="contributionLayout">
+           <item row="0" column="0">
+            <widget class="QLabel" name="feeLabel">
+             <property name="text">
+              <string>&amp;Beitrag</string>
              </property>
-             <layout class="QFormLayout" name="formLayout_4">
-              <item row="0" column="0">
-               <widget class="QLabel" name="feeLabel">
-                <property name="text">
-                 <string>&amp;Beitrag</string>
-                </property>
-                <property name="buddy">
-                 <cstring>fee</cstring>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QLineEdit" name="fee"/>
-              </item>
-              <item row="1" column="0">
-               <widget class="QLabel" name="donationLabel">
-                <property name="text">
-                 <string>Spende</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <widget class="QLineEdit" name="donation"/>
-              </item>
-              <item row="2" column="0">
-               <widget class="QLabel" name="conInfoLabel">
-                <property name="text">
-                 <string>Info</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="1">
-               <widget class="QLineEdit" name="contributionInfo"/>
-              </item>
-             </layout>
+             <property name="buddy">
+              <cstring>fee</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLineEdit" name="fee"/>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="donationLabel">
+             <property name="text">
+              <string>Spende</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QLineEdit" name="donation"/>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="conInfoLabel">
+             <property name="text">
+              <string>Info</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QLineEdit" name="contributionInfo"/>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QWidget" name="buttonWidget" native="true">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>300</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>450</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="layoutDirection">
+           <enum>Qt::RightToLeft</enum>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <item>
+            <widget class="QPushButton" name="saldoButton">
+             <property name="text">
+              <string>Saldo Anzeigen</string>
+             </property>
             </widget>
            </item>
            <item>
@@ -319,81 +361,74 @@
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="bank">
-          <attribute name="title">
-           <string>Bank</string>
-          </attribute>
-          <layout class="QVBoxLayout" name="verticalLayout_5">
-           <item>
-            <widget class="QGroupBox" name="groupBox_5">
-             <property name="title">
-              <string>Bank Verbindung</string>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="accountGroupBox">
+          <property name="title">
+           <string>Bank Verbindung</string>
+          </property>
+          <layout class="QFormLayout" name="accountLayout">
+           <item row="0" column="0">
+            <widget class="QLabel" name="bankNameLabel">
+             <property name="text">
+              <string>Name</string>
              </property>
-             <layout class="QFormLayout" name="formLayout_5">
-              <item row="0" column="0">
-               <widget class="QLabel" name="bankNameLabel">
-                <property name="text">
-                 <string>Name</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QLineEdit" name="bankName"/>
-              </item>
-              <item row="1" column="0">
-               <widget class="QLabel" name="accountLabel">
-                <property name="text">
-                 <string>Konto Nr.</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <widget class="QLineEdit" name="account"/>
-              </item>
-              <item row="2" column="0">
-               <widget class="QLabel" name="codeLabel">
-                <property name="text">
-                 <string>BLZ</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="1">
-               <widget class="QLineEdit" name="code"/>
-              </item>
-             </layout>
             </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLineEdit" name="bankName"/>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="accountLabel">
+             <property name="text">
+              <string>Konto Nr.</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QLineEdit" name="account"/>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="codeLabel">
+             <property name="text">
+              <string>BLZ</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QLineEdit" name="code"/>
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="infoSite">
-          <attribute name="title">
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="infoSite">
+       <attribute name="title">
+        <string>Info</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="infoVerticalLayout">
+        <item>
+         <widget class="QGroupBox" name="infoGroupBox">
+          <property name="title">
            <string>Info</string>
-          </attribute>
-          <layout class="QVBoxLayout" name="verticalLayout_6">
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout">
            <item>
-            <widget class="QGroupBox" name="groupBox_4">
-             <layout class="QFormLayout" name="formLayout_6">
-              <item row="0" column="0">
-               <widget class="QLabel" name="infoLabel">
-                <property name="text">
-                 <string>&amp;Info</string>
-                </property>
-                <property name="buddy">
-                 <cstring>info</cstring>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QPlainTextEdit" name="info"/>
-              </item>
-             </layout>
-            </widget>
+            <widget class="QPlainTextEdit" name="info"/>
            </item>
           </layout>
          </widget>
-        </widget>
-       </item>
-      </layout>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+    <item row="1" column="2">
+     <widget class="QDialogButtonBox" name="buttonBox">
+      <property name="standardButtons">
+       <set>QDialogButtonBox::SaveAll</set>
+      </property>
      </widget>
     </item>
    </layout>
@@ -418,7 +453,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1054</width>
+     <width>634</width>
      <height>20</height>
     </rect>
    </property>
