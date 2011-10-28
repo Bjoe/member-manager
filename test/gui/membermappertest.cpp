@@ -10,6 +10,7 @@
 #include "database/databaseutil.h"
 #include "ui_mainwindow.h"
 #include "member.h"
+#include "memberfactory.h"
 
 #include <QtCore>
 #include <QtSql>
@@ -35,7 +36,7 @@ void MemberMapperTest::showMember()
     mainWindow.setupUi(&window);
     memberMapper.initUi();
 
-    memberMapper.map(1025);
+    memberMapper.showMember(ClubFrontend::MemberFactory::createMember(1025));
 
     QLabel *memberId = mainWindow.memberId;
     QCOMPARE(memberId->text(), QString("1025"));
@@ -86,110 +87,6 @@ void MemberMapperTest::showMember()
     QCOMPARE(bankName->text(), QString("sparstrumpf"));
 }
 
-void MemberMapperTest::newMember()
-{
-    Ui::MainWindow mainWindow;
-    ClubFrontend::Gui::MemberMapper memberMapper(&mainWindow);
-    QMainWindow window;
-    mainWindow.setupUi(&window);
-    memberMapper.initUi();
-
-    memberMapper.newMember();
-
-    QLabel *memberId = mainWindow.memberId;
-    QString strId = memberId->text();
-    QCOMPARE(strId, QString("1027"));
-
-    QLineEdit *memberName = mainWindow.memberName;
-    QTest::keyClicks(memberName, "Mc Kay");
-
-    QLineEdit *firstName = mainWindow.firstName;
-    firstName->clear();
-    QTest::keyClicks(firstName, "Rodney");
-
-    QLineEdit *nickname = mainWindow.nickname;
-    QTest::keyClicks(nickname, "Rod");
-
-    QLineEdit *street = mainWindow.street;
-    QTest::keyClicks(street, "Atlantis");
-
-    QLineEdit *city = mainWindow.city;
-    QTest::keyClicks(city, "Pegasus");
-
-    QLineEdit *zipcode = mainWindow.zipcode;
-    QTest::keyClicks(zipcode, "40215");
-
-    QLineEdit *email = mainWindow.email;
-    QTest::keyClicks(email, "rod@atlantis.pegasus");
-
-    QDateEdit *entryDate = mainWindow.entryDate;
-    QTest::keyClicks(entryDate, "01.01.09");
-
-    QLineEdit *fee = mainWindow.fee;
-    QTest::keyClicks(fee, "15");
-
-    QLineEdit *donation = mainWindow.donation;
-    QTest::keyClicks(donation, "5");
-
-    QLineEdit *contributionInfo = mainWindow.contributionInfo;
-    QTest::keyClicks(contributionInfo, "Info");
-
-    QLineEdit *account = mainWindow.account;
-    QTest::keyClicks(account, "123454321");
-
-    QLineEdit *bankName = mainWindow.bankName;
-    QTest::keyClicks(bankName, "Galaxy Bank");
-
-    QLineEdit *code = mainWindow.code;
-    QTest::keyClicks(code, "98765432");
-
-    QPlainTextEdit *info = mainWindow.info;
-    QTest::keyClicks(info, "Foo");
-
-    QDialogButtonBox *buttonBox = mainWindow.buttonBox;
-    QPushButton *saveButton = buttonBox->button(QDialogButtonBox::SaveAll);
-    QTest::mouseClick(saveButton, Qt::LeftButton);
-
-    int id = strId.toInt();
-    const QString whereClause = QString(" where dorfmitglied_pkey=%1").arg(id);
-
-    using ClubFrontend::Model::MemberTable;
-    QSqlQuery query;
-    query.exec("select * from " + MemberTable::TABLENAME + whereClause);
-    query.next();
-    QCOMPARE(query.value(MemberTable::FirstName).toString(), QString("Rodney"));
-    QCOMPARE(query.value(MemberTable::Name).toString(), QString("Mc Kay"));
-    QCOMPARE(query.value(MemberTable::NickName).toString(), QString("Rod"));
-    QCOMPARE(query.value(MemberTable::Info).toString(), QString("Foo"));
-
-    using ClubFrontend::Model::AddressTable;
-    query.exec("select * from " + AddressTable::TABLENAME + whereClause);
-    query.next();
-    QCOMPARE(query.value(AddressTable::Street).toString(), QString("Atlantis"));
-    QCOMPARE(query.value(AddressTable::ZipCode).toString(), QString("40215"));
-    QCOMPARE(query.value(AddressTable::Town).toString(), QString("Pegasus"));
-
-    using ClubFrontend::Model::ContributionTable;
-    query.exec("select * from " + ContributionTable::TABLENAME + whereClause +
-               " order by " + ContributionTable::COLUMNNAME[ContributionTable::ValidFrom] + " desc");
-    query.next();
-    QCOMPARE(query.value(ContributionTable::Fee).toInt(), 15);
-    QCOMPARE(query.value(ContributionTable::Donation).toInt(), 5);
-    QCOMPARE(query.value(ContributionTable::Info).toString(), QString("Info"));
-
-    using ClubFrontend::Model::BankAccountTable;
-    query.exec("select * from " + BankAccountTable::TABLENAME + whereClause);
-    query.next();
-    QCOMPARE(query.value(BankAccountTable::Code).toInt(), 98765432);
-    QCOMPARE(query.value(BankAccountTable::AccountNr).toInt(), 123454321);
-    QCOMPARE(query.value(BankAccountTable::BankName).toString(), QString("Galaxy Bank"));
-
-    using ClubFrontend::Model::RessourcenTable;
-    query.exec("select * from " + RessourcenTable::TABLENAME + whereClause);
-    query.next();
-    QCOMPARE(query.value(RessourcenTable::EmailAdress).toString(), QString("rod@atlantis.pegasus"));
-}
-
 void MemberMapperTest::changeMember()
 {
     Ui::MainWindow mainWindow;
@@ -198,7 +95,7 @@ void MemberMapperTest::changeMember()
     mainWindow.setupUi(&window);
     memberMapper.initUi();
 
-    memberMapper.map(1025);
+    memberMapper.showMember(ClubFrontend::MemberFactory::createMember(1025));
 
     QLabel *id = mainWindow.memberId;
     QCOMPARE(id->text(), QString("1025"));

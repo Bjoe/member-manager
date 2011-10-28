@@ -42,6 +42,7 @@ set(QT_SRCS
     model/tabledao.cpp
 
     member.cpp
+    memberfactory.cpp
     summaryhandler.cpp
     countmembersummary.cpp
     cashsumsummary.cpp

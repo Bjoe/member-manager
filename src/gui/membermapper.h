@@ -18,17 +18,12 @@ public:
     explicit MemberMapper(const Ui::MainWindow *anUi, QObject *parent = 0);
     void initUi();
 
-    void map(int anId);
-
-public slots:
-    void newMember();
+    void showMember(Member aMember);
 
 private slots:
     void submitContribution();
 
 private:
-    void showMember();
-
     Member member;
     const Ui::MainWindow *ui;
     QDataWidgetMapper * const memberMapper;

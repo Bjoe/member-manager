@@ -16,8 +16,6 @@ public:
     Member();
     Member(int anId);
 
-    int createNewMember();
-
     int getMemberId() const;
     QString getName() const;
     QString getFirstname() const;

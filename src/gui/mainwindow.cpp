@@ -1,5 +1,6 @@
 #include "gui/mainwindow.h"
 
+#include "memberfactory.h"
 #include "model/memberfilter.h"
 #include "gui/saldodialog.h"
 
@@ -21,7 +22,7 @@ MainWindow::MainWindow(const QSqlDatabase &aDatabase,
             SLOT(showMemberView()));
     connect(ui.actionShowDeletedMember, SIGNAL(triggered()),
             SLOT(showDeletedMemberView()));
-    connect(ui.actionNewMember, SIGNAL(triggered()), &memberMapper,
+    connect(ui.actionNewMember, SIGNAL(triggered()),
             SLOT(newMember()));
     connect(ui.actionShowSaldo, SIGNAL(triggered()),
             SLOT(showSaldo()));
@@ -34,11 +35,14 @@ MainWindow::MainWindow(const QSqlDatabase &aDatabase,
             SLOT(updateMemberMapper(QItemSelection, QItemSelection)));
 }
 
+void MainWindow::newMember()
+{
+    memberMapper.showMember(MemberFactory::createNewMember());
+}
+
 void MainWindow::updateMemberMapper(const QItemSelection &aSelected, const QItemSelection &aDeselected)
 {
-    int id = getSelection();
-    // \todo if id == 0 clear memberMapper
-    memberMapper.map(id);
+    memberMapper.showMember(MemberFactory::createMember(getSelection()));
 }
 
 void MainWindow::showSaldo()

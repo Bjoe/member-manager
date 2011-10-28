@@ -34,6 +34,7 @@ add_subdirectory(gui)
 add_subdirectory(model)
 
 qt4_add_test(member membertest.cpp)
+qt4_add_test(memberfactory memberfactorytest.cpp)
 qt4_add_test(cashsumsummary cashsumsummarytest.cpp testutil/summaryhandlermock.cpp)
 qt4_add_test(countmembersummary countmembersummarytest.cpp testutil/summaryhandlermock.cpp)
 qt4_add_test(debitsumsummary debitsumsummarytest.cpp testutil/summaryhandlermock.cpp)

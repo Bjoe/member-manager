@@ -1,5 +1,6 @@
 #include "gui/membermapper.h"
 
+#include "memberfactory.h"
 #include "model/databasestructure.h"
 
 namespace ClubFrontend
@@ -25,20 +26,10 @@ void MemberMapper::initUi()
     connect(ui->buttonBox, SIGNAL(accepted()), SLOT(submitContribution()));
 }
 
-void MemberMapper::newMember()
+void MemberMapper::showMember(Member aMember)
 {
-    member.createNewMember();
-    showMember();
-}
+    member = aMember;
 
-void MemberMapper::map(int anId)
-{
-    member = Member(anId);
-    showMember();
-}
-
-void MemberMapper::showMember()
-{
     QString id;
     id.setNum(member.getMemberId());
     ui->memberId->setText(id);

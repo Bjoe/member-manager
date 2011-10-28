@@ -15,7 +15,6 @@ class MemberMapperTest : public QObject
 private slots:
     void initTestCase();
     void showMember();
-    void newMember();
     void changeMember();
 };
 

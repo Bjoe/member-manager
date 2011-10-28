@@ -51,14 +51,6 @@ void Member::initTableModel(const QString &aTableName,
     aModel->select();
 }
 
-int Member::createNewMember()
-{
-    Model::MemberDao dao(QSqlDatabase::database());
-    id = dao.newMember();
-    initModels();
-    return id;
-}
-
 QString Member::getValue(const QSqlTableModel *aModel, int aColumn) const
 {
     const QSqlRecord record = aModel->record(0);
