@@ -4,9 +4,9 @@
 #include "model/memberfilter.h"
 #include "gui/saldodialog.h"
 
-namespace ClubFrontend
+namespace membermanager
 {
-namespace Gui
+namespace gui
 {
 
 MainWindow::MainWindow(const QSqlDatabase &aDatabase,
@@ -29,8 +29,8 @@ MainWindow::MainWindow(const QSqlDatabase &aDatabase,
     connect(ui.saldoButton, SIGNAL(clicked()),
             SLOT(showSaldo()));
 
-//    connect ( ui.tableView->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
-//            SLOT(updateMemberMapper()));
+    //    connect ( ui.tableView->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
+    //            SLOT(updateMemberMapper()));
     connect(ui.tableView->selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
             SLOT(updateMemberMapper(QItemSelection, QItemSelection)));
 }
@@ -56,7 +56,7 @@ int MainWindow::getSelection() const
     QItemSelectionModel *selectionModel = ui.tableView->selectionModel();
     QModelIndexList indexes = selectionModel->selectedIndexes();
     int id = 0;
-    if(indexes.size() > 0) {
+    if (indexes.size() > 0) {
         QModelIndex index = indexes.first();
         id = memberModel.getMemberId(index);
     }
@@ -76,11 +76,11 @@ void MainWindow::showMemberView()
 void MainWindow::showMembers(const bool aBoolean)
 {
     QItemSelectionModel *selectionModel = ui.tableView->selectionModel();
-    if(selectionModel) {
+    if (selectionModel) {
         selectionModel->clearSelection();
     }
 
-    Model::MemberFilter filter;
+    model::MemberFilter filter;
     filter.setDeleted(aBoolean);
     memberModel.setFilter(filter.getFilter());
     memberModel.initTableView(ui.tableView);
@@ -89,7 +89,7 @@ void MainWindow::showMembers(const bool aBoolean)
     ui.tableView->addAction(ui.actionCopyMailAdr);
     ui.tableView->addAction(ui.actionShowSaldo);
 
-    if(aBoolean) {
+    if (aBoolean) {
         ui.actionShowDeletedMember->setChecked(true);
         ui.actionShowMember->setChecked(false);
     } else {

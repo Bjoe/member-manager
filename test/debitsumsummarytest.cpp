@@ -6,7 +6,7 @@
 #include "database/databaseutil.h"
 #include "testutil/summaryhandlermock.h"
 
-namespace ClubFrontendTest
+namespace membermanagertest
 {
 
 void DebitSumSummaryTest::initTestCase()
@@ -18,9 +18,9 @@ void DebitSumSummaryTest::initTestCase()
 
 void DebitSumSummaryTest::testDebitSum()
 {
-    Utils::SummaryHandlerMock *handler = new Utils::SummaryHandlerMock();
+    util::SummaryHandlerMock *handler = new util::SummaryHandlerMock();
 
-    ClubFrontend::DebitSumSummary debitSum(handler);
+    membermanager::DebitSumSummary debitSum(handler);
 
     QPushButton *button = handler->getPushButton();
     QVERIFY(button);
@@ -32,5 +32,5 @@ void DebitSumSummaryTest::testDebitSum()
 
 }
 
-QTEST_MAIN(ClubFrontendTest::DebitSumSummaryTest)
+QTEST_MAIN(membermanagertest::DebitSumSummaryTest)
 #include "debitsumsummarytest.moc"

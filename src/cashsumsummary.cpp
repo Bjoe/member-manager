@@ -1,6 +1,6 @@
 #include "cashsumsummary.h"
 
-namespace ClubFrontend
+namespace membermanager
 {
 
 CashSumSummary::CashSumSummary(SummaryHandler *aHandler, QObject *parent) :

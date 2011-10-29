@@ -2,9 +2,9 @@
 
 #include "model/databasestructure.h"
 
-namespace ClubFrontend
+namespace membermanager
 {
-namespace Model
+namespace model
 {
 
 SaldoSumModel::SaldoSumModel(const QSqlDatabase &aDb)
@@ -32,7 +32,7 @@ SaldoSumModel::SaldoSumModel(const QSqlDatabase &aDb)
     model->setQuery(query, aDb);
 }
 
-void SaldoSumModel::initTableView(QTableView * const aView)
+void SaldoSumModel::initTableView(QTableView *const aView)
 {
     aView->setModel(model);
     aView->setColumnHidden(5, true);

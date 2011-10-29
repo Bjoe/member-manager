@@ -6,12 +6,12 @@
 
 #include "summaryhandler.h"
 
-namespace ClubFrontendTest
+namespace membermanagertest
 {
-namespace Utils
+namespace util
 {
 
-class SummaryHandlerMock : public ClubFrontend::SummaryHandler
+class SummaryHandlerMock : public membermanager::SummaryHandler
 {
 
 public:
@@ -21,7 +21,7 @@ public:
     virtual void addButton(QPushButton *aButton);
     virtual void showSummary(const QString &aText);
 
-    QPushButton * getPushButton() const;
+    QPushButton *getPushButton() const;
     QString getText() const;
 
 private:

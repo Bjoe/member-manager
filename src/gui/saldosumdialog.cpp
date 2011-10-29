@@ -2,12 +2,12 @@
 
 #include <QSqlDatabase>
 
-namespace ClubFrontend
+namespace membermanager
 {
-namespace Gui
+namespace gui
 {
 
-SaldoSumDialog::SaldoSumDialog(Model::SaldoSumModel &aModel, QWidget *aParent)
+SaldoSumDialog::SaldoSumDialog(model::SaldoSumModel &aModel, QWidget *aParent)
     : QDialog(aParent)
 {
     ui.setupUi(this);

@@ -1,9 +1,9 @@
 #include "tabledao.h"
 
 
-namespace ClubFrontend
+namespace membermanager
 {
-namespace Model
+namespace model
 {
 
 int TableDao::insertNewRow(QSqlTableModel *aModel,

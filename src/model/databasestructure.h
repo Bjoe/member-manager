@@ -4,9 +4,9 @@
 #include <QString>
 #include <QStringList>
 
-namespace ClubFrontend
+namespace membermanager
 {
-namespace Model
+namespace model
 {
 
 class AddressTable

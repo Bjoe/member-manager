@@ -3,9 +3,9 @@
 
 #include <QtTest/QtTest>
 
-namespace ClubFrontendTest
+namespace membermanagertest
 {
-namespace Model
+namespace model
 {
 
 class KassaModelTest: public QObject

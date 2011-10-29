@@ -1,8 +1,8 @@
 #include "gui/saldodialog.h"
 
-namespace ClubFrontend
+namespace membermanager
 {
-namespace Gui
+namespace gui
 {
 
 SaldoDialog::SaldoDialog(QWidget *parent)
@@ -15,7 +15,7 @@ SaldoDialog::SaldoDialog(QWidget *parent)
     float sum = saldoModel.amount();
     QString sumDisplay = QString(tr("Summe: %1")).arg(sum);
     ui.sumLabel->setText(sumDisplay);
-    if(sum < 0) {
+    if (sum < 0) {
         ui.sumLabel->setStyleSheet("QLabel { color: red }");
     }
 }
@@ -27,9 +27,9 @@ SaldoDialog::~SaldoDialog()
 }
 }
 
-void ClubFrontend::Gui::SaldoDialog::showSaldo(int anId)
+void membermanager::gui::SaldoDialog::showSaldo(int anId)
 {
-    if(anId > 0) {
+    if (anId > 0) {
         saldoModel.setMemberId(anId);
         saldoModel.refresh();
         show();

@@ -7,9 +7,9 @@
 #include <QString>
 #include <QVariant>
 
-namespace ClubFrontend
+namespace membermanager
 {
-namespace Model
+namespace model
 {
 
 SaldoModel::SaldoModel(const QSqlDatabase &aDb) :

@@ -6,7 +6,7 @@
 
 #include "summaryhandler.h"
 
-namespace ClubFrontend
+namespace membermanager
 {
 
 class DebitSumSummary : public QObject

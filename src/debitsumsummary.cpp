@@ -1,6 +1,6 @@
 #include "debitsumsummary.h"
 
-namespace ClubFrontend
+namespace membermanager
 {
 
 DebitSumSummary::DebitSumSummary(SummaryHandler *aHandler, QObject *parent) :

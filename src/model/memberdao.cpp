@@ -1,9 +1,9 @@
 #include "model/memberdao.h"
 #include "model/databasestructure.h"
 
-namespace ClubFrontend
+namespace membermanager
 {
-namespace Model
+namespace model
 {
 
 MemberDao::MemberDao(const QSqlDatabase &aDatabase) :
@@ -33,7 +33,7 @@ int MemberDao::newMember()
     query.addBindValue("true");
     query.addBindValue(date.toString(Qt::ISODate));
     query.addBindValue("newMember");
-    if(!query.exec()) {
+    if (!query.exec()) {
         rollback(query);
         return 0;
     }
@@ -42,7 +42,7 @@ int MemberDao::newMember()
                " WHERE " + MemberTable::COLUMNNAME[MemberTable::Deleted] + " = 'true'" +
                " AND " + MemberTable::COLUMNNAME[MemberTable::EntryDate] + " = '" + date.toString(Qt::ISODate) + "'" +
                " AND " + MemberTable::COLUMNNAME[MemberTable::FirstName] + " = 'newMember'");
-    if(!query.next()) {
+    if (!query.next()) {
         rollback(query);
         return 0;
     }
@@ -53,7 +53,7 @@ int MemberDao::newMember()
                   .arg(AddressTable::TABLENAME)
                   .arg(AddressTable::COLUMNNAME[AddressTable::MemberId]));
     query.addBindValue(id);
-    if(!query.exec()) {
+    if (!query.exec()) {
         rollback(query);
         return 0;
     }
@@ -62,7 +62,7 @@ int MemberDao::newMember()
                   .arg(BankAccountTable::TABLENAME)
                   .arg(BankAccountTable::COLUMNNAME[BankAccountTable::MemberId]));
     query.addBindValue(id);
-    if(!query.exec()) {
+    if (!query.exec()) {
         rollback(query);
         return 0;
     }
@@ -71,7 +71,7 @@ int MemberDao::newMember()
                   .arg(RessourcenTable::TABLENAME)
                   .arg(RessourcenTable::COLUMNNAME[RessourcenTable::MemberId]));
     query.addBindValue(id);
-    if(!query.exec()) {
+    if (!query.exec()) {
         rollback(query);
         return 0;
     }
@@ -80,7 +80,7 @@ int MemberDao::newMember()
                   .arg(ContributionTable::TABLENAME)
                   .arg(ContributionTable::COLUMNNAME[ContributionTable::MemberId]));
     query.addBindValue(id);
-    if(!query.exec()) {
+    if (!query.exec()) {
         rollback(query);
         return 0;
     }
@@ -92,7 +92,7 @@ int MemberDao::newMember()
 void MemberDao::rollback(const QSqlQuery aQuery)
 {
     QSqlError error = aQuery.lastError();
-    if(error.type() != QSqlError::NoError) {
+    if (error.type() != QSqlError::NoError) {
         qDebug() << error.text();
     }
     database.rollback();
@@ -106,7 +106,7 @@ void MemberDao::deleteMember(int anId)
 
     QSqlQuery query("select * from " + MemberTable::TABLENAME + whereClause
                     + " AND " + columnDeteled + "='false'");
-    if(query.next()) {
+    if (query.next()) {
         query .exec("update " + MemberTable::TABLENAME + " set "
                     + columnDeteled + "='true' " + whereClause + " AND "
                     + columnDeteled + "='false'");

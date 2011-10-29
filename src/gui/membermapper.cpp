@@ -3,9 +3,9 @@
 #include "memberfactory.h"
 #include "model/databasestructure.h"
 
-namespace ClubFrontend
+namespace membermanager
 {
-namespace Gui
+namespace gui
 {
 
 MemberMapper::MemberMapper(const Ui::MainWindow *anUi, QObject *parent) :
@@ -36,30 +36,30 @@ void MemberMapper::showMember(Member aMember)
 
     member.initMemberMapper(memberMapper);
     memberMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
-    memberMapper->addMapping(ui->firstName, Model::MemberTable::FirstName);
-    memberMapper->addMapping(ui->memberName, Model::MemberTable::Name);
-    memberMapper->addMapping(ui->nickname, Model::MemberTable::NickName);
-    memberMapper->addMapping(ui->entryDate, Model::MemberTable::EntryDate);
-    memberMapper->addMapping(ui->info, Model::MemberTable::Info);
+    memberMapper->addMapping(ui->firstName, model::MemberTable::FirstName);
+    memberMapper->addMapping(ui->memberName, model::MemberTable::Name);
+    memberMapper->addMapping(ui->nickname, model::MemberTable::NickName);
+    memberMapper->addMapping(ui->entryDate, model::MemberTable::EntryDate);
+    memberMapper->addMapping(ui->info, model::MemberTable::Info);
     memberMapper->toFirst();
 
     member.initAddressMapper(addressMapper);
     addressMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
-    addressMapper->addMapping(ui->city, Model::AddressTable::Town);
-    addressMapper->addMapping(ui->street, Model::AddressTable::Street);
-    addressMapper->addMapping(ui->zipcode, Model::AddressTable::ZipCode);
+    addressMapper->addMapping(ui->city, model::AddressTable::Town);
+    addressMapper->addMapping(ui->street, model::AddressTable::Street);
+    addressMapper->addMapping(ui->zipcode, model::AddressTable::ZipCode);
     addressMapper->toFirst();
 
     member.initBankAccountMapper(bankMapper);
     bankMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
-    bankMapper->addMapping(ui->account, Model::BankAccountTable::AccountNr);
-    bankMapper->addMapping(ui->code, Model::BankAccountTable::Code);
-    bankMapper->addMapping(ui->bankName, Model::BankAccountTable::BankName);
+    bankMapper->addMapping(ui->account, model::BankAccountTable::AccountNr);
+    bankMapper->addMapping(ui->code, model::BankAccountTable::Code);
+    bankMapper->addMapping(ui->bankName, model::BankAccountTable::BankName);
     bankMapper->toFirst();
 
     member.initRessourcenMapper(ressourcenMapper);
     ressourcenMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
-    ressourcenMapper->addMapping(ui->email, Model::RessourcenTable::EmailAdress);
+    ressourcenMapper->addMapping(ui->email, model::RessourcenTable::EmailAdress);
     ressourcenMapper->toFirst();
 
     ui->contributionInfo->setText(member.getContributionInfo());

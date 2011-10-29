@@ -6,9 +6,9 @@
 #include "model/databasestructure.h"
 #include "database/databaseutil.h"
 
-namespace ClubFrontendTest
+namespace membermanagertest
 {
-namespace Model
+namespace model
 {
 
 void MemberDaoTest::initTestCase()
@@ -20,7 +20,7 @@ void MemberDaoTest::initTestCase()
 
 void MemberDaoTest::testNewMember()
 {
-    ClubFrontend::Model::MemberDao dao(QSqlDatabase::database());
+    membermanager::model::MemberDao dao(QSqlDatabase::database());
     int id = dao.newMember();
     QVERIFY(id);
 
@@ -28,19 +28,19 @@ void MemberDaoTest::testNewMember()
     const QString select = QString("select * from ");
     QSqlQuery query;
 
-    query.exec(select + ClubFrontend::Model::MemberTable::TABLENAME + whereClause);
+    query.exec(select + membermanager::model::MemberTable::TABLENAME + whereClause);
     QVERIFY(query.next());
 
-    query.exec(select + ClubFrontend::Model::AddressTable::TABLENAME + whereClause);
+    query.exec(select + membermanager::model::AddressTable::TABLENAME + whereClause);
     QVERIFY(query.next());
 
-    query.exec(select + ClubFrontend::Model::BankAccountTable::TABLENAME + whereClause);
+    query.exec(select + membermanager::model::BankAccountTable::TABLENAME + whereClause);
     QVERIFY(query.next());
 
-    query.exec(select + ClubFrontend::Model::ContributionTable::TABLENAME + whereClause);
+    query.exec(select + membermanager::model::ContributionTable::TABLENAME + whereClause);
     QVERIFY(query.next());
 
-    query.exec(select + ClubFrontend::Model::RessourcenTable::TABLENAME + whereClause);
+    query.exec(select + membermanager::model::RessourcenTable::TABLENAME + whereClause);
     QVERIFY(query.next());
 }
 
@@ -48,10 +48,10 @@ void MemberDaoTest::testDeleteMember()
 {
     int id = 1025;
     const QString whereClause = QString(" where dorfmitglied_pkey=%1").arg(id);
-    using ClubFrontend::Model::MemberTable;
+    using membermanager::model::MemberTable;
     QSqlQuery query("select * from " + MemberTable::TABLENAME + whereClause);
 
-    ClubFrontend::Model::MemberDao dao(QSqlDatabase::database());
+    membermanager::model::MemberDao dao(QSqlDatabase::database());
     dao.deleteMember(id);
 
     query.exec();
@@ -67,5 +67,5 @@ void MemberDaoTest::testDeleteMember()
 }
 }
 
-QTEST_MAIN(ClubFrontendTest::Model::MemberDaoTest)
+QTEST_MAIN(membermanagertest::model::MemberDaoTest)
 #include "memberdaotest.moc"

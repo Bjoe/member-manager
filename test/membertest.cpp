@@ -5,7 +5,7 @@
 #include "testconfig.h"
 #include "database/databaseutil.h"
 
-namespace ClubFrontendTest
+namespace membermanagertest
 {
 
 void MemberTest::initTestCase()
@@ -19,7 +19,7 @@ void MemberTest::testMember()
 {
     float donation = 1;
     float fee = 15;
-    ClubFrontend::Member member(1025);
+    membermanager::Member member(1025);
     QCOMPARE(member.getMemberId(), 1025);
     QCOMPARE(member.getName(), QString("Kirk"));
     QCOMPARE(member.getFirstname(), QString("James T"));
@@ -38,5 +38,5 @@ void MemberTest::testMember()
 
 }
 
-QTEST_MAIN(ClubFrontendTest::MemberTest)
+QTEST_MAIN(membermanagertest::MemberTest)
 #include "membertest.moc"

@@ -1,8 +1,8 @@
 #include "testutil/summaryhandlermock.h"
 
-namespace ClubFrontendTest
+namespace membermanagertest
 {
-namespace Utils
+namespace util
 {
 
 SummaryHandlerMock::SummaryHandlerMock() :
@@ -26,7 +26,7 @@ void SummaryHandlerMock::showSummary(const QString &aText)
     text = aText;
 }
 
-QPushButton * SummaryHandlerMock::getPushButton() const
+QPushButton *SummaryHandlerMock::getPushButton() const
 {
     return button;
 }

@@ -7,7 +7,7 @@
 #include "testconfig.h"
 #include "database/databaseutil.h"
 
-namespace ClubFrontendTest
+namespace membermanagertest
 {
 
 void CashSumSummaryTest::initTestCase()
@@ -19,9 +19,9 @@ void CashSumSummaryTest::initTestCase()
 
 void CashSumSummaryTest::testCashSum()
 {
-    Utils::SummaryHandlerMock *handler = new Utils::SummaryHandlerMock();
+    util::SummaryHandlerMock *handler = new util::SummaryHandlerMock();
 
-    ClubFrontend::CashSumSummary cashSum(handler);
+    membermanager::CashSumSummary cashSum(handler);
 
     QPushButton *button = handler->getPushButton();
     QVERIFY(button);
@@ -33,5 +33,5 @@ void CashSumSummaryTest::testCashSum()
 
 }
 
-QTEST_MAIN(ClubFrontendTest::CashSumSummaryTest)
+QTEST_MAIN(membermanagertest::CashSumSummaryTest)
 #include "cashsumsummarytest.moc"

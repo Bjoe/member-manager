@@ -3,7 +3,7 @@
 
 #include "member.h"
 
-namespace ClubFrontend
+namespace membermanager
 {
 
 class MemberFactory

@@ -16,9 +16,9 @@
 #include <QtSql>
 #include <QtGui>
 
-namespace ClubFrontendTest
+namespace membermanagertest
 {
-namespace Gui
+namespace gui
 {
 
 void MemberMapperTest::initTestCase()
@@ -31,12 +31,12 @@ void MemberMapperTest::initTestCase()
 void MemberMapperTest::showMember()
 {
     Ui::MainWindow mainWindow;
-    ClubFrontend::Gui::MemberMapper memberMapper(&mainWindow);
+    membermanager::gui::MemberMapper memberMapper(&mainWindow);
     QMainWindow window;
     mainWindow.setupUi(&window);
     memberMapper.initUi();
 
-    memberMapper.showMember(ClubFrontend::MemberFactory::createMember(1025));
+    memberMapper.showMember(membermanager::MemberFactory::createMember(1025));
 
     QLabel *memberId = mainWindow.memberId;
     QCOMPARE(memberId->text(), QString("1025"));
@@ -90,12 +90,12 @@ void MemberMapperTest::showMember()
 void MemberMapperTest::changeMember()
 {
     Ui::MainWindow mainWindow;
-    ClubFrontend::Gui::MemberMapper memberMapper(&mainWindow);
+    membermanager::gui::MemberMapper memberMapper(&mainWindow);
     QMainWindow window;
     mainWindow.setupUi(&window);
     memberMapper.initUi();
 
-    memberMapper.showMember(ClubFrontend::MemberFactory::createMember(1025));
+    memberMapper.showMember(membermanager::MemberFactory::createMember(1025));
 
     QLabel *id = mainWindow.memberId;
     QCOMPARE(id->text(), QString("1025"));
@@ -203,7 +203,7 @@ void MemberMapperTest::changeMember()
 
     const QString whereClause(" where dorfmitglied_pkey=1025");
 
-    using ClubFrontend::Model::MemberTable;
+    using membermanager::model::MemberTable;
     QSqlQuery query;
     query.exec("select * from " + MemberTable::TABLENAME + whereClause);
     query.next();
@@ -212,14 +212,14 @@ void MemberMapperTest::changeMember()
     QCOMPARE(query.value(MemberTable::NickName).toString(), QString("Captain"));
     QCOMPARE(query.value(MemberTable::Info).toString(), QString("Lalala"));
 
-    using ClubFrontend::Model::AddressTable;
+    using membermanager::model::AddressTable;
     query.exec("select * from " + AddressTable::TABLENAME + whereClause);
     query.next();
     QCOMPARE(query.value(AddressTable::Street).toString(), QString("NCC-1701"));
     QCOMPARE(query.value(AddressTable::ZipCode).toString(), QString("98765"));
     QCOMPARE(query.value(AddressTable::Town).toString(), QString("Dtown"));
 
-    using ClubFrontend::Model::ContributionTable;
+    using membermanager::model::ContributionTable;
     query.exec("select * from " + ContributionTable::TABLENAME + whereClause +
                " order by " + ContributionTable::COLUMNNAME[ContributionTable::ValidFrom] + " desc");
     query.next();
@@ -227,14 +227,14 @@ void MemberMapperTest::changeMember()
     QCOMPARE(query.value(ContributionTable::Donation).toInt(), 100);
     QCOMPARE(query.value(ContributionTable::Info).toString(), QString("Kohle"));
 
-    using ClubFrontend::Model::BankAccountTable;
+    using membermanager::model::BankAccountTable;
     query.exec("select * from " + BankAccountTable::TABLENAME + whereClause);
     query.next();
     QCOMPARE(query.value(BankAccountTable::Code).toInt(), 98765432);
     QCOMPARE(query.value(BankAccountTable::AccountNr).toInt(), 123456789);
     QCOMPARE(query.value(BankAccountTable::BankName).toString(), QString("Galaxy"));
 
-    using ClubFrontend::Model::RessourcenTable;
+    using membermanager::model::RessourcenTable;
     query.exec("select * from " + RessourcenTable::TABLENAME + whereClause);
     query.next();
     QCOMPARE(query.value(RessourcenTable::EmailAdress).toString(), QString("foo@bar.tx"));
@@ -243,5 +243,5 @@ void MemberMapperTest::changeMember()
 }
 }
 
-QTEST_MAIN(ClubFrontendTest::Gui::MemberMapperTest)
+QTEST_MAIN(membermanagertest::gui::MemberMapperTest)
 #include "membermappertest.moc"

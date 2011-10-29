@@ -14,9 +14,9 @@
 #include <QTest>
 #include <QDebug>
 
-namespace ClubFrontendTest
+namespace membermanagertest
 {
-namespace Gui
+namespace gui
 {
 
 void MainWindowTest::init()
@@ -28,7 +28,7 @@ void MainWindowTest::init()
 
 void MainWindowTest::testNewMember()
 {
-    ClubFrontend::Gui::MainWindow mainWindow(QSqlDatabase::database());
+    membermanager::gui::MainWindow mainWindow(QSqlDatabase::database());
 
     QAction *actionNewMember = mainWindow.findChild<QAction *> (
                                    "actionNewMember");
@@ -46,7 +46,7 @@ void MainWindowTest::testNewMember()
 
 void MainWindowTest::testSelectedMember()
 {
-    ClubFrontend::Gui::MainWindow mainWindow(QSqlDatabase::database());
+    membermanager::gui::MainWindow mainWindow(QSqlDatabase::database());
 
     QTableView *view = mainWindow.findChild<QTableView *> ("tableView");
     QItemSelectionModel *selectionModel = view->selectionModel();
@@ -61,7 +61,7 @@ void MainWindowTest::testSelectedMember()
 
 void MainWindowTest::testShowSaldo()
 {
-    ClubFrontend::Gui::MainWindow mainWindow(QSqlDatabase::database());
+    membermanager::gui::MainWindow mainWindow(QSqlDatabase::database());
 
     QTableView *view = mainWindow.findChild<QTableView *> ("tableView");
     QItemSelectionModel *selectionModel = view->selectionModel();
@@ -81,7 +81,7 @@ void MainWindowTest::handle()
     bool next = true;
     do {
         QWidget *widget = QApplication::activeWindow();
-        if(widget) {
+        if (widget) {
             QLabel *memberId = widget->findChild<QLabel *> ("memberId");
             id = memberId->text();
             QDialogButtonBox *buttonBox = widget->findChild<QDialogButtonBox *> (
@@ -90,12 +90,12 @@ void MainWindowTest::handle()
             button->click();
             next = false;
         }
-    } while(next);
+    } while (next);
 }
 
 void MainWindowTest::testMemberView()
 {
-    ClubFrontend::Gui::MainWindow mainWindow(QSqlDatabase::database());
+    membermanager::gui::MainWindow mainWindow(QSqlDatabase::database());
 
     QAction *actionSelectMember = mainWindow.findChild<QAction *> (
                                       "actionShowMember");
@@ -121,7 +121,7 @@ void MainWindowTest::testMemberView()
 
 void MainWindowTest::testDeletedMemberView()
 {
-    ClubFrontend::Gui::MainWindow mainWindow(QSqlDatabase::database());
+    membermanager::gui::MainWindow mainWindow(QSqlDatabase::database());
 
     QAction *actionShowDeletedMember = mainWindow.findChild<QAction *> (
                                            "actionShowDeletedMember");
@@ -148,5 +148,5 @@ void MainWindowTest::testDeletedMemberView()
 }
 }
 
-QTEST_MAIN(ClubFrontendTest::Gui::MainWindowTest)
+QTEST_MAIN(membermanagertest::gui::MainWindowTest)
 #include "mainwindowtest.moc"

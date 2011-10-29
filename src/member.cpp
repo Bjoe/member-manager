@@ -3,7 +3,7 @@
 #include "model/databasestructure.h"
 #include "model/memberdao.h"
 
-namespace ClubFrontend
+namespace membermanager
 {
 
 Member::Member() :
@@ -11,7 +11,7 @@ Member::Member() :
     bankAccountModel(new QSqlTableModel()),
     ressourcenModel(new QSqlTableModel()),
     memberModel(new QSqlTableModel()),
-    contributionModel(new Model::ContributionModel(QSqlDatabase::database())),
+    contributionModel(new model::ContributionModel(QSqlDatabase::database())),
     saldoModel(0),
     id(0)
 {
@@ -22,7 +22,7 @@ Member::Member(int anId) :
     bankAccountModel(new QSqlTableModel()),
     ressourcenModel(new QSqlTableModel()),
     memberModel(new QSqlTableModel()),
-    contributionModel(new Model::ContributionModel(QSqlDatabase::database())),
+    contributionModel(new model::ContributionModel(QSqlDatabase::database())),
     saldoModel(0),
     id(anId)
 {
@@ -31,18 +31,18 @@ Member::Member(int anId) :
 
 void Member::initModels()
 {
-    initTableModel(Model::AddressTable::TABLENAME, addressModel);
-    initTableModel(Model::BankAccountTable::TABLENAME, bankAccountModel);
-    initTableModel(Model::RessourcenTable::TABLENAME, ressourcenModel);
-    initTableModel(Model::MemberTable::TABLENAME, memberModel);
+    initTableModel(model::AddressTable::TABLENAME, addressModel);
+    initTableModel(model::BankAccountTable::TABLENAME, bankAccountModel);
+    initTableModel(model::RessourcenTable::TABLENAME, ressourcenModel);
+    initTableModel(model::MemberTable::TABLENAME, memberModel);
 
     contributionModel->setMemberId(id);
 }
 
 void Member::initTableModel(const QString &aTableName,
-                            QSqlTableModel * const aModel)
+                            QSqlTableModel *const aModel)
 {
-    QString pkey = Model::MemberTable::COLUMNNAME[Model::MemberTable::MemberId];
+    QString pkey = model::MemberTable::COLUMNNAME[model::MemberTable::MemberId];
     QString filter = QString(pkey + " = %1").arg(id);
 
     aModel->setTable(aTableName);
@@ -71,52 +71,52 @@ int Member::getMemberId() const
 
 QString Member::getFirstname() const
 {
-    return getValue(memberModel, Model::MemberTable::FirstName);
+    return getValue(memberModel, model::MemberTable::FirstName);
 }
 
 QString Member::getName() const
 {
-    return getValue(memberModel, Model::MemberTable::Name);
+    return getValue(memberModel, model::MemberTable::Name);
 }
 
 QString Member::getNickname() const
 {
-    return getValue(memberModel, Model::MemberTable::NickName);
+    return getValue(memberModel, model::MemberTable::NickName);
 }
 
 QString Member::getEmail() const
 {
-    return getValue(ressourcenModel, Model::RessourcenTable::EmailAdress);
+    return getValue(ressourcenModel, model::RessourcenTable::EmailAdress);
 }
 
 QString Member::getStreet() const
 {
-    return getValue(addressModel, Model::AddressTable::Street);
+    return getValue(addressModel, model::AddressTable::Street);
 }
 
 QString Member::getTown() const
 {
-    return getValue(addressModel, Model::AddressTable::Town);
+    return getValue(addressModel, model::AddressTable::Town);
 }
 
 QString Member::getZipCode() const
 {
-    return getValue(addressModel, Model::AddressTable::ZipCode);
+    return getValue(addressModel, model::AddressTable::ZipCode);
 }
 
 QString Member::getAccountNr() const
 {
-    return getValue(bankAccountModel, Model::BankAccountTable::AccountNr);
+    return getValue(bankAccountModel, model::BankAccountTable::AccountNr);
 }
 
 QString Member::getBankName() const
 {
-    return getValue(bankAccountModel, Model::BankAccountTable::BankName);
+    return getValue(bankAccountModel, model::BankAccountTable::BankName);
 }
 
 QString Member::getCode() const
 {
-    return getValue(bankAccountModel, Model::BankAccountTable::Code);
+    return getValue(bankAccountModel, model::BankAccountTable::Code);
 }
 
 QString Member::getDonation() const
@@ -164,12 +164,12 @@ void Member::initRessourcenMapper(QDataWidgetMapper *aMapper) const
     aMapper->setModel(ressourcenModel);
 }
 
-Model::ContributionModel * Member::getContributionModel() const
+model::ContributionModel *Member::getContributionModel() const
 {
     return contributionModel;
 }
 
-Model::SaldoModel * Member::getSaldoModel() const
+model::SaldoModel *Member::getSaldoModel() const
 {
     return saldoModel;
 }

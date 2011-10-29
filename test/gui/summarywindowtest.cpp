@@ -5,9 +5,9 @@
 #include <QtCore/QtCore>
 #include <QtGui>
 
-namespace ClubFrontendTest
+namespace membermanagertest
 {
-namespace Gui
+namespace gui
 {
 
 SummaryWindowTest::SummaryWindowTest() : isClicked(false)
@@ -16,7 +16,7 @@ SummaryWindowTest::SummaryWindowTest() : isClicked(false)
 
 void SummaryWindowTest::testShowSummary()
 {
-    ClubFrontend::Gui::SummaryWindow summary;
+    membermanager::gui::SummaryWindow summary;
 
     summary.showSummary("foo");
 
@@ -28,7 +28,7 @@ void SummaryWindowTest::testShowSummary()
 void SummaryWindowTest::testAddButton()
 {
     isClicked = false;
-    ClubFrontend::Gui::SummaryWindow summary;
+    membermanager::gui::SummaryWindow summary;
 
     QPushButton *button = new QPushButton();
     button->setObjectName("testButton");
@@ -49,5 +49,5 @@ void SummaryWindowTest::buttonClicked()
 }
 }
 
-QTEST_MAIN(ClubFrontendTest::Gui::SummaryWindowTest)
+QTEST_MAIN(membermanagertest::gui::SummaryWindowTest)
 #include "summarywindowtest.moc"

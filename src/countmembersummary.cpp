@@ -1,6 +1,6 @@
 #include "countmembersummary.h"
 
-namespace ClubFrontend
+namespace membermanager
 {
 
 CountMemberSummary::CountMemberSummary(SummaryHandler *aHandler, QObject *parent) :

@@ -9,9 +9,9 @@
 
 #include "summaryhandler.h"
 
-namespace ClubFrontend
+namespace membermanager
 {
-namespace Gui
+namespace gui
 {
 
 class SummaryWindow : public QWidget, public SummaryHandler

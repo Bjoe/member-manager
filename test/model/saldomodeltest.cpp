@@ -10,9 +10,9 @@
 #include <QSqlRecord>
 #include <QString>
 
-namespace ClubFrontendTest
+namespace membermanagertest
 {
-namespace Model
+namespace model
 {
 
 void SaldoModelTest::initTestCase()
@@ -24,11 +24,11 @@ void SaldoModelTest::initTestCase()
 
 void SaldoModelTest::testModel()
 {
-    ClubFrontend::Model::SaldoModel saldoModel(QSqlDatabase::database());
+    membermanager::model::SaldoModel saldoModel(QSqlDatabase::database());
     saldoModel.setMemberId(1025);
     saldoModel.refresh();
 
-    using ClubFrontend::Model::SaldoTable;
+    using membermanager::model::SaldoTable;
     const QSqlTableModel *model = saldoModel.findChild<QSqlTableModel *> (SaldoTable::TABLENAME);
     QVERIFY(model);
     QCOMPARE(model->rowCount(), 2);
@@ -39,7 +39,7 @@ void SaldoModelTest::testModel()
 
 void SaldoModelTest::testAmount()
 {
-    ClubFrontend::Model::SaldoModel saldoModel(QSqlDatabase::database());
+    membermanager::model::SaldoModel saldoModel(QSqlDatabase::database());
     saldoModel.setMemberId(1025);
     saldoModel.refresh();
 
@@ -51,5 +51,5 @@ void SaldoModelTest::testAmount()
 }
 }
 
-QTEST_MAIN(ClubFrontendTest::Model::SaldoModelTest)
+QTEST_MAIN(membermanagertest::model::SaldoModelTest)
 #include "saldomodeltest.moc"

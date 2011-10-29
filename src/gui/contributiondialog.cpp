@@ -1,11 +1,11 @@
 #include "gui/contributiondialog.h"
 
-namespace ClubFrontend
+namespace membermanager
 {
-namespace Gui
+namespace gui
 {
 
-ContributionDialog::ContributionDialog(Model::ContributionModel *aContributionModel, QWidget *parent) :
+ContributionDialog::ContributionDialog(model::ContributionModel *aContributionModel, QWidget *parent) :
     QDialog(parent), contributionModel(aContributionModel), ui()
 {
     ui.setupUi(this);

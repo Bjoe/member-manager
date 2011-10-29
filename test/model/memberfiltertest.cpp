@@ -4,14 +4,14 @@
 
 #include <QString>
 
-namespace ClubFrontendTest
+namespace membermanagertest
 {
-namespace Model
+namespace model
 {
 
 void MemberFilterTest::testSetDeleted()
 {
-    ClubFrontend::Model::MemberFilter filter;
+    membermanager::model::MemberFilter filter;
     filter.setDeleted(true);
 
     QCOMPARE(filter.getFilter(), QString("deleted='true'"));
@@ -19,7 +19,7 @@ void MemberFilterTest::testSetDeleted()
 
 void MemberFilterTest::testSetDeletedFalse()
 {
-    ClubFrontend::Model::MemberFilter filter;
+    membermanager::model::MemberFilter filter;
     filter.setDeleted(false);
 
     QCOMPARE(filter.getFilter(), QString("deleted='false'"));
@@ -28,5 +28,5 @@ void MemberFilterTest::testSetDeletedFalse()
 }
 }
 
-QTEST_MAIN(ClubFrontendTest::Model::MemberFilterTest)
+QTEST_MAIN(membermanagertest::model::MemberFilterTest)
 #include "memberfiltertest.moc"

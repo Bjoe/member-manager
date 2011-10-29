@@ -4,9 +4,9 @@
 #include <QtGui/QDialog>
 #include "ui_connectiondialog.h"
 
-namespace ClubFrontend
+namespace membermanager
 {
-namespace Gui
+namespace gui
 {
 
 class ConnectionDialog: public QDialog

@@ -6,7 +6,7 @@
 #include "testconfig.h"
 #include "database/databaseutil.h"
 
-namespace ClubFrontendTest
+namespace membermanagertest
 {
 
 void MemberFactoryTest::initTestCase()
@@ -18,13 +18,13 @@ void MemberFactoryTest::initTestCase()
 
 void MemberFactoryTest::testCreateNewMember()
 {
-    ClubFrontend::Member member = ClubFrontend::MemberFactory::createNewMember();
+    membermanager::Member member = membermanager::MemberFactory::createNewMember();
     QCOMPARE(member.getMemberId(), 1027);
 }
 
 void MemberFactoryTest::testCreateExistsMember()
 {
-    ClubFrontend::Member member = ClubFrontend::MemberFactory::createMember(1025);
+    membermanager::Member member = membermanager::MemberFactory::createMember(1025);
 
     float donation = 1;
     float fee = 15;
@@ -46,5 +46,5 @@ void MemberFactoryTest::testCreateExistsMember()
 
 }
 
-QTEST_MAIN(ClubFrontendTest::MemberFactoryTest)
+QTEST_MAIN(membermanagertest::MemberFactoryTest)
 #include "memberfactorytest.moc"

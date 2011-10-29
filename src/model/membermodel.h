@@ -7,9 +7,9 @@
 
 #include "member.h"
 
-namespace ClubFrontend
+namespace membermanager
 {
-namespace Model
+namespace model
 {
 
 class MemberModel: public QObject
@@ -28,7 +28,7 @@ public:
     void initTableView(QTableView *aTableView) const;
 
 private:
-    QSqlTableModel * const model;
+    QSqlTableModel *const model;
 };
 
 }

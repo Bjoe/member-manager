@@ -2,9 +2,9 @@
 
 #include "model/databasestructure.h"
 
-namespace ClubFrontend
+namespace membermanager
 {
-namespace Model
+namespace model
 {
 
 MemberModel::MemberModel(const QSqlDatabase &aDb) :

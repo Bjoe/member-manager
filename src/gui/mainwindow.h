@@ -7,9 +7,9 @@
 #include "gui/membermapper.h"
 #include "model/membermodel.h"
 
-namespace ClubFrontend
+namespace membermanager
 {
-namespace Gui
+namespace gui
 {
 
 class MainWindow: public QMainWindow
@@ -29,8 +29,8 @@ private slots:
 
 private:
     Ui::MainWindow ui;
-    Gui::MemberMapper memberMapper;
-    Model::MemberModel memberModel;
+    gui::MemberMapper memberMapper;
+    model::MemberModel memberModel;
 
     void showMembers(const bool aBoolean);
     int getSelection() const;

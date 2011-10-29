@@ -1,16 +1,16 @@
 #include "model/memberfilter.h"
 #include "model/databasestructure.h"
 
-namespace ClubFrontend
+namespace membermanager
 {
-namespace Model
+namespace model
 {
 
 void MemberFilter::setDeleted(const bool aBoolean)
 {
     QString column = MemberTable::COLUMNNAME[MemberTable::Deleted];
     QString deletedColumn(column + "='false'");
-    if(aBoolean) {
+    if (aBoolean) {
         deletedColumn = column + "='true'";
     }
     columns.append(deletedColumn);

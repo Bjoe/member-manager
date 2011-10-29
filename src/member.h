@@ -7,7 +7,7 @@
 #include "model/saldomodel.h"
 #include "model/contributionmodel.h"
 
-namespace ClubFrontend
+namespace membermanager
 {
 
 class Member
@@ -34,8 +34,8 @@ public:
     float getFeeAsFloat() const;
     QString getContributionInfo() const;
 
-    Model::ContributionModel * getContributionModel() const;
-    Model::SaldoModel * getSaldoModel() const;
+    model::ContributionModel *getContributionModel() const;
+    model::SaldoModel *getSaldoModel() const;
 
     void initAddressMapper(QDataWidgetMapper *aMapper) const;
     void initBankAccountMapper(QDataWidgetMapper *aMapper) const;
@@ -46,7 +46,7 @@ public:
 
 private:
     void initModels();
-    void initTableModel(const QString &aTablename, QSqlTableModel * const aModel);
+    void initTableModel(const QString &aTablename, QSqlTableModel *const aModel);
     QString getValue(const QSqlTableModel *aModel, int aColumn) const;
 
     int id;
@@ -55,8 +55,8 @@ private:
     QSqlTableModel *bankAccountModel;
     QSqlTableModel *ressourcenModel;
     QSqlTableModel *memberModel;
-    Model::ContributionModel *contributionModel;
-    Model::SaldoModel *saldoModel;
+    model::ContributionModel *contributionModel;
+    model::SaldoModel *saldoModel;
 
 };
 

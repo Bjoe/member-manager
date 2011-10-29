@@ -24,13 +24,13 @@ int main(int argc, char *argv[])
     QVariant hostname = settings.value(hostnameKey);
     QVariant port = settings.value(portKey);
 
-    ClubFrontend::Gui::ConnectionDialog dialog;
+    membermanager::gui::ConnectionDialog dialog;
     dialog.setDriver(driver.toString());
     dialog.setDatabaseName(databasename.toString());
     dialog.setUsername(username.toString());
     dialog.setHostname(hostname.toString());
     dialog.setPort(port.toInt());
-    if(dialog.exec() != QDialog::Accepted) {
+    if (dialog.exec() != QDialog::Accepted) {
         return 0;
     }
 
@@ -39,9 +39,9 @@ int main(int argc, char *argv[])
     db.setPort(dialog.getPort());
     db.setPassword(dialog.getPassword());
     db.setUserName(dialog.getUsername());
-    if(!db.open()) {
+    if (!db.open()) {
         QSqlError err = db.lastError();
-        if(err.type() != QSqlError::NoError) {
+        if (err.type() != QSqlError::NoError) {
             QMessageBox::warning(0, QObject::tr("Unable to open database"),
                                  QObject::tr(
                                      "An error occured while opening the connection: ")
@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
     settings.setValue(hostnameKey, dialog.getHostname());
     settings.setValue(portKey, dialog.getPort());
 
-    ClubFrontend::Gui::MainWindow *mainWindow = new ClubFrontend::Gui::MainWindow(
+    membermanager::gui::MainWindow *mainWindow = new membermanager::gui::MainWindow(
         db);
     mainWindow->show();
 

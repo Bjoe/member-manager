@@ -2,9 +2,9 @@
 
 #include <QSqlDatabase>
 
-namespace ClubFrontend
+namespace membermanager
 {
-namespace Gui
+namespace gui
 {
 
 ConnectionDialog::ConnectionDialog(QWidget *parent) :
@@ -66,7 +66,7 @@ QString ConnectionDialog::getDriver() const
 void ConnectionDialog::setDriver(const QString &aName)
 {
     const int result = ui.driver->findText(aName);
-    if(result > -1)
+    if (result > -1)
         ui.driver->setCurrentIndex(result);
 }
 

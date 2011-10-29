@@ -10,9 +10,9 @@
 #include <QSqlRecord>
 #include <QString>
 
-namespace ClubFrontendTest
+namespace membermanagertest
 {
-namespace Model
+namespace model
 {
 
 void KassaModelTest::initTestCase()
@@ -24,9 +24,9 @@ void KassaModelTest::initTestCase()
 
 void KassaModelTest::testModel()
 {
-    ClubFrontend::Model::KassaModel kassaModel(QSqlDatabase::database());
+    membermanager::model::KassaModel kassaModel(QSqlDatabase::database());
 
-    using ClubFrontend::Model::KassaTable;
+    using membermanager::model::KassaTable;
     const QSqlTableModel *model = kassaModel.findChild<QSqlTableModel *> (KassaTable::TABLENAME);
     QVERIFY(model);
     QCOMPARE(model->rowCount(), 3);
@@ -37,5 +37,5 @@ void KassaModelTest::testModel()
 }
 }
 
-QTEST_MAIN(ClubFrontendTest::Model::KassaModelTest)
+QTEST_MAIN(membermanagertest::model::KassaModelTest)
 #include "kassamodeltest.moc"

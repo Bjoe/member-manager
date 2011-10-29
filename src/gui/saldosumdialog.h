@@ -6,9 +6,9 @@
 
 #include "model/saldosummodel.h"
 
-namespace ClubFrontend
+namespace membermanager
 {
-namespace Gui
+namespace gui
 {
 
 class SaldoSumDialog : public QDialog
@@ -16,7 +16,7 @@ class SaldoSumDialog : public QDialog
     Q_OBJECT
 
 public:
-    SaldoSumDialog(Model::SaldoSumModel &aModel, QWidget *aParent = 0);
+    SaldoSumDialog(model::SaldoSumModel &aModel, QWidget *aParent = 0);
 
 private:
     Ui::SaldoSumDialog ui;

@@ -1,8 +1,8 @@
 #include "model/databasestructure.h"
 
-namespace ClubFrontend
+namespace membermanager
 {
-namespace Model
+namespace model
 {
 
 const QString AddressTable::TABLENAME = "adresse";

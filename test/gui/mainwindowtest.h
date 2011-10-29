@@ -5,9 +5,9 @@
 
 #include "handler.h"
 
-namespace ClubFrontendTest
+namespace membermanagertest
 {
-namespace Gui
+namespace gui
 {
 
 class MainWindowTest: public QObject, public qttestutil::Handler

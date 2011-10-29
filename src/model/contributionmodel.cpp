@@ -3,9 +3,9 @@
 #include "model/databasestructure.h"
 #include "model/tabledao.h"
 
-namespace ClubFrontend
+namespace membermanager
 {
-namespace Model
+namespace model
 {
 
 ContributionModel::ContributionModel(const QSqlDatabase &aDb) :
@@ -40,7 +40,7 @@ int ContributionModel::insertMemberId(const QVariant &aMemberId)
 {
     model->setFilter("");
     model->select();
-    Model::TableDao tableDao;
+    model::TableDao tableDao;
     int row = tableDao.insertNewRow(model, ContributionTable::MemberId, aMemberId);
     setMemberId(aMemberId.toInt());
     return row;
@@ -89,7 +89,7 @@ void ContributionModel::submit(const QString &aFee, const QString &aDonation, co
     QString fee = getFee();
     QString donation = getDonation();
 
-    if(fee.compare(aFee) != 0 || donation.compare(aDonation) != 0) {
+    if (fee.compare(aFee) != 0 || donation.compare(aDonation) != 0) {
         QSqlRecord newRecord = model->record();
         newRecord.setValue(ContributionTable::MemberId, memberId);
         newRecord.setValue(ContributionTable::Fee, QVariant(aFee));

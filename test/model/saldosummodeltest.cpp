@@ -13,9 +13,9 @@
 #include <QVariant>
 #include <QString>
 
-namespace ClubFrontendTest
+namespace membermanagertest
 {
-namespace Model
+namespace model
 {
 
 void SaldoSumModelTest::initTestCase()
@@ -27,7 +27,7 @@ void SaldoSumModelTest::initTestCase()
 
 void SaldoSumModelTest::testView()
 {
-    ClubFrontend::Model::SaldoSumModel saldoSumModel(QSqlDatabase::database());
+    membermanager::model::SaldoSumModel saldoSumModel(QSqlDatabase::database());
     QTableView *view = new QTableView();
     saldoSumModel.initTableView(view);
     QAbstractItemModel *model = view->model();
@@ -38,5 +38,5 @@ void SaldoSumModelTest::testView()
 }
 }
 
-QTEST_MAIN(ClubFrontendTest::Model::SaldoSumModelTest)
+QTEST_MAIN(membermanagertest::model::SaldoSumModelTest)
 #include "saldosummodeltest.moc"

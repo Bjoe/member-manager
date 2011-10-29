@@ -6,9 +6,9 @@
 
 #include "model/saldomodel.h"
 
-namespace ClubFrontend
+namespace membermanager
 {
-namespace Gui
+namespace gui
 {
 
 class SaldoDialog : public QDialog
@@ -23,7 +23,7 @@ public:
 
 private:
     Ui::SaldoDialogClass ui;
-    Model::SaldoModel saldoModel;
+    model::SaldoModel saldoModel;
 };
 
 }

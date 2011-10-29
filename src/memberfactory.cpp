@@ -3,12 +3,12 @@
 #include <QSqlDatabase>
 #include "model/memberdao.h"
 
-namespace ClubFrontend
+namespace membermanager
 {
 
 Member MemberFactory::createNewMember()
 {
-    Model::MemberDao dao(QSqlDatabase::database());
+    model::MemberDao dao(QSqlDatabase::database());
     int id = dao.newMember();
 
     return createMember(id);

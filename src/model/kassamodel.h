@@ -6,9 +6,9 @@
 #include <QSqlTableModel>
 #include <QTableView>
 
-namespace ClubFrontend
+namespace membermanager
 {
-namespace Model
+namespace model
 {
 
 class KassaModel: public QObject

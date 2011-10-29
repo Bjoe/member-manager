@@ -3,9 +3,9 @@
 
 #include <QtTest/QtTest>
 
-namespace ClubFrontendTest
+namespace membermanagertest
 {
-namespace Gui
+namespace gui
 {
 
 class ContributionDialogTest : public QObject

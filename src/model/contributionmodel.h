@@ -5,9 +5,9 @@
 #include <QtSql>
 #include <QTableView>
 
-namespace ClubFrontend
+namespace membermanager
 {
-namespace Model
+namespace model
 {
 
 class ContributionModel : public QObject

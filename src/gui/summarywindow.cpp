@@ -1,8 +1,8 @@
 #include "gui/summarywindow.h"
 
-namespace ClubFrontend
+namespace membermanager
 {
-namespace Gui
+namespace gui
 {
 
 SummaryWindow::SummaryWindow(QWidget *parent) : QWidget(parent)

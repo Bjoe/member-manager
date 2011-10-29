@@ -27,8 +27,8 @@ void SaldoSumDialogTest::testShowDialog()
     ClubFrontend::SaldoSumModel saldoSumModel(QSqlDatabase::database());
     ClubFrontend::SaldoSumDialog dialog(saldoSumModel);
 
-    QTableView* tableView = dialog.findChild<QTableView* > ("tableView");
-    QAbstractItemModel* model = tableView->model();
+    QTableView *tableView = dialog.findChild<QTableView * > ("tableView");
+    QAbstractItemModel *model = tableView->model();
     int rowCount = model->rowCount();
     QCOMPARE(rowCount, 1);
 }

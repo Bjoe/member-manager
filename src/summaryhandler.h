@@ -4,7 +4,7 @@
 #include <QString>
 #include <QPushButton>
 
-namespace ClubFrontend
+namespace membermanager
 {
 
 class SummaryHandler

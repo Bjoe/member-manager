@@ -3,9 +3,9 @@
 
 #include <QtSql>
 
-namespace ClubFrontend
+namespace membermanager
 {
-namespace Model
+namespace model
 {
 
 class MemberDao

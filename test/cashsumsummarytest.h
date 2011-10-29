@@ -3,7 +3,7 @@
 
 #include <QtTest/QtTest>
 
-namespace ClubFrontendTest
+namespace membermanagertest
 {
 
 class CashSumSummaryTest : public QObject

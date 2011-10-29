@@ -6,7 +6,7 @@
 #include "database/databaseutil.h"
 #include "testutil/summaryhandlermock.h"
 
-namespace ClubFrontendTest
+namespace membermanagertest
 {
 
 void CountMemberSummaryTest::initTestCase()
@@ -18,9 +18,9 @@ void CountMemberSummaryTest::initTestCase()
 
 void CountMemberSummaryTest::testCountMember()
 {
-    Utils::SummaryHandlerMock *handler = new Utils::SummaryHandlerMock();
+    util::SummaryHandlerMock *handler = new util::SummaryHandlerMock();
 
-    ClubFrontend::CountMemberSummary countMember(handler);
+    membermanager::CountMemberSummary countMember(handler);
 
     QPushButton *button = handler->getPushButton();
     QVERIFY(button);
@@ -32,5 +32,5 @@ void CountMemberSummaryTest::testCountMember()
 
 }
 
-QTEST_MAIN(ClubFrontendTest::CountMemberSummaryTest)
+QTEST_MAIN(membermanagertest::CountMemberSummaryTest)
 #include "countmembersummarytest.moc"

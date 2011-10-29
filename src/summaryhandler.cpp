@@ -1,6 +1,6 @@
 #include "summaryhandler.h"
 
-namespace ClubFrontend
+namespace membermanager
 {
 
 

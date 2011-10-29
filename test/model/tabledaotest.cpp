@@ -7,9 +7,9 @@
 #include "model/databasestructure.h"
 #include "database/databaseutil.h"
 
-namespace ClubFrontendTest
+namespace membermanagertest
 {
-namespace Model
+namespace model
 {
 
 void TableDaoTest::initTestCase()
@@ -21,7 +21,7 @@ void TableDaoTest::initTestCase()
 
 void TableDaoTest::testInsertNewRow()
 {
-    using ClubFrontend::Model::SaldoTable;
+    using membermanager::model::SaldoTable;
     QSqlTableModel *model = new QSqlTableModel();
     model->setTable(SaldoTable::TABLENAME);
     model->select();
@@ -29,7 +29,7 @@ void TableDaoTest::testInsertNewRow()
 
     QVariant id(123);
 
-    ClubFrontend::Model::TableDao tableDao;
+    membermanager::model::TableDao tableDao;
     int row = tableDao.insertNewRow(model, SaldoTable::dorfmitglied_pkey, id);
     QCOMPARE(row, 2);
 
@@ -44,5 +44,5 @@ void TableDaoTest::testInsertNewRow()
 }
 }
 
-QTEST_MAIN(ClubFrontendTest::Model::TableDaoTest)
+QTEST_MAIN(membermanagertest::model::TableDaoTest)
 #include "tabledaotest.moc"
