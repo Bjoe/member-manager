@@ -2,11 +2,12 @@
 #define MEMBERTEST_H
 
 #include <QtTest/QtTest>
+#include "testcoverageobject.h"
 
 namespace membermanagertest
 {
 
-class MemberTest : public QObject
+class MemberTest : public qttestutil::TestCoverageObject
 {
     Q_OBJECT
 

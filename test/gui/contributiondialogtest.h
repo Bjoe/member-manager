@@ -2,13 +2,14 @@
 #define CONTRIBUTIONDIALOGTEST_H
 
 #include <QtTest/QtTest>
+#include "testcoverageobject.h"
 
 namespace membermanagertest
 {
 namespace gui
 {
 
-class ContributionDialogTest : public QObject
+class ContributionDialogTest : public qttestutil::TestCoverageObject
 {
     Q_OBJECT
 

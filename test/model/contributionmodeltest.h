@@ -2,13 +2,14 @@
 #define CONTRIBUTIONMODELTEST_H
 
 #include <QtTest/QtTest>
+#include "testcoverageobject.h"
 
 namespace membermanagertest
 {
 namespace model
 {
 
-class ContributionModelTest : public QObject
+class ContributionModelTest : public qttestutil::TestCoverageObject
 {
     Q_OBJECT
 

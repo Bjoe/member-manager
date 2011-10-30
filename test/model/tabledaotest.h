@@ -2,6 +2,7 @@
 #define TABLEDAOTEST_H
 
 #include <QtTest/QtTest>
+#include "testcoverageobject.h"
 
 namespace membermanagertest
 {
@@ -9,11 +10,13 @@ namespace model
 {
 
 
-class TableDaoTest : public QObject
+class TableDaoTest : public qttestutil::TestCoverageObject
 {
     Q_OBJECT
+public:
+    void initTest();
+
 private slots:
-    void initTestCase();
     void testInsertNewRow();
 };
 

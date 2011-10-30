@@ -2,11 +2,12 @@
 #define CASHSUMSUMMARYTEST_H
 
 #include <QtTest/QtTest>
+#include "testcoverageobject.h"
 
 namespace membermanagertest
 {
 
-class CashSumSummaryTest : public QObject
+class CashSumSummaryTest : public qttestutil::TestCoverageObject
 {
     Q_OBJECT
 

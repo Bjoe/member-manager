@@ -3,6 +3,10 @@
 enable_testing(true)
 #include(CTest)
 
+if(CMAKE_CROSSCOMPILING)
+    include(Coverage)
+endif(CMAKE_CROSSCOMPILING)
+
 find_package(QtTestUtil)
 
 find_package(Qt4 4.7.3 COMPONENTS QtTest REQUIRED)

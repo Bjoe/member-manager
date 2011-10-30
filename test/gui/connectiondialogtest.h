@@ -2,13 +2,14 @@
 #define CONNECTIONDIALOGTEST_H_
 
 #include <QtTest/QtTest>
+#include "testcoverageobject.h"
 
 namespace membermanagertest
 {
 namespace gui
 {
 
-class ConnectionDialogTest: public QObject
+class ConnectionDialogTest: public qttestutil::TestCoverageObject
 {
     Q_OBJECT
 

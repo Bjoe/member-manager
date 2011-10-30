@@ -2,13 +2,14 @@
 #define SUMMARYWINDOWTEST_H
 
 #include <QtTest/QtTest>
+#include "testcoverageobject.h"
 
 namespace membermanagertest
 {
 namespace gui
 {
 
-class SummaryWindowTest : public QObject
+class SummaryWindowTest : public qttestutil::TestCoverageObject
 {
     Q_OBJECT
 

@@ -2,13 +2,14 @@
 #define MEMBERMAPPERTEST_H
 
 #include <QtTest/QtTest>
+#include "testcoverageobject.h"
 
 namespace membermanagertest
 {
 namespace gui
 {
 
-class MemberMapperTest : public QObject
+class MemberMapperTest : public qttestutil::TestCoverageObject
 {
     Q_OBJECT
 

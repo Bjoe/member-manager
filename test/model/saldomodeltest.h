@@ -2,13 +2,14 @@
 #define SALDOMODELTEST_H_
 
 #include <QtTest/QtTest>
+#include "testcoverageobject.h"
 
 namespace membermanagertest
 {
 namespace model
 {
 
-class SaldoModelTest: public QObject
+class SaldoModelTest: public qttestutil::TestCoverageObject
 {
     Q_OBJECT
 

@@ -2,11 +2,12 @@
 #define DEBITSUMSUMMARYTEST_H
 
 #include <QtTest/QtTest>
+#include "testcoverageobject.h"
 
 namespace membermanagertest
 {
 
-class DebitSumSummaryTest : public QObject
+class DebitSumSummaryTest : public qttestutil::TestCoverageObject
 {
     Q_OBJECT
 

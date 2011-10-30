@@ -12,7 +12,7 @@ namespace membermanagertest
 namespace model
 {
 
-void TableDaoTest::initTestCase()
+void TableDaoTest::initTest()
 {
     qttestutil::database::DatabaseUtil database(DATABASEDRIVER);
     database.open(DATABASE);

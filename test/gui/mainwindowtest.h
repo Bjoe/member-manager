@@ -2,7 +2,7 @@
 #define MAINWINDOWTEST_H
 
 #include <QtTest/QtTest>
-
+#include "testcoverageobject.h"
 #include "handler.h"
 
 namespace membermanagertest
@@ -10,7 +10,7 @@ namespace membermanagertest
 namespace gui
 {
 
-class MainWindowTest: public QObject, public qttestutil::Handler
+class MainWindowTest: public qttestutil::TestCoverageObject, public qttestutil::Handler
 {
     Q_OBJECT
 

@@ -2,13 +2,14 @@
 #define SALDODIALOGTEST_H
 
 #include <QtTest/QtTest>
+#include "testcoverageobject.h"
 
 namespace membermanagertest
 {
 namespace gui
 {
 
-class SaldoDialogTest : public QObject
+class SaldoDialogTest : public qttestutil::TestCoverageObject
 {
     Q_OBJECT
 

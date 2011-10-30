@@ -2,11 +2,12 @@
 #define COUNTMEMBERSUMMARYTEST_H
 
 #include <QtTest/QtTest>
+#include "testcoverageobject.h"
 
 namespace membermanagertest
 {
 
-class CountMemberSummaryTest : public QObject
+class CountMemberSummaryTest : public qttestutil::TestCoverageObject
 {
     Q_OBJECT
 
