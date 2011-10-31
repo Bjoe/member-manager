@@ -81,8 +81,6 @@ QVariant ContributionModel::getInfoValue() const
     return record.value(ContributionTable::Info);
 }
 
-
-// TODO Refactor: In DAO Klasse Refactoren
 void ContributionModel::submit(const QString &aFee, const QString &aDonation, const QString &anInfo)
 {
     QString fee = getFee();
