@@ -1,6 +1,6 @@
 
 # The following are required to uses Dart and the Cdash dashboard
-enable_testing(true)
+#enable_testing(true)
 #include(CTest)
 
 if(CMAKE_CROSSCOMPILING)
