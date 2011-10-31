@@ -16,7 +16,7 @@ public:
     ContributionModel(const QSqlDatabase &aDb);
     virtual ~ContributionModel();
 
-    void setMemberId(const int aMemberId);
+    void selectMemberId(const int aMemberId);
     int insertMemberId(const QVariant &aMemberId);
     void refresh();
 

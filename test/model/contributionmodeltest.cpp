@@ -27,7 +27,7 @@ void ContributionModelTest::testModel()
 {
     membermanager::model::ContributionModel contributionModel(QSqlDatabase::database());
 
-    contributionModel.setMemberId(1025);
+    contributionModel.selectMemberId(1025);
     using membermanager::model::ContributionTable;
     const QSqlTableModel *model = contributionModel.findChild<QSqlTableModel *> (ContributionTable::TABLENAME);
     QVERIFY(model);
@@ -41,7 +41,7 @@ void ContributionModelTest::testGetColumns()
 {
     membermanager::model::ContributionModel contributionModel(QSqlDatabase::database());
 
-    contributionModel.setMemberId(1025);
+    contributionModel.selectMemberId(1025);
     QCOMPARE(contributionModel.getInfo(), QString("Beitragsaenderung"));
     QCOMPARE(contributionModel.getDonation(), QString("1"));
     QCOMPARE(contributionModel.getFee(), QString("15"));
@@ -51,7 +51,7 @@ void ContributionModelTest::testChangeInfo()
 {
     membermanager::model::ContributionModel contributionModel(QSqlDatabase::database());
 
-    contributionModel.setMemberId(1025);
+    contributionModel.selectMemberId(1025);
 
     contributionModel.submit("15", "1", "Foo");
 
@@ -64,7 +64,7 @@ void ContributionModelTest::testNewFeeDonation()
 {
     membermanager::model::ContributionModel contributionModel(QSqlDatabase::database());
 
-    contributionModel.setMemberId(1025);
+    contributionModel.selectMemberId(1025);
 
     using membermanager::model::ContributionTable;
     QSqlTableModel *model = contributionModel.findChild<QSqlTableModel *> (ContributionTable::TABLENAME);

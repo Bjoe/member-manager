@@ -25,8 +25,7 @@ ContributionModel::~ContributionModel()
 {
 }
 
-//! \todo Refactor selectMemberId
-void ContributionModel::setMemberId(const int aMemberId)
+void ContributionModel::selectMemberId(const int aMemberId)
 {
     QString columname = ContributionTable::COLUMNNAME[ContributionTable::MemberId];
     QString filter = QString(columname + " = %1").arg(aMemberId);
@@ -42,7 +41,7 @@ int ContributionModel::insertMemberId(const QVariant &aMemberId)
     model->select();
     model::TableDao tableDao;
     int row = tableDao.insertNewRow(model, ContributionTable::MemberId, aMemberId);
-    setMemberId(aMemberId.toInt());
+    selectMemberId(aMemberId.toInt());
     return row;
 }
 

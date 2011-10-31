@@ -36,7 +36,7 @@ void Member::initModels()
     initTableModel(model::RessourcenTable::TABLENAME, ressourcenModel);
     initTableModel(model::MemberTable::TABLENAME, memberModel);
 
-    contributionModel->setMemberId(id);
+    contributionModel->selectMemberId(id);
 }
 
 void Member::initTableModel(const QString &aTableName,
