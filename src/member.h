@@ -3,9 +3,7 @@
 
 #include <QtGui>
 #include <QtSql>
-
-#include "model/saldomodel.h"
-#include "model/contributionmodel.h"
+#include "membercontribution.h"
 
 namespace membermanager
 {
@@ -18,46 +16,39 @@ public:
 
     int getMemberId() const;
     QString getName() const;
+    void setName(const QString &aName);
     QString getFirstname() const;
+    void setFirstname(const QString &aName);
     QString getNickname() const;
+    void setNickname(const QString &aName);
     QString getEmail() const;
+    void setEmail(const QString &anEmailAddress);
+    QDate getEntryDate() const;
+    void setEntryDate(const QDate &aDate);
+    QString getInfo() const;
+    void setInfo(const QString &anInfo);
     QString getStreet() const;
-    QString getTown() const;
+    void setStreet(const QString &aStreet);
+    QString getCity() const;
+    void setCity(const QString &aCity);
     QString getZipCode() const;
+    void setZipCode(const QString &aCode);
     QString getAccountNr() const;
+    void setAccountNr(const QString &aNr);
     QString getBankName() const;
+    void setBankName(const QString &aName);
     QString getCode() const;
+    void setCode(const QString &aCode);
 
-    QString getDonation() const;
-    float getDonationAsFloat() const;
-    QString getFee() const;
-    float getFeeAsFloat() const;
-    QString getContributionInfo() const;
+    MemberContribution getMemberContribution() const;
 
-    model::ContributionModel *getContributionModel() const;
-    model::SaldoModel *getSaldoModel() const;
-
-    void initAddressMapper(QDataWidgetMapper *aMapper) const;
-    void initBankAccountMapper(QDataWidgetMapper *aMapper) const;
-    void initRessourcenMapper(QDataWidgetMapper *aMapper) const;
-    void initMemberMapper(QDataWidgetMapper *aMapper) const;
-
-    void submitContribution(const QString &aFee, const QString &aDonation, const QString &anInfo);
+    bool save();
 
 private:
-    void initModels();
-    void initTableModel(const QString &aTablename, QSqlTableModel *const aModel);
-    QString getValue(const QSqlTableModel *aModel, int aColumn) const;
-
-    int id;
-
-    QSqlTableModel *addressModel;
-    QSqlTableModel *bankAccountModel;
-    QSqlTableModel *ressourcenModel;
-    QSqlTableModel *memberModel;
-    model::ContributionModel *contributionModel;
-    model::SaldoModel *saldoModel;
-
+    QSqlRecord memberRecord;
+    QSqlRecord addressRecord;
+    QSqlRecord bankRecord;
+    QSqlRecord ressourcenRecord;
 };
 
 }

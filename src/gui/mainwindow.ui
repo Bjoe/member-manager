@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>788</width>
-    <height>551</height>
+    <width>677</width>
+    <height>513</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -56,16 +56,16 @@
      <widget class="QTabWidget" name="tabWidget">
       <property name="maximumSize">
        <size>
-        <width>450</width>
+        <width>600</width>
         <height>16777215</height>
        </size>
       </property>
       <property name="currentIndex">
        <number>0</number>
       </property>
-      <widget class="QWidget" name="name">
+      <widget class="QWidget" name="data">
        <attribute name="title">
-        <string>Name</string>
+        <string>Daten</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
@@ -118,7 +118,7 @@
            <item row="1" column="0">
             <widget class="QLabel" name="memberNameLabel">
              <property name="text">
-              <string>&amp;Name</string>
+              <string>Name</string>
              </property>
             </widget>
            </item>
@@ -318,6 +318,16 @@
            <item row="2" column="1">
             <widget class="QLineEdit" name="contributionInfo"/>
            </item>
+           <item row="3" column="1">
+            <widget class="QDateEdit" name="validFrom"/>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="validFromLabel">
+             <property name="text">
+              <string>Gültig ab</string>
+             </property>
+            </widget>
+           </item>
           </layout>
          </widget>
         </item>
@@ -337,7 +347,7 @@
           </property>
           <property name="maximumSize">
            <size>
-            <width>450</width>
+            <width>600</width>
             <height>16777215</height>
            </size>
           </property>
@@ -355,7 +365,14 @@
            <item>
             <widget class="QPushButton" name="feeButton">
              <property name="text">
-              <string>Beiträge</string>
+              <string>Beiträge Anzeigen</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="newFeeButton">
+             <property name="text">
+              <string>Neuer Beitrag</string>
              </property>
             </widget>
            </item>
@@ -428,7 +445,7 @@
      <widget class="QDialogButtonBox" name="buttonBox">
       <property name="maximumSize">
        <size>
-        <width>450</width>
+        <width>600</width>
         <height>16777215</height>
        </size>
       </property>
@@ -459,7 +476,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>788</width>
+     <width>677</width>
      <height>20</height>
     </rect>
    </property>

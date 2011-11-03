@@ -1,7 +1,4 @@
 
-# The following are required to uses Dart and the Cdash dashboard
-#enable_testing(true)
-#include(CTest)
 
 if(CMAKE_CROSSCOMPILING)
     include(Coverage)
@@ -38,6 +35,7 @@ add_subdirectory(gui)
 add_subdirectory(model)
 
 qt4_add_test(member membertest.cpp)
+qt4_add_test(membercontribution membercontributiontest.cpp)
 qt4_add_test(memberfactory memberfactorytest.cpp)
 qt4_add_test(cashsumsummary cashsumsummarytest.cpp testutil/summaryhandlermock.cpp)
 qt4_add_test(countmembersummary countmembersummarytest.cpp testutil/summaryhandlermock.cpp)

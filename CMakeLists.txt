@@ -16,4 +16,8 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 find_doxygen()
 
 add_subdirectory(src)
+
+# The following are required to uses CTest, Dart and the Cdash dashboard
+enable_testing(true)
+#include(CTest)
 add_subdirectory(test)

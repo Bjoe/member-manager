@@ -17,26 +17,11 @@ public:
     virtual ~ContributionModel();
 
     void selectMemberId(const int aMemberId);
-    int insertMemberId(const QVariant &aMemberId);
-    void refresh();
 
     void initTableView(QTableView *aTableView) const;
 
-    QString getInfo() const;
-    QVariant getInfoValue() const;
-    QString getDonation() const;
-    QVariant getDonationValue() const;
-    QString getFee() const;
-    QVariant getFeeValue() const;
-
-    void submit(const QString &aFee, const QString &aDonation, const QString &anInfo);
-
 private:
-    QVariant returnValue(int aColumn) const;
-
     QSqlTableModel *model;
-    QSqlRecord record;
-    int memberId;
 };
 
 }

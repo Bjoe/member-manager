@@ -11,38 +11,34 @@ namespace gui
 
 MainWindow::MainWindow(const QSqlDatabase &aDatabase,
                        QWidget *parent) :
-    QMainWindow(parent), ui(), memberModel(aDatabase), memberMapper(&ui)
+    QMainWindow(parent), ui(), memberModel(aDatabase), memberDetailView(&ui)
 {
     ui.setupUi(this);
-    memberMapper.initUi();
 
     showMembers(false);
 
-    connect(ui.actionShowMember, SIGNAL(triggered()),
-            SLOT(showMemberView()));
-    connect(ui.actionShowDeletedMember, SIGNAL(triggered()),
-            SLOT(showDeletedMemberView()));
-    connect(ui.actionNewMember, SIGNAL(triggered()),
-            SLOT(newMember()));
-    connect(ui.actionShowSaldo, SIGNAL(triggered()),
-            SLOT(showSaldo()));
-    connect(ui.saldoButton, SIGNAL(clicked()),
-            SLOT(showSaldo()));
+    connect(ui.buttonBox, SIGNAL(clicked()), &memberDetailView, SLOT(saveMember()));
+    //connect(ui.newFeeButton, SIGNAL(clicked()), &memberDetailView, SLOT(newFee());
+    connect(ui.actionShowMember, SIGNAL(triggered()), SLOT(showMemberView()));
+    connect(ui.actionShowDeletedMember, SIGNAL(triggered()), SLOT(showDeletedMemberView()));
+    connect(ui.actionNewMember, SIGNAL(triggered()), SLOT(newMember()));
+    connect(ui.actionShowSaldo, SIGNAL(triggered()), SLOT(showSaldo()));
+    connect(ui.saldoButton, SIGNAL(clicked()), SLOT(showSaldo()));
 
     //    connect ( ui.tableView->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
     //            SLOT(updateMemberMapper()));
     connect(ui.tableView->selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
-            SLOT(updateMemberMapper(QItemSelection, QItemSelection)));
+            SLOT(updateMemberDetailView(QItemSelection, QItemSelection)));
 }
 
 void MainWindow::newMember()
 {
-    memberMapper.showMember(MemberFactory::createNewMember());
+    memberDetailView.showMember(MemberFactory::createNewMember());
 }
 
-void MainWindow::updateMemberMapper(const QItemSelection &aSelected, const QItemSelection &aDeselected)
+void MainWindow::updateMemberDetailView(const QItemSelection &aSelected, const QItemSelection &aDeselected)
 {
-    memberMapper.showMember(MemberFactory::createMember(getSelection()));
+    memberDetailView.showMember(MemberFactory::createMember(getSelection()));
 }
 
 void MainWindow::showSaldo()

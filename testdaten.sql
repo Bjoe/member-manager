@@ -71,13 +71,13 @@ INSERT INTO dorfmitglied (
             dorfmitglied_pkey, deleted, vorname, name, nickname, chaosdorfadr,
             intern, ccc, shell, einzug, chaosnr, eintrittsdatum, info)
     VALUES (1025,'false','James T','Kirk','Capt. Kirk','kirk@chaosdorf.de',
-            'kirk@chaosdorf.de','kirk@chaosdorf.de','kirk',1,2193,date('2001-04-24'),'');
+            'kirk@chaosdorf.de','kirk@chaosdorf.de','kirk',1,2193,date('2001-04-24'),'Captain of the ncc-1701');
 
 INSERT INTO dorfmitglied (
             dorfmitglied_pkey, deleted, vorname, name, nickname, chaosdorfadr,
             intern, ccc, shell, einzug, chaosnr, eintrittsdatum, info)
     VALUES (1026,'true','Spock','Spock','Spock','spock@chaosdorf.de',
-            'spock@chaosdorf.de','spock@chaosdorf.de','spock',0,1234,date('2002-05-26'),'');
+            'spock@chaosdorf.de','spock@chaosdorf.de','spock',0,1234,date('2002-05-26'),'Strange vulcanier');
 
 
 

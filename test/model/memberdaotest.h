@@ -17,6 +17,11 @@ private slots:
     void initTestCase();
     void testNewMember();
     void testDeleteMember();
+    void testGetRecordWithMemberId();
+    void testGetRecordWithMemberIdWithSort();
+    void testSaveRecord();
+    void testSaveNewRecord();
+    void testSaveRecordWithSort();
 };
 
 }

@@ -7,171 +7,161 @@ namespace membermanager
 {
 
 Member::Member() :
-    addressModel(new QSqlTableModel()),
-    bankAccountModel(new QSqlTableModel()),
-    ressourcenModel(new QSqlTableModel()),
-    memberModel(new QSqlTableModel()),
-    contributionModel(new model::ContributionModel(QSqlDatabase::database())),
-    saldoModel(0),
-    id(0)
+    memberRecord(), addressRecord(), bankRecord(), ressourcenRecord()
 {
 }
 
 Member::Member(int anId) :
-    addressModel(new QSqlTableModel()),
-    bankAccountModel(new QSqlTableModel()),
-    ressourcenModel(new QSqlTableModel()),
-    memberModel(new QSqlTableModel()),
-    contributionModel(new model::ContributionModel(QSqlDatabase::database())),
-    saldoModel(0),
-    id(anId)
+    memberRecord(), addressRecord(), bankRecord(), ressourcenRecord()
 {
-    initModels();
+    model::MemberDao dao(QSqlDatabase::database());
+
+    addressRecord = dao.getRecordWithMemberId(model::AddressTable::TABLENAME, anId);
+    bankRecord = dao.getRecordWithMemberId(model::BankAccountTable::TABLENAME, anId);
+    ressourcenRecord = dao.getRecordWithMemberId(model::RessourcenTable::TABLENAME, anId);
+    memberRecord = dao.getRecordWithMemberId(model::MemberTable::TABLENAME, anId);
 }
 
-void Member::initModels()
+bool Member::save()
 {
-    initTableModel(model::AddressTable::TABLENAME, addressModel);
-    initTableModel(model::BankAccountTable::TABLENAME, bankAccountModel);
-    initTableModel(model::RessourcenTable::TABLENAME, ressourcenModel);
-    initTableModel(model::MemberTable::TABLENAME, memberModel);
+    model::MemberDao dao(QSqlDatabase::database());
 
-    contributionModel->selectMemberId(id);
+    bool successful = false;
+    successful |= dao.saveRecordWithMemberId(model::MemberTable::TABLENAME, memberRecord);
+    successful |= dao.saveRecordWithMemberId(model::RessourcenTable::TABLENAME, ressourcenRecord);
+    successful |= dao.saveRecordWithMemberId(model::BankAccountTable::TABLENAME, bankRecord);
+    successful |= dao.saveRecordWithMemberId(model::AddressTable::TABLENAME, addressRecord);
+    return successful;
 }
 
-void Member::initTableModel(const QString &aTableName,
-                            QSqlTableModel *const aModel)
+MemberContribution Member::getMemberContribution() const
 {
-    QString pkey = model::MemberTable::COLUMNNAME[model::MemberTable::MemberId];
-    QString filter = QString(pkey + " = %1").arg(id);
-
-    aModel->setTable(aTableName);
-    aModel->setObjectName(aTableName);
-    aModel->setFilter(filter);
-    aModel->select();
+    return MemberContribution(getMemberId());
 }
 
-QString Member::getValue(const QSqlTableModel *aModel, int aColumn) const
-{
-    const QSqlRecord record = aModel->record(0);
-    const QVariant variant = record.value(aColumn);
-    return variant.toString();
-}
-
-void Member::submitContribution(const QString &aFee, const QString &aDonation, const QString &anInfo)
-{
-    contributionModel->submit(aFee, aDonation, anInfo);
-}
-
-// \todo Refactor Inline ?
 int Member::getMemberId() const
 {
-    return id;
+    return memberRecord.value(model::MemberTable::MemberId).toInt();
 }
 
 QString Member::getFirstname() const
 {
-    return getValue(memberModel, model::MemberTable::FirstName);
+    return memberRecord.value(model::MemberTable::FirstName).toString();
+}
+
+void Member::setFirstname(const QString &aName)
+{
+    memberRecord.setValue(model::MemberTable::FirstName, QVariant(aName));
 }
 
 QString Member::getName() const
 {
-    return getValue(memberModel, model::MemberTable::Name);
+    return memberRecord.value(model::MemberTable::Name).toString();
+}
+
+void Member::setName(const QString &aName)
+{
+    memberRecord.setValue(model::MemberTable::Name, QVariant(aName));
 }
 
 QString Member::getNickname() const
 {
-    return getValue(memberModel, model::MemberTable::NickName);
+    return memberRecord.value(model::MemberTable::NickName).toString();
+}
+
+void Member::setNickname(const QString &aName)
+{
+    memberRecord.setValue(model::MemberTable::NickName, QVariant(aName));
 }
 
 QString Member::getEmail() const
 {
-    return getValue(ressourcenModel, model::RessourcenTable::EmailAdress);
+    return ressourcenRecord.value(model::RessourcenTable::EmailAdress).toString();
+}
+
+void Member::setEmail(const QString &anEmailAddress)
+{
+    ressourcenRecord.setValue(model::RessourcenTable::EmailAdress, QVariant(anEmailAddress));
+}
+
+QDate Member::getEntryDate() const
+{
+    return memberRecord.value(model::MemberTable::EntryDate).toDate();
+}
+
+void Member::setEntryDate(const QDate &aDate)
+{
+    memberRecord.setValue(model::MemberTable::EntryDate, QVariant(aDate));
+}
+
+QString Member::getInfo() const
+{
+    return memberRecord.value(model::MemberTable::Info).toString();
+}
+
+void Member::setInfo(const QString &anInfo)
+{
+    memberRecord.setValue(model::MemberTable::Info, QVariant(anInfo));
 }
 
 QString Member::getStreet() const
 {
-    return getValue(addressModel, model::AddressTable::Street);
+    return addressRecord.value(model::AddressTable::Street).toString();
 }
 
-QString Member::getTown() const
+void Member::setStreet(const QString &aStreet)
 {
-    return getValue(addressModel, model::AddressTable::Town);
+    addressRecord.setValue(model::AddressTable::Street, QVariant(aStreet));
+}
+
+QString Member::getCity() const
+{
+    return addressRecord.value(model::AddressTable::Town).toString();
+}
+
+void Member::setCity(const QString &aCity)
+{
+    addressRecord.setValue(model::AddressTable::Town, QVariant(aCity));
 }
 
 QString Member::getZipCode() const
 {
-    return getValue(addressModel, model::AddressTable::ZipCode);
+    return addressRecord.value(model::AddressTable::ZipCode).toString();
+}
+
+void Member::setZipCode(const QString &aCode)
+{
+    addressRecord.setValue(model::AddressTable::ZipCode, QVariant(aCode));
 }
 
 QString Member::getAccountNr() const
 {
-    return getValue(bankAccountModel, model::BankAccountTable::AccountNr);
+    return bankRecord.value(model::BankAccountTable::AccountNr).toString();
+}
+
+void Member::setAccountNr(const QString &aNr)
+{
+    bankRecord.setValue(model::BankAccountTable::AccountNr, QVariant(aNr));
 }
 
 QString Member::getBankName() const
 {
-    return getValue(bankAccountModel, model::BankAccountTable::BankName);
+    return bankRecord.value(model::BankAccountTable::BankName).toString();
+}
+
+void Member::setBankName(const QString &aName)
+{
+    bankRecord.setValue(model::BankAccountTable::BankName, QVariant(aName));
 }
 
 QString Member::getCode() const
 {
-    return getValue(bankAccountModel, model::BankAccountTable::Code);
+    return bankRecord.value(model::BankAccountTable::Code).toString();
 }
 
-QString Member::getDonation() const
+void Member::setCode(const QString &aCode)
 {
-    return contributionModel->getDonation();
-}
-
-float Member::getDonationAsFloat() const
-{
-    return contributionModel->getDonationValue().toFloat();
-}
-
-QString Member::getFee() const
-{
-    return contributionModel->getFee();
-}
-
-float Member::getFeeAsFloat() const
-{
-    return contributionModel->getFeeValue().toFloat();
-}
-
-QString Member::getContributionInfo() const
-{
-    return contributionModel->getInfo();
-}
-
-void Member::initAddressMapper(QDataWidgetMapper *aMapper) const
-{
-    aMapper->setModel(addressModel);
-}
-
-void Member::initBankAccountMapper(QDataWidgetMapper *aMapper) const
-{
-    aMapper->setModel(bankAccountModel);
-}
-
-void Member::initMemberMapper(QDataWidgetMapper *aMapper) const
-{
-    aMapper->setModel(memberModel);
-}
-
-void Member::initRessourcenMapper(QDataWidgetMapper *aMapper) const
-{
-    aMapper->setModel(ressourcenModel);
-}
-
-model::ContributionModel *Member::getContributionModel() const
-{
-    return contributionModel;
-}
-
-model::SaldoModel *Member::getSaldoModel() const
-{
-    return saldoModel;
+    bankRecord.setValue(model::BankAccountTable::Code, QVariant(aCode));
 }
 
 }

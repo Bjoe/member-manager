@@ -4,7 +4,7 @@
 #include <QtGui>
 
 #include "ui_mainwindow.h"
-#include "gui/membermapper.h"
+#include "gui/memberdetailview.h"
 #include "model/membermodel.h"
 
 namespace membermanager
@@ -25,11 +25,11 @@ private slots:
     void showMemberView();
     void showSaldo();
     void newMember();
-    void updateMemberMapper(const QItemSelection &aSelected, const QItemSelection &aDeselected);
+    void updateMemberDetailView(const QItemSelection &aSelected, const QItemSelection &aDeselected);
 
 private:
     Ui::MainWindow ui;
-    gui::MemberMapper memberMapper;
+    MemberDetailView memberDetailView;
     model::MemberModel memberModel;
 
     void showMembers(const bool aBoolean);

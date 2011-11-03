@@ -16,10 +16,6 @@ class ContributionModelTest : public qttestutil::TestCoverageObject
 private slots:
     void initTestCase();
     void testModel();
-    void testGetColumns();
-    void testChangeInfo();
-    void testNewFeeDonation();
-    void testNewMemberId();
 };
 
 }

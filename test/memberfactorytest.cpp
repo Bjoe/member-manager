@@ -25,23 +25,7 @@ void MemberFactoryTest::testCreateNewMember()
 void MemberFactoryTest::testCreateExistsMember()
 {
     membermanager::Member member = membermanager::MemberFactory::createMember(1025);
-
-    float donation = 1;
-    float fee = 15;
     QCOMPARE(member.getMemberId(), 1025);
-    QCOMPARE(member.getName(), QString("Kirk"));
-    QCOMPARE(member.getFirstname(), QString("James T"));
-    QCOMPARE(member.getNickname(), QString("Capt. Kirk"));
-    QCOMPARE(member.getEmail(), QString("fooo@baaar.xx"));
-    QCOMPARE(member.getStreet(), QString("Industriestr. 23"));
-    QCOMPARE(member.getTown(), QString("Bloedeldorf"));
-    QCOMPARE(member.getZipCode(), QString("90546"));
-    QCOMPARE(member.getAccountNr(), QString("12234569"));
-    QCOMPARE(member.getBankName(), QString("sparstrumpf"));
-    QCOMPARE(member.getCode(), QString("9004010"));
-    QCOMPARE(member.getDonationAsFloat(), donation);
-    QCOMPARE(member.getFeeAsFloat(), fee);
-    QCOMPARE(member.getContributionInfo(), QString("Beitragsaenderung"));
 }
 
 }

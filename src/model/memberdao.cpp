@@ -1,20 +1,59 @@
 #include "model/memberdao.h"
-#include "model/databasestructure.h"
 
 namespace membermanager
 {
 namespace model
 {
 
+/// \todo constructor(Object, database)
 MemberDao::MemberDao(const QSqlDatabase &aDatabase) :
-    database(aDatabase)
-{
+    object(new QObject()), database(aDatabase),  pkey(model::MemberTable::COLUMNNAME[model::MemberTable::MemberId])
 
+{
 }
 
-MemberDao::~MemberDao()
+QSqlRecord MemberDao::getRecordWithMemberId(const QString &aTableName, int anId,
+        int aSortColumn, Qt::SortOrder aSortOrder)
 {
+    QSqlTableModel model(object, database);
+    selectTableModel(model, aTableName, anId, aSortColumn, aSortOrder);
+    QSqlRecord record = model.record(0);
+    printSqlError(model.lastError());
+    return record;
+}
 
+bool MemberDao::saveRecordWithMemberId(const QString &aTableName, const QSqlRecord &aRecord,
+                                       int aSortColumn, Qt::SortOrder aSortOrder)
+{
+    QSqlTableModel model(object, database);
+    selectTableModel(model, aTableName, aRecord.value(pkey).toInt(), aSortColumn, aSortOrder);
+    model.setRecord(0, aRecord);
+    printSqlError(model.lastError());
+    bool successful = model.submitAll();
+    printSqlError(model.lastError());
+    return successful;
+}
+
+bool MemberDao::saveNewRecordWithMemberId(const QString &aTableName, const QSqlRecord &aRecord,
+        int aSortColumn, Qt::SortOrder aSortOrder)
+{
+    QSqlTableModel model(object, database);
+    selectTableModel(model, aTableName, aRecord.value(pkey).toInt(), aSortColumn, aSortOrder);
+    bool successful = model.insertRecord(-1, aRecord);
+    printSqlError(model.lastError());
+    return successful;
+}
+
+void MemberDao::selectTableModel(QSqlTableModel &aModel, const QString &aTableName, int anId,
+                                 int aSortColumn, Qt::SortOrder aSortOrder)
+{
+    const QString filter = QString(pkey + " = %1").arg(anId);
+
+    aModel.setTable(aTableName);
+    aModel.setFilter(filter);
+    if (aSortColumn != -1)
+        aModel.setSort(aSortColumn, aSortOrder);
+    aModel.select();
 }
 
 int MemberDao::newMember()
@@ -89,19 +128,9 @@ int MemberDao::newMember()
     return id;
 }
 
-void MemberDao::rollback(const QSqlQuery aQuery)
-{
-    QSqlError error = aQuery.lastError();
-    if (error.type() != QSqlError::NoError) {
-        qDebug() << error.text();
-    }
-    database.rollback();
-}
-
 void MemberDao::deleteMember(int anId)
 {
-    const QString whereClause = QString(" where %1=%2").arg(
-                                    MemberTable::COLUMNNAME[MemberTable::MemberId]).arg(anId);
+    const QString whereClause = QString(" where %1=%2").arg(pkey).arg(anId);
     const QString columnDeteled = MemberTable::COLUMNNAME[MemberTable::Deleted];
 
     QSqlQuery query("select * from " + MemberTable::TABLENAME + whereClause
@@ -122,6 +151,20 @@ void MemberDao::deleteMember(int anId)
         query.exec("delete from " + RessourcenTable::TABLENAME + whereClause);
     }
 
+}
+
+void MemberDao::rollback(const QSqlQuery &aQuery)
+{
+    printSqlError(aQuery.lastError());
+    database.rollback();
+}
+
+void MemberDao::printSqlError(const QSqlError &anError)
+{
+    if (anError.type() != QSqlError::NoError) {
+        /// \todo Publish error to the statusbar as event.
+        qDebug() << anError.text();
+    }
 }
 
 }
