@@ -22,7 +22,7 @@ MainWindow::MainWindow(const QSqlDatabase &aDatabase,
     connect(ui.actionShowMember, SIGNAL(triggered()), SLOT(showMemberView()));
     connect(ui.actionShowDeletedMember, SIGNAL(triggered()), SLOT(showDeletedMemberView()));
     connect(ui.actionNewMember, SIGNAL(triggered()), SLOT(newMember()));
-    connect(ui.actionShowSaldo, SIGNAL(triggered()), SLOT(showSaldo()));
+    //connect(ui.actionShowSaldo, SIGNAL(triggered()), SLOT(showSaldo()));
     connect(ui.saldoButton, SIGNAL(clicked()), SLOT(showSaldo()));
 
     //    connect ( ui.tableView->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
@@ -39,12 +39,6 @@ void MainWindow::newMember()
 void MainWindow::updateMemberDetailView(const QItemSelection &aSelected, const QItemSelection &aDeselected)
 {
     memberDetailView.showMember(MemberFactory::createMember(getSelection()));
-}
-
-void MainWindow::showSaldo()
-{
-    SaldoDialog dialog(this);
-    dialog.showSaldo(getSelection());
 }
 
 int MainWindow::getSelection() const

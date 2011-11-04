@@ -24,9 +24,7 @@ void SaldoModelTest::initTestCase()
 
 void SaldoModelTest::testModel()
 {
-    membermanager::model::SaldoModel saldoModel(QSqlDatabase::database());
-    saldoModel.setMemberId(1025);
-    saldoModel.refresh();
+    membermanager::model::SaldoModel saldoModel(1025, QSqlDatabase::database());
 
     using membermanager::model::SaldoTable;
     const QSqlTableModel *model = saldoModel.findChild<QSqlTableModel *> (SaldoTable::TABLENAME);
@@ -39,12 +37,10 @@ void SaldoModelTest::testModel()
 
 void SaldoModelTest::testAmount()
 {
-    membermanager::model::SaldoModel saldoModel(QSqlDatabase::database());
-    saldoModel.setMemberId(1025);
-    saldoModel.refresh();
+    membermanager::model::SaldoModel saldoModel(1025, QSqlDatabase::database());
 
-    float sum = saldoModel.amount();
-    float expected = -15;
+    double sum = saldoModel.amount();
+    double expected = -15;
     QCOMPARE(sum, expected);
 }
 

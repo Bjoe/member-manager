@@ -23,7 +23,6 @@ public:
 private slots:
     void showDeletedMemberView();
     void showMemberView();
-    void showSaldo();
     void newMember();
     void updateMemberDetailView(const QItemSelection &aSelected, const QItemSelection &aDeselected);
 

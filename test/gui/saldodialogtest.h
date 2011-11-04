@@ -15,7 +15,6 @@ class SaldoDialogTest : public qttestutil::TestCoverageObject
 
 private slots:
     void initTestCase();
-    void testShowNothing();
     void testShowDialog();
     void testShowSum();
 };

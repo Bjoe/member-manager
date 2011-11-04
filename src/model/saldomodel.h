@@ -14,13 +14,10 @@ namespace model
 class SaldoModel: public QObject
 {
 public:
-    SaldoModel(const QSqlDatabase &aDb = QSqlDatabase::database());
+    SaldoModel(int anId, const QSqlDatabase &aDb = QSqlDatabase::database());
     virtual ~SaldoModel();
 
-    void setMemberId(const int aMemberId);
-    float amount() const;
-    void refresh();
-
+    double amount() const;
     void initTableView(QTableView *aTableView) const;
 
 private:

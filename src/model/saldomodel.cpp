@@ -12,7 +12,7 @@ namespace membermanager
 namespace model
 {
 
-SaldoModel::SaldoModel(const QSqlDatabase &aDb) :
+SaldoModel::SaldoModel(int anId, const QSqlDatabase &aDb) :
     model(new QSqlTableModel(this))
 {
     model->setObjectName(SaldoTable::TABLENAME);
@@ -24,20 +24,18 @@ SaldoModel::SaldoModel(const QSqlDatabase &aDb) :
     model->setHeaderData(SaldoTable::konten, Qt::Horizontal, tr("Konten"));
     model->setHeaderData(SaldoTable::kasse_pkey, Qt::Horizontal, tr("Kassa Id"));
     model->setHeaderData(SaldoTable::info, Qt::Horizontal, tr("Info"));
+
+    QString columnname = SaldoTable::COLUMNNAME[SaldoTable::dorfmitglied_pkey];
+    QString filter = QString(columnname + " = %1").arg(anId);
+    model->setFilter(filter);
+    model->select();
 }
 
 SaldoModel::~SaldoModel()
 {
 }
 
-void SaldoModel::setMemberId(const int aMemberId)
-{
-    QString columnname = SaldoTable::COLUMNNAME[SaldoTable::dorfmitglied_pkey];
-    QString filter = QString(columnname + " = %1").arg(aMemberId);
-    model->setFilter(filter);
-}
-
-float SaldoModel::amount() const
+double SaldoModel::amount() const
 {
     QSqlRecord record = model->record(0);
     QVariant id = record.value(SaldoTable::dorfmitglied_pkey);
@@ -46,11 +44,6 @@ float SaldoModel::amount() const
     sqlQuery.next();
     QVariant sum = sqlQuery.value(0);
     return sum.toFloat();
-}
-
-void SaldoModel::refresh()
-{
-    model->select();
 }
 
 void SaldoModel::initTableView(QTableView *aTableView) const
