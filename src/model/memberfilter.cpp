@@ -6,7 +6,17 @@ namespace membermanager
 namespace model
 {
 
-void MemberFilter::setDeleted(const bool aBoolean)
+MemberFilter::MemberFilter() :
+    columns()
+{}
+
+MemberFilter MemberFilter::build()
+{
+    MemberFilter memberFilter;
+    return memberFilter;
+}
+
+MemberFilter &MemberFilter::withDeleted(const bool aBoolean)
 {
     QString column = MemberTable::COLUMNNAME[MemberTable::Deleted];
     QString deletedColumn(column + "='false'");
@@ -14,9 +24,10 @@ void MemberFilter::setDeleted(const bool aBoolean)
         deletedColumn = column + "='true'";
     }
     columns.append(deletedColumn);
+    return *this;
 }
 
-QString MemberFilter::getFilter() const
+QString MemberFilter::createFilter() const
 {
     return columns.join(" AND ");
 }

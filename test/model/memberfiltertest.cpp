@@ -11,18 +11,18 @@ namespace model
 
 void MemberFilterTest::testSetDeleted()
 {
-    membermanager::model::MemberFilter filter;
-    filter.setDeleted(true);
+    using membermanager::model::MemberFilter;
+    QString filter = MemberFilter::build().withDeleted(true).createFilter();
 
-    QCOMPARE(filter.getFilter(), QString("deleted='true'"));
+    QCOMPARE(filter, QString("deleted='true'"));
 }
 
 void MemberFilterTest::testSetDeletedFalse()
 {
-    membermanager::model::MemberFilter filter;
-    filter.setDeleted(false);
+    using membermanager::model::MemberFilter;
+    QString filter = MemberFilter::build().withDeleted(false).createFilter();
 
-    QCOMPARE(filter.getFilter(), QString("deleted='false'"));
+    QCOMPARE(filter, QString("deleted='false'"));
 }
 
 }

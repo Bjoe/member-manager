@@ -17,13 +17,13 @@ MainWindow::MainWindow(const QSqlDatabase &aDatabase,
 
     showMembers(false);
 
-    connect(ui.buttonBox, SIGNAL(clicked()), &memberDetailView, SLOT(saveMember()));
+    //connect(ui.buttonBox, SIGNAL(clicked()), &memberDetailView, SLOT(saveMember()));
     //connect(ui.newFeeButton, SIGNAL(clicked()), &memberDetailView, SLOT(newFee());
     connect(ui.actionShowMember, SIGNAL(triggered()), SLOT(showMemberView()));
     connect(ui.actionShowDeletedMember, SIGNAL(triggered()), SLOT(showDeletedMemberView()));
     connect(ui.actionNewMember, SIGNAL(triggered()), SLOT(newMember()));
     //connect(ui.actionShowSaldo, SIGNAL(triggered()), SLOT(showSaldo()));
-    connect(ui.saldoButton, SIGNAL(clicked()), SLOT(showSaldo()));
+    //connect(ui.saldoButton, SIGNAL(clicked()), SLOT(showSaldo()));
 
     //    connect ( ui.tableView->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
     //            SLOT(updateMemberMapper()));
@@ -63,16 +63,14 @@ void MainWindow::showMemberView()
     showMembers(false);
 }
 
-void MainWindow::showMembers(const bool aBoolean)
+void MainWindow::showMembers(bool aBoolean)
 {
     QItemSelectionModel *selectionModel = ui.tableView->selectionModel();
     if (selectionModel) {
         selectionModel->clearSelection();
     }
 
-    model::MemberFilter filter;
-    filter.setDeleted(aBoolean);
-    memberModel.setFilter(filter.getFilter());
+    memberModel.setFilter(model::MemberFilter::build().withDeleted(aBoolean).createFilter());
     memberModel.initTableView(ui.tableView);
     ui.tableView->resizeColumnsToContents();
 

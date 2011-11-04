@@ -13,12 +13,15 @@ class MemberFilter
 {
 
 public:
-    void setDeleted(const bool aBoolean);
+    static MemberFilter build();
+    MemberFilter &withDeleted(const bool aBoolean);
 
-    QString getFilter() const;
+    QString createFilter() const;
 
 private:
     QStringList columns;
+
+    MemberFilter();
 };
 
 }

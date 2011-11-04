@@ -70,10 +70,11 @@ void MainWindowTest::testShowSaldo()
     QItemSelection selection(index, index);
     selectionModel->select(selection, QItemSelectionModel::Select);
 
-    qttestutil::gui::DialogButtonBoxHandler handler(QDialogButtonBox::Close);
+/*    qttestutil::gui::DialogButtonBoxHandler handler(QDialogButtonBox::Close);
     qttestutil::TriggerThread thread(this, &handler);
     connect(&thread, SIGNAL(triggered()), &mainWindow, SLOT(showSaldo()));
     thread.syncStart();
+    */
 }
 
 void MainWindowTest::handle()

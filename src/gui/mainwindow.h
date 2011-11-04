@@ -31,7 +31,7 @@ private:
     MemberDetailView memberDetailView;
     model::MemberModel memberModel;
 
-    void showMembers(const bool aBoolean);
+    void showMembers(bool aBoolean);
     int getSelection() const;
 };
 
