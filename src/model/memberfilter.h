@@ -14,7 +14,8 @@ class MemberFilter
 
 public:
     static MemberFilter build();
-    MemberFilter &withDeleted(const bool aBoolean);
+    MemberFilter &withDeleted(bool isDeleted);
+    MemberFilter &withMemberId(int anId);
 
     QString createFilter() const;
 

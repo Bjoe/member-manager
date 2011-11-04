@@ -16,6 +16,7 @@ class MemberFilterTest: public qttestutil::TestCoverageObject
 private slots:
     void testSetDeleted();
     void testSetDeletedFalse();
+    void testSetMemberId();
 };
 
 }

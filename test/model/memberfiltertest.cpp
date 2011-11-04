@@ -14,7 +14,7 @@ void MemberFilterTest::testSetDeleted()
     using membermanager::model::MemberFilter;
     QString filter = MemberFilter::build().withDeleted(true).createFilter();
 
-    QCOMPARE(filter, QString("deleted='true'"));
+    QCOMPARE(filter, QString("deleted = 'true'"));
 }
 
 void MemberFilterTest::testSetDeletedFalse()
@@ -22,7 +22,15 @@ void MemberFilterTest::testSetDeletedFalse()
     using membermanager::model::MemberFilter;
     QString filter = MemberFilter::build().withDeleted(false).createFilter();
 
-    QCOMPARE(filter, QString("deleted='false'"));
+    QCOMPARE(filter, QString("deleted = 'false'"));
+}
+
+void MemberFilterTest::testSetMemberId()
+{
+    using membermanager::model::MemberFilter;
+    QString filter = MemberFilter::build().withMemberId(23).createFilter();
+
+    QCOMPARE(filter, QString("dorfmitglied_pkey = 23"));
 }
 
 }

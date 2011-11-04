@@ -16,14 +16,25 @@ MemberFilter MemberFilter::build()
     return memberFilter;
 }
 
-MemberFilter &MemberFilter::withDeleted(const bool aBoolean)
+MemberFilter &MemberFilter::withDeleted(bool isDeleted)
 {
+    QString result;
+    if(isDeleted)
+        result = QString("'true'");
+    else
+        result = QString("'false'");
+
     QString column = MemberTable::COLUMNNAME[MemberTable::Deleted];
-    QString deletedColumn(column + "='false'");
-    if (aBoolean) {
-        deletedColumn = column + "='true'";
-    }
+    QString deletedColumn = QString(column + " = %1").arg(result);
     columns.append(deletedColumn);
+    return *this;
+}
+
+MemberFilter &MemberFilter::withMemberId(int anId)
+{
+    QString columname = ContributionTable::COLUMNNAME[ContributionTable::MemberId];
+    QString memberIdColumn = QString(columname + " = %1").arg(anId);
+    columns.append(memberIdColumn);
     return *this;
 }
 
