@@ -19,9 +19,12 @@ void MemberContributionTest::initTestCase()
 
 void MemberContributionTest::testGetContribution()
 {
+    using membermanager::model::MemberFilter;
+    MemberFilter filter = MemberFilter::build().withMemberId(1025);
+
     double fee = 15;
     double donation = 1;
-    membermanager::MemberContribution memberContribution(1025);
+    membermanager::MemberContribution memberContribution(filter);
     QCOMPARE(memberContribution.getFee(), fee);
     QCOMPARE(memberContribution.getDonation(), donation);
     QCOMPARE(memberContribution.getInfo(), QString("Beitragsaenderung"));
@@ -30,9 +33,12 @@ void MemberContributionTest::testGetContribution()
 
 void MemberContributionTest::testSaveContribution()
 {
+    using membermanager::model::MemberFilter;
+    MemberFilter filter = MemberFilter::build().withMemberId(1025);
+
     double fee = 15;
     double donation = 1;
-    membermanager::MemberContribution memberContribution(1025);
+    membermanager::MemberContribution memberContribution(filter);
     QCOMPARE(memberContribution.getFee(), fee);
     QCOMPARE(memberContribution.getDonation(), donation);
     QCOMPARE(memberContribution.getInfo(), QString("Beitragsaenderung"));
@@ -62,9 +68,12 @@ void MemberContributionTest::testSaveContribution()
 
 void MemberContributionTest::testSaveNewContribution()
 {
+    using membermanager::model::MemberFilter;
+    MemberFilter filter = MemberFilter::build().withMemberId(1025);
+
     double fee = 42;
     double donation = 23;
-    membermanager::MemberContribution memberContribution(1025);
+    membermanager::MemberContribution memberContribution(filter);
     QCOMPARE(memberContribution.getFee(), fee);
     QCOMPARE(memberContribution.getDonation(), donation);
     QCOMPARE(memberContribution.getInfo(), QString("More stuff"));

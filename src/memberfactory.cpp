@@ -1,6 +1,7 @@
 #include "memberfactory.h"
 
 #include <QSqlDatabase>
+#include "model/memberfilter.h"
 #include "model/memberdao.h"
 
 namespace membermanager
@@ -16,7 +17,8 @@ Member MemberFactory::createNewMember()
 
 Member MemberFactory::createMember(int anId)
 {
-    Member member(anId);
+    model::MemberFilter filter = model::MemberFilter::build().withMemberId(anId);
+    Member member(filter);
     return member;
 }
 

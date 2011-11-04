@@ -6,6 +6,7 @@
 #include "database/databaseutil.h"
 #include "model/databasestructure.h"
 #include "model/contributionmodel.h"
+#include "model/memberfilter.h"
 
 #include <QSqlDatabase>
 #include <QTableView>
@@ -29,7 +30,9 @@ void ContributionDialogTest::initTestCase()
 
 void ContributionDialogTest::testShowDialog()
 {
-    membermanager::model::ContributionModel contributionModel(1025, QSqlDatabase::database());
+    using membermanager::model::MemberFilter;
+    MemberFilter filter = MemberFilter::build().withMemberId(1025);
+    membermanager::model::ContributionModel contributionModel(filter, QSqlDatabase::database());
     membermanager::gui::ContributionDialog dialog(&contributionModel);
 
     const QTableView *tableView = dialog.findChild<QTableView *> ("contributionTableView");

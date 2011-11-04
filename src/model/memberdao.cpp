@@ -1,4 +1,5 @@
 #include "model/memberdao.h"
+#include "model/databasestructure.h"
 
 namespace membermanager
 {
@@ -12,21 +13,21 @@ MemberDao::MemberDao(const QSqlDatabase &aDatabase) :
 {
 }
 
-QSqlRecord MemberDao::getRecordWithMemberId(const QString &aTableName, int anId,
-        int aSortColumn, Qt::SortOrder aSortOrder)
+QSqlRecord MemberDao::getRecordWithMemberId(const QString &aTableName, const MemberFilter &aFilter
+                    , int aSortColumn, Qt::SortOrder aSortOrder)
 {
     QSqlTableModel model(object, database);
-    selectTableModel(model, aTableName, anId, aSortColumn, aSortOrder);
+    selectTableModel(model, aTableName, aFilter, aSortColumn, aSortOrder);
     QSqlRecord record = model.record(0);
     printSqlError(model.lastError());
     return record;
 }
 
-bool MemberDao::saveRecordWithMemberId(const QString &aTableName, const QSqlRecord &aRecord,
-                                       int aSortColumn, Qt::SortOrder aSortOrder)
+bool MemberDao::saveRecordWithMemberId(const QString &aTableName, const MemberFilter &aFilter
+                        , const QSqlRecord &aRecord, int aSortColumn, Qt::SortOrder aSortOrder)
 {
     QSqlTableModel model(object, database);
-    selectTableModel(model, aTableName, aRecord.value(pkey).toInt(), aSortColumn, aSortOrder);
+    selectTableModel(model, aTableName, aFilter, aSortColumn, aSortOrder);
     model.setRecord(0, aRecord);
     printSqlError(model.lastError());
     bool successful = model.submitAll();
@@ -34,23 +35,21 @@ bool MemberDao::saveRecordWithMemberId(const QString &aTableName, const QSqlReco
     return successful;
 }
 
-bool MemberDao::saveNewRecordWithMemberId(const QString &aTableName, const QSqlRecord &aRecord,
-        int aSortColumn, Qt::SortOrder aSortOrder)
+bool MemberDao::saveNewRecordWithMemberId(const QString &aTableName, const MemberFilter &aFilter
+                        , const QSqlRecord &aRecord, int aSortColumn, Qt::SortOrder aSortOrder)
 {
     QSqlTableModel model(object, database);
-    selectTableModel(model, aTableName, aRecord.value(pkey).toInt(), aSortColumn, aSortOrder);
+    selectTableModel(model, aTableName, aFilter, aSortColumn, aSortOrder);
     bool successful = model.insertRecord(-1, aRecord);
     printSqlError(model.lastError());
     return successful;
 }
 
-void MemberDao::selectTableModel(QSqlTableModel &aModel, const QString &aTableName, int anId,
-                                 int aSortColumn, Qt::SortOrder aSortOrder)
+void MemberDao::selectTableModel(QSqlTableModel &aModel, const QString &aTableName, const MemberFilter &aFilter
+                        , int aSortColumn, Qt::SortOrder aSortOrder)
 {
-    const QString filter = QString(pkey + " = %1").arg(anId);
-
     aModel.setTable(aTableName);
-    aModel.setFilter(filter);
+    aModel.setFilter(aFilter.createFilter());
     if (aSortColumn != -1)
         aModel.setSort(aSortColumn, aSortOrder);
     aModel.select();
@@ -128,13 +127,14 @@ int MemberDao::newMember()
     return id;
 }
 
-void MemberDao::deleteMember(int anId)
+void MemberDao::deleteMember(const MemberFilter &aFilter)
 {
-    const QString whereClause = QString(" where %1=%2").arg(pkey).arg(anId);
+    const QString whereClause = QString(" where %1").arg(aFilter.createFilter());
     const QString columnDeteled = MemberTable::COLUMNNAME[MemberTable::Deleted];
 
     QSqlQuery query("select * from " + MemberTable::TABLENAME + whereClause
                     + " AND " + columnDeteled + "='false'");
+    /// \todo refactor if. Add a new parameter erease.
     if (query.next()) {
         query .exec("update " + MemberTable::TABLENAME + " set "
                     + columnDeteled + "='true' " + whereClause + " AND "

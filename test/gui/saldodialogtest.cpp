@@ -7,6 +7,7 @@
 #include "triggerthread.h"
 #include "gui/dialogbuttonboxhandler.h"
 #include "model/saldomodel.h"
+#include "model/memberfilter.h"
 
 #include <QSqlDatabase>
 #include <QTableView>
@@ -33,7 +34,9 @@ void SaldoDialogTest::initTestCase()
 
 void SaldoDialogTest::testShowDialog()
 {
-    membermanager::model::SaldoModel saldoModel(1025, QSqlDatabase::database());
+    using membermanager::model::MemberFilter;
+    MemberFilter filter = MemberFilter::build().withMemberId(1025);
+    membermanager::model::SaldoModel saldoModel(filter, QSqlDatabase::database());
     membermanager::gui::SaldoDialog dialog(&saldoModel);
 
     QTableView *tableView = dialog.findChild<QTableView *> ("saldoTableView");
@@ -47,7 +50,9 @@ void SaldoDialogTest::testShowDialog()
 
 void SaldoDialogTest::testShowSum()
 {
-    membermanager::model::SaldoModel saldoModel(1025, QSqlDatabase::database());
+    using membermanager::model::MemberFilter;
+    MemberFilter filter = MemberFilter::build().withMemberId(1025);
+    membermanager::model::SaldoModel saldoModel(filter, QSqlDatabase::database());
     membermanager::gui::SaldoDialog dialog(&saldoModel);
 
     QLabel *sumLabel = dialog.findChild<QLabel *> ("sumLabel");

@@ -11,32 +11,35 @@ Member::Member() :
 {
 }
 
-Member::Member(int anId) :
+Member::Member(const model::MemberFilter &aFilter) :
     memberRecord(), addressRecord(), bankRecord(), ressourcenRecord()
 {
     model::MemberDao dao(QSqlDatabase::database());
 
-    addressRecord = dao.getRecordWithMemberId(model::AddressTable::TABLENAME, anId);
-    bankRecord = dao.getRecordWithMemberId(model::BankAccountTable::TABLENAME, anId);
-    ressourcenRecord = dao.getRecordWithMemberId(model::RessourcenTable::TABLENAME, anId);
-    memberRecord = dao.getRecordWithMemberId(model::MemberTable::TABLENAME, anId);
+    addressRecord = dao.getRecordWithMemberId(model::AddressTable::TABLENAME, aFilter);
+    bankRecord = dao.getRecordWithMemberId(model::BankAccountTable::TABLENAME, aFilter);
+    ressourcenRecord = dao.getRecordWithMemberId(model::RessourcenTable::TABLENAME, aFilter);
+    memberRecord = dao.getRecordWithMemberId(model::MemberTable::TABLENAME, aFilter);
 }
 
 bool Member::save()
 {
     model::MemberDao dao(QSqlDatabase::database());
 
-    bool successful = false;
-    successful |= dao.saveRecordWithMemberId(model::MemberTable::TABLENAME, memberRecord);
-    successful |= dao.saveRecordWithMemberId(model::RessourcenTable::TABLENAME, ressourcenRecord);
-    successful |= dao.saveRecordWithMemberId(model::BankAccountTable::TABLENAME, bankRecord);
-    successful |= dao.saveRecordWithMemberId(model::AddressTable::TABLENAME, addressRecord);
+    model::MemberFilter filter = model::MemberFilter::build().withMemberId(getMemberId());
+
+    bool successful = true;
+    successful &= dao.saveRecordWithMemberId(model::MemberTable::TABLENAME, filter, memberRecord);
+    successful &= dao.saveRecordWithMemberId(model::RessourcenTable::TABLENAME, filter, ressourcenRecord);
+    successful &= dao.saveRecordWithMemberId(model::BankAccountTable::TABLENAME, filter, bankRecord);
+    successful &= dao.saveRecordWithMemberId(model::AddressTable::TABLENAME, filter, addressRecord);
     return successful;
 }
 
 MemberContribution Member::getMemberContribution() const
 {
-    return MemberContribution(getMemberId());
+    model::MemberFilter filter = model::MemberFilter::build().withMemberId(getMemberId());
+    return MemberContribution(filter);
 }
 
 int Member::getMemberId() const

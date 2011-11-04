@@ -3,6 +3,7 @@
 
 #include <QtGui>
 #include <QtSql>
+#include "model/memberfilter.h"
 #include "membercontribution.h"
 
 namespace membermanager
@@ -12,7 +13,7 @@ class Member
 {
 public:
     Member();
-    Member(int anId);
+    Member(const model::MemberFilter &aFilter);
 
     int getMemberId() const;
     QString getName() const;

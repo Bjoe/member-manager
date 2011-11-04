@@ -12,7 +12,7 @@ namespace membermanager
 namespace model
 {
 
-SaldoModel::SaldoModel(int anId, const QSqlDatabase &aDb) :
+SaldoModel::SaldoModel(const MemberFilter &aFilter, const QSqlDatabase &aDb) :
     model(new QSqlTableModel(this))
 {
     model->setObjectName(SaldoTable::TABLENAME);
@@ -25,9 +25,7 @@ SaldoModel::SaldoModel(int anId, const QSqlDatabase &aDb) :
     model->setHeaderData(SaldoTable::kasse_pkey, Qt::Horizontal, tr("Kassa Id"));
     model->setHeaderData(SaldoTable::info, Qt::Horizontal, tr("Info"));
 
-    QString columnname = SaldoTable::COLUMNNAME[SaldoTable::dorfmitglied_pkey];
-    QString filter = QString(columnname + " = %1").arg(anId);
-    model->setFilter(filter);
+    model->setFilter(aFilter.createFilter());
     model->select();
 }
 

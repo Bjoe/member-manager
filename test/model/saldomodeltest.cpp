@@ -5,6 +5,7 @@
 #include "testconfig.h"
 #include "database/databaseutil.h"
 #include "model/databasestructure.h"
+#include "model/memberfilter.h"
 
 #include <QSqlTableModel>
 #include <QSqlRecord>
@@ -24,7 +25,9 @@ void SaldoModelTest::initTestCase()
 
 void SaldoModelTest::testModel()
 {
-    membermanager::model::SaldoModel saldoModel(1025, QSqlDatabase::database());
+    using membermanager::model::MemberFilter;
+    MemberFilter filter = MemberFilter::build().withMemberId(1025);
+    membermanager::model::SaldoModel saldoModel(filter, QSqlDatabase::database());
 
     using membermanager::model::SaldoTable;
     const QSqlTableModel *model = saldoModel.findChild<QSqlTableModel *> (SaldoTable::TABLENAME);
@@ -37,7 +40,9 @@ void SaldoModelTest::testModel()
 
 void SaldoModelTest::testAmount()
 {
-    membermanager::model::SaldoModel saldoModel(1025, QSqlDatabase::database());
+    using membermanager::model::MemberFilter;
+    MemberFilter filter = MemberFilter::build().withMemberId(1025);
+    membermanager::model::SaldoModel saldoModel(filter, QSqlDatabase::database());
 
     double sum = saldoModel.amount();
     double expected = -15;

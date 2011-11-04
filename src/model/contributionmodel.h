@@ -5,6 +5,8 @@
 #include <QtSql>
 #include <QTableView>
 
+#include "model/memberfilter.h"
+
 namespace membermanager
 {
 namespace model
@@ -13,7 +15,7 @@ namespace model
 class ContributionModel : public QObject
 {
 public:
-    ContributionModel(int anId, const QSqlDatabase &aDb);
+    ContributionModel(const MemberFilter &aFilter, const QSqlDatabase &aDb);
     virtual ~ContributionModel();
 
     void initTableView(QTableView *aTableView) const;

@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QtSql>
-#include "model/databasestructure.h"
+#include "model/memberfilter.h"
 
 namespace membermanager
 {
@@ -17,12 +17,12 @@ public:
     virtual ~MemberDao() {}
 
     int newMember();
-    void deleteMember(int anId);
-    QSqlRecord getRecordWithMemberId(const QString &aTableName, int anId,
+    void deleteMember(const MemberFilter &aFilter);
+    QSqlRecord getRecordWithMemberId(const QString &aTableName, const MemberFilter &aFilter,
                                      int aSortColumn = -1, Qt::SortOrder aSortOrder = Qt::DescendingOrder);
-    bool saveRecordWithMemberId(const QString &aTableName, const QSqlRecord &aRecord,
+    bool saveRecordWithMemberId(const QString &aTableName, const MemberFilter &aFilter, const QSqlRecord &aRecord,
                                 int aSortColumn = -1, Qt::SortOrder aSortOrder = Qt::DescendingOrder);
-    bool saveNewRecordWithMemberId(const QString &aTableName, const QSqlRecord &aRecord,
+    bool saveNewRecordWithMemberId(const QString &aTableName, const MemberFilter &aFilter, const QSqlRecord &aRecord,
                                    int aSortColumn = -1, Qt::SortOrder aSortOrder = Qt::DescendingOrder);
 
 
@@ -32,7 +32,7 @@ private:
     const QString pkey;
     void rollback(const QSqlQuery &aQuery);
     void printSqlError(const QSqlError &anError);
-    void selectTableModel(QSqlTableModel &aModel, const QString &aTableName, int anId,
+    void selectTableModel(QSqlTableModel &aModel, const QString &aTableName, const MemberFilter &aFilter,
                           int aSortColumn, Qt::SortOrder aSortOrder);
 };
 

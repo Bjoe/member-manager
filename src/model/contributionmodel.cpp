@@ -7,7 +7,7 @@ namespace membermanager
 namespace model
 {
 
-ContributionModel::ContributionModel(int anId, const QSqlDatabase &aDb) :
+ContributionModel::ContributionModel(const MemberFilter &aFilter, const QSqlDatabase &aDb) :
     model(new QSqlTableModel(this, aDb))
 {
     model->setObjectName(ContributionTable::TABLENAME);
@@ -17,9 +17,7 @@ ContributionModel::ContributionModel(int anId, const QSqlDatabase &aDb) :
     model->setHeaderData(ContributionTable::ValidFrom, Qt::Horizontal, tr("Gültig ab:"));
     model->setHeaderData(ContributionTable::Info, Qt::Horizontal, tr("Info"));
 
-    QString columname = ContributionTable::COLUMNNAME[ContributionTable::MemberId];
-    QString filter = QString(columname + " = %1").arg(anId);
-    model->setFilter(filter);
+    model->setFilter(aFilter.createFilter());
     model->setSort(ContributionTable::ValidFrom, Qt::DescendingOrder);
     model->select();
 }

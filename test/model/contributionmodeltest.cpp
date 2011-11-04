@@ -5,6 +5,7 @@
 #include "testconfig.h"
 #include "database/databaseutil.h"
 #include "model/databasestructure.h"
+#include "model/memberfilter.h"
 
 #include <QSqlTableModel>
 #include <QSqlRecord>
@@ -25,7 +26,9 @@ void ContributionModelTest::initTestCase()
 
 void ContributionModelTest::testModel()
 {
-    membermanager::model::ContributionModel contributionModel(1025, QSqlDatabase::database());
+    using membermanager::model::MemberFilter;
+    MemberFilter filter = MemberFilter::build().withMemberId(1025);
+    membermanager::model::ContributionModel contributionModel(filter, QSqlDatabase::database());
 
     using membermanager::model::ContributionTable;
     const QSqlTableModel *model = contributionModel.findChild<QSqlTableModel *> (ContributionTable::TABLENAME);

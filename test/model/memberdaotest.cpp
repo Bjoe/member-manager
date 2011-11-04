@@ -60,14 +60,16 @@ void MemberDaoTest::testDeleteMember()
     query.next();
     QVERIFY(!query.value(MemberTable::Deleted).toBool());
 
+    using membermanager::model::MemberFilter;
+    MemberFilter filter = MemberFilter::build().withMemberId(id);
     membermanager::model::MemberDao dao(QSqlDatabase::database());
-    dao.deleteMember(id);
+    dao.deleteMember(filter);
 
     query.exec();
     query.next();
     QVERIFY(query.value(MemberTable::Deleted).toBool());
 
-    dao.deleteMember(id);
+    dao.deleteMember(filter);
 
     query.exec();
     QVERIFY(!query.next());
@@ -75,17 +77,21 @@ void MemberDaoTest::testDeleteMember()
 
 void MemberDaoTest::testGetRecordWithMemberId()
 {
+    using membermanager::model::MemberFilter;
+    MemberFilter filter = MemberFilter::build().withMemberId(1026);
     using membermanager::model::MemberTable;
     membermanager::model::MemberDao dao(QSqlDatabase::database());
-    QSqlRecord record = dao.getRecordWithMemberId(MemberTable::TABLENAME, 1026);
+    QSqlRecord record = dao.getRecordWithMemberId(MemberTable::TABLENAME, filter);
     QCOMPARE(record.value(MemberTable::FirstName).toString(), QString("Spock"));
 }
 
 void MemberDaoTest::testGetRecordWithMemberIdWithSort()
 {
+    using membermanager::model::MemberFilter;
+    MemberFilter filter = MemberFilter::build().withMemberId(1025);
     using membermanager::model::ContributionTable;
     membermanager::model::MemberDao dao(QSqlDatabase::database());
-    QSqlRecord record = dao.getRecordWithMemberId(ContributionTable::TABLENAME, 1025,
+    QSqlRecord record = dao.getRecordWithMemberId(ContributionTable::TABLENAME, filter,
                         ContributionTable::ValidFrom, Qt::DescendingOrder);
     QCOMPARE(record.value(ContributionTable::Fee).toString(), QString("15"));
 }
@@ -102,12 +108,14 @@ void MemberDaoTest::testSaveRecord()
     query.next();
     QCOMPARE(query.value(MemberTable::FirstName).toString(), QString("Spock"));
 
+    using membermanager::model::MemberFilter;
+    MemberFilter filter = MemberFilter::build().withMemberId(id);
     membermanager::model::MemberDao dao(QSqlDatabase::database());
-    QSqlRecord record = dao.getRecordWithMemberId(MemberTable::TABLENAME, id);
+    QSqlRecord record = dao.getRecordWithMemberId(MemberTable::TABLENAME, filter);
     QCOMPARE(record.value(MemberTable::FirstName).toString(), QString("Spock"));
 
     record.setValue(MemberTable::FirstName, QVariant("Spocky"));
-    QVERIFY(dao.saveRecordWithMemberId(MemberTable::TABLENAME, record));
+    QVERIFY(dao.saveRecordWithMemberId(MemberTable::TABLENAME, filter, record));
 
     query.exec();
     query.next();
@@ -127,13 +135,15 @@ void MemberDaoTest::testSaveRecordWithSort()
     query.last();
     QCOMPARE(query.value(ContributionTable::Fee).toString(), QString("15"));
 
+    using membermanager::model::MemberFilter;
+    MemberFilter filter = MemberFilter::build().withMemberId(id);
     membermanager::model::MemberDao dao(QSqlDatabase::database());
-    QSqlRecord record = dao.getRecordWithMemberId(ContributionTable::TABLENAME, id,
+    QSqlRecord record = dao.getRecordWithMemberId(ContributionTable::TABLENAME, filter,
                         ContributionTable::ValidFrom, Qt::DescendingOrder);
     QCOMPARE(record.value(ContributionTable::Fee).toString(), QString("15"));
 
     record.setValue(ContributionTable::Fee, QVariant(23));
-    QVERIFY(dao.saveRecordWithMemberId(ContributionTable::TABLENAME, record,
+    QVERIFY(dao.saveRecordWithMemberId(ContributionTable::TABLENAME, filter, record,
                                        ContributionTable::ValidFrom, Qt::DescendingOrder));
 
     query.exec();
@@ -153,13 +163,15 @@ void MemberDaoTest::testSaveNewRecord()
     query.next();
     QCOMPARE(query.value(MemberTable::NickName).toString(), QString("Spock"));
 
+    using membermanager::model::MemberFilter;
+    MemberFilter filter = MemberFilter::build().withMemberId(id);
     membermanager::model::MemberDao dao(QSqlDatabase::database());
-    QSqlRecord record = dao.getRecordWithMemberId(MemberTable::TABLENAME, id);
+    QSqlRecord record = dao.getRecordWithMemberId(MemberTable::TABLENAME, filter);
     QCOMPARE(record.value(MemberTable::NickName).toString(), QString("Spock"));
 
     record.setValue(MemberTable::NickName, QVariant("Spitzohr"));
     record.setValue(MemberTable::MemberId, QVariant(1030));
-    QVERIFY(dao.saveNewRecordWithMemberId(MemberTable::TABLENAME, record));
+    QVERIFY(dao.saveNewRecordWithMemberId(MemberTable::TABLENAME, filter, record));
 
     id = 1030;
     whereClause = QString(" where %1=%2").arg(

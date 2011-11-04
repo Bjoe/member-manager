@@ -3,6 +3,7 @@
 #include "member.h"
 
 #include "membercontribution.h"
+#include "model/memberfilter.h"
 
 #include <QSqlQuery>
 #include "model/databasestructure.h"
@@ -21,7 +22,9 @@ void MemberTest::initTestCase()
 
 void MemberTest::testGetMember()
 {
-    membermanager::Member member(1025);
+    using membermanager::model::MemberFilter;
+    MemberFilter filter = MemberFilter::build().withMemberId(1025);
+    membermanager::Member member(filter);
     QCOMPARE(member.getMemberId(), 1025);
     QCOMPARE(member.getName(), QString("Kirk"));
     QCOMPARE(member.getFirstname(), QString("James T"));
@@ -39,7 +42,9 @@ void MemberTest::testGetMember()
 
 void MemberTest::testGetMembercontribution()
 {
-    membermanager::Member member(1025);
+    using membermanager::model::MemberFilter;
+    MemberFilter filter = MemberFilter::build().withMemberId(1025);
+    membermanager::Member member(filter);
     membermanager::MemberContribution memberContribution = member.getMemberContribution();
 
     double fee = 15;
@@ -48,7 +53,9 @@ void MemberTest::testGetMembercontribution()
 
 void MemberTest::testSaveMember()
 {
-    membermanager::Member member(1025);
+    using membermanager::model::MemberFilter;
+    MemberFilter filter = MemberFilter::build().withMemberId(1025);
+    membermanager::Member member(filter);
     QCOMPARE(member.getMemberId(), 1025);
     QCOMPARE(member.getName(), QString("Kirk"));
     QCOMPARE(member.getFirstname(), QString("James T"));

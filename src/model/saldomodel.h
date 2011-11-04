@@ -6,6 +6,8 @@
 #include <QSqlTableModel>
 #include <QTableView>
 
+#include "model/memberfilter.h"
+
 namespace membermanager
 {
 namespace model
@@ -14,7 +16,7 @@ namespace model
 class SaldoModel: public QObject
 {
 public:
-    SaldoModel(int anId, const QSqlDatabase &aDb = QSqlDatabase::database());
+    SaldoModel(const MemberFilter &aFilter, const QSqlDatabase &aDb = QSqlDatabase::database());
     virtual ~SaldoModel();
 
     double amount() const;
