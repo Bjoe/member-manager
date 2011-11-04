@@ -25,9 +25,8 @@ void ContributionModelTest::initTestCase()
 
 void ContributionModelTest::testModel()
 {
-    membermanager::model::ContributionModel contributionModel(QSqlDatabase::database());
+    membermanager::model::ContributionModel contributionModel(1025, QSqlDatabase::database());
 
-    contributionModel.selectMemberId(1025);
     using membermanager::model::ContributionTable;
     const QSqlTableModel *model = contributionModel.findChild<QSqlTableModel *> (ContributionTable::TABLENAME);
     QVERIFY(model);

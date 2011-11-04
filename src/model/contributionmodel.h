@@ -13,10 +13,8 @@ namespace model
 class ContributionModel : public QObject
 {
 public:
-    ContributionModel(const QSqlDatabase &aDb);
+    ContributionModel(int anId, const QSqlDatabase &aDb);
     virtual ~ContributionModel();
-
-    void selectMemberId(const int aMemberId);
 
     void initTableView(QTableView *aTableView) const;
 

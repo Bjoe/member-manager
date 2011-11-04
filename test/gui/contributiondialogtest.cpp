@@ -29,8 +29,7 @@ void ContributionDialogTest::initTestCase()
 
 void ContributionDialogTest::testShowDialog()
 {
-    membermanager::model::ContributionModel contributionModel(QSqlDatabase::database());
-    contributionModel.selectMemberId(1025);
+    membermanager::model::ContributionModel contributionModel(1025, QSqlDatabase::database());
     membermanager::gui::ContributionDialog dialog(&contributionModel);
 
     const QTableView *tableView = dialog.findChild<QTableView *> ("contributionTableView");
