@@ -5,6 +5,8 @@
 #include <QtGui>
 #include "ui_mainwindow.h"
 #include "member.h"
+#include "model/saldomodel.h"
+#include "model/contributionmodel.h"
 
 namespace membermanager
 {
@@ -18,6 +20,9 @@ public:
     explicit MemberDetailView(const Ui::MainWindow *anUi, QObject *aParent = 0);
 
     void showMember(Member aMember);
+
+    model::SaldoModel getSaldoModel() const;
+    model::ContributionModel getContributionModel() const;
 
 public slots:
     void saveMember();

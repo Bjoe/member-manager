@@ -1,5 +1,6 @@
 #include "gui/memberdetailview.h"
 #include "membercontribution.h"
+#include "model/memberfilter.h"
 
 namespace membermanager
 {
@@ -34,6 +35,18 @@ void MemberDetailView::showMember(Member aMember)
     ui->donation->setText(QString::number(memberContribution.getDonation()));
     ui->contributionInfo->setText(memberContribution.getInfo());
     ui->validFrom->setDate(memberContribution.getValidFrom());
+}
+
+model::SaldoModel MemberDetailView::getSaldoModel() const
+{
+    model::MemberFilter filter = model::MemberFilter::build().withMemberId(member.getMemberId());
+    return model::SaldoModel(filter);
+}
+
+model::ContributionModel MemberDetailView::getContributionModel() const
+{
+    model::MemberFilter filter = model::MemberFilter::build().withMemberId(member.getMemberId());
+    return model::ContributionModel(filter);
 }
 
 void MemberDetailView::newFee()

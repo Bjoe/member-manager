@@ -59,7 +59,7 @@ void MainWindowTest::testSelectedMember()
     QCOMPARE(memberId->text() , QString("1025"));
 }
 
-void MainWindowTest::testShowSaldo()
+void MainWindowTest::testShowSaldoDialog()
 {
     membermanager::gui::MainWindow mainWindow(QSqlDatabase::database());
 
@@ -70,11 +70,27 @@ void MainWindowTest::testShowSaldo()
     QItemSelection selection(index, index);
     selectionModel->select(selection, QItemSelectionModel::Select);
 
-/*    qttestutil::gui::DialogButtonBoxHandler handler(QDialogButtonBox::Close);
+    qttestutil::gui::DialogButtonBoxHandler handler(QDialogButtonBox::Close);
     qttestutil::TriggerThread thread(this, &handler);
-    connect(&thread, SIGNAL(triggered()), &mainWindow, SLOT(showSaldo()));
+    connect(&thread, SIGNAL(triggered()), &mainWindow, SLOT(showSaldoDialog()));
     thread.syncStart();
-    */
+}
+
+void MainWindowTest::testShowContributionDialog()
+{
+    membermanager::gui::MainWindow mainWindow(QSqlDatabase::database());
+
+    QTableView *view = mainWindow.findChild<QTableView *> ("tableView");
+    QItemSelectionModel *selectionModel = view->selectionModel();
+    QAbstractItemModel *model = view->model();
+    QModelIndex index = model->index(0, 3);
+    QItemSelection selection(index, index);
+    selectionModel->select(selection, QItemSelectionModel::Select);
+
+    qttestutil::gui::DialogButtonBoxHandler handler(QDialogButtonBox::Close);
+    qttestutil::TriggerThread thread(this, &handler);
+    connect(&thread, SIGNAL(triggered()), &mainWindow, SLOT(showContributionDialog()));
+    thread.syncStart();
 }
 
 void MainWindowTest::handle()

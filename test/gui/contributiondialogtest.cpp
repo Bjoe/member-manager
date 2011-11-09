@@ -12,6 +12,7 @@
 #include <QTableView>
 #include <QModelIndex>
 #include <QAbstractItemModel>
+#include <QPushButton>
 #include <QPoint>
 #include <QVariant>
 #include <QString>
@@ -33,7 +34,7 @@ void ContributionDialogTest::testShowDialog()
     using membermanager::model::MemberFilter;
     MemberFilter filter = MemberFilter::build().withMemberId(1025);
     membermanager::model::ContributionModel contributionModel(filter, QSqlDatabase::database());
-    membermanager::gui::ContributionDialog dialog(&contributionModel);
+    membermanager::gui::ContributionDialog dialog(contributionModel);
 
     const QTableView *tableView = dialog.findChild<QTableView *> ("contributionTableView");
     const QAbstractItemModel *model = tableView->model();
@@ -45,6 +46,39 @@ void ContributionDialogTest::testShowDialog()
     QCOMPARE(value.toString(), QString("2007-05-01"));
 }
 
+void ContributionDialogTest::testWindowTitle()
+{
+    using membermanager::model::MemberFilter;
+    MemberFilter filter = MemberFilter::build().withMemberId(1025);
+    membermanager::model::ContributionModel contributionModel(filter, QSqlDatabase::database());
+    membermanager::gui::ContributionDialog dialog(contributionModel);
+
+    QCOMPARE(dialog.windowTitle(), QString("Member Id: 1025"));
+}
+
+void ContributionDialogTest::testInsertAndDeleteRow()
+{
+    using membermanager::model::MemberFilter;
+    MemberFilter filter = MemberFilter::build().withMemberId(1025);
+    membermanager::model::ContributionModel contributionModel(filter, QSqlDatabase::database());
+    membermanager::gui::ContributionDialog dialog(contributionModel);
+
+    const QTableView *tableView = dialog.findChild<QTableView *> ("contributionTableView");
+    const QAbstractItemModel *model = tableView->model();
+    QVERIFY(model != 0);
+    QCOMPARE(model->rowCount(), 2);
+
+    QPushButton *button = dialog.findChild<QPushButton *> ("newRowButton");
+    QTest::mouseClick(button, Qt::LeftButton);
+
+    QCOMPARE(model->rowCount(), 3);
+
+
+    button = dialog.findChild<QPushButton *> ("deleteRowButton");
+    QTest::mouseClick(button, Qt::LeftButton);
+
+    QCOMPARE(model->rowCount(), 2);
+}
 
 }
 }

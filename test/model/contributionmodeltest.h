@@ -16,6 +16,8 @@ class ContributionModelTest : public qttestutil::TestCoverageObject
 private slots:
     void initTestCase();
     void testModel();
+    void testGetMemberId();
+    void testInsertAndDeleteRow();
 };
 
 }

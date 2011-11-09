@@ -3,6 +3,7 @@
 #include "memberfactory.h"
 #include "model/memberfilter.h"
 #include "gui/saldodialog.h"
+#include "gui/contributiondialog.h"
 
 namespace membermanager
 {
@@ -17,13 +18,14 @@ MainWindow::MainWindow(const QSqlDatabase &aDatabase,
 
     showMembers(false);
 
-    //connect(ui.buttonBox, SIGNAL(clicked()), &memberDetailView, SLOT(saveMember()));
-    //connect(ui.newFeeButton, SIGNAL(clicked()), &memberDetailView, SLOT(newFee());
+    connect(ui.buttonBox, SIGNAL(accepted()), &memberDetailView, SLOT(saveMember()));
+    connect(ui.newFeeButton, SIGNAL(clicked()), &memberDetailView, SLOT(newFee()));
     connect(ui.actionShowMember, SIGNAL(triggered()), SLOT(showMemberView()));
     connect(ui.actionShowDeletedMember, SIGNAL(triggered()), SLOT(showDeletedMemberView()));
     connect(ui.actionNewMember, SIGNAL(triggered()), SLOT(newMember()));
     //connect(ui.actionShowSaldo, SIGNAL(triggered()), SLOT(showSaldo()));
-    //connect(ui.saldoButton, SIGNAL(clicked()), SLOT(showSaldo()));
+    connect(ui.saldoButton, SIGNAL(clicked()), SLOT(showSaldoDialog()));
+    connect(ui.feeButton, SIGNAL(clicked()), SLOT(showContributionDialog()));
 
     //    connect ( ui.tableView->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
     //            SLOT(updateMemberMapper()));
@@ -39,6 +41,21 @@ void MainWindow::newMember()
 void MainWindow::updateMemberDetailView(const QItemSelection &aSelected, const QItemSelection &aDeselected)
 {
     memberDetailView.showMember(MemberFactory::createMember(getSelection()));
+}
+
+void MainWindow::showSaldoDialog()
+{
+    model::SaldoModel model = memberDetailView.getSaldoModel();
+    SaldoDialog dialog(model, this);
+    dialog.exec();
+}
+
+
+void MainWindow::showContributionDialog()
+{
+    model::ContributionModel model = memberDetailView.getContributionModel();
+    ContributionDialog dialog(model, this);
+    dialog.exec();
 }
 
 int MainWindow::getSelection() const

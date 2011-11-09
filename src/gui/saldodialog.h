@@ -16,12 +16,16 @@ class SaldoDialog : public QDialog
     Q_OBJECT
 
 public:
-    SaldoDialog(model::SaldoModel *aSaldoModel, QWidget *parent = 0);
+    SaldoDialog(model::SaldoModel aSaldoModel, QWidget *parent = 0);
     ~SaldoDialog();
+
+private slots:
+    void insertRow();
+    void deleteRow();
 
 private:
     Ui::SaldoDialogClass ui;
-    model::SaldoModel *saldoModel;
+    model::SaldoModel saldoModel;
 };
 
 }

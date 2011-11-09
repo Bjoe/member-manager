@@ -17,6 +17,8 @@ private slots:
     void initTestCase();
     void testModel();
     void testAmount();
+    void testGetMemberId();
+    void testInsertAndDeleteRow();
 };
 
 }

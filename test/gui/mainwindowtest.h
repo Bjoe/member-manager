@@ -24,7 +24,8 @@ private slots:
     void testSelectedMember();
     void testMemberView();
     void testDeletedMemberView();
-    void testShowSaldo();
+    void testShowSaldoDialog();
+    void testShowContributionDialog();
 
 private:
     QString id;

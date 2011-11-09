@@ -6,6 +6,8 @@
 #include "member.h"
 #include "memberfactory.h"
 #include "model/databasestructure.h"
+#include "model/saldomodel.h"
+#include "model/contributionmodel.h"
 #include "testconfig.h"
 
 #include <QtCore>
@@ -403,6 +405,34 @@ void MemberDetailViewTest::testChangeMemberWithNewContribution()
     query.exec("select * from " + RessourcenTable::TABLENAME + whereClause);
     query.next();
     QCOMPARE(query.value(RessourcenTable::EmailAdress).toString(), QString("foo@bar.tx"));
+}
+
+void MemberDetailViewTest::testgetSaldo()
+{
+    QMainWindow *qmainWindow = new QMainWindow();
+    Ui::MainWindow mainWindow;
+    mainWindow.setupUi(qmainWindow);
+    membermanager::gui::MemberDetailView memberDetailView(&mainWindow);
+
+    memberDetailView.showMember(membermanager::MemberFactory::createMember(1025));
+
+    membermanager::model::SaldoModel model = memberDetailView.getSaldoModel();
+
+    QCOMPARE(model.getMemberId(), QString("1025"));
+}
+
+void MemberDetailViewTest::testgetContribution()
+{
+    QMainWindow *qmainWindow = new QMainWindow();
+    Ui::MainWindow mainWindow;
+    mainWindow.setupUi(qmainWindow);
+    membermanager::gui::MemberDetailView memberDetailView(&mainWindow);
+
+    memberDetailView.showMember(membermanager::MemberFactory::createMember(1025));
+
+    membermanager::model::ContributionModel model = memberDetailView.getContributionModel();
+
+    QCOMPARE(model.getMemberId(), QString("1025"));
 }
 
 }

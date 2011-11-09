@@ -13,6 +13,7 @@
 #include <QTableView>
 #include <QModelIndex>
 #include <QAbstractItemModel>
+#include <QPushButton>
 #include <QPoint>
 #include <QVariant>
 #include <QString>
@@ -37,7 +38,7 @@ void SaldoDialogTest::testShowDialog()
     using membermanager::model::MemberFilter;
     MemberFilter filter = MemberFilter::build().withMemberId(1025);
     membermanager::model::SaldoModel saldoModel(filter, QSqlDatabase::database());
-    membermanager::gui::SaldoDialog dialog(&saldoModel);
+    membermanager::gui::SaldoDialog dialog(saldoModel);
 
     QTableView *tableView = dialog.findChild<QTableView *> ("saldoTableView");
     const QAbstractItemModel *model = tableView->model();
@@ -48,15 +49,48 @@ void SaldoDialogTest::testShowDialog()
     QCOMPARE(value.toString(), QString("2005-09-18"));
 }
 
+void SaldoDialogTest::testWindowTitle()
+{
+    using membermanager::model::MemberFilter;
+    MemberFilter filter = MemberFilter::build().withMemberId(1025);
+    membermanager::model::SaldoModel saldoModel(filter, QSqlDatabase::database());
+    membermanager::gui::SaldoDialog dialog(saldoModel);
+
+    QCOMPARE(dialog.windowTitle(), QString("Member Id: 1025"));
+}
+
 void SaldoDialogTest::testShowSum()
 {
     using membermanager::model::MemberFilter;
     MemberFilter filter = MemberFilter::build().withMemberId(1025);
     membermanager::model::SaldoModel saldoModel(filter, QSqlDatabase::database());
-    membermanager::gui::SaldoDialog dialog(&saldoModel);
+    membermanager::gui::SaldoDialog dialog(saldoModel);
 
     QLabel *sumLabel = dialog.findChild<QLabel *> ("sumLabel");
     QCOMPARE(sumLabel->text(), QString("Summe: -15"));
+}
+
+void SaldoDialogTest::testInsertAndDeleteRow()
+{
+    using membermanager::model::MemberFilter;
+    MemberFilter filter = MemberFilter::build().withMemberId(1025);
+    membermanager::model::SaldoModel saldoModel(filter, QSqlDatabase::database());
+    membermanager::gui::SaldoDialog dialog(saldoModel);
+
+    QTableView *tableView = dialog.findChild<QTableView *> ("saldoTableView");
+    const QAbstractItemModel *model = tableView->model();
+    QVERIFY(model != 0);
+    QCOMPARE(model->rowCount(), 2);
+
+    QPushButton *button = dialog.findChild<QPushButton *> ("newRowButton");
+    QTest::mouseClick(button, Qt::LeftButton);
+
+    QCOMPARE(model->rowCount(), 3);
+
+    button = dialog.findChild<QPushButton *> ("deleteRowButton");
+    QTest::mouseClick(button, Qt::LeftButton);
+
+    QCOMPARE(model->rowCount(), 2);
 }
 
 }

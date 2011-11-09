@@ -9,6 +9,7 @@
 
 #include <QSqlTableModel>
 #include <QSqlRecord>
+#include <QModelIndex>
 #include <QString>
 
 namespace membermanagertest
@@ -27,10 +28,10 @@ void SaldoModelTest::testModel()
 {
     using membermanager::model::MemberFilter;
     MemberFilter filter = MemberFilter::build().withMemberId(1025);
-    membermanager::model::SaldoModel saldoModel(filter, QSqlDatabase::database());
+    membermanager::model::SaldoModel saldoModel(filter, QSqlDatabase::database(), this);
 
     using membermanager::model::SaldoTable;
-    const QSqlTableModel *model = saldoModel.findChild<QSqlTableModel *> (SaldoTable::TABLENAME);
+    const QSqlTableModel *model = findChild<QSqlTableModel *> (SaldoTable::TABLENAME);
     QVERIFY(model);
     QCOMPARE(model->rowCount(), 2);
     QSqlRecord record = model->record(0);
@@ -47,6 +48,38 @@ void SaldoModelTest::testAmount()
     double sum = saldoModel.amount();
     double expected = -15;
     QCOMPARE(sum, expected);
+}
+
+void SaldoModelTest::testGetMemberId()
+{
+    using membermanager::model::MemberFilter;
+    MemberFilter filter = MemberFilter::build().withMemberId(1025);
+    membermanager::model::SaldoModel saldoModel(filter, QSqlDatabase::database());
+
+    QCOMPARE(saldoModel.getMemberId(), QString("1025"));
+}
+
+void SaldoModelTest::testInsertAndDeleteRow()
+{
+    using membermanager::model::MemberFilter;
+    MemberFilter filter = MemberFilter::build().withMemberId(1025);
+    membermanager::model::SaldoModel saldoModel(filter, QSqlDatabase::database(), this);
+
+    using membermanager::model::SaldoTable;
+    QSqlTableModel *model = findChild<QSqlTableModel *> (SaldoTable::TABLENAME);
+    QVERIFY(model);
+    QCOMPARE(model->rowCount(), 2);
+
+
+    QModelIndex index = saldoModel.insertNewRow();
+
+    model->select();
+    QCOMPARE(model->rowCount(), 3);
+    QCOMPARE(index.row(), 2);
+
+    QVERIFY(saldoModel.deleteRow(index));
+    model->select();
+    QCOMPARE(model->rowCount(), 2);
 }
 
 }

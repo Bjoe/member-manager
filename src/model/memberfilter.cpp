@@ -19,7 +19,7 @@ MemberFilter MemberFilter::build()
 MemberFilter &MemberFilter::withDeleted(bool isDeleted)
 {
     QString result;
-    if(isDeleted)
+    if (isDeleted)
         result = QString("'true'");
     else
         result = QString("'false'");

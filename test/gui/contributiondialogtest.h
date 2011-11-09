@@ -16,6 +16,8 @@ class ContributionDialogTest : public qttestutil::TestCoverageObject
 private slots:
     void initTestCase();
     void testShowDialog();
+    void testWindowTitle();
+    void testInsertAndDeleteRow();
 };
 
 }

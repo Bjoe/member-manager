@@ -4,6 +4,7 @@
 
 #include <QSqlRecord>
 #include <QSqlQuery>
+#include <QSqlError>
 #include <QString>
 #include <QVariant>
 
@@ -12,18 +13,18 @@ namespace membermanager
 namespace model
 {
 
-SaldoModel::SaldoModel(const MemberFilter &aFilter, const QSqlDatabase &aDb) :
-    model(new QSqlTableModel(this))
+SaldoModel::SaldoModel(const MemberFilter &aFilter, const QSqlDatabase &aDb, QObject *aParent) :
+    model(new QSqlTableModel(aParent, aDb))
 {
     model->setObjectName(SaldoTable::TABLENAME);
     model->setTable(SaldoTable::TABLENAME);
-    model->setHeaderData(SaldoTable::betrag, Qt::Horizontal, tr("Betrag"));
-    model->setHeaderData(SaldoTable::datum, Qt::Horizontal, tr("Valuta Datum"));
-    model->setHeaderData(SaldoTable::bezeichnung, Qt::Horizontal, tr("Bezeichnung"));
-    model->setHeaderData(SaldoTable::barkonto, Qt::Horizontal, tr("Barkonto"));
-    model->setHeaderData(SaldoTable::konten, Qt::Horizontal, tr("Konten"));
-    model->setHeaderData(SaldoTable::kasse_pkey, Qt::Horizontal, tr("Kassa Id"));
-    model->setHeaderData(SaldoTable::info, Qt::Horizontal, tr("Info"));
+    model->setHeaderData(SaldoTable::betrag, Qt::Horizontal, aParent->tr("Betrag"));
+    model->setHeaderData(SaldoTable::datum, Qt::Horizontal, aParent->tr("Valuta Datum"));
+    model->setHeaderData(SaldoTable::bezeichnung, Qt::Horizontal, aParent->tr("Bezeichnung"));
+    model->setHeaderData(SaldoTable::barkonto, Qt::Horizontal, aParent->tr("Barkonto"));
+    model->setHeaderData(SaldoTable::konten, Qt::Horizontal, aParent->tr("Konten"));
+    model->setHeaderData(SaldoTable::kasse_pkey, Qt::Horizontal, aParent->tr("Kassa Id"));
+    model->setHeaderData(SaldoTable::info, Qt::Horizontal, aParent->tr("Info"));
 
     model->setFilter(aFilter.createFilter());
     model->select();
@@ -33,11 +34,17 @@ SaldoModel::~SaldoModel()
 {
 }
 
-double SaldoModel::amount() const
+QString SaldoModel::getMemberId() const
 {
     QSqlRecord record = model->record(0);
     QVariant id = record.value(SaldoTable::dorfmitglied_pkey);
-    QString query = QString("SELECT SUM(betrag) FROM saldo WHERE dorfmitglied_pkey=%1").arg(id.toString());
+    return id.toString();
+}
+
+double SaldoModel::amount() const
+{
+    /// \todo use MemberFilter and use SaldoTable::TABLENAME
+    QString query = QString("SELECT SUM(betrag) FROM saldo WHERE dorfmitglied_pkey=%1").arg(getMemberId());
     QSqlQuery sqlQuery(query);
     sqlQuery.next();
     QVariant sum = sqlQuery.value(0);
@@ -51,6 +58,22 @@ void SaldoModel::initTableView(QTableView *aTableView) const
     aTableView->setColumnHidden(SaldoTable::dorfmitglied_pkey, true);
 
     aTableView->sortByColumn(SaldoTable::saldo_pkey, Qt::DescendingOrder);
+}
+
+QModelIndex SaldoModel::insertNewRow()
+{
+    int row = model->rowCount();
+    model->insertRow(row);
+    model->setData(model->index(row, SaldoTable::dorfmitglied_pkey), getMemberId());
+    model->submitAll();
+    /// \todo model.lastError();
+    return model->index(row, SaldoTable::betrag);
+}
+
+bool SaldoModel::deleteRow(const QModelIndex &anIndex)
+{
+    return model->removeRow(anIndex.row());
+    /// \todo model.lastError();
 }
 
 }

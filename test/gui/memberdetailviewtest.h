@@ -23,6 +23,8 @@ private slots:
     void testShowMember();
     void testChangeMember();
     void testChangeMemberWithNewContribution();
+    void testgetSaldo();
+    void testgetContribution();
 
 private:
     qttestutil::database::DatabaseUtil database;
