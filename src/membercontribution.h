@@ -26,7 +26,7 @@ public:
     bool saveNewRecord();
 
 private:
-    const model::MemberFilter &filter;
+    const model::MemberFilter filter;
     QSqlRecord contributionRecord;
 };
 

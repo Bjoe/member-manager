@@ -39,7 +39,8 @@ bool Member::save()
 MemberContribution Member::getMemberContribution() const
 {
     model::MemberFilter filter = model::MemberFilter::build().withMemberId(getMemberId());
-    return MemberContribution(filter);
+    MemberContribution memberContribution(filter);
+    return memberContribution;
 }
 
 int Member::getMemberId() const
