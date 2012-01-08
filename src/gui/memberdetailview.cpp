@@ -29,6 +29,7 @@ void MemberDetailView::showMember(Member aMember)
     ui->bankName->setText(member.getBankName());
     ui->code->setText(member.getCode());
     ui->account->setText(member.getAccountNr());
+    ui->deleted->setChecked(member.isDeleted());
 
     MemberContribution memberContribution = member.getMemberContribution();
     ui->fee->setText(QString::number(memberContribution.getFee()));
@@ -76,6 +77,7 @@ void MemberDetailView::saveMember()
     member.setBankName(ui->bankName->text());
     member.setCode(ui->code->text());
     member.setAccountNr(ui->account->text());
+    member.setDeleted(ui->deleted->isChecked());
 
     MemberContribution memberContribution = member.getMemberContribution();
     memberContribution.setFee(ui->fee->text().toDouble());

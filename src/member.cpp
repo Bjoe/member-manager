@@ -168,4 +168,14 @@ void Member::setCode(const QString &aCode)
     bankRecord.setValue(model::BankAccountTable::Code, QVariant(aCode));
 }
 
+bool Member::isDeleted() const
+{
+   return memberRecord.value(model::MemberTable::Deleted).toBool();
+}
+
+void Member::setDeleted(bool aDeleted)
+{
+    memberRecord.setValue(model::MemberTable::Deleted, QVariant(aDeleted));
+}
+
 }

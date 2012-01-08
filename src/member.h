@@ -41,6 +41,9 @@ public:
     QString getCode() const;
     void setCode(const QString &aCode);
 
+    bool isDeleted() const;
+    void setDeleted(bool aDeleted);
+
     MemberContribution getMemberContribution() const;
 
     bool save();

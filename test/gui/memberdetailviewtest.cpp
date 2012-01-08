@@ -92,6 +92,9 @@ void MemberDetailViewTest::testShowMember()
 
     QLineEdit *bankName = mainWindow.bankName;
     QCOMPARE(bankName->text(), QString("sparstrumpf"));
+
+    QCheckBox *deleted = mainWindow.deleted;
+    QVERIFY(deleted->isChecked() == false);
 }
 
 void MemberDetailViewTest::testChangeMember()
@@ -154,6 +157,9 @@ void MemberDetailViewTest::testChangeMember()
     QLineEdit *bankName = mainWindow.bankName;
     QCOMPARE(bankName->text(), QString("sparstrumpf"));
 
+    QCheckBox *deleted = mainWindow.deleted;
+    QVERIFY(deleted->isChecked() == false);
+
     memberName->clear();
     QTest::keyClicks(memberName, "Archer");
     firstName->clear();
@@ -189,6 +195,8 @@ void MemberDetailViewTest::testChangeMember()
     info->clear();
     QTest::keyClicks(info, "Lalala");
 
+    deleted->setChecked(true);
+
     memberDetailView.saveMember();
 
     QCOMPARE(firstName->text(), QString("Jonathan"));
@@ -207,6 +215,7 @@ void MemberDetailViewTest::testChangeMember()
     QCOMPARE(bankName->text(), QString("Galaxy"));
     QCOMPARE(code->text(), QString("98765432"));
     QCOMPARE(info->toPlainText(), QString("Lalala"));
+    QVERIFY(deleted->isChecked());
 
     using membermanager::model::MemberTable;
     const QString whereClause = QString(" where %1=%2").arg(
@@ -221,6 +230,7 @@ void MemberDetailViewTest::testChangeMember()
     QCOMPARE(query.value(MemberTable::Name).toString(), QString("Archer"));
     QCOMPARE(query.value(MemberTable::NickName).toString(), QString("Captain"));
     QCOMPARE(query.value(MemberTable::Info).toString(), QString("Lalala"));
+    QVERIFY(query.value(MemberTable::Deleted).toBool());
 
     using membermanager::model::AddressTable;
     query.exec("select * from " + AddressTable::TABLENAME + whereClause);
