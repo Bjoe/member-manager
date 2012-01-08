@@ -36,6 +36,7 @@ int main(int argc, char *argv[])
 
     QSqlDatabase db = QSqlDatabase::addDatabase(dialog.getDriver());
     db.setDatabaseName(dialog.getDatabaseName());
+    db.setHostName(dialog.getHostname());
     db.setPort(dialog.getPort());
     db.setPassword(dialog.getPassword());
     db.setUserName(dialog.getUsername());
