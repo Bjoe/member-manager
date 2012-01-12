@@ -24,8 +24,9 @@ public:
     model::SaldoModel getSaldoModel() const;
     model::ContributionModel getContributionModel() const;
 
-public slots:
     void saveMember();
+
+public slots:
     void newFee();
 
 private:

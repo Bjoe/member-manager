@@ -12,13 +12,13 @@ namespace gui
 
 MainWindow::MainWindow(const QSqlDatabase &aDatabase,
                        QWidget *parent) :
-    QMainWindow(parent), ui(), memberModel(aDatabase), memberDetailView(&ui)
+    QMainWindow(parent), ui(), memberModel(aDatabase), memberDetailView(&ui), showDeleted(false)
 {
     ui.setupUi(this);
 
-    showMembers(false);
+    showMembers();
 
-    connect(ui.buttonBox, SIGNAL(accepted()), &memberDetailView, SLOT(saveMember()));
+    connect(ui.buttonBox, SIGNAL(accepted()), SLOT(saveMember()));
     connect(ui.newFeeButton, SIGNAL(clicked()), &memberDetailView, SLOT(newFee()));
     connect(ui.actionShowMember, SIGNAL(triggered()), SLOT(showMemberView()));
     connect(ui.actionShowDeletedMember, SIGNAL(triggered()), SLOT(showDeletedMemberView()));
@@ -36,6 +36,15 @@ MainWindow::MainWindow(const QSqlDatabase &aDatabase,
 void MainWindow::newMember()
 {
     memberDetailView.showMember(MemberFactory::createNewMember());
+    updateTableView();
+}
+
+void MainWindow::saveMember()
+{
+    QModelIndex index = ui.tableView->currentIndex();
+    memberDetailView.saveMember();
+    updateTableView();
+    ui.tableView->selectRow(index.row());
 }
 
 void MainWindow::updateMemberDetailView(const QItemSelection &aSelected, const QItemSelection &aDeselected)
@@ -72,35 +81,41 @@ int MainWindow::getSelection() const
 
 void MainWindow::showDeletedMemberView()
 {
-    showMembers(true);
+    showDeleted = true;
+    showMembers();
 }
 
 void MainWindow::showMemberView()
 {
-    showMembers(false);
+    showDeleted = false;
+    showMembers();
 }
 
-void MainWindow::showMembers(bool aBoolean)
+void MainWindow::showMembers()
 {
     QItemSelectionModel *selectionModel = ui.tableView->selectionModel();
     if (selectionModel) {
         selectionModel->clearSelection();
     }
-
-    memberModel.setFilter(model::MemberFilter::build().withDeleted(aBoolean).createFilter());
-    memberModel.initTableView(ui.tableView);
-    ui.tableView->resizeColumnsToContents();
+    updateTableView();
 
     ui.tableView->addAction(ui.actionCopyMailAdr);
     ui.tableView->addAction(ui.actionShowSaldo);
 
-    if (aBoolean) {
+    if (showDeleted == true) {
         ui.actionShowDeletedMember->setChecked(true);
         ui.actionShowMember->setChecked(false);
     } else {
         ui.actionShowDeletedMember->setChecked(false);
         ui.actionShowMember->setChecked(true);
     }
+}
+
+void MainWindow::updateTableView()
+{
+    memberModel.setFilter(model::MemberFilter::build().withDeleted(showDeleted).createFilter());
+    memberModel.initTableView(ui.tableView);
+    ui.tableView->resizeColumnsToContents();
 }
 
 }

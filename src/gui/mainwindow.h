@@ -26,15 +26,18 @@ private slots:
     void showSaldoDialog();
     void showContributionDialog();
     void newMember();
+    void saveMember();
     void updateMemberDetailView(const QItemSelection &aSelected, const QItemSelection &aDeselected);
 
 private:
     Ui::MainWindow ui;
     MemberDetailView memberDetailView;
     model::MemberModel memberModel;
+    bool showDeleted;
 
-    void showMembers(bool aBoolean);
+    void showMembers();
     int getSelection() const;
+    void updateTableView();
 };
 
 }
