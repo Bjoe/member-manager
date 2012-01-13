@@ -59,7 +59,7 @@ int MemberDao::newMember()
 {
     QDateTime dateTime = QDateTime::currentDateTime();
     QDate date = dateTime.date();
-
+    QString firstname = QString("newMember%1").arg(dateTime.toMSecsSinceEpoch());
     database.transaction();
     QSqlQuery query(database);
 
@@ -70,16 +70,16 @@ int MemberDao::newMember()
                   ") VALUES (? ,? ,? )");
     query.addBindValue("true");
     query.addBindValue(date.toString(Qt::ISODate));
-    query.addBindValue("newMember");
+    query.addBindValue(firstname);
     if (!query.exec()) {
         rollback(query);
         return 0;
     }
 
-    query.exec("SELECT " + MemberTable::COLUMNNAME[MemberTable::MemberId] + " FROM " + MemberTable::TABLENAME +
+    query.exec(QString("SELECT " + MemberTable::COLUMNNAME[MemberTable::MemberId] + " FROM " + MemberTable::TABLENAME +
                " WHERE " + MemberTable::COLUMNNAME[MemberTable::Deleted] + " = 'true'" +
                " AND " + MemberTable::COLUMNNAME[MemberTable::EntryDate] + " = '" + date.toString(Qt::ISODate) + "'" +
-               " AND " + MemberTable::COLUMNNAME[MemberTable::FirstName] + " = 'newMember'");
+               " AND " + MemberTable::COLUMNNAME[MemberTable::FirstName] + " = '%1'").arg(firstname));
     if (!query.next()) {
         rollback(query);
         return 0;
