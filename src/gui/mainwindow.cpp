@@ -16,6 +16,7 @@ MainWindow::MainWindow(const QSqlDatabase &aDatabase,
 {
     ui.setupUi(this);
 
+    memberModel.initTableView(ui.tableView);
     showMembers();
 
     connect(ui.buttonBox, SIGNAL(accepted()), SLOT(saveMember()));
@@ -35,8 +36,8 @@ MainWindow::MainWindow(const QSqlDatabase &aDatabase,
 
 void MainWindow::newMember()
 {
+    ui.tableView->selectionModel()->clearSelection();
     memberDetailView.showMember(MemberFactory::createNewMember());
-    updateTableView();
 }
 
 void MainWindow::saveMember()
@@ -48,6 +49,11 @@ void MainWindow::saveMember()
 }
 
 void MainWindow::updateMemberDetailView(const QItemSelection &aSelected, const QItemSelection &aDeselected)
+{
+    updateMemberDetailView();
+}
+
+void MainWindow::updateMemberDetailView()
 {
     memberDetailView.showMember(MemberFactory::createMember(getSelection()));
 }
@@ -91,12 +97,8 @@ void MainWindow::showMemberView()
     showMembers();
 }
 
-void MainWindow::showMembers()
+void MainWindow::showMembers(int aRow)
 {
-    QItemSelectionModel *selectionModel = ui.tableView->selectionModel();
-    if (selectionModel) {
-        selectionModel->clearSelection();
-    }
     updateTableView();
 
     ui.tableView->addAction(ui.actionCopyMailAdr);
@@ -109,12 +111,13 @@ void MainWindow::showMembers()
         ui.actionShowDeletedMember->setChecked(false);
         ui.actionShowMember->setChecked(true);
     }
+    ui.tableView->selectRow(aRow);
+    updateMemberDetailView();
 }
 
 void MainWindow::updateTableView()
 {
     memberModel.setFilter(model::MemberFilter::build().withDeleted(showDeleted).createFilter());
-    memberModel.initTableView(ui.tableView);
     ui.tableView->resizeColumnsToContents();
 }
 

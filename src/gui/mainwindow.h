@@ -35,9 +35,10 @@ private:
     model::MemberModel memberModel;
     bool showDeleted;
 
-    void showMembers();
+    void showMembers(int aRow = 0);
     int getSelection() const;
     void updateTableView();
+    void updateMemberDetailView();
 };
 
 }
