@@ -12,23 +12,21 @@ namespace membermanager
 namespace model
 {
 
-class MemberModel: public QObject
+class MemberModel
 {
 
 public:
-    MemberModel(const QSqlDatabase &aDb);
+    MemberModel(QObject *anObject, const QSqlDatabase &aDb);
     virtual ~MemberModel();
 
     void setFilter(const QString aSqlFilter);
-    void refresh();
-
     int getMemberId(const QModelIndex &anIndex) const;
+    QSqlTableModel* getModel();
 
     QString getLastError() const;
-    void initTableView(QTableView *aTableView) const;
 
 private:
-    QSqlTableModel *const model;
+    QSqlTableModel *model;
 };
 
 }

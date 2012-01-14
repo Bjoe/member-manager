@@ -24,15 +24,16 @@ void MemberModelTest::initTestCase()
 
 void MemberModelTest::testGetLastError()
 {
-    membermanager::model::MemberModel dataSource(QSqlDatabase::database());
+    membermanager::model::MemberModel dataSource(this, QSqlDatabase::database());
     // Fehler Produzieren ? QCOMPARE(memberModel.getLastError(),QString());
 }
 
 void MemberModelTest::testGetMemberModel()
 {
-    membermanager::model::MemberModel dataSource(QSqlDatabase::database());
+    membermanager::model::MemberModel dataSource(this, QSqlDatabase::database());
 
-    const QSqlTableModel *model = dataSource.findChild<QSqlTableModel *> (membermanager::model::MemberTable::TABLENAME);
+    QSqlTableModel *model = dataSource.getModel();
+    model->select();
     QCOMPARE(model->rowCount(), 2);
     QSqlRecord record = model->record(1);
     QCOMPARE(record.value("name").toString(), QString("Spock"));
@@ -40,11 +41,11 @@ void MemberModelTest::testGetMemberModel()
 
 void MemberModelTest::testSetFilter()
 {
-    membermanager::model::MemberModel memberModel(QSqlDatabase::database());
+    membermanager::model::MemberModel memberModel(this, QSqlDatabase::database());
 
     memberModel.setFilter("deleted='false'");
 
-    const QSqlTableModel *model = memberModel.findChild<QSqlTableModel *> (membermanager::model::MemberTable::TABLENAME);
+    const QSqlTableModel *model = memberModel.getModel();
     QCOMPARE(model->rowCount(), 1);
     QSqlRecord record = model->record(0);
     QCOMPARE(record.value("name").toString(), QString("Kirk"));
@@ -52,11 +53,12 @@ void MemberModelTest::testSetFilter()
 
 void MemberModelTest::testGetMemberId()
 {
-    membermanager::model::MemberModel memberModel(QSqlDatabase::database());
+    membermanager::model::MemberModel memberModel(this, QSqlDatabase::database());
 
-    const QSqlTableModel *model = memberModel.findChild<QSqlTableModel *> (membermanager::model::MemberTable::TABLENAME);
+    QSqlTableModel *model = memberModel.getModel();
+    model->select();
 
-    const QModelIndex index = model->index(0, 5);
+    const QModelIndex index = model->index(0, 1);
 
     const int id = memberModel.getMemberId(index);
 

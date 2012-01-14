@@ -12,11 +12,11 @@ namespace gui
 
 MainWindow::MainWindow(const QSqlDatabase &aDatabase,
                        QWidget *parent) :
-    QMainWindow(parent), ui(), memberModel(aDatabase), memberDetailView(&ui), showDeleted(false)
+    QMainWindow(parent), ui(), memberModel(this, aDatabase), memberDetailView(&ui), showDeleted(false)
 {
     ui.setupUi(this);
+    ui.tableView->setModel(memberModel.getModel());
 
-    memberModel.initTableView(ui.tableView);
     showMembers();
 
     connect(ui.buttonBox, SIGNAL(accepted()), SLOT(saveMember()));
