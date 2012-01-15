@@ -2,8 +2,6 @@
 
 #include "memberfactory.h"
 #include "model/memberfilter.h"
-#include "gui/saldodialog.h"
-#include "gui/contributiondialog.h"
 
 namespace membermanager
 {
@@ -12,25 +10,24 @@ namespace gui
 
 MainWindow::MainWindow(const QSqlDatabase &aDatabase,
                        QWidget *parent) :
-    QMainWindow(parent), ui(), memberModel(this, aDatabase), memberDetailView(&ui), showDeleted(false)
+    QMainWindow(parent), ui(), memberModel(this, aDatabase), memberDetailView(&ui, this), showDeleted(false)
 {
     ui.setupUi(this);
+
     ui.tableView->setModel(memberModel.getModel());
 
     showMembers();
 
-    connect(ui.buttonBox, SIGNAL(accepted()), SLOT(saveMember()));
+    connect(ui.saldoButton, SIGNAL(clicked()), &memberDetailView, SLOT(showSaldoDialog()));
+    connect(ui.feeButton, SIGNAL(clicked()), &memberDetailView, SLOT(showContributionDialog()));
     connect(ui.newFeeButton, SIGNAL(clicked()), &memberDetailView, SLOT(newFee()));
+
+    connect(ui.buttonBox, SIGNAL(accepted()), SLOT(saveMember()));
     connect(ui.actionShowMember, SIGNAL(triggered()), SLOT(showMemberView()));
     connect(ui.actionShowDeletedMember, SIGNAL(triggered()), SLOT(showDeletedMemberView()));
     connect(ui.actionNewMember, SIGNAL(triggered()), SLOT(newMember()));
     //connect(ui.actionShowSaldo, SIGNAL(triggered()), SLOT(showSaldo()));
-    connect(ui.saldoButton, SIGNAL(clicked()), SLOT(showSaldoDialog()));
-    connect(ui.feeButton, SIGNAL(clicked()), SLOT(showContributionDialog()));
-
-    //    connect ( ui.tableView->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
-    //            SLOT(updateMemberMapper()));
-    connect(ui.tableView->selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
+   connect(ui.tableView->selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
             SLOT(updateMemberDetailView(QItemSelection, QItemSelection)));
 }
 
@@ -50,40 +47,16 @@ void MainWindow::saveMember()
 
 void MainWindow::updateMemberDetailView(const QItemSelection &aSelected, const QItemSelection &aDeselected)
 {
-    updateMemberDetailView();
-}
-
-void MainWindow::updateMemberDetailView()
-{
-    memberDetailView.showMember(MemberFactory::createMember(getSelection()));
-}
-
-void MainWindow::showSaldoDialog()
-{
-    model::SaldoModel model = memberDetailView.getSaldoModel();
-    SaldoDialog dialog(model, this);
-    dialog.exec();
-}
-
-
-void MainWindow::showContributionDialog()
-{
-    model::ContributionModel model = memberDetailView.getContributionModel();
-    ContributionDialog dialog(model, this);
-    dialog.exec();
-}
-
-int MainWindow::getSelection() const
-{
-    QItemSelectionModel *selectionModel = ui.tableView->selectionModel();
-    QModelIndexList indexes = selectionModel->selectedIndexes();
+    QModelIndexList indexList = aSelected.indexes();
     int id = 0;
-    if (indexes.size() > 0) {
-        QModelIndex index = indexes.first();
-        id = memberModel.getMemberId(index);
+    if (indexList.size() > 0) {
+        QModelIndex index = indexList.first();
+        id = memberModel.getMemberId(index.row());
     }
-    return id;
+    Member member = MemberFactory::createMember(id);
+    memberDetailView.showMember(member);
 }
+
 
 void MainWindow::showDeletedMemberView()
 {
@@ -112,7 +85,9 @@ void MainWindow::showMembers(int aRow)
         ui.actionShowMember->setChecked(true);
     }
     ui.tableView->selectRow(aRow);
-    updateMemberDetailView();
+    int id = memberModel.getMemberId(aRow);
+    Member member = MemberFactory::createMember(id);
+    memberDetailView.showMember(member);
 }
 
 void MainWindow::updateTableView()

@@ -37,9 +37,9 @@ void MemberModel::setFilter(const QString aSqlFilter)
     model->select();
 }
 
-int MemberModel::getMemberId(const QModelIndex &anIndex) const
+int MemberModel::getMemberId(int aRow) const
 {
-    QSqlRecord record = model->record(anIndex.row());
+    QSqlRecord record = model->record(aRow);
     return record.value(MemberTable::MemberId).toInt();
 }
 

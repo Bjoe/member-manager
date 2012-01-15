@@ -60,7 +60,7 @@ void MemberModelTest::testGetMemberId()
 
     const QModelIndex index = model->index(0, 1);
 
-    const int id = memberModel.getMemberId(index);
+    const int id = memberModel.getMemberId(index.row());
 
     QCOMPARE(id, 1025);
 }

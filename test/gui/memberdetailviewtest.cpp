@@ -6,9 +6,9 @@
 #include "member.h"
 #include "memberfactory.h"
 #include "model/databasestructure.h"
-#include "model/saldomodel.h"
-#include "model/contributionmodel.h"
 #include "testconfig.h"
+#include "triggerthread.h"
+#include "gui/dialogbuttonboxhandler.h"
 
 #include <QtCore>
 #include <QtSql>
@@ -417,7 +417,7 @@ void MemberDetailViewTest::testChangeMemberWithNewContribution()
     QCOMPARE(query.value(RessourcenTable::EmailAdress).toString(), QString("foo@bar.tx"));
 }
 
-void MemberDetailViewTest::testgetSaldo()
+void MemberDetailViewTest::testShowSaldoDialog()
 {
     QMainWindow *qmainWindow = new QMainWindow();
     Ui::MainWindow mainWindow;
@@ -426,12 +426,13 @@ void MemberDetailViewTest::testgetSaldo()
 
     memberDetailView.showMember(membermanager::MemberFactory::createMember(1025));
 
-    membermanager::model::SaldoModel model = memberDetailView.getSaldoModel();
-
-    QCOMPARE(model.getMemberId(), 1025);
+    qttestutil::gui::DialogButtonBoxHandler handler(QDialogButtonBox::Close);
+    qttestutil::TriggerThread thread(this, &handler);
+    connect(&thread, SIGNAL(triggered()), &memberDetailView, SLOT(showSaldoDialog()));
+    thread.syncStart();
 }
 
-void MemberDetailViewTest::testgetContribution()
+void MemberDetailViewTest::testShowContributionDialog()
 {
     QMainWindow *qmainWindow = new QMainWindow();
     Ui::MainWindow mainWindow;
@@ -440,9 +441,27 @@ void MemberDetailViewTest::testgetContribution()
 
     memberDetailView.showMember(membermanager::MemberFactory::createMember(1025));
 
-    membermanager::model::ContributionModel model = memberDetailView.getContributionModel();
+    qttestutil::gui::DialogButtonBoxHandler handler(QDialogButtonBox::Close);
+    qttestutil::TriggerThread thread(this, &handler);
+    connect(&thread, SIGNAL(triggered()), &memberDetailView, SLOT(showContributionDialog()));
+    thread.syncStart();
+}
 
-    QCOMPARE(model.getMemberId(), 1025);
+void MemberDetailViewTest::handle()
+{
+    bool next = true;
+    do {
+        QWidget *widget = QApplication::activeWindow();
+        if (widget) {
+            QLabel *memberId = widget->findChild<QLabel *> ("memberId");
+            id = memberId->text();
+            QDialogButtonBox *buttonBox = widget->findChild<QDialogButtonBox *> (
+                                              "buttonBox");
+            QPushButton *button = buttonBox->button(QDialogButtonBox::Close);
+            button->click();
+            next = false;
+        }
+    } while (next);
 }
 
 }

@@ -5,29 +5,25 @@
 #include <QtGui>
 #include "ui_mainwindow.h"
 #include "member.h"
-#include "model/saldomodel.h"
-#include "model/contributionmodel.h"
 
 namespace membermanager
 {
 namespace gui
 {
 
-class MemberDetailView : public QObject
+class MemberDetailView : public QWidget
 {
     Q_OBJECT
 public:
-    explicit MemberDetailView(const Ui::MainWindow *anUi, QObject *aParent = 0);
+    explicit MemberDetailView(const Ui::MainWindow *anUi, QWidget *aParent = 0);
 
     void showMember(Member aMember);
-
-    model::SaldoModel getSaldoModel() const;
-    model::ContributionModel getContributionModel() const;
-
     void saveMember();
 
 public slots:
     void newFee();
+    void showSaldoDialog();
+    void showContributionDialog();
 
 private:
     bool newContribution;

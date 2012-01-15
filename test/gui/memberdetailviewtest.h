@@ -3,6 +3,7 @@
 
 #include <QtTest/QtTest>
 #include "testcoverageobject.h"
+#include "handler.h"
 #include "database/databaseutil.h"
 
 namespace membermanagertest
@@ -10,12 +11,15 @@ namespace membermanagertest
 namespace gui
 {
 
-class MemberDetailViewTest : public qttestutil::TestCoverageObject
+class MemberDetailViewTest : public qttestutil::TestCoverageObject, public qttestutil::Handler
 {
     Q_OBJECT
 
 public:
     MemberDetailViewTest();
+
+public:
+    virtual void handle();
 
 private slots:
     void initTestCase();
@@ -23,10 +27,11 @@ private slots:
     void testShowMember();
     void testChangeMember();
     void testChangeMemberWithNewContribution();
-    void testgetSaldo();
-    void testgetContribution();
+    void testShowSaldoDialog();
+    void testShowContributionDialog();
 
 private:
+    QString id;
     qttestutil::database::DatabaseUtil database;
 };
 

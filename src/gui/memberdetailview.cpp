@@ -1,14 +1,18 @@
 #include "gui/memberdetailview.h"
 #include "membercontribution.h"
-#include "model/memberfilter.h"
+#include "gui/saldodialog.h"
+#include "gui/contributiondialog.h"
+
+#include "model/saldomodel.h"
+#include "model/contributionmodel.h"
 
 namespace membermanager
 {
 namespace gui
 {
 
-MemberDetailView::MemberDetailView(const Ui::MainWindow *anUi, QObject *aParent) :
-    QObject(aParent), newContribution(false), member(), ui(anUi)
+MemberDetailView::MemberDetailView(const Ui::MainWindow *anUi, QWidget *aParent) :
+    QWidget(aParent), newContribution(false), member(), ui(anUi)
 {
 }
 
@@ -36,16 +40,6 @@ void MemberDetailView::showMember(Member aMember)
     ui->donation->setText(QString::number(memberContribution.getDonation()));
     ui->contributionInfo->setText(memberContribution.getInfo());
     ui->validFrom->setDate(memberContribution.getValidFrom());
-}
-
-model::SaldoModel MemberDetailView::getSaldoModel() const
-{
-    return model::SaldoModel(member.getMemberId());
-}
-
-model::ContributionModel MemberDetailView::getContributionModel() const
-{
-    return model::ContributionModel(member.getMemberId());
 }
 
 void MemberDetailView::newFee()
@@ -90,6 +84,21 @@ void MemberDetailView::saveMember()
         memberContribution.save();
 
     newContribution = false;
+}
+
+void MemberDetailView::showSaldoDialog()
+{
+    model::SaldoModel model(member.getMemberId());
+    SaldoDialog dialog(model, this);
+    dialog.exec();
+}
+
+
+void MemberDetailView::showContributionDialog()
+{
+    model::ContributionModel model(member.getMemberId());
+    ContributionDialog dialog(model, this);
+    dialog.exec();
 }
 
 }

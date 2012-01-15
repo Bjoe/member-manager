@@ -20,7 +20,7 @@ public:
     virtual ~MemberModel();
 
     void setFilter(const QString aSqlFilter);
-    int getMemberId(const QModelIndex &anIndex) const;
+    int getMemberId(int aRow) const;
     QSqlTableModel* getModel();
 
     QString getLastError() const;
