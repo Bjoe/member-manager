@@ -40,8 +40,7 @@ void MemberDetailView::showMember(Member aMember)
 
 model::SaldoModel MemberDetailView::getSaldoModel() const
 {
-    model::MemberFilter filter = model::MemberFilter::build().withMemberId(member.getMemberId());
-    return model::SaldoModel(filter);
+    return model::SaldoModel(member.getMemberId());
 }
 
 model::ContributionModel MemberDetailView::getContributionModel() const

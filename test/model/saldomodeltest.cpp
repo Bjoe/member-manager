@@ -26,24 +26,20 @@ void SaldoModelTest::initTestCase()
 
 void SaldoModelTest::testModel()
 {
-    using membermanager::model::MemberFilter;
-    MemberFilter filter = MemberFilter::build().withMemberId(1025);
-    membermanager::model::SaldoModel saldoModel(filter, QSqlDatabase::database(), this);
+    membermanager::model::SaldoModel saldoModel(1025, QSqlDatabase::database(), this);
 
     using membermanager::model::SaldoTable;
-    const QSqlTableModel *model = findChild<QSqlTableModel *> (SaldoTable::TABLENAME);
+    const QSqlTableModel *model = saldoModel.getModel();
     QVERIFY(model);
     QCOMPARE(model->rowCount(), 2);
-    QSqlRecord record = model->record(0);
+    QSqlRecord record = model->record(1);
     QCOMPARE(record.value(SaldoTable::bezeichnung).toString(), QString("Start Saldo"));
     QCOMPARE(record.value(SaldoTable::betrag).toString(), QString("0"));
 }
 
 void SaldoModelTest::testAmount()
 {
-    using membermanager::model::MemberFilter;
-    MemberFilter filter = MemberFilter::build().withMemberId(1025);
-    membermanager::model::SaldoModel saldoModel(filter, QSqlDatabase::database());
+    membermanager::model::SaldoModel saldoModel(1025, QSqlDatabase::database());
 
     double sum = saldoModel.amount();
     double expected = -15;
@@ -52,21 +48,16 @@ void SaldoModelTest::testAmount()
 
 void SaldoModelTest::testGetMemberId()
 {
-    using membermanager::model::MemberFilter;
-    MemberFilter filter = MemberFilter::build().withMemberId(1025);
-    membermanager::model::SaldoModel saldoModel(filter, QSqlDatabase::database());
+    membermanager::model::SaldoModel saldoModel(1025, QSqlDatabase::database());
 
-    QCOMPARE(saldoModel.getMemberId(), QString("1025"));
+    QCOMPARE(saldoModel.getMemberId(), 1025);
 }
 
 void SaldoModelTest::testInsertAndDeleteRow()
 {
-    using membermanager::model::MemberFilter;
-    MemberFilter filter = MemberFilter::build().withMemberId(1025);
-    membermanager::model::SaldoModel saldoModel(filter, QSqlDatabase::database(), this);
+    membermanager::model::SaldoModel saldoModel(1025, QSqlDatabase::database(), this);
 
-    using membermanager::model::SaldoTable;
-    QSqlTableModel *model = findChild<QSqlTableModel *> (SaldoTable::TABLENAME);
+    QSqlTableModel *model = saldoModel.getModel();
     QVERIFY(model);
     QCOMPARE(model->rowCount(), 2);
 

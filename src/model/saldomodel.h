@@ -17,16 +17,18 @@ namespace model
 class SaldoModel
 {
 public:
-    SaldoModel(const MemberFilter &aFilter, const QSqlDatabase &aDb = QSqlDatabase::database(), QObject *aParent = 0);
+    SaldoModel(int aMemberId, const QSqlDatabase &aDb = QSqlDatabase::database(), QObject *aParent = 0);
     virtual ~SaldoModel();
 
-    void initTableView(QTableView *aTableView) const;
-    QString getMemberId() const;
+    int getMemberId() const;
+    QSqlTableModel *getModel();
+
     double amount() const;
     QModelIndex insertNewRow();
     bool deleteRow(const QModelIndex &anIndex);
 
 private:
+    int memberId;
     QSqlTableModel *model;
 };
 

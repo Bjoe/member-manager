@@ -22,6 +22,7 @@ public:
 private slots:
     void insertRow();
     void deleteRow();
+    void calculateSum();
 
 private:
     Ui::SaldoDialogClass ui;

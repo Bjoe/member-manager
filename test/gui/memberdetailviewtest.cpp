@@ -428,7 +428,7 @@ void MemberDetailViewTest::testgetSaldo()
 
     membermanager::model::SaldoModel model = memberDetailView.getSaldoModel();
 
-    QCOMPARE(model.getMemberId(), QString("1025"));
+    QCOMPARE(model.getMemberId(), 1025);
 }
 
 void MemberDetailViewTest::testgetContribution()

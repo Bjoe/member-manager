@@ -7,7 +7,6 @@
 #include "triggerthread.h"
 #include "gui/dialogbuttonboxhandler.h"
 #include "model/saldomodel.h"
-#include "model/memberfilter.h"
 
 #include <QSqlDatabase>
 #include <QTableView>
@@ -35,9 +34,7 @@ void SaldoDialogTest::initTestCase()
 
 void SaldoDialogTest::testShowDialog()
 {
-    using membermanager::model::MemberFilter;
-    MemberFilter filter = MemberFilter::build().withMemberId(1025);
-    membermanager::model::SaldoModel saldoModel(filter, QSqlDatabase::database());
+    membermanager::model::SaldoModel saldoModel(1025, QSqlDatabase::database());
     membermanager::gui::SaldoDialog dialog(saldoModel);
 
     QTableView *tableView = dialog.findChild<QTableView *> ("saldoTableView");
@@ -51,9 +48,7 @@ void SaldoDialogTest::testShowDialog()
 
 void SaldoDialogTest::testWindowTitle()
 {
-    using membermanager::model::MemberFilter;
-    MemberFilter filter = MemberFilter::build().withMemberId(1025);
-    membermanager::model::SaldoModel saldoModel(filter, QSqlDatabase::database());
+    membermanager::model::SaldoModel saldoModel(1025, QSqlDatabase::database());
     membermanager::gui::SaldoDialog dialog(saldoModel);
 
     QCOMPARE(dialog.windowTitle(), QString("Member Id: 1025"));
@@ -61,9 +56,7 @@ void SaldoDialogTest::testWindowTitle()
 
 void SaldoDialogTest::testShowSum()
 {
-    using membermanager::model::MemberFilter;
-    MemberFilter filter = MemberFilter::build().withMemberId(1025);
-    membermanager::model::SaldoModel saldoModel(filter, QSqlDatabase::database());
+    membermanager::model::SaldoModel saldoModel(1025, QSqlDatabase::database());
     membermanager::gui::SaldoDialog dialog(saldoModel);
 
     QLabel *sumLabel = dialog.findChild<QLabel *> ("sumLabel");
@@ -72,9 +65,7 @@ void SaldoDialogTest::testShowSum()
 
 void SaldoDialogTest::testInsertAndDeleteRow()
 {
-    using membermanager::model::MemberFilter;
-    MemberFilter filter = MemberFilter::build().withMemberId(1025);
-    membermanager::model::SaldoModel saldoModel(filter, QSqlDatabase::database());
+    membermanager::model::SaldoModel saldoModel(1025, QSqlDatabase::database());
     membermanager::gui::SaldoDialog dialog(saldoModel);
 
     QTableView *tableView = dialog.findChild<QTableView *> ("saldoTableView");
