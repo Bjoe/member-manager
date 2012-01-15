@@ -3,8 +3,9 @@
 
 #include <QtGui>
 #include <QtSql>
-#include "model/memberfilter.h"
 #include "membercontribution.h"
+#include "model/saldomodel.h"
+#include "model/contributionmodel.h"
 
 namespace membermanager
 {
@@ -13,7 +14,7 @@ class Member
 {
 public:
     Member();
-    Member(const model::MemberFilter &aFilter);
+    Member(int aMemberId);
 
     int getMemberId() const;
     QString getName() const;
@@ -44,9 +45,11 @@ public:
     bool isDeleted() const;
     void setDeleted(bool aDeleted);
 
-    MemberContribution getMemberContribution() const;
-
     bool save();
+
+    MemberContribution getMemberContribution() const;
+    model::SaldoModel getSaldoModel();
+    model::ContributionModel getContributionModel();
 
 private:
     QSqlRecord memberRecord;

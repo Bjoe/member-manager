@@ -88,16 +88,14 @@ void MemberDetailView::saveMember()
 
 void MemberDetailView::showSaldoDialog()
 {
-    model::SaldoModel model(member.getMemberId());
-    SaldoDialog dialog(model, this);
+    SaldoDialog dialog(member.getSaldoModel(), this);
     dialog.exec();
 }
 
 
 void MemberDetailView::showContributionDialog()
 {
-    model::ContributionModel model(member.getMemberId());
-    ContributionDialog dialog(model, this);
+    ContributionDialog dialog(member.getContributionModel(), this);
     dialog.exec();
 }
 

@@ -2,6 +2,7 @@
 
 #include "model/databasestructure.h"
 #include "model/memberdao.h"
+#include "model/memberfilter.h"
 
 namespace membermanager
 {
@@ -11,15 +12,16 @@ Member::Member() :
 {
 }
 
-Member::Member(const model::MemberFilter &aFilter) :
+Member::Member(int aMemberId) :
     memberRecord(), addressRecord(), bankRecord(), ressourcenRecord()
 {
     model::MemberDao dao(QSqlDatabase::database());
 
-    addressRecord = dao.getRecordWithMemberId(model::AddressTable::TABLENAME, aFilter);
-    bankRecord = dao.getRecordWithMemberId(model::BankAccountTable::TABLENAME, aFilter);
-    ressourcenRecord = dao.getRecordWithMemberId(model::RessourcenTable::TABLENAME, aFilter);
-    memberRecord = dao.getRecordWithMemberId(model::MemberTable::TABLENAME, aFilter);
+    model::MemberFilter filter = model::MemberFilter::build().withMemberId(aMemberId);
+    addressRecord = dao.getRecordWithMemberId(model::AddressTable::TABLENAME, filter);
+    bankRecord = dao.getRecordWithMemberId(model::BankAccountTable::TABLENAME, filter);
+    ressourcenRecord = dao.getRecordWithMemberId(model::RessourcenTable::TABLENAME, filter);
+    memberRecord = dao.getRecordWithMemberId(model::MemberTable::TABLENAME, filter);
 }
 
 bool Member::save()
@@ -41,6 +43,18 @@ MemberContribution Member::getMemberContribution() const
     model::MemberFilter filter = model::MemberFilter::build().withMemberId(getMemberId());
     MemberContribution memberContribution(filter);
     return memberContribution;
+}
+
+model::SaldoModel Member::getSaldoModel()
+{
+    model::SaldoModel saldoModel(getMemberId(), QSqlDatabase::database());
+    return saldoModel;
+}
+
+model::ContributionModel Member::getContributionModel()
+{
+    model::ContributionModel contributionModel(getMemberId(), QSqlDatabase::database());
+    return contributionModel;
 }
 
 int Member::getMemberId() const

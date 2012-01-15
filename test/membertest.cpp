@@ -9,6 +9,8 @@
 #include "model/databasestructure.h"
 #include "testconfig.h"
 #include "database/databaseutil.h"
+#include "model/saldomodel.h"
+#include "model/contributionmodel.h"
 
 namespace membermanagertest
 {
@@ -22,9 +24,7 @@ void MemberTest::initTestCase()
 
 void MemberTest::testGetMember()
 {
-    using membermanager::model::MemberFilter;
-    MemberFilter filter = MemberFilter::build().withMemberId(1025);
-    membermanager::Member member(filter);
+    membermanager::Member member(1025);
     QCOMPARE(member.getMemberId(), 1025);
     QCOMPARE(member.getName(), QString("Kirk"));
     QCOMPARE(member.getFirstname(), QString("James T"));
@@ -43,20 +43,28 @@ void MemberTest::testGetMember()
 
 void MemberTest::testGetMembercontribution()
 {
-    using membermanager::model::MemberFilter;
-    MemberFilter filter = MemberFilter::build().withMemberId(1025);
-    membermanager::Member member(filter);
+    membermanager::Member member(1025);
     membermanager::MemberContribution memberContribution = member.getMemberContribution();
 
     double fee = 15;
     QCOMPARE(memberContribution.getFee(), fee);
 }
 
+void MemberTest::testGetSaldoModel()
+{
+    membermanager::Member member(1025);
+    membermanager::model::SaldoModel model = member.getSaldoModel();
+}
+
+void MemberTest::testGetContributionModel()
+{
+    membermanager::Member member(1025);
+    membermanager::model::ContributionModel model = member.getContributionModel();
+}
+
 void MemberTest::testSaveMember()
 {
-    using membermanager::model::MemberFilter;
-    MemberFilter filter = MemberFilter::build().withMemberId(1025);
-    membermanager::Member member(filter);
+    membermanager::Member member(1025);
     QCOMPARE(member.getMemberId(), 1025);
     QCOMPARE(member.getName(), QString("Kirk"));
     QCOMPARE(member.getFirstname(), QString("James T"));
