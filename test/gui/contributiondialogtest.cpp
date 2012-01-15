@@ -32,8 +32,7 @@ void ContributionDialogTest::initTestCase()
 void ContributionDialogTest::testShowDialog()
 {
     using membermanager::model::MemberFilter;
-    MemberFilter filter = MemberFilter::build().withMemberId(1025);
-    membermanager::model::ContributionModel contributionModel(filter, QSqlDatabase::database());
+    membermanager::model::ContributionModel contributionModel(1025, QSqlDatabase::database());
     membermanager::gui::ContributionDialog dialog(contributionModel);
 
     const QTableView *tableView = dialog.findChild<QTableView *> ("contributionTableView");
@@ -41,7 +40,7 @@ void ContributionDialogTest::testShowDialog()
     QVERIFY(model != 0);
     QCOMPARE(model->rowCount(), 2);
     using membermanager::model::ContributionTable;
-    const QModelIndex index = model->index(0, ContributionTable::ValidFrom);
+    const QModelIndex index = model->index(0, ContributionTable::ValidFrom -1);
     const QVariant value = model->data(index);
     QCOMPARE(value.toString(), QString("2007-05-01"));
 }
@@ -49,8 +48,7 @@ void ContributionDialogTest::testShowDialog()
 void ContributionDialogTest::testWindowTitle()
 {
     using membermanager::model::MemberFilter;
-    MemberFilter filter = MemberFilter::build().withMemberId(1025);
-    membermanager::model::ContributionModel contributionModel(filter, QSqlDatabase::database());
+    membermanager::model::ContributionModel contributionModel(1025, QSqlDatabase::database());
     membermanager::gui::ContributionDialog dialog(contributionModel);
 
     QCOMPARE(dialog.windowTitle(), QString("Member Id: 1025"));
@@ -59,8 +57,7 @@ void ContributionDialogTest::testWindowTitle()
 void ContributionDialogTest::testInsertAndDeleteRow()
 {
     using membermanager::model::MemberFilter;
-    MemberFilter filter = MemberFilter::build().withMemberId(1025);
-    membermanager::model::ContributionModel contributionModel(filter, QSqlDatabase::database());
+    membermanager::model::ContributionModel contributionModel(1025, QSqlDatabase::database());
     membermanager::gui::ContributionDialog dialog(contributionModel);
 
     const QTableView *tableView = dialog.findChild<QTableView *> ("contributionTableView");

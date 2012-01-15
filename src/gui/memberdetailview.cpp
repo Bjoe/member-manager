@@ -46,8 +46,7 @@ model::SaldoModel MemberDetailView::getSaldoModel() const
 
 model::ContributionModel MemberDetailView::getContributionModel() const
 {
-    model::MemberFilter filter = model::MemberFilter::build().withMemberId(member.getMemberId());
-    return model::ContributionModel(filter);
+    return model::ContributionModel(member.getMemberId());
 }
 
 void MemberDetailView::newFee()

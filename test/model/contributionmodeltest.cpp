@@ -28,35 +28,32 @@ void ContributionModelTest::initTestCase()
 void ContributionModelTest::testModel()
 {
     using membermanager::model::MemberFilter;
-    MemberFilter filter = MemberFilter::build().withMemberId(1025);
-    membermanager::model::ContributionModel contributionModel(filter, QSqlDatabase::database(), this);
+    membermanager::model::ContributionModel contributionModel(1025, QSqlDatabase::database(), this);
 
     using membermanager::model::ContributionTable;
-    const QSqlTableModel *model = findChild<QSqlTableModel *> (ContributionTable::TABLENAME);
+    const QSqlTableModel *model = contributionModel.getModel();
     QVERIFY(model);
     QCOMPARE(model->rowCount(), 2);
     QSqlRecord record = model->record(0);
-    QCOMPARE(record.value(ContributionTable::Info).toString(), QString("Beitragsaenderung"));
+    QCOMPARE(record.value(ContributionTable::Info -1).toString(), QString("Beitragsaenderung"));
     QCOMPARE(record.value(ContributionTable::Fee).toString(), QString("15"));
 }
 
 void ContributionModelTest::testGetMemberId()
 {
     using membermanager::model::MemberFilter;
-    MemberFilter filter = MemberFilter::build().withMemberId(1025);
-    membermanager::model::ContributionModel contributionModel(filter, QSqlDatabase::database());
+    membermanager::model::ContributionModel contributionModel(1025, QSqlDatabase::database());
 
-    QCOMPARE(contributionModel.getMemberId(), QString("1025"));
+    QCOMPARE(contributionModel.getMemberId(), 1025);
 }
 
 void ContributionModelTest::testInsertAndDeleteRow()
 {
     using membermanager::model::MemberFilter;
-    MemberFilter filter = MemberFilter::build().withMemberId(1025);
-    membermanager::model::ContributionModel contributionModel(filter, QSqlDatabase::database(), this);
+    membermanager::model::ContributionModel contributionModel(1025, QSqlDatabase::database(), this);
 
     using membermanager::model::ContributionTable;
-    QSqlTableModel *model = findChild<QSqlTableModel *> (ContributionTable::TABLENAME);
+    QSqlTableModel *model = contributionModel.getModel();
     QVERIFY(model);
     QCOMPARE(model->rowCount(), 2);
 

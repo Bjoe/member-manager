@@ -16,17 +16,17 @@ namespace model
 class ContributionModel
 {
 public:
-    ContributionModel(const MemberFilter &aFilter, const QSqlDatabase &aDb = QSqlDatabase::database(), QObject *aParent = 0);
+    ContributionModel(int aMemberId, const QSqlDatabase &aDb = QSqlDatabase::database(), QObject *aParent = 0);
     virtual ~ContributionModel();
 
-    void initTableView(QTableView *aTableView) const;
-
-    QString getMemberId() const;
+    QSqlTableModel *getModel();
+    int getMemberId() const;
 
     QModelIndex insertNewRow();
     bool deleteRow(const QModelIndex &anIndex);
 
 private:
+    int memberId;
     QSqlTableModel *model;
 };
 

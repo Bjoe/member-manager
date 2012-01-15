@@ -1,24 +1,27 @@
 #include "contributionmodel.h"
 
 #include "model/databasestructure.h"
+#include "model/memberfilter.h"
 
 namespace membermanager
 {
 namespace model
 {
 
-ContributionModel::ContributionModel(const MemberFilter &aFilter, const QSqlDatabase &aDb, QObject *aParent) :
-    model(new QSqlTableModel(aParent, aDb))
+ContributionModel::ContributionModel(int aMemberId, const QSqlDatabase &aDb, QObject *aParent) :
+    memberId(aMemberId), model(new QSqlTableModel(aParent, aDb))
 {
     model->setObjectName(ContributionTable::TABLENAME);
     model->setTable(ContributionTable::TABLENAME);
     model->setHeaderData(ContributionTable::Fee, Qt::Horizontal, aParent->tr("Beitrag"));
     model->setHeaderData(ContributionTable::Donation, Qt::Horizontal, aParent->tr("Spende"));
-    model->setHeaderData(ContributionTable::ValidFrom, Qt::Horizontal, aParent->tr("Gültig ab:"));
-    model->setHeaderData(ContributionTable::Info, Qt::Horizontal, aParent->tr("Info"));
+    model->removeColumn(ContributionTable::Debit);
+    model->setHeaderData(ContributionTable::ValidFrom -1, Qt::Horizontal, aParent->tr("Gueltig ab"));
+    model->setHeaderData(ContributionTable::Info -1, Qt::Horizontal, aParent->tr("Info"));
 
-    model->setFilter(aFilter.createFilter());
-    model->setSort(ContributionTable::ValidFrom, Qt::DescendingOrder);
+    MemberFilter filter = MemberFilter::build().withMemberId(memberId);
+    model->setFilter(filter.createFilter());
+    model->setSort(ContributionTable::ValidFrom -1, Qt::DescendingOrder);
     model->select();
 }
 
@@ -26,20 +29,14 @@ ContributionModel::~ContributionModel()
 {
 }
 
-void ContributionModel::initTableView(QTableView *aTableView) const
+QSqlTableModel *ContributionModel::getModel()
 {
-    aTableView->setModel(model);
-
-    aTableView->setColumnHidden(ContributionTable::ContributionId, true);
-    aTableView->setColumnHidden(ContributionTable::MemberId, true);
-    aTableView->setColumnHidden(ContributionTable::Debit, true);
+    return model;
 }
 
-QString ContributionModel::getMemberId() const
+int ContributionModel::getMemberId() const
 {
-    QSqlRecord record = model->record(0);
-    QVariant id = record.value(ContributionTable::MemberId);
-    return id.toString();
+    return memberId;
 }
 
 QModelIndex ContributionModel::insertNewRow()

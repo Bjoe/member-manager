@@ -1,6 +1,7 @@
 #include "gui/contributiondialog.h"
 
 #include <QModelIndex>
+#include "model/databasestructure.h"
 
 namespace membermanager
 {
@@ -13,7 +14,10 @@ ContributionDialog::ContributionDialog(model::ContributionModel aContributionMod
     ui.setupUi(this);
     QString title = QString(tr("Member Id: %1")).arg(contributionModel.getMemberId());
     setWindowTitle(title);
-    contributionModel.initTableView(ui.contributionTableView);
+    ui.contributionTableView->setModel(contributionModel.getModel());
+    ui.contributionTableView->hideColumn(model::ContributionTable::ContributionId);
+    ui.contributionTableView->hideColumn(model::ContributionTable::MemberId);
+    ui.contributionTableView->sortByColumn(model::ContributionTable::ValidFrom -1, Qt::DescendingOrder);
 
     ui.contributionTableView->resizeColumnsToContents();
 

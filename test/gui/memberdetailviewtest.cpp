@@ -442,7 +442,7 @@ void MemberDetailViewTest::testgetContribution()
 
     membermanager::model::ContributionModel model = memberDetailView.getContributionModel();
 
-    QCOMPARE(model.getMemberId(), QString("1025"));
+    QCOMPARE(model.getMemberId(), 1025);
 }
 
 }
