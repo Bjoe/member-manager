@@ -3,7 +3,6 @@
 
 #include <QtCore>
 #include <QSqlRecord>
-#include "model/memberfilter.h"
 
 namespace membermanager
 {
@@ -11,7 +10,7 @@ namespace membermanager
 class MemberContribution
 {
 public:
-    MemberContribution(const model::MemberFilter &aFilter);
+    MemberContribution(int aMemberId);
 
     double getFee() const;
     void setFee(double aFee);
@@ -26,7 +25,7 @@ public:
     bool saveNewRecord();
 
 private:
-    const model::MemberFilter filter;
+    int memberId;
     QSqlRecord contributionRecord;
 };
 

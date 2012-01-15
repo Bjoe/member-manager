@@ -6,12 +6,12 @@
 namespace membermanager
 {
 
-MemberContribution::MemberContribution(const model::MemberFilter &aFilter) :
-    filter(aFilter), contributionRecord()
+MemberContribution::MemberContribution(int aMemberId) :
+    memberId(aMemberId), contributionRecord()
 {
     model::MemberDao dao(QSqlDatabase::database());
 
-    contributionRecord = dao.getRecordWithMemberId(model::ContributionTable::TABLENAME, filter
+    contributionRecord = dao.getRecordWithMemberId(model::ContributionTable::TABLENAME, memberId
                          , model::ContributionTable::ValidFrom
                          , Qt::DescendingOrder);
 }
@@ -20,7 +20,7 @@ bool MemberContribution::save()
 {
     model::MemberDao dao(QSqlDatabase::database());
 
-    return dao.saveRecordWithMemberId(model::ContributionTable::TABLENAME, filter, contributionRecord
+    return dao.saveRecordWithMemberId(model::ContributionTable::TABLENAME, memberId, contributionRecord
                                       , model::ContributionTable::ValidFrom
                                       , Qt::DescendingOrder);
 }
@@ -31,7 +31,7 @@ bool MemberContribution::saveNewRecord()
 
     model::MemberDao dao(QSqlDatabase::database());
 
-    return dao.saveNewRecordWithMemberId(model::ContributionTable::TABLENAME, filter, contributionRecord
+    return dao.saveNewRecordWithMemberId(model::ContributionTable::TABLENAME, memberId, contributionRecord
                                          , model::ContributionTable::ValidFrom
                                          , Qt::DescendingOrder);
 }

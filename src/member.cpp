@@ -2,7 +2,6 @@
 
 #include "model/databasestructure.h"
 #include "model/memberdao.h"
-#include "model/memberfilter.h"
 
 namespace membermanager
 {
@@ -17,31 +16,28 @@ Member::Member(int aMemberId) :
 {
     model::MemberDao dao(QSqlDatabase::database());
 
-    model::MemberFilter filter = model::MemberFilter::build().withMemberId(aMemberId);
-    addressRecord = dao.getRecordWithMemberId(model::AddressTable::TABLENAME, filter);
-    bankRecord = dao.getRecordWithMemberId(model::BankAccountTable::TABLENAME, filter);
-    ressourcenRecord = dao.getRecordWithMemberId(model::RessourcenTable::TABLENAME, filter);
-    memberRecord = dao.getRecordWithMemberId(model::MemberTable::TABLENAME, filter);
+    addressRecord = dao.getRecordWithMemberId(model::AddressTable::TABLENAME, aMemberId);
+    bankRecord = dao.getRecordWithMemberId(model::BankAccountTable::TABLENAME, aMemberId);
+    ressourcenRecord = dao.getRecordWithMemberId(model::RessourcenTable::TABLENAME, aMemberId);
+    memberRecord = dao.getRecordWithMemberId(model::MemberTable::TABLENAME, aMemberId);
 }
 
 bool Member::save()
 {
     model::MemberDao dao(QSqlDatabase::database());
 
-    model::MemberFilter filter = model::MemberFilter::build().withMemberId(getMemberId());
-
+    int memberId = getMemberId();
     bool successful = true;
-    successful &= dao.saveRecordWithMemberId(model::MemberTable::TABLENAME, filter, memberRecord);
-    successful &= dao.saveRecordWithMemberId(model::RessourcenTable::TABLENAME, filter, ressourcenRecord);
-    successful &= dao.saveRecordWithMemberId(model::BankAccountTable::TABLENAME, filter, bankRecord);
-    successful &= dao.saveRecordWithMemberId(model::AddressTable::TABLENAME, filter, addressRecord);
+    successful &= dao.saveRecordWithMemberId(model::MemberTable::TABLENAME, memberId, memberRecord);
+    successful &= dao.saveRecordWithMemberId(model::RessourcenTable::TABLENAME, memberId, ressourcenRecord);
+    successful &= dao.saveRecordWithMemberId(model::BankAccountTable::TABLENAME, memberId, bankRecord);
+    successful &= dao.saveRecordWithMemberId(model::AddressTable::TABLENAME, memberId, addressRecord);
     return successful;
 }
 
 MemberContribution Member::getMemberContribution() const
 {
-    model::MemberFilter filter = model::MemberFilter::build().withMemberId(getMemberId());
-    MemberContribution memberContribution(filter);
+    MemberContribution memberContribution(getMemberId());
     return memberContribution;
 }
 
