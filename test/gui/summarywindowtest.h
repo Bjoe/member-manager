@@ -13,18 +13,8 @@ class SummaryWindowTest : public qttestutil::TestCoverageObject
 {
     Q_OBJECT
 
-public:
-    SummaryWindowTest();
-
-public slots:
-    void buttonClicked();
-
-private:
-    bool isClicked;
-
 private slots:
     void testShowSummary();
-    void testAddButton();
 };
 
 }

@@ -9,7 +9,7 @@ set (MemberManager_VERSION_MAJOR 0)
 set (MemberManager_VERSION_MINOR 1)
 set (MemberManager_VERSION_PATCH 0)
 
-find_package(Qt4 4.7 REQUIRED QtCore QtGui QtSql)
+find_package(Qt4 4.7.0 REQUIRED QtCore QtGui QtSql)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON) 
 

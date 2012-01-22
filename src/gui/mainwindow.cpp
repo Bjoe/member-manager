@@ -2,6 +2,9 @@
 
 #include "memberfactory.h"
 #include "model/memberfilter.h"
+#include "gui/summarywindow.h"
+#include "cashsumsummary.h"
+#include "debitsumsummary.h"
 
 namespace membermanager
 {
@@ -26,6 +29,7 @@ MainWindow::MainWindow(const QSqlDatabase &aDatabase,
     connect(ui.actionShowMember, SIGNAL(triggered()), SLOT(showMemberView()));
     connect(ui.actionShowDeletedMember, SIGNAL(triggered()), SLOT(showDeletedMemberView()));
     connect(ui.actionNewMember, SIGNAL(triggered()), SLOT(newMember()));
+    connect(ui.actionSummary, SIGNAL(triggered()), SLOT(managerSummary()));
     //connect(ui.actionShowSaldo, SIGNAL(triggered()), SLOT(showSaldo()));
    connect(ui.tableView->selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
             SLOT(updateMemberDetailView(QItemSelection, QItemSelection)));
@@ -94,6 +98,18 @@ void MainWindow::updateTableView()
 {
     memberModel.setFilter(model::MemberFilter::build().withDeleted(showDeleted).createFilter());
     ui.tableView->resizeColumnsToContents();
+}
+
+void MainWindow::managerSummary()
+{
+    QList<Member> memberList = MemberFactory::createMemberList(memberModel.getModel());
+    CashSumSummary cashSum(memberList);
+    DebitSumSummary debitSum(memberList);
+
+    SummaryWindow summaryWindow(this);
+    summaryWindow.addSummary(&cashSum);
+    summaryWindow.addSummary(&debitSum);
+    summaryWindow.exec();
 }
 
 }

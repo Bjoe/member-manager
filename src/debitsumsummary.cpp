@@ -3,24 +3,46 @@
 namespace membermanager
 {
 
-DebitSumSummary::DebitSumSummary(SummaryHandler *aHandler, QObject *parent) :
-    QObject(parent), handler(aHandler), debitSumButton(new QPushButton())
+DebitSumSummary::DebitSumSummary(const QList<Member> &aMemberList) :
+    memberList(aMemberList), writer(0)
 {
-    debitSumButton->setObjectName(QString::fromUtf8("debitSumButton"));
-    debitSumButton->setText(tr("Debit Summe"));
-
-    connect(debitSumButton, SIGNAL(clicked(bool)), this, SLOT(summaryResult()));
-
-    handler->addButton(debitSumButton);
 }
 
-void DebitSumSummary::summaryResult()
+QString DebitSumSummary::getTitle() const
 {
-    QString result("foo");
+    return QString("Saldo");
+}
 
-    // TODO QVector< Member > MemberModel.getSelectedMembers();
+void DebitSumSummary::setWriter(SummaryWriter *aWriter)
+{
+    writer = aWriter;
+}
 
-    handler->showSummary(result);
+void DebitSumSummary::handleHtmlText()
+{
+    double saldoSum = 0;
+    foreach(Member member, memberList) {
+        double saldo = member.getSaldoModel().amount();
+        if(saldo < 0) {
+            QString htmlText;
+            htmlText.append(tr("To: "));
+            htmlText.append(0x20);
+            htmlText.append(member.getEmail());
+            htmlText.append("<br>");
+            htmlText.append(tr("Name "));
+            htmlText.append(0x20);
+            htmlText.append(member.getName());
+            htmlText.append("<br>");
+            htmlText.append(tr("Mitgliedschulden"));
+            htmlText.append(0x20);
+            htmlText.append(QString("%1").arg(saldo));
+            writer->writeContent(htmlText);
+
+            saldoSum += saldo;
+        }
+    }
+    QString htmlTextSaldoSum = QString(tr("<br><br>Gesamt Saldo: %1<br>")).arg(saldoSum);
+    writer->writeContent(htmlTextSaldoSum);
 }
 
 

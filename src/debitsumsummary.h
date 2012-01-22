@@ -1,27 +1,30 @@
 #ifndef DEBITSUMSUMMARY_H
 #define DEBITSUMSUMMARY_H
 
-#include <QtCore>
-#include <QPushButton>
+#include <QString>
+#include <QList>
 
 #include "summaryhandler.h"
+#include "summarywriter.h"
+#include "member.h"
 
 namespace membermanager
 {
 
-class DebitSumSummary : public QObject
+class DebitSumSummary : public SummaryHandler
 {
-    Q_OBJECT
 
 public:
-    DebitSumSummary(SummaryHandler *aHandler, QObject *parent = 0);
+    DebitSumSummary(const QList<Member> &aMemberList);
 
-private slots:
-    void summaryResult();
+    virtual QString getTitle() const;
+    virtual void setWriter(SummaryWriter *aWriter);
+
+    virtual void handleHtmlText();
 
 private:
-    SummaryHandler *handler;
-    QPushButton *debitSumButton;
+    QList<Member> memberList;
+    SummaryWriter *writer;
 };
 
 }

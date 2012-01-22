@@ -5,45 +5,56 @@
 #include <QtCore/QtCore>
 #include <QtGui>
 
+#include "summarywriter.h"
+#include "summaryhandler.h"
+
 namespace membermanagertest
 {
 namespace gui
 {
 
-SummaryWindowTest::SummaryWindowTest() : isClicked(false)
-{}
-
-
 void SummaryWindowTest::testShowSummary()
 {
     membermanager::gui::SummaryWindow summary;
 
-    summary.showSummary("foo");
+    class : public membermanager::SummaryHandler
+    {
+    public:
+        bool isWriter;
+        bool isClick;
+        membermanager::SummaryWriter *writer;
+
+        virtual QString getTitle() const
+        {
+            return QString("foo");
+        }
+
+        virtual void setWriter(membermanager::SummaryWriter *aWriter)
+        {
+            writer = aWriter;
+            isWriter = true;
+        }
+
+        virtual void handleHtmlText()
+        {
+            isClick = true;
+            writer->writeContent("bar");
+        }
+    } testSummary;
+
+    testSummary.isClick = false;
+    testSummary.isWriter = false;
+
+    summary.addSummary(&testSummary);
+
+    QVERIFY(testSummary.isWriter == true);
+
+    QPushButton *button = summary.findChild<QPushButton *>("foo");
+    QTest::mouseClick(button, Qt::LeftButton);
+    QVERIFY(testSummary.isClick == true);
 
     const QTextEdit *textEdit = summary.findChild<QTextEdit *> ("textEdit");
-
-    QCOMPARE(textEdit->toPlainText(), QString("foo"));
-}
-
-void SummaryWindowTest::testAddButton()
-{
-    isClicked = false;
-    membermanager::gui::SummaryWindow summary;
-
-    QPushButton *button = new QPushButton();
-    button->setObjectName("testButton");
-    button->connect(button, SIGNAL(clicked(bool)), this, SLOT(buttonClicked()));
-    summary.addButton(button);
-
-    QPushButton *testButton = summary.findChild<QPushButton *> ("testButton");
-    QTest::mouseClick(testButton, Qt::LeftButton);
-
-    QVERIFY(isClicked);
-}
-
-void SummaryWindowTest::buttonClicked()
-{
-    isClicked = true;
+    QCOMPARE(textEdit->toPlainText(), QString("bar"));
 }
 
 }

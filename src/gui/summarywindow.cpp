@@ -5,25 +5,40 @@ namespace membermanager
 namespace gui
 {
 
-SummaryWindow::SummaryWindow(QWidget *parent) : QWidget(parent)
+SummaryWindow::SummaryWindow(QWidget *parent) : QDialog(parent), handlerList()
 {
     ui.setupUi(this);
+
+    connect(ui.buttonBox, SIGNAL(rejected()), SLOT(close()));
 }
 
-void SummaryWindow::showSummary(const QString &aText)
+void SummaryWindow::addSummary(SummaryHandler *aHandler)
 {
-    ui.textEdit->setText(aText);
+    addButton(aHandler);
+    aHandler->setWriter(this);
+    handlerList.append(aHandler);
 }
 
-void SummaryWindow::addButton(QPushButton *aButton)
+void SummaryWindow::writeContent(const QString &aContent)
+{
+    ui.textEdit->insertHtml(aContent);
+}
+
+void SummaryWindow::addButton(const SummaryHandler *aHandler)
 {
     QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     sizePolicy.setHorizontalStretch(0);
     sizePolicy.setVerticalStretch(0);
-    sizePolicy.setHeightForWidth(aButton->sizePolicy().hasHeightForWidth());
-    aButton->setSizePolicy(sizePolicy);
 
-    ui.verticalLayout->addWidget(aButton);
+    QPushButton *button = new QPushButton(aHandler->getTitle());
+    button->setObjectName(aHandler->getTitle());
+
+    sizePolicy.setHeightForWidth(button->sizePolicy().hasHeightForWidth());
+    button->setSizePolicy(sizePolicy);
+
+    ui.verticalLayout->addWidget(button);
+
+    connect(button, SIGNAL(clicked()), aHandler, SLOT(handleHtmlText()));
 }
 
 }

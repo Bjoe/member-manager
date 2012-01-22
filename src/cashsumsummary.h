@@ -1,27 +1,28 @@
 #ifndef CASHSUMSUMMARY_H
 #define CASHSUMSUMMARY_H
 
-#include <QtCore>
-#include <QPushButton>
+#include <QString>
 
 #include "summaryhandler.h"
+#include "summarywriter.h"
+#include "member.h"
 
 namespace membermanager
 {
 
-class CashSumSummary : public QObject
+class CashSumSummary : public SummaryHandler
 {
-    Q_OBJECT
-
 public:
-    CashSumSummary(SummaryHandler *aHandler, QObject *parent = 0);
+    CashSumSummary(const QList<Member> &aMemberList);
 
-private slots:
-    void summaryResult();
+    virtual QString getTitle() const;
+    virtual void setWriter(SummaryWriter *aWriter);
+
+    virtual void handleHtmlText();
 
 private:
-    SummaryHandler *handler;
-    QPushButton *cashSumButton;
+    const QList<Member> memberList;
+    SummaryWriter *writer;
 };
 
 }

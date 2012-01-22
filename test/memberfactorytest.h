@@ -15,6 +15,7 @@ private slots:
     void initTestCase();
     void testCreateNewMember();
     void testCreateExistsMember();
+    void testCreateMemberList();
 };
 
 }

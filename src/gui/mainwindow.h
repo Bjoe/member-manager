@@ -26,6 +26,7 @@ private slots:
     void newMember();
     void saveMember();
     void updateMemberDetailView(const QItemSelection &aSelected, const QItemSelection &aDeselected);
+    void managerSummary();
 
 private:
     Ui::MainWindow ui;

@@ -4,20 +4,16 @@ set(QT_MOC_HEADERS
     gui/memberdetailview.h
     gui/connectiondialog.h
     gui/saldodialog.h
-    gui/saldosumdialog.h
     gui/contributiondialog.h
     gui/summarywindow.h
 
-    countmembersummary.h
-    cashsumsummary.h
-    debitsumsummary.h
+    summaryhandler.h
     )
 
 set(QT_UI
     gui/mainwindow.ui
     gui/connectiondialog.ui
     gui/saldodialog.ui
-    gui/saldosumdialog.ui
     gui/contributiondialog.ui
     gui/summarywindow.ui
     )
@@ -27,7 +23,6 @@ set(QT_SRCS
     gui/memberdetailview.cpp
     gui/connectiondialog.cpp
     gui/saldodialog.cpp
-    gui/saldosumdialog.cpp
     gui/contributiondialog.cpp
     gui/summarywindow.cpp
 
@@ -43,10 +38,9 @@ set(QT_SRCS
     member.cpp
     membercontribution.cpp
     memberfactory.cpp
-    summaryhandler.cpp
-    countmembersummary.cpp
     cashsumsummary.cpp
     debitsumsummary.cpp
+    contributionreceipt.cpp
     )
 
 # configure a header file to pass some of the CMake settings

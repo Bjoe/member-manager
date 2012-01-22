@@ -2,10 +2,15 @@
 
 #include "cashsumsummary.h"
 
-#include "testutil/summaryhandlermock.h"
-
 #include "testconfig.h"
+#include "model/databasestructure.h"
 #include "database/databaseutil.h"
+#include "member.h"
+#include "memberfactory.h"
+#include "summarywriter.h"
+
+#include <QString>
+#include <QSqlTableModel>
 
 namespace membermanagertest
 {
@@ -19,16 +24,30 @@ void CashSumSummaryTest::initTestCase()
 
 void CashSumSummaryTest::testCashSum()
 {
-    util::SummaryHandlerMock *handler = new util::SummaryHandlerMock();
+    class : public membermanager::SummaryWriter
+    {
+    public:
+        QString content;
 
-    membermanager::CashSumSummary cashSum(handler);
+        virtual void writeContent(const QString &aContent)
+        {
+            content.append(aContent);
+        }
+    } writer;
 
-    QPushButton *button = handler->getPushButton();
-    QVERIFY(button);
-    QCOMPARE(button->objectName(), QString("cashSumButton"));
-    button->click();
+    QSqlTableModel model;
+    model.setTable(membermanager::model::MemberTable::TABLENAME);
+    model.select();
 
-    QCOMPARE(handler->getText(), QString("foo"));
+    QList<membermanager::Member> memberList = membermanager::MemberFactory::createMemberList(&model);
+    membermanager::CashSumSummary cashSum(memberList);
+
+    QCOMPARE(cashSum.getTitle(), QString("Einahmen"));
+
+    cashSum.setWriter(&writer);
+    cashSum.handleHtmlText();
+
+    QCOMPARE(writer.content, QString("Anzahl 1 * Beitrag 0 Gesamt = 0<br>Anzahl 1 * Beitrag 15 Gesamt = 15<br><br>Gesamt Spenden: 1<br><br>Gesamt Mitglieder: 2 Einahmen: 16<br><br>Gesamt Einzuege Mitglieder: 1 Einahmen: 16<br><br>Gesamt Saldo: -15<br>"));
 }
 
 }
