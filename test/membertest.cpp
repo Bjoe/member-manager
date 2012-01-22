@@ -30,6 +30,7 @@ void MemberTest::testGetMember()
     QCOMPARE(member.getFirstname(), QString("James T"));
     QCOMPARE(member.getNickname(), QString("Capt. Kirk"));
     QCOMPARE(member.getEntryDate(), QDate(2001, 4, 24));
+    QCOMPARE(member.getReference(), QString("2193"));
     QCOMPARE(member.getInfo(), QString("Captain of the ncc-1701"));
     QCOMPARE(member.getEmail(), QString("fooo@baaar.xx"));
     QCOMPARE(member.getStreet(), QString("Industriestr. 23"));
@@ -38,6 +39,7 @@ void MemberTest::testGetMember()
     QCOMPARE(member.getAccountNr(), QString("12234569"));
     QCOMPARE(member.getBankName(), QString("sparstrumpf"));
     QCOMPARE(member.getCode(), QString("9004010"));
+    QVERIFY(member.isCollection() == true);
     QVERIFY(member.isDeleted() == false);
 }
 
@@ -78,6 +80,8 @@ void MemberTest::testSaveMember()
     QCOMPARE(member.getAccountNr(), QString("12234569"));
     QCOMPARE(member.getBankName(), QString("sparstrumpf"));
     QCOMPARE(member.getCode(), QString("9004010"));
+    QCOMPARE(member.getReference(), QString("2193"));
+    QVERIFY(member.isCollection() == true);
     QVERIFY(member.isDeleted() == false);
 
     member.setName("Archer");
@@ -92,6 +96,8 @@ void MemberTest::testSaveMember()
     member.setBankName("Galaxy");
     member.setCode("98765432");
     member.setInfo("Lalala");
+    member.setReference("9876");
+    member.setCollection(false);
     member.setDeleted(true);
 
     QVERIFY(member.save());
@@ -106,6 +112,8 @@ void MemberTest::testSaveMember()
     QCOMPARE(query.value(MemberTable::Name).toString(), QString("Archer"));
     QCOMPARE(query.value(MemberTable::NickName).toString(), QString("Captain"));
     QCOMPARE(query.value(MemberTable::Info).toString(), QString("Lalala"));
+    QCOMPARE(query.value(MemberTable::FOO_ChaosNr).toString(), QString("9876"));
+    QVERIFY(query.value(MemberTable::FOO_Einzug).toBool() == false);
     QVERIFY(query.value(MemberTable::Deleted).toBool());
 
     using membermanager::model::AddressTable;

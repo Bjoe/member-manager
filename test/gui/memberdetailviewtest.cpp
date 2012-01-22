@@ -54,6 +54,9 @@ void MemberDetailViewTest::testShowMember()
     QLineEdit *nickname = mainWindow.nickname;
     QCOMPARE(nickname->text(), QString("Capt. Kirk"));
 
+    QLineEdit *reference = mainWindow.reference;
+    QCOMPARE(reference->text(), QString("2193"));
+
     QPlainTextEdit *info = mainWindow.info;
     QCOMPARE(info->toPlainText(), QString("Captain of the ncc-1701"));
 
@@ -95,6 +98,9 @@ void MemberDetailViewTest::testShowMember()
 
     QCheckBox *deleted = mainWindow.deleted;
     QVERIFY(deleted->isChecked() == false);
+
+    QCheckBox *collection = mainWindow.collection;
+    QVERIFY(collection->isChecked() == true);
 }
 
 void MemberDetailViewTest::testChangeMember()
@@ -114,6 +120,9 @@ void MemberDetailViewTest::testChangeMember()
 
     QLineEdit *memberName = mainWindow.memberName;
     QCOMPARE(memberName->text(), QString("Kirk"));
+
+    QLineEdit *reference = mainWindow.reference;
+    QCOMPARE(reference->text(), QString("2193"));
 
     QLineEdit *nickname = mainWindow.nickname;
     QCOMPARE(nickname->text(), QString("Capt. Kirk"));
@@ -160,12 +169,17 @@ void MemberDetailViewTest::testChangeMember()
     QCheckBox *deleted = mainWindow.deleted;
     QVERIFY(deleted->isChecked() == false);
 
+    QCheckBox *collection = mainWindow.collection;
+    QVERIFY(collection->isChecked() == true);
+
     memberName->clear();
     QTest::keyClicks(memberName, "Archer");
     firstName->clear();
     QTest::keyClicks(firstName, "Jonathan");
     nickname->clear();
     QTest::keyClicks(nickname, "Captain");
+    reference->clear();
+    QTest::keyClicks(reference, "2323");
 
     street->clear();
     QTest::keyClicks(street, "NCC-1701");
@@ -196,12 +210,14 @@ void MemberDetailViewTest::testChangeMember()
     QTest::keyClicks(info, "Lalala");
 
     deleted->setChecked(true);
+    collection->setChecked(false);
 
     memberDetailView.saveMember();
 
     QCOMPARE(firstName->text(), QString("Jonathan"));
     QCOMPARE(memberName->text(), QString("Archer"));
     QCOMPARE(nickname->text(), QString("Captain"));
+    QCOMPARE(reference->text(), QString("2323"));
     QCOMPARE(id->text(), QString("1025"));
     QCOMPARE(city->text(), QString("Dtown"));
     QCOMPARE(street->text(), QString("NCC-1701"));
@@ -215,7 +231,8 @@ void MemberDetailViewTest::testChangeMember()
     QCOMPARE(bankName->text(), QString("Galaxy"));
     QCOMPARE(code->text(), QString("98765432"));
     QCOMPARE(info->toPlainText(), QString("Lalala"));
-    QVERIFY(deleted->isChecked());
+    QVERIFY(deleted->isChecked() == true);
+    QVERIFY(collection->isChecked() == false);
 
     using membermanager::model::MemberTable;
     const QString whereClause = QString(" where %1=%2").arg(
@@ -230,7 +247,9 @@ void MemberDetailViewTest::testChangeMember()
     QCOMPARE(query.value(MemberTable::Name).toString(), QString("Archer"));
     QCOMPARE(query.value(MemberTable::NickName).toString(), QString("Captain"));
     QCOMPARE(query.value(MemberTable::Info).toString(), QString("Lalala"));
-    QVERIFY(query.value(MemberTable::Deleted).toBool());
+    QCOMPARE(query.value(MemberTable::FOO_ChaosNr).toString(), QString("2323"));
+    QVERIFY(query.value(MemberTable::Deleted).toBool() == true);
+    QVERIFY(query.value(MemberTable::FOO_Einzug).toBool() == false);
 
     using membermanager::model::AddressTable;
     query.exec("select * from " + AddressTable::TABLENAME + whereClause);

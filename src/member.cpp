@@ -88,6 +88,16 @@ void Member::setNickname(const QString &aName)
     memberRecord.setValue(model::MemberTable::NickName, QVariant(aName));
 }
 
+bool Member::isCollection() const
+{
+    return memberRecord.value(model::MemberTable::FOO_Einzug).toBool();
+}
+
+void Member::setCollection(bool aCollection)
+{
+    memberRecord.setValue(model::MemberTable::FOO_Einzug, QVariant(aCollection));
+}
+
 QString Member::getEmail() const
 {
     return ressourcenRecord.value(model::RessourcenTable::EmailAdress).toString();
@@ -116,6 +126,16 @@ QString Member::getInfo() const
 void Member::setInfo(const QString &anInfo)
 {
     memberRecord.setValue(model::MemberTable::Info, QVariant(anInfo));
+}
+
+QString Member::getReference() const
+{
+    return memberRecord.value(model::MemberTable::FOO_ChaosNr).toString();
+}
+
+void Member::setReference(const QString &aReference)
+{
+    memberRecord.setValue(model::MemberTable::FOO_ChaosNr, QVariant(aReference));
 }
 
 QString Member::getStreet() const

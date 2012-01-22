@@ -29,12 +29,16 @@ public:
     void setEntryDate(const QDate &aDate);
     QString getInfo() const;
     void setInfo(const QString &anInfo);
+    QString getReference() const;
+    void setReference(const QString &aReference);
     QString getStreet() const;
     void setStreet(const QString &aStreet);
     QString getCity() const;
     void setCity(const QString &aCity);
     QString getZipCode() const;
     void setZipCode(const QString &aCode);
+    bool isCollection() const;
+    void setCollection(bool aCollection);
     QString getAccountNr() const;
     void setAccountNr(const QString &aNr);
     QString getBankName() const;
