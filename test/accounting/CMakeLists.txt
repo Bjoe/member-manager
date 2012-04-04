@@ -6,4 +6,5 @@ configure_file (
 
 include_directories(../)
 
-qt4_add_test(balanceenty balanceentrytest.cpp)
+qt4_add_test(balanceentry balanceentrytest.cpp)
+qt4_add_test(contributionentry contributionentrytest.cpp)

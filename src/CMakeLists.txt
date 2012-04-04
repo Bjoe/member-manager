@@ -35,8 +35,10 @@ set(QT_SRCS
     model/databasestructure.cpp
     model/memberdao.cpp
     model/balancedao.cpp
+    model/contributiondao.cpp
 
     accounting/balanceentry.cpp
+    accounting/contributionentry.cpp
 
     member.cpp
     membercontribution.cpp
