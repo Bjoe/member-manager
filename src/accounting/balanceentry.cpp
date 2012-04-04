@@ -1,5 +1,6 @@
 #include "balanceentry.h"
 
+#include <QString>
 #include <QVariant>
 #include <QSqlField>
 
@@ -13,69 +14,78 @@ using model::SaldoTable;
 
 BalanceEntry::BalanceEntry(int aMemberId) : balanceRecord()
 {
-    appendAndSetField(SaldoTable::dorfmitglied_pkey, QVariant::Int, QVariant(aMemberId));
+    setValueOnField(SaldoTable::dorfmitglied_pkey, QVariant::Int, QVariant(aMemberId));
 }
 
 int BalanceEntry::getMemberId() const
 {
-    return balanceRecord.value(SaldoTable::COLUMNNAME[SaldoTable::dorfmitglied_pkey]).toInt();
+    QString fieldname = SaldoTable::COLUMNNAME[SaldoTable::dorfmitglied_pkey];
+    return balanceRecord.value(fieldname).toInt();
 }
 
 void BalanceEntry::setValue(double aValue)
 {
-    appendAndSetField(SaldoTable::betrag, QVariant::Double, QVariant(aValue));
+    setValueOnField(SaldoTable::betrag, QVariant::Double, QVariant(aValue));
 }
 
 double BalanceEntry::getValue() const
 {
-    return balanceRecord.value(SaldoTable::COLUMNNAME[SaldoTable::betrag]).toDouble();
+    QString fieldname = SaldoTable::COLUMNNAME[SaldoTable::betrag];
+    return balanceRecord.value(fieldname).toDouble();
 }
 
 void BalanceEntry::setValuta(const QDate &aDate)
 {
-    appendAndSetField(SaldoTable::datum, QVariant::Date, QVariant(aDate));
+    setValueOnField(SaldoTable::datum, QVariant::Date, QVariant(aDate));
 }
 
 QDate BalanceEntry::getValuta() const
 {
-   return balanceRecord.value(SaldoTable::COLUMNNAME[SaldoTable::datum]).toDate();
+    QString fieldname = SaldoTable::COLUMNNAME[SaldoTable::datum];
+    return balanceRecord.value(fieldname).toDate();
 }
 
 void BalanceEntry::setPurpose(const QString &aPurpose)
 {
-    appendAndSetField(SaldoTable::bezeichnung, QVariant::String, QVariant(aPurpose));
+    setValueOnField(SaldoTable::bezeichnung, QVariant::String, QVariant(aPurpose));
 }
 
 QString BalanceEntry::getPurpose() const
 {
-    return balanceRecord.value(SaldoTable::COLUMNNAME[SaldoTable::bezeichnung]).toString();
+    QString fieldname = SaldoTable::COLUMNNAME[SaldoTable::bezeichnung];
+    return balanceRecord.value(fieldname).toString();
 }
 
 void BalanceEntry::setInfo(const QString &anInfo)
 {
-    appendAndSetField(SaldoTable::info, QVariant::String, QVariant(anInfo));
+    setValueOnField(SaldoTable::info, QVariant::String, QVariant(anInfo));
 }
 
 QString BalanceEntry::getInfo() const
 {
-    return balanceRecord.value(SaldoTable::COLUMNNAME[SaldoTable::info]).toString();
+    QString fieldname = SaldoTable::COLUMNNAME[SaldoTable::info];
+    return balanceRecord.value(fieldname).toString();
 }
 
 void BalanceEntry::setAccount(int anAccount)
 {
-    appendAndSetField(SaldoTable::konten, QVariant::Int, QVariant(anAccount));
+    setValueOnField(SaldoTable::konten, QVariant::Int, QVariant(anAccount));
 }
 
 int BalanceEntry::getAccount() const
 {
-    return balanceRecord.value(SaldoTable::COLUMNNAME[SaldoTable::konten]).toInt();
+    QString fieldname = SaldoTable::COLUMNNAME[SaldoTable::konten];
+    return balanceRecord.value(fieldname).toInt();
 }
 
-void BalanceEntry::appendAndSetField(int aIndex, QVariant::Type aType, const QVariant &aValue)
+void BalanceEntry::setValueOnField(int aIndex, QVariant::Type aType, const QVariant &aValue)
 {
-    QSqlField field(SaldoTable::COLUMNNAME[aIndex], aType);
-    field.setValue(aValue);
-    balanceRecord.append(field);
+    QString fieldname = SaldoTable::COLUMNNAME[aIndex];
+    if(balanceRecord.contains(fieldname) == false) {
+        QSqlField field(fieldname, aType);
+        balanceRecord.append(field);
+    }
+    balanceRecord.setValue(fieldname, aValue);
 }
 
 }

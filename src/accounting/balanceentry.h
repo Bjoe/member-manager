@@ -35,7 +35,7 @@ public:
 private:
     QSqlRecord balanceRecord;
 
-    void appendAndSetField(int aIndex, QVariant::Type aType, const QVariant &aValue);
+    void setValueOnField(int aIndex, QVariant::Type aType, const QVariant &aValue);
 };
 
 }
