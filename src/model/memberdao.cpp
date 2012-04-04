@@ -56,11 +56,12 @@ void MemberDao::selectTableModel(QSqlTableModel &aModel, const QString &aTableNa
     aModel.select();
 }
 
+/// \todo createMember()
 int MemberDao::newMember()
 {
     QDateTime dateTime = QDateTime::currentDateTime();
     QDate date = dateTime.date();
-    QString firstname = QString("newMember%1").arg(dateTime.toMSecsSinceEpoch());
+    QString firstname = QString("new%1").arg(dateTime.toMSecsSinceEpoch());
     database.transaction();
     QSqlQuery query(database);
 
