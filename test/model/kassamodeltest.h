@@ -8,7 +8,7 @@ namespace membermanagertest
 {
 namespace model
 {
-
+/// \todo rename Kassa in Cash
 class KassaModelTest: public qttestutil::TestCoverageObject
 {
     Q_OBJECT

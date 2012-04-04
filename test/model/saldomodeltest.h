@@ -8,7 +8,7 @@ namespace membermanagertest
 {
 namespace model
 {
-
+/// \todo rename Salod in Balance
 class SaldoModelTest: public qttestutil::TestCoverageObject
 {
     Q_OBJECT
