@@ -6,7 +6,7 @@
 
 namespace membermanager
 {
-
+/// \todo Refactor to ContributionEntry
 class MemberContribution
 {
 public:
@@ -20,7 +20,7 @@ public:
     void setInfo(const QString &aText);
     QDate getValidFrom() const;
     void setValidFrom(const QDate &aDate);
-
+/// \todo Refactor to ContributionDao
     bool save();
     bool saveNewRecord();
 

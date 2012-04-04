@@ -9,7 +9,7 @@
 
 namespace membermanager
 {
-
+/// \todo Refactor, rename to MemberEntry
 class Member
 {
 public:
@@ -48,9 +48,9 @@ public:
 
     bool isDeleted() const;
     void setDeleted(bool aDeleted);
-
+/// \todo Refactor to MemberDao
     bool save();
-
+/// \todo Refactor, delete.
     MemberContribution getMemberContribution() const;
     model::SaldoModel getSaldoModel();
     model::ContributionModel getContributionModel();
