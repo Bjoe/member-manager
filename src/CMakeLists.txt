@@ -34,6 +34,9 @@ set(QT_SRCS
     model/memberfilter.cpp
     model/databasestructure.cpp
     model/memberdao.cpp
+    model/balancedao.cpp
+
+    accounting/balanceentry.cpp
 
     member.cpp
     membercontribution.cpp

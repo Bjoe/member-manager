@@ -25,6 +25,8 @@ include_directories(../src ${CMAKE_CURRENT_BINARY_DIR}/../src ${QT_TEST_UTIL_INC
 set(test_additional_lib
  memberManagerLib
  ${QT_TEST_UTIL_LIBRARIES}
+ ${QT_GUI_TEST_UTIL_LIBRARIES}
+ ${QT_DATABASE_TEST_UTIL_LIBRARIES}
 )
 
 set(test_additional
@@ -32,6 +34,7 @@ set(test_additional
 
 add_subdirectory(gui)
 add_subdirectory(model)
+add_subdirectory(accounting)
 
 qt4_add_test(member membertest.cpp)
 qt4_add_test(membercontribution membercontributiontest.cpp)
