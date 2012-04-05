@@ -12,7 +12,7 @@ namespace membermanager
 {
 namespace model
 {
-
+/// \todo Refactor to ContributionDao
 class ContributionModel
 {
 public:

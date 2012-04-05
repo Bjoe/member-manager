@@ -32,6 +32,7 @@ MemberFilter &MemberFilter::withDeleted(bool isDeleted)
 
 MemberFilter &MemberFilter::withMemberId(int anId)
 {
+    /// \todo wrong table ?
     QString columname = ContributionTable::COLUMNNAME[ContributionTable::MemberId];
     QString memberIdColumn = QString(columname + " = %1").arg(anId);
     columns.append(memberIdColumn);
