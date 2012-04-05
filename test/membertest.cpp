@@ -48,7 +48,7 @@ void MemberTest::testGetMembercontribution()
     membermanager::Member member(1025);
     membermanager::MemberContribution memberContribution = member.getMemberContribution();
 
-    double fee = 15;
+    double fee = 99;
     QCOMPARE(memberContribution.getFee(), fee);
 }
 

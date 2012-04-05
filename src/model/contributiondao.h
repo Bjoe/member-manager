@@ -21,6 +21,7 @@ public:
 
     bool saveRecord(const accounting::ContributionEntry &anEntry);
     accounting::ContributionEntry findByMemberIdWithPointInTime(int anId, const QDate &aDate);
+    accounting::ContributionEntry findLastDateByMemberId(int anId);
 
 private:
     QSqlTableModel model;

@@ -29,13 +29,23 @@ void ContributionDaoTest::testSaveDao()
     QVERIFY(contributionDao.saveRecord(ContributionEntry(1)));
 }
 
-void ContributionDaoTest::testGetEntry()
+void ContributionDaoTest::testFindByMemberIdWithPointInTime()
 {
     ContributionDao contributionDao(QSqlDatabase::database());
 
     ContributionEntry entry = contributionDao.findByMemberIdWithPointInTime(1025, QDate(2007, 04, 12));
 
     double fee = 14.00;
+    QCOMPARE(entry.getFee(), fee);
+}
+
+void ContributionDaoTest::testFindLastDateByMemberId()
+{
+    ContributionDao contributionDao(QSqlDatabase::database());
+
+    ContributionEntry entry = contributionDao.findLastDateByMemberId(1025);
+
+    double fee = 99.00;
     QCOMPARE(entry.getFee(), fee);
 }
 

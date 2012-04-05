@@ -79,13 +79,13 @@ void MemberDetailViewTest::testShowMember()
     QCOMPARE(contributionInfo->text(), QString("Beitragsaenderung"));
 
     QLineEdit *donation = mainWindow.donation;
-    QCOMPARE(donation->text(), QString("1"));
+    QCOMPARE(donation->text(), QString("1.5"));
 
     QLineEdit *fee = mainWindow.fee;
-    QCOMPARE(fee->text(), QString("15"));
+    QCOMPARE(fee->text(), QString("99"));
 
     QDateEdit *validFrom = mainWindow.validFrom;
-    QCOMPARE(validFrom->text(), QString("01.05.07"));
+    QCOMPARE(validFrom->text(), QString("10.03.09"));
 
     QLineEdit *account = mainWindow.account;
     QCOMPARE(account->text(), QString("12234569"));
@@ -149,13 +149,13 @@ void MemberDetailViewTest::testChangeMember()
     QCOMPARE(contributionInfo->text(), QString("Beitragsaenderung"));
 
     QLineEdit *donation = mainWindow.donation;
-    QCOMPARE(donation->text(), QString("1"));
+    QCOMPARE(donation->text(), QString("1.5"));
 
     QLineEdit *fee = mainWindow.fee;
-    QCOMPARE(fee->text(), QString("15"));
+    QCOMPARE(fee->text(), QString("99"));
 
     QDateEdit *validFrom = mainWindow.validFrom;
-    QCOMPARE(validFrom->text(), QString("01.05.07"));
+    QCOMPARE(validFrom->text(), QString("10.03.09"));
 
     QLineEdit *account = mainWindow.account;
     QCOMPARE(account->text(), QString("12234569"));
@@ -322,13 +322,13 @@ void MemberDetailViewTest::testChangeMemberWithNewContribution()
     QCOMPARE(contributionInfo->text(), QString("Beitragsaenderung"));
 
     QLineEdit *donation = mainWindow.donation;
-    QCOMPARE(donation->text(), QString("1"));
+    QCOMPARE(donation->text(), QString("1.5"));
 
     QLineEdit *fee = mainWindow.fee;
-    QCOMPARE(fee->text(), QString("15"));
+    QCOMPARE(fee->text(), QString("99"));
 
     QDateEdit *validFrom = mainWindow.validFrom;
-    QCOMPARE(validFrom->text(), QString("01.05.07"));
+    QCOMPARE(validFrom->text(), QString("10.03.09"));
 
     QLineEdit *account = mainWindow.account;
     QCOMPARE(account->text(), QString("12234569"));

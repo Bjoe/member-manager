@@ -14,7 +14,8 @@ class ContributionDaoTest : public qttestutil::TestCoverageObject
 private slots:
     void initTestCase();
     void testSaveDao();
-    void testGetEntry();
+    void testFindByMemberIdWithPointInTime();
+    void testFindLastDateByMemberId();
 };
 
 } // namespace model
