@@ -14,6 +14,7 @@ class ContributionDaoTest : public qttestutil::TestCoverageObject
 private slots:
     void initTestCase();
     void testSaveDao();
+    void testGetEntry();
 };
 
 } // namespace model

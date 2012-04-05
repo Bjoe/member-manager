@@ -2,6 +2,7 @@
 #define MEMBERMANAGER_MODEL_CONTRIBUTIONDAO_H
 
 #include <QtSql>
+#include <QDate>
 
 #include "accounting/contributionentry.h"
 
@@ -19,9 +20,10 @@ public:
     ContributionDao(const QSqlDatabase &aDatabase);
 
     bool saveRecord(const accounting::ContributionEntry &anEntry);
+    accounting::ContributionEntry findByMemberIdWithPointInTime(int anId, const QDate &aDate);
 
 private:
-    QSqlDatabase database;
+    QSqlTableModel model;
 
     void printSqlError(const QSqlError &anError);
 };
