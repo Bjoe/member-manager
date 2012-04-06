@@ -42,11 +42,13 @@ void ContributionReceiptTest::testContribution()
     QList<membermanager::Member> memberList = membermanager::MemberFactory::createMemberList(&model);
     membermanager::ContributionReceipt contributionReceipt(memberList);
 
+    QSKIP("Test macht noch nichts.", SkipAll);
     QCOMPARE(contributionReceipt.getTitle(), QString(""));
 
     contributionReceipt.setWriter(&writer);
     contributionReceipt.handleHtmlText();
 
+    /// \todo fix test
     QCOMPARE(writer.content, QString(""));
 }
 

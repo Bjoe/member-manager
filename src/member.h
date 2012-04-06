@@ -4,7 +4,6 @@
 #include <QtGui>
 #include <QtSql>
 #include "model/saldomodel.h"
-#include "model/contributionmodel.h"
 
 namespace membermanager
 {
@@ -51,7 +50,6 @@ public:
     bool save();
 /// \todo Refactor, delete.
     model::SaldoModel getSaldoModel();
-    model::ContributionModel getContributionModel();
 
 private:
     QSqlRecord memberRecord;

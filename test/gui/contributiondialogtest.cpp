@@ -5,15 +5,11 @@
 #include "testconfig.h"
 #include "database/databaseutil.h"
 #include "model/databasestructure.h"
-#include "model/contributionmodel.h"
-#include "model/memberfilter.h"
 
-#include <QSqlDatabase>
 #include <QTableView>
 #include <QModelIndex>
 #include <QAbstractItemModel>
 #include <QPushButton>
-#include <QPoint>
 #include <QVariant>
 #include <QString>
 
@@ -31,50 +27,44 @@ void ContributionDialogTest::initTestCase()
 
 void ContributionDialogTest::testShowDialog()
 {
-    using membermanager::model::MemberFilter;
-    membermanager::model::ContributionModel contributionModel(1025, QSqlDatabase::database());
-    membermanager::gui::ContributionDialog dialog(contributionModel);
+    membermanager::gui::ContributionDialog dialog(1025);
 
     const QTableView *tableView = dialog.findChild<QTableView *> ("contributionTableView");
     const QAbstractItemModel *model = tableView->model();
     QVERIFY(model != 0);
-    QCOMPARE(model->rowCount(), 2);
+    QCOMPARE(model->rowCount(), 5);
     using membermanager::model::ContributionTable;
     const QModelIndex index = model->index(0, ContributionTable::ValidFrom -1);
     const QVariant value = model->data(index);
-    QCOMPARE(value.toString(), QString("2007-05-01"));
+    QCOMPARE(value.toString(), QString("2009-03-10"));
 }
 
 void ContributionDialogTest::testWindowTitle()
 {
-    using membermanager::model::MemberFilter;
-    membermanager::model::ContributionModel contributionModel(1025, QSqlDatabase::database());
-    membermanager::gui::ContributionDialog dialog(contributionModel);
+    membermanager::gui::ContributionDialog dialog(1025);
 
     QCOMPARE(dialog.windowTitle(), QString("Member Id: 1025"));
 }
 
 void ContributionDialogTest::testInsertAndDeleteRow()
 {
-    using membermanager::model::MemberFilter;
-    membermanager::model::ContributionModel contributionModel(1025, QSqlDatabase::database());
-    membermanager::gui::ContributionDialog dialog(contributionModel);
+    membermanager::gui::ContributionDialog dialog(1025);
 
     const QTableView *tableView = dialog.findChild<QTableView *> ("contributionTableView");
     const QAbstractItemModel *model = tableView->model();
     QVERIFY(model != 0);
-    QCOMPARE(model->rowCount(), 2);
+    QCOMPARE(model->rowCount(), 5);
 
     QPushButton *button = dialog.findChild<QPushButton *> ("newRowButton");
     QTest::mouseClick(button, Qt::LeftButton);
 
-    QCOMPARE(model->rowCount(), 3);
+    QCOMPARE(model->rowCount(), 6);
 
 
     button = dialog.findChild<QPushButton *> ("deleteRowButton");
     QTest::mouseClick(button, Qt::LeftButton);
 
-    QCOMPARE(model->rowCount(), 2);
+    QCOMPARE(model->rowCount(), 5);
 }
 
 }

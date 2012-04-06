@@ -41,12 +41,6 @@ model::SaldoModel Member::getSaldoModel()
     return saldoModel;
 }
 
-model::ContributionModel Member::getContributionModel()
-{
-    model::ContributionModel contributionModel(getMemberId(), QSqlDatabase::database());
-    return contributionModel;
-}
-
 int Member::getMemberId() const
 {
     return memberRecord.value(model::MemberTable::MemberId).toInt();

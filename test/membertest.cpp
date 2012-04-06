@@ -9,7 +9,6 @@
 #include "testconfig.h"
 #include "database/databaseutil.h"
 #include "model/saldomodel.h"
-#include "model/contributionmodel.h"
 
 namespace membermanagertest
 {
@@ -46,12 +45,6 @@ void MemberTest::testGetSaldoModel()
 {
     membermanager::Member member(1025);
     membermanager::model::SaldoModel model = member.getSaldoModel();
-}
-
-void MemberTest::testGetContributionModel()
-{
-    membermanager::Member member(1025);
-    membermanager::model::ContributionModel model = member.getContributionModel();
 }
 
 void MemberTest::testSaveMember()

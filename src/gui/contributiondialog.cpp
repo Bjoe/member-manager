@@ -8,13 +8,16 @@ namespace membermanager
 namespace gui
 {
 
-ContributionDialog::ContributionDialog(model::ContributionModel aContributionModel, QWidget *parent) :
-    QDialog(parent), contributionModel(aContributionModel), ui()
+ContributionDialog::ContributionDialog(int aMemberId, QWidget *parent) :
+    QDialog(parent), memberId(aMemberId), contributionDao(), ui()
 {
     ui.setupUi(this);
-    QString title = QString(tr("Member Id: %1")).arg(contributionModel.getMemberId());
+    QString title = QString(tr("Member Id: %1")).arg(memberId);
     setWindowTitle(title);
-    ui.contributionTableView->setModel(contributionModel.getModel());
+
+    QSqlTableModel *model = contributionDao.getModelByMemberId(memberId);
+    ui.contributionTableView->setModel(model);
+
     ui.contributionTableView->hideColumn(model::ContributionTable::ContributionId);
     ui.contributionTableView->hideColumn(model::ContributionTable::MemberId);
     ui.contributionTableView->sortByColumn(model::ContributionTable::ValidFrom -1, Qt::DescendingOrder);
@@ -32,7 +35,7 @@ ContributionDialog::~ContributionDialog()
 
 void ContributionDialog::insertRow()
 {
-    QModelIndex index = contributionModel.insertNewRow();
+    QModelIndex index = contributionDao.insertNewEmptyRowWithMemberId(memberId);
     ui.contributionTableView->setCurrentIndex(index);
     ui.contributionTableView->edit(index);
 }
@@ -40,7 +43,7 @@ void ContributionDialog::insertRow()
 void ContributionDialog::deleteRow()
 {
     QModelIndex index = ui.contributionTableView->currentIndex();
-    contributionModel.deleteRow(index);
+    contributionDao.deleteRow(index);
 }
 
 }

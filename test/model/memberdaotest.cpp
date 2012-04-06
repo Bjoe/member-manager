@@ -87,7 +87,7 @@ void MemberDaoTest::testGetRecordWithMemberIdWithSort()
     membermanager::model::MemberDao dao(QSqlDatabase::database());
     QSqlRecord record = dao.getRecordWithMemberId(ContributionTable::TABLENAME, 1025,
                         ContributionTable::ValidFrom, Qt::DescendingOrder);
-    QCOMPARE(record.value(ContributionTable::Fee).toString(), QString("15"));
+    QCOMPARE(record.value(ContributionTable::Fee).toString(), QString("99"));
 }
 
 void MemberDaoTest::testSaveRecord()
@@ -125,12 +125,12 @@ void MemberDaoTest::testSaveRecordWithSort()
     QSqlQuery query("select * from " + ContributionTable::TABLENAME + whereClause);
     query.exec();
     query.last();
-    QCOMPARE(query.value(ContributionTable::Fee).toString(), QString("15"));
+    QCOMPARE(query.value(ContributionTable::Fee).toString(), QString("99"));
 
     membermanager::model::MemberDao dao(QSqlDatabase::database());
     QSqlRecord record = dao.getRecordWithMemberId(ContributionTable::TABLENAME, id,
                         ContributionTable::ValidFrom, Qt::DescendingOrder);
-    QCOMPARE(record.value(ContributionTable::Fee).toString(), QString("15"));
+    QCOMPARE(record.value(ContributionTable::Fee).toString(), QString("99"));
 
     record.setValue(ContributionTable::Fee, QVariant(23));
     QVERIFY(dao.saveRecordWithMemberId(ContributionTable::TABLENAME, id, record,

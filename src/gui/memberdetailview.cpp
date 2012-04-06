@@ -3,7 +3,6 @@
 #include "gui/contributiondialog.h"
 
 #include "model/saldomodel.h"
-#include "model/contributionmodel.h"
 #include "model/contributiondao.h"
 
 namespace membermanager
@@ -96,7 +95,8 @@ void MemberDetailView::showSaldoDialog()
 
 void MemberDetailView::showContributionDialog()
 {
-    ContributionDialog dialog(member.getContributionModel(), this);
+    int memberId = member.getMemberId();
+    ContributionDialog dialog(memberId, this);
     dialog.exec();
 }
 

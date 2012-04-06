@@ -30,7 +30,6 @@ set(QT_SRCS
     model/kassamodel.cpp
     model/saldomodel.cpp
     model/saldosummodel.cpp
-    model/contributionmodel.cpp
     model/memberfilter.cpp
     model/databasestructure.cpp
     model/memberdao.cpp

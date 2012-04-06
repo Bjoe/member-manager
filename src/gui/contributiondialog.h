@@ -4,7 +4,7 @@
 #include <QtGui/QDialog>
 #include "ui_contributiondialog.h"
 
-#include "model/contributionmodel.h"
+#include "model/contributiondao.h"
 
 namespace membermanager
 {
@@ -16,7 +16,7 @@ class ContributionDialog : public QDialog
     Q_OBJECT
 
 public:
-    ContributionDialog(model::ContributionModel aContributionModel, QWidget *parent = 0);
+    ContributionDialog(int aMemberId, QWidget *parent = 0);
     ~ContributionDialog();
 
 private slots:
@@ -25,7 +25,8 @@ private slots:
 
 private:
     Ui::ContributionDialogClass ui;
-    model::ContributionModel contributionModel;
+    int memberId;
+    model::ContributionDao contributionDao;
 };
 
 }

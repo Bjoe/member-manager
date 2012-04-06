@@ -8,7 +8,6 @@ include_directories(../)
 
 qt4_add_test(memberfilter memberfiltertest.cpp)
 qt4_add_test(membermodel membermodeltest.cpp)
-qt4_add_test(contributionmodel contributionmodeltest.cpp)
 qt4_add_test(kassamodel kassamodeltest.cpp)
 qt4_add_test(saldosummodel saldosummodeltest.cpp)
 qt4_add_test(saldomodel saldomodeltest.cpp)

@@ -15,7 +15,6 @@ private slots:
     void initTestCase();
     void testGetMember();
     void testGetSaldoModel();
-    void testGetContributionModel();
     void testSaveMember();
 };
 
