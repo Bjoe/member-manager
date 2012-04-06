@@ -1,5 +1,11 @@
 #include "cashsumsummary.h"
 
+#include <QSqlDatabase>
+#include <QDate>
+
+#include "model/contributiondao.h"
+#include "accounting/contributionentry.h"
+
 namespace membermanager
 {
 
@@ -20,6 +26,8 @@ void CashSumSummary::setWriter(SummaryWriter *aWriter)
 
 void CashSumSummary::handleHtmlText()
 {
+    QDate date = QDate::currentDate();
+    model::ContributionDao contributionDao(QSqlDatabase::database());
     QMap<double, double> sumMap;
     QMap<double, int> countMember;
     double total = 0;
@@ -28,14 +36,17 @@ void CashSumSummary::handleHtmlText()
     int memberSum = 0;
     int memberCollection = 0;
     double totalCollection = 0;
+
     foreach(Member member, memberList) {
         memberSum++;
 
-        double donation = member.getMemberContribution().getDonation();
+        int memberId = member.getMemberId();
+        accounting::ContributionEntry contributionEntry = contributionDao.findByMemberIdWithPointInTime(memberId, date);
+        double donation = contributionEntry.getDonation();
         donationTotal += donation;
         double saldo = member.getSaldoModel().amount();
         saldoSum += saldo;
-        double fee = member.getMemberContribution().getFee();
+        double fee = contributionEntry.getFee();
         total += fee;
 
         if(member.isCollection()) {
@@ -71,6 +82,8 @@ void CashSumSummary::handleHtmlText()
     writer->writeContent(htmlTextCollection);
     QString htmlTextSaldoSum = QString(tr("Gesamt Saldo: %1<br>")).arg(saldoSum);
     writer->writeContent(htmlTextSaldoSum);
+    QString htmlTextDate = QString(tr("Stand: %1<br>")).arg(date.toString());
+    writer->writeContent(htmlTextDate);
 }
 
 }

@@ -1,5 +1,4 @@
 #include "gui/memberdetailview.h"
-#include "membercontribution.h"
 #include "gui/saldodialog.h"
 #include "gui/contributiondialog.h"
 

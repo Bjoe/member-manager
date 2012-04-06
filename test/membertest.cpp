@@ -2,7 +2,6 @@
 
 #include "member.h"
 
-#include "membercontribution.h"
 #include "model/memberfilter.h"
 
 #include <QSqlQuery>
@@ -41,15 +40,6 @@ void MemberTest::testGetMember()
     QCOMPARE(member.getCode(), QString("9004010"));
     QVERIFY(member.isCollection() == true);
     QVERIFY(member.isDeleted() == false);
-}
-
-void MemberTest::testGetMembercontribution()
-{
-    membermanager::Member member(1025);
-    membermanager::MemberContribution memberContribution = member.getMemberContribution();
-
-    double fee = 99;
-    QCOMPARE(memberContribution.getFee(), fee);
 }
 
 void MemberTest::testGetSaldoModel()

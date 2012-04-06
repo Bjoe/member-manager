@@ -35,12 +35,6 @@ bool Member::save()
     return successful;
 }
 
-MemberContribution Member::getMemberContribution() const
-{
-    MemberContribution memberContribution(getMemberId());
-    return memberContribution;
-}
-
 model::SaldoModel Member::getSaldoModel()
 {
     model::SaldoModel saldoModel(getMemberId(), QSqlDatabase::database());

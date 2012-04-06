@@ -37,7 +37,6 @@ add_subdirectory(model)
 add_subdirectory(accounting)
 
 qt4_add_test(member membertest.cpp)
-qt4_add_test(membercontribution membercontributiontest.cpp)
 qt4_add_test(memberfactory memberfactorytest.cpp)
 qt4_add_test(contributionreceipt contributionreceipttest.cpp)
 qt4_add_test(cashsumsummary cashsumsummarytest.cpp)

@@ -3,7 +3,6 @@
 
 #include <QtGui>
 #include <QtSql>
-#include "membercontribution.h"
 #include "model/saldomodel.h"
 #include "model/contributionmodel.h"
 
@@ -51,7 +50,6 @@ public:
 /// \todo Refactor to MemberDao
     bool save();
 /// \todo Refactor, delete.
-    MemberContribution getMemberContribution() const;
     model::SaldoModel getSaldoModel();
     model::ContributionModel getContributionModel();
 
