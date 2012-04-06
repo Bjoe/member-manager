@@ -19,7 +19,7 @@ namespace accounting {
 class ContributionEntry
 {
 public:
-    ContributionEntry(int aMemberId);
+    ContributionEntry(int aMemberId = 0);
 
     int getMemberId() const;
     double getFee() const;

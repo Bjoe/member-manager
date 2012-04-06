@@ -5,6 +5,7 @@
 #include <QtGui>
 #include "ui_mainwindow.h"
 #include "member.h"
+#include "accounting/contributionentry.h"
 
 namespace membermanager
 {
@@ -28,6 +29,7 @@ public slots:
 private:
     bool newContribution;
     Member member;
+    accounting::ContributionEntry memberContribution;
     const Ui::MainWindow *ui;
 };
 

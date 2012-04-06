@@ -193,7 +193,7 @@ void MemberDetailViewTest::testChangeMember()
     QTest::keyClicks(entryDate, "15.07.06");
 
     fee->clear();
-    QTest::keyClicks(fee, "99");
+    QTest::keyClicks(fee, "105");
     donation->clear();
     QTest::keyClicks(donation, "100");
     contributionInfo->clear();
@@ -226,7 +226,7 @@ void MemberDetailViewTest::testChangeMember()
     //QCOMPARE(entryDate->text(), QString("15.07.06"));
     QCOMPARE(contributionInfo->text(), QString("Kohle"));
     QCOMPARE(donation->text(), QString("100"));
-    QCOMPARE(fee->text(), QString("99"));
+    QCOMPARE(fee->text(), QString("105"));
     QCOMPARE(account->text(), QString("123456789"));
     QCOMPARE(bankName->text(), QString("Galaxy"));
     QCOMPARE(code->text(), QString("98765432"));
@@ -262,7 +262,7 @@ void MemberDetailViewTest::testChangeMember()
     query.exec("select * from " + ContributionTable::TABLENAME + whereClause +
                " order by " + ContributionTable::COLUMNNAME[ContributionTable::ValidFrom] + " desc");
     query.next();
-    QCOMPARE(query.value(ContributionTable::Fee).toInt(), 99);
+    QCOMPARE(query.value(ContributionTable::Fee).toInt(), 105);
     QCOMPARE(query.value(ContributionTable::Donation).toInt(), 100);
     QCOMPARE(query.value(ContributionTable::Info).toString(), QString("Kohle"));
 

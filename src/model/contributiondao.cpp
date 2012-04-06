@@ -12,23 +12,34 @@ ContributionDao::ContributionDao(const QSqlDatabase &aDatabase) : model(0, aData
 
 bool ContributionDao::saveRecord(const accounting::ContributionEntry &anEntry)
 {
-    QSqlRecord record = anEntry.contributionRecord;
-
-    bool successful = model.insertRecord(-1, record);
+    bool successful = false;
+    QString primaryKeyName = ContributionTable::COLUMNNAME[ContributionTable::ContributionId];
+    QSqlRecord record = anEntry.contributionRecord; 
+    if(record.contains(primaryKeyName)) {
+        int primaryKey = record.value(primaryKeyName).toInt();
+        QString filter = QString("%1 = %2").arg(primaryKeyName).arg(primaryKey);
+        model.setFilter(filter);
+        model.select();
+        model.setRecord(0, record);
+        printSqlError(model.lastError());
+        successful = model.submitAll();
+    } else {
+        successful = model.insertRecord(-1, record);
+    }
     printSqlError(model.lastError());
     return successful;
 }
 
 accounting::ContributionEntry ContributionDao::findByMemberIdWithPointInTime(int anId, const QDate &aDate)
 {
-    QString columnnameDate = model::ContributionTable::COLUMNNAME[model::ContributionTable::ValidFrom];
+    QString columnnameDate = ContributionTable::COLUMNNAME[ContributionTable::ValidFrom];
     QString filterDate = QString("%1 <= '%2'").arg(columnnameDate).arg(aDate.toString(Qt::ISODate));
 
-    QString columnnameId = model::ContributionTable::COLUMNNAME[model::ContributionTable::MemberId];
+    QString columnnameId = ContributionTable::COLUMNNAME[ContributionTable::MemberId];
     QString filterId = QString("%1 = %2").arg(columnnameId).arg(anId);
     QString filter = QString("%1 AND %2").arg(filterId).arg(filterDate);
     model.setFilter(filter);
-    model.setSort(model::ContributionTable::ValidFrom, Qt::DescendingOrder);
+    model.setSort(ContributionTable::ValidFrom, Qt::DescendingOrder);
     model.select();
 
     accounting::ContributionEntry entry(anId);
@@ -38,10 +49,10 @@ accounting::ContributionEntry ContributionDao::findByMemberIdWithPointInTime(int
 
 accounting::ContributionEntry ContributionDao::findLastDateByMemberId(int anId)
 {
-    QString columnnameId = model::ContributionTable::COLUMNNAME[model::ContributionTable::MemberId];
+    QString columnnameId = ContributionTable::COLUMNNAME[ContributionTable::MemberId];
     QString filterId = QString("%1 = %2").arg(columnnameId).arg(anId);
     model.setFilter(filterId);
-    model.setSort(model::ContributionTable::ValidFrom, Qt::DescendingOrder);
+    model.setSort(ContributionTable::ValidFrom, Qt::DescendingOrder);
     model.select();
 
     accounting::ContributionEntry entry(anId);

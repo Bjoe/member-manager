@@ -23,10 +23,18 @@ void ContributionDaoTest::initTestCase()
     database.read(SQLTESTFILE);
 }
 
-void ContributionDaoTest::testSaveDao()
+void ContributionDaoTest::testSaveNewRecord()
 {
     ContributionDao contributionDao(QSqlDatabase::database());
     QVERIFY(contributionDao.saveRecord(ContributionEntry(1)));
+}
+
+void ContributionDaoTest::testSaveRecord()
+{
+    ContributionDao contributionDao(QSqlDatabase::database());
+    ContributionEntry entry = contributionDao.findLastDateByMemberId(1025);
+
+    QVERIFY(contributionDao.saveRecord(entry));
 }
 
 void ContributionDaoTest::testFindByMemberIdWithPointInTime()

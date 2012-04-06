@@ -13,15 +13,15 @@ namespace gui
 {
 
 MemberDetailView::MemberDetailView(const Ui::MainWindow *anUi, QWidget *aParent) :
-    QWidget(aParent), newContribution(false), member(), ui(anUi)
+    QWidget(aParent), newContribution(false), member(), memberContribution(), ui(anUi)
 {
 }
 
 void MemberDetailView::showMember(Member aMember)
 {
     member = aMember;
-
-    ui->memberId->setText(QString::number(member.getMemberId()));
+    int memberId = member.getMemberId();
+    ui->memberId->setText(QString::number(memberId));
     ui->firstName->setText(member.getFirstname());
     ui->memberName->setText(member.getName());
     ui->nickname->setText(member.getNickname());
@@ -38,7 +38,8 @@ void MemberDetailView::showMember(Member aMember)
     ui->account->setText(member.getAccountNr());
     ui->deleted->setChecked(member.isDeleted());
 
-    MemberContribution memberContribution = member.getMemberContribution();
+    model::ContributionDao contributionDao(QSqlDatabase::database());
+    memberContribution = contributionDao.findLastDateByMemberId(memberId);
     ui->fee->setText(QString::number(memberContribution.getFee()));
     ui->donation->setText(QString::number(memberContribution.getDonation()));
     ui->contributionInfo->setText(memberContribution.getInfo());
@@ -55,7 +56,8 @@ void MemberDetailView::newFee()
     ui->contributionInfo->setText(QString("Beitragsänderung"));
     ui->validFrom->setDate(QDate::currentDate());
 
-    newContribution = true;
+    int memberId = member.getMemberId();
+    memberContribution = accounting::ContributionEntry(memberId);
 }
 
 void MemberDetailView::saveMember()
@@ -76,19 +78,15 @@ void MemberDetailView::saveMember()
     member.setAccountNr(ui->account->text());
     member.setDeleted(ui->deleted->isChecked());
 
-    MemberContribution memberContribution = member.getMemberContribution();
     memberContribution.setFee(ui->fee->text().toDouble());
     memberContribution.setDonation(ui->donation->text().toDouble());
     memberContribution.setInfo(ui->contributionInfo->text());
     memberContribution.setValidFrom(ui->validFrom->date());
 
     member.save();
-    if (newContribution)
-        memberContribution.saveNewRecord();
-    else
-        memberContribution.save();
 
-    newContribution = false;
+    model::ContributionDao contributionDao(QSqlDatabase::database());
+    contributionDao.saveRecord(memberContribution);
 }
 
 void MemberDetailView::showSaldoDialog()
