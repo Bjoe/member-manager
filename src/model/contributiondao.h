@@ -17,14 +17,18 @@ namespace model {
 class ContributionDao
 {
 public:
-    ContributionDao(const QSqlDatabase &aDatabase);
+    ContributionDao(const QSqlDatabase &aDatabase = QSqlDatabase::database(), QObject *aParent = 0);
 
     bool saveRecord(const accounting::ContributionEntry &anEntry);
-    accounting::ContributionEntry findByMemberIdWithPointInTime(int anId, const QDate &aDate);
-    accounting::ContributionEntry findLastDateByMemberId(int anId);
+    accounting::ContributionEntry findByMemberIdWithPointInTime(int aMemberId, const QDate &aDate);
+    accounting::ContributionEntry findLastDateByMemberId(int aMemberId);
+
+    QSqlTableModel *getModelByMemberId(int aMemberId);
+    QModelIndex insertNewEmptyRowWithMemberId(int aMemberId);
+    bool deleteRow(const QModelIndex &anIndex);
 
 private:
-    QSqlTableModel model;
+    QSqlTableModel *model;
 
     void printSqlError(const QSqlError &anError);
 };

@@ -4,13 +4,17 @@
 
 #include <QDate>
 #include <QSqlRecord>
+#include <QSqlTableModel>
 
 #include "accounting/contributionentry.h"
+
+#include "model/databasestructure.h"
 
 #include "testconfig.h"
 #include "database/databaseutil.h"
 
 using membermanager::model::ContributionDao;
+using membermanager::model::ContributionTable;
 using membermanager::accounting::ContributionEntry;
 
 namespace membermanagertest {
@@ -55,6 +59,39 @@ void ContributionDaoTest::testFindLastDateByMemberId()
 
     double fee = 99.00;
     QCOMPARE(entry.getFee(), fee);
+}
+
+void ContributionDaoTest::testGetModelByMemberId()
+{
+    ContributionDao contributionDao(QSqlDatabase::database());
+
+    const QSqlTableModel *model = contributionDao.getModelByMemberId(1025);
+
+    QVERIFY(model);
+    QCOMPARE(model->rowCount(), 5);
+    QSqlRecord record = model->record(0);
+    QCOMPARE(record.value(ContributionTable::Info -1).toString(), QString("Beitragsaenderung"));
+    QCOMPARE(record.value(ContributionTable::Fee).toString(), QString("99"));
+}
+
+void ContributionDaoTest::testInsertNewEmptyRowAndDeletRow()
+{
+    ContributionDao contributionDao;
+
+    QSqlTableModel *model = contributionDao.getModelByMemberId(1025);
+    QVERIFY(model);
+    QCOMPARE(model->rowCount(), 5);
+
+    QModelIndex index = contributionDao.insertNewEmptyRowWithMemberId(1025);
+
+    QCOMPARE(index.row(), 5);
+    model->select();
+    QCOMPARE(model->rowCount(), 6);
+
+    QVERIFY(contributionDao.deleteRow(index));
+
+    model->select();
+    QCOMPARE(model->rowCount(), 5);
 }
 
 } // namespace model

@@ -17,6 +17,8 @@ private slots:
     void testSaveRecord();
     void testFindByMemberIdWithPointInTime();
     void testFindLastDateByMemberId();
+    void testGetModelByMemberId();
+    void testInsertNewEmptyRowAndDeletRow();
 };
 
 } // namespace model
