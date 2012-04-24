@@ -1,18 +1,20 @@
 /*! \mainpage TODO
  * 
- * \todo Compiler Warnungen Fixen!
+ * \todo SaldoModel nach BalanceDao Refactoren (siehe ContributionDao). Nutzen von BalanceEntry
+ * \todo Member nach MemberEntry Refactoren.
+ * \todo save() Methoden in Member nach MemberDao Refactoren (siehe ContributionDao)
+ * \todo MemberModel nach MemberDao Refactoren (siehe ContributionDao)
+ * \todo MemberFilter entfernen
+ * \todo namespace model nach dao refactoren
+ * 
  * \todo Test Warnungen Fixen: connection 'qt_sql_default_connection' is still in use, all queries will cease to work.
- * \todo Refactor: MainWindow.ui Anpassen.
  * \todo Einpaar Denglische Datenbankfelder und member attribute auf Englisch Refactoren.
  * \todo Einige unsinnige Datenbankfelder rauswerfen und Tabellen mergen. Wird erst nach der ersten lauffaehigen Version umgesetzt damit Parrallel mit der alten Perl Applikation weiter gearbeitet werden kann.
  * \todo Code Dokumentieren mit Doxygen.
  * 
  * \todo Welche Open Source License ?
  * \todo Fehlermelungen in Statusleiste Anzeigen.
- * \todo Moeglichkeit Bankeinzug fuer ein Mitglied auszusetzen
- * \todo Gesamt Status uebersicht ueber den Verein: Gesamt Einahemen, gesamt Mitglieder etc.
- * \todo Wie sollen die SWIFT MT940 Transaktionsdaten eingelesen werden? AqBanking API einbinden?
- * \todo Matchen der SWIFT Transaktionen und auf die Mitgliedskonten buchen.
- * \todo DTAUS fuer Einzuege erstellen. AqBanking API benutzen?
- *  
+ * \todo AqBanking einbinden und mit DTAUS einzuege erstellen und SWIFT Modul Umsaetze einlesen. 
+ * 
+ * 
  */
