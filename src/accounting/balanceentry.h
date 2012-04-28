@@ -16,7 +16,7 @@ class BalanceEntry
 {
 
 public:
-    BalanceEntry(int aMemberId);
+    BalanceEntry(int aMemberId = 0);
 
     int getMemberId() const;
     void setValue(double aValue);

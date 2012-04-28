@@ -3,7 +3,7 @@ set(QT_MOC_HEADERS
     gui/mainwindow.h
     gui/memberdetailview.h
     gui/connectiondialog.h
-    gui/saldodialog.h
+    gui/balancedialog.h
     gui/contributiondialog.h
     gui/summarywindow.h
 
@@ -13,7 +13,7 @@ set(QT_MOC_HEADERS
 set(QT_UI
     gui/mainwindow.ui
     gui/connectiondialog.ui
-    gui/saldodialog.ui
+    gui/balancedialog.ui
     gui/contributiondialog.ui
     gui/summarywindow.ui
     )
@@ -22,13 +22,12 @@ set(QT_SRCS
     gui/mainwindow.cpp
     gui/memberdetailview.cpp
     gui/connectiondialog.cpp
-    gui/saldodialog.cpp
+    gui/balancedialog.cpp
     gui/contributiondialog.cpp
     gui/summarywindow.cpp
 
     model/membermodel.cpp
     model/kassamodel.cpp
-    model/saldomodel.cpp
     model/memberfilter.cpp
     model/databasestructure.cpp
     model/memberdao.cpp

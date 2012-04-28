@@ -1,5 +1,10 @@
 #include "debitsumsummary.h"
 
+#include <QSqlDatabase>
+
+#include "model/balancedao.h"
+#include "accounting/balanceentry.h"
+
 namespace membermanager
 {
 
@@ -20,9 +25,18 @@ void DebitSumSummary::setWriter(SummaryWriter *aWriter)
 
 void DebitSumSummary::handleHtmlText()
 {
+    model::BalanceDao balanceDao(QSqlDatabase::database());
+
     double saldoSum = 0;
     foreach(Member member, memberList) {
-        double saldo = member.getSaldoModel().amount();
+        int memberId = member.getMemberId();
+        QList<accounting::BalanceEntry> balanceList = balanceDao.findByMemberId(memberId);
+        double saldo = 0;
+        accounting::BalanceEntry balanceEntry;
+        foreach(balanceEntry, balanceList) {
+            saldo += balanceEntry.getValue();
+        }
+
         if(saldo < 0) {
             QString htmlText;
             htmlText.append("<br><br><br>");
@@ -64,7 +78,7 @@ void DebitSumSummary::handleHtmlText()
             htmlText.append("<br>");
             htmlText.append(tr("Also deine Referenz:"));
             htmlText.append("<br>");
-            htmlText.append(QString("%1").arg(member.getMemberId()));
+            htmlText.append(QString("%1").arg(memberId));
             htmlText.append(0x20);
             htmlText.append(member.getFirstname());
             htmlText.append(0x20);

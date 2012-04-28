@@ -16,6 +16,9 @@ class BalanceDaoTest : public qttestutil::TestCoverageObject
 private slots:
     void initTestCase();
     void testSaveBalance();
+    void testGetMemberBalance();
+    void testGetModelByMemberId();
+    void testInsertNewEmptyRowAndDeletRow();
 };
 
 }

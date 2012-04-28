@@ -1,8 +1,7 @@
 #include "gui/memberdetailview.h"
-#include "gui/saldodialog.h"
 #include "gui/contributiondialog.h"
+#include "gui/balancedialog.h"
 
-#include "model/saldomodel.h"
 #include "model/contributiondao.h"
 
 namespace membermanager
@@ -89,7 +88,8 @@ void MemberDetailView::saveMember()
 
 void MemberDetailView::showSaldoDialog()
 {
-    SaldoDialog dialog(member.getSaldoModel(), this);
+    int memberId = member.getMemberId();
+    BalanceDialog dialog(memberId, this);
     dialog.exec();
 }
 

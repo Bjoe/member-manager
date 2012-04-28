@@ -8,7 +8,7 @@ include_directories(../)
 
 qt4_add_test(contributiondialog contributiondialogtest.cpp)
 qt4_add_test(connectiondialog connectiondialogtest.cpp)
-qt4_add_test(saldodialog saldodialogtest.cpp)
+qt4_add_test(balancedialog balancedialogtest.cpp)
 qt4_add_test(summarywindow summarywindowtest.cpp)
 qt4_add_test(mainwindow mainwindowtest.cpp)
 qt4_add_test(memberdetailview memberdetailviewtest.cpp)

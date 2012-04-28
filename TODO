@@ -1,6 +1,5 @@
 /*! \mainpage TODO
  * 
- * \todo SaldoModel nach BalanceDao Refactoren (siehe ContributionDao). Nutzen von BalanceEntry
  * \todo Member nach MemberEntry Refactoren.
  * \todo save() Methoden in Member nach MemberDao Refactoren (siehe ContributionDao)
  * \todo MemberModel nach MemberDao Refactoren (siehe ContributionDao)

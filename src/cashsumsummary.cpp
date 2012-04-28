@@ -2,9 +2,12 @@
 
 #include <QSqlDatabase>
 #include <QDate>
+#include <QMap>
 
 #include "model/contributiondao.h"
+#include "model/balancedao.h"
 #include "accounting/contributionentry.h"
+#include "accounting/balanceentry.h"
 
 namespace membermanager
 {
@@ -28,6 +31,7 @@ void CashSumSummary::handleHtmlText()
 {
     QDate date = QDate::currentDate();
     model::ContributionDao contributionDao(QSqlDatabase::database());
+    model::BalanceDao balanceDao(QSqlDatabase::database());
     QMap<double, double> sumMap;
     QMap<double, int> countMember;
     double total = 0;
@@ -38,14 +42,18 @@ void CashSumSummary::handleHtmlText()
     double totalCollection = 0;
 
     foreach(Member member, memberList) {
-        memberSum++;
+         int memberId = member.getMemberId();
+         memberSum++;
 
-        int memberId = member.getMemberId();
+        QList<accounting::BalanceEntry> balanceList = balanceDao.findByMemberId(memberId);
+        accounting::BalanceEntry balanceEntry;
+        foreach(balanceEntry, balanceList) {
+            saldoSum += balanceEntry.getValue();
+        }
+
         accounting::ContributionEntry contributionEntry = contributionDao.findByMemberIdWithPointInTime(memberId, date);
         double donation = contributionEntry.getDonation();
         donationTotal += donation;
-        double saldo = member.getSaldoModel().amount();
-        saldoSum += saldo;
         double fee = contributionEntry.getFee();
         total += fee;
 

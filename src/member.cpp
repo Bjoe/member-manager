@@ -35,12 +35,6 @@ bool Member::save()
     return successful;
 }
 
-model::SaldoModel Member::getSaldoModel()
-{
-    model::SaldoModel saldoModel(getMemberId(), QSqlDatabase::database());
-    return saldoModel;
-}
-
 int Member::getMemberId() const
 {
     return memberRecord.value(model::MemberTable::MemberId).toInt();

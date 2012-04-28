@@ -1,5 +1,5 @@
-#ifndef SALDODIALOGTEST_H
-#define SALDODIALOGTEST_H
+#ifndef MEMBERMANAGERTEST_GUI_BALANCEDIALOGTEST_H
+#define MEMBERMANAGERTEST_GUI_BALANCEDIALOGTEST_H
 
 #include <QtTest/QtTest>
 #include "testcoverageobject.h"
@@ -9,7 +9,7 @@ namespace membermanagertest
 namespace gui
 {
 
-class SaldoDialogTest : public qttestutil::TestCoverageObject
+class BalanceDialogTest : public qttestutil::TestCoverageObject
 {
     Q_OBJECT
 
@@ -21,7 +21,7 @@ private slots:
     void testInsertAndDeleteRow();
 };
 
-}
-}
+} // namespace gui
+} // namespace membermanagertest
 
-#endif // SALDODIALOGTEST_H
+#endif // MEMBERMANAGERTEST_GUI_BALANCEDIALOGTEST_H

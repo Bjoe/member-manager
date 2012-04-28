@@ -3,7 +3,6 @@
 
 #include <QtGui>
 #include <QtSql>
-#include "model/saldomodel.h"
 
 namespace membermanager
 {
@@ -48,8 +47,6 @@ public:
     void setDeleted(bool aDeleted);
 /// \todo Refactor to MemberDao
     bool save();
-/// \todo Refactor, delete.
-    model::SaldoModel getSaldoModel();
 
 private:
     QSqlRecord memberRecord;

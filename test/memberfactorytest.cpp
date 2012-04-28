@@ -9,6 +9,7 @@
 #include "testconfig.h"
 #include "database/databaseutil.h"
 #include "model/databasestructure.h"
+#include "model/memberfilter.h"
 
 namespace membermanagertest
 {

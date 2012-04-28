@@ -2,6 +2,7 @@
 #define CASHSUMSUMMARY_H
 
 #include <QString>
+#include <QList>
 
 #include "summaryhandler.h"
 #include "summarywriter.h"

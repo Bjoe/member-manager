@@ -8,7 +8,6 @@
 #include "model/databasestructure.h"
 #include "testconfig.h"
 #include "database/databaseutil.h"
-#include "model/saldomodel.h"
 
 namespace membermanagertest
 {
@@ -39,12 +38,6 @@ void MemberTest::testGetMember()
     QCOMPARE(member.getCode(), QString("9004010"));
     QVERIFY(member.isCollection() == true);
     QVERIFY(member.isDeleted() == false);
-}
-
-void MemberTest::testGetSaldoModel()
-{
-    membermanager::Member member(1025);
-    membermanager::model::SaldoModel model = member.getSaldoModel();
 }
 
 void MemberTest::testSaveMember()
