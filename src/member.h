@@ -4,8 +4,12 @@
 #include <QtGui>
 #include <QtSql>
 
+#include "model/memberdao.h"
+
 namespace membermanager
 {
+namespace model { class MemberDao; }
+
 /// \todo Refactor, rename to MemberEntry
 class Member
 {
@@ -45,8 +49,8 @@ public:
 
     bool isDeleted() const;
     void setDeleted(bool aDeleted);
-/// \todo Refactor to MemberDao
-    bool save();
+
+    friend class model::MemberDao;
 
 private:
     QSqlRecord memberRecord;

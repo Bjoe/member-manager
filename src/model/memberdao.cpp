@@ -14,6 +14,26 @@ MemberDao::MemberDao(const QSqlDatabase &aDatabase) :
 {
 }
 
+bool MemberDao::saveRecord(const Member &aMember)
+{
+    int memberId = aMember.getMemberId();
+    bool successful = true;
+
+    QSqlRecord record = aMember.memberRecord;
+    successful &= saveRecordWithMemberId(model::MemberTable::TABLENAME, memberId, record);
+
+    record = aMember.ressourcenRecord;
+    successful &= saveRecordWithMemberId(model::RessourcenTable::TABLENAME, memberId, record);
+
+    record = aMember.bankRecord;
+    successful &= saveRecordWithMemberId(model::BankAccountTable::TABLENAME, memberId, record);
+
+    record = aMember.addressRecord;
+    successful &= saveRecordWithMemberId(model::AddressTable::TABLENAME, memberId, record);
+
+    return successful;
+}
+
 QSqlRecord MemberDao::getRecordWithMemberId(const QString &aTableName, int aMemberId
         , int aSortColumn, Qt::SortOrder aSortOrder)
 {
@@ -22,18 +42,6 @@ QSqlRecord MemberDao::getRecordWithMemberId(const QString &aTableName, int aMemb
     QSqlRecord record = model.record(0);
     printSqlError(model.lastError());
     return record;
-}
-
-bool MemberDao::saveRecordWithMemberId(const QString &aTableName, int aMemberId
-                                       , const QSqlRecord &aRecord, int aSortColumn, Qt::SortOrder aSortOrder)
-{
-    QSqlTableModel model(object, database);
-    selectTableModel(model, aTableName, aMemberId, aSortColumn, aSortOrder);
-    model.setRecord(0, aRecord);
-    printSqlError(model.lastError());
-    bool successful = model.submitAll();
-    printSqlError(model.lastError());
-    return successful;
 }
 
 bool MemberDao::saveNewRecordWithMemberId(const QString &aTableName, int aMemberId
@@ -159,6 +167,18 @@ void MemberDao::rollback(const QSqlQuery &aQuery)
 {
     printSqlError(aQuery.lastError());
     database.rollback();
+}
+
+bool MemberDao::saveRecordWithMemberId(const QString &aTableName, int aMemberId
+                                       , const QSqlRecord &aRecord)
+{
+    QSqlTableModel model(object, database);
+    selectTableModel(model, aTableName, aMemberId);
+    model.setRecord(0, aRecord);
+    printSqlError(model.lastError());
+    bool successful = model.submitAll();
+    printSqlError(model.lastError());
+    return successful;
 }
 
 void MemberDao::printSqlError(const QSqlError &anError)

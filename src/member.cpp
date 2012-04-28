@@ -22,19 +22,6 @@ Member::Member(int aMemberId) :
     memberRecord = dao.getRecordWithMemberId(model::MemberTable::TABLENAME, aMemberId);
 }
 
-bool Member::save()
-{
-    model::MemberDao dao(QSqlDatabase::database());
-
-    int memberId = getMemberId();
-    bool successful = true;
-    successful &= dao.saveRecordWithMemberId(model::MemberTable::TABLENAME, memberId, memberRecord);
-    successful &= dao.saveRecordWithMemberId(model::RessourcenTable::TABLENAME, memberId, ressourcenRecord);
-    successful &= dao.saveRecordWithMemberId(model::BankAccountTable::TABLENAME, memberId, bankRecord);
-    successful &= dao.saveRecordWithMemberId(model::AddressTable::TABLENAME, memberId, addressRecord);
-    return successful;
-}
-
 int Member::getMemberId() const
 {
     return memberRecord.value(model::MemberTable::MemberId).toInt();

@@ -6,6 +6,8 @@
 #include "model/databasestructure.h"
 #include "database/databaseutil.h"
 
+#include "member.h"
+
 namespace membermanagertest
 {
 namespace model
@@ -47,31 +49,6 @@ void MemberDaoTest::testNewMember()
     QVERIFY(query.next());
 }
 
-void MemberDaoTest::testDeleteMember()
-{
-    int id = 1025;
-    using membermanager::model::MemberTable;
-    const QString whereClause = QString(" where %1=%2").arg(
-                                    MemberTable::COLUMNNAME[MemberTable::MemberId])
-                                .arg(id);
-    QSqlQuery query("select * from " + MemberTable::TABLENAME + whereClause);
-
-    query.exec();
-    query.next();
-    QVERIFY(!query.value(MemberTable::Deleted).toBool());
-
-    membermanager::model::MemberDao dao(QSqlDatabase::database());
-    dao.deleteMember(id);
-
-    query.exec();
-    query.next();
-    QVERIFY(query.value(MemberTable::Deleted).toBool());
-
-    dao.deleteMember(id);
-
-    query.exec();
-    QVERIFY(!query.next());
-}
 
 void MemberDaoTest::testGetRecordWithMemberId()
 {
@@ -92,53 +69,76 @@ void MemberDaoTest::testGetRecordWithMemberIdWithSort()
 
 void MemberDaoTest::testSaveRecord()
 {
-    int id = 1026;
-    using membermanager::model::MemberTable;
-    const QString whereClause = QString(" where %1=%2").arg(
-                                    MemberTable::COLUMNNAME[MemberTable::MemberId])
-                                .arg(id);
-    QSqlQuery query("select * from " + MemberTable::TABLENAME + whereClause);
-    query.exec();
-    query.next();
-    QCOMPARE(query.value(MemberTable::FirstName).toString(), QString("Spock"));
-
     membermanager::model::MemberDao dao(QSqlDatabase::database());
-    QSqlRecord record = dao.getRecordWithMemberId(MemberTable::TABLENAME, id);
-    QCOMPARE(record.value(MemberTable::FirstName).toString(), QString("Spock"));
 
-    record.setValue(MemberTable::FirstName, QVariant("Spocky"));
-    QVERIFY(dao.saveRecordWithMemberId(MemberTable::TABLENAME, id, record));
+    membermanager::Member member(1025);
+    QCOMPARE(member.getMemberId(), 1025);
+    QCOMPARE(member.getName(), QString("Kirk"));
+    QCOMPARE(member.getFirstname(), QString("James T"));
+    QCOMPARE(member.getNickname(), QString("Capt. Kirk"));
+    QCOMPARE(member.getEntryDate(), QDate(2001, 4, 24));
+    QCOMPARE(member.getInfo(), QString("Captain of the ncc-1701"));
+    QCOMPARE(member.getEmail(), QString("fooo@baaar.xx"));
+    QCOMPARE(member.getStreet(), QString("Industriestr. 23"));
+    QCOMPARE(member.getCity(), QString("Bloedeldorf"));
+    QCOMPARE(member.getZipCode(), QString("90546"));
+    QCOMPARE(member.getAccountNr(), QString("12234569"));
+    QCOMPARE(member.getBankName(), QString("sparstrumpf"));
+    QCOMPARE(member.getCode(), QString("9004010"));
+    QCOMPARE(member.getReference(), QString("2193"));
+    QVERIFY(member.isCollection() == true);
+    QVERIFY(member.isDeleted() == false);
 
-    query.exec();
-    query.next();
-    QCOMPARE(query.value(MemberTable::FirstName).toString(), QString("Spocky"));
-}
+    member.setName("Archer");
+    member.setFirstname("Jonathan");
+    member.setNickname("Captain");
+    member.setStreet("NCC-1701");
+    member.setCity("Dtown");
+    member.setZipCode("98765");
+    member.setEmail("foo@bar.tx");
+    member.setEntryDate(QDate(2006, 07, 15));
+    member.setAccountNr("123456789");
+    member.setBankName("Galaxy");
+    member.setCode("98765432");
+    member.setInfo("Lalala");
+    member.setReference("9876");
+    member.setCollection(false);
+    member.setDeleted(false);
 
-void MemberDaoTest::testSaveRecordWithSort()
-{
-    int id = 1025;
+    QVERIFY(dao.saveRecord(member));
+
+    const QString whereClause(" where dorfmitglied_pkey=1025");
+
     using membermanager::model::MemberTable;
-    using membermanager::model::ContributionTable;
-    const QString whereClause = QString(" where %1=%2 order by %3 desc").arg(
-                                    MemberTable::COLUMNNAME[MemberTable::MemberId])
-                                .arg(id).arg(ContributionTable::ValidFrom);
-    QSqlQuery query("select * from " + ContributionTable::TABLENAME + whereClause);
-    query.exec();
-    query.last();
-    QCOMPARE(query.value(ContributionTable::Fee).toString(), QString("99"));
+    QSqlQuery query;
+    query.exec("select * from " + MemberTable::TABLENAME + whereClause);
+    query.next();
+    QCOMPARE(query.value(MemberTable::FirstName).toString(), QString("Jonathan"));
+    QCOMPARE(query.value(MemberTable::Name).toString(), QString("Archer"));
+    QCOMPARE(query.value(MemberTable::NickName).toString(), QString("Captain"));
+    QCOMPARE(query.value(MemberTable::Info).toString(), QString("Lalala"));
+    QCOMPARE(query.value(MemberTable::FOO_ChaosNr).toString(), QString("9876"));
+    QVERIFY(query.value(MemberTable::FOO_Einzug).toBool() == false);
+    QVERIFY(query.value(MemberTable::Deleted).toBool() == false);
 
-    membermanager::model::MemberDao dao(QSqlDatabase::database());
-    QSqlRecord record = dao.getRecordWithMemberId(ContributionTable::TABLENAME, id,
-                        ContributionTable::ValidFrom, Qt::DescendingOrder);
-    QCOMPARE(record.value(ContributionTable::Fee).toString(), QString("99"));
+    using membermanager::model::AddressTable;
+    query.exec("select * from " + AddressTable::TABLENAME + whereClause);
+    query.next();
+    QCOMPARE(query.value(AddressTable::Street).toString(), QString("NCC-1701"));
+    QCOMPARE(query.value(AddressTable::ZipCode).toString(), QString("98765"));
+    QCOMPARE(query.value(AddressTable::Town).toString(), QString("Dtown"));
 
-    record.setValue(ContributionTable::Fee, QVariant(23));
-    QVERIFY(dao.saveRecordWithMemberId(ContributionTable::TABLENAME, id, record,
-                                       ContributionTable::ValidFrom, Qt::DescendingOrder));
+    using membermanager::model::BankAccountTable;
+    query.exec("select * from " + BankAccountTable::TABLENAME + whereClause);
+    query.next();
+    QCOMPARE(query.value(BankAccountTable::Code).toInt(), 98765432);
+    QCOMPARE(query.value(BankAccountTable::AccountNr).toInt(), 123456789);
+    QCOMPARE(query.value(BankAccountTable::BankName).toString(), QString("Galaxy"));
 
-    query.exec();
-    query.last();
-    QCOMPARE(query.value(ContributionTable::Fee).toString(), QString("23"));
+    using membermanager::model::RessourcenTable;
+    query.exec("select * from " + RessourcenTable::TABLENAME + whereClause);
+    query.next();
+    QCOMPARE(query.value(RessourcenTable::EmailAdress).toString(), QString("foo@bar.tx"));
 }
 
 void MemberDaoTest::testSaveNewRecord()
@@ -170,6 +170,32 @@ void MemberDaoTest::testSaveNewRecord()
     query.exec();
     query.next();
     QCOMPARE(query.value(MemberTable::NickName).toString(), QString("Spitzohr"));
+}
+
+void MemberDaoTest::testDeleteMember()
+{
+    int id = 1025;
+    using membermanager::model::MemberTable;
+    const QString whereClause = QString(" where %1=%2").arg(
+                                    MemberTable::COLUMNNAME[MemberTable::MemberId])
+                                .arg(id);
+    QSqlQuery query("select * from " + MemberTable::TABLENAME + whereClause);
+
+    query.exec();
+    query.next();
+    QVERIFY(!query.value(MemberTable::Deleted).toBool());
+
+    membermanager::model::MemberDao dao(QSqlDatabase::database());
+    dao.deleteMember(id);
+
+    query.exec();
+    query.next();
+    QVERIFY(query.value(MemberTable::Deleted).toBool());
+
+    dao.deleteMember(id);
+
+    query.exec();
+    QVERIFY(!query.next());
 }
 
 }

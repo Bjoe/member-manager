@@ -3,6 +3,7 @@
 #include "gui/balancedialog.h"
 
 #include "model/contributiondao.h"
+#include "model/memberdao.h"
 
 namespace membermanager
 {
@@ -80,7 +81,8 @@ void MemberDetailView::saveMember()
     memberContribution.setInfo(ui->contributionInfo->text());
     memberContribution.setValidFrom(ui->validFrom->date());
 
-    member.save();
+    model::MemberDao memberDao(QSqlDatabase::database());
+    memberDao.saveRecord(member);
 
     model::ContributionDao contributionDao(QSqlDatabase::database());
     contributionDao.saveRecord(memberContribution);

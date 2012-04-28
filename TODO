@@ -1,8 +1,8 @@
 /*! \mainpage TODO
  * 
- * \todo Member nach MemberEntry Refactoren.
- * \todo save() Methoden in Member nach MemberDao Refactoren (siehe ContributionDao)
+ * \todo MemberId to MemberDao.findMemberById();
  * \todo MemberModel nach MemberDao Refactoren (siehe ContributionDao)
+ * \todo Member nach MemberEntry Refactoren.
  * \todo MemberFilter entfernen
  * \todo namespace model nach dao refactoren
  * 

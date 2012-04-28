@@ -14,7 +14,7 @@ class MemberTest : public qttestutil::TestCoverageObject
 private slots:
     void initTestCase();
     void testGetMember();
-    void testSaveMember();
+    void testSetMember();
 };
 
 }
