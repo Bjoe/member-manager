@@ -141,37 +141,6 @@ void MemberDaoTest::testSaveRecord()
     QCOMPARE(query.value(RessourcenTable::EmailAdress).toString(), QString("foo@bar.tx"));
 }
 
-void MemberDaoTest::testSaveNewRecord()
-{
-    int id = 1026;
-    using membermanager::model::MemberTable;
-    QString whereClause = QString(" where %1=%2").arg(
-                              MemberTable::COLUMNNAME[MemberTable::MemberId])
-                          .arg(id);
-    QSqlQuery query("select * from " + MemberTable::TABLENAME + whereClause);
-    query.exec();
-    query.next();
-    QCOMPARE(query.value(MemberTable::NickName).toString(), QString("Spock"));
-
-    membermanager::model::MemberDao dao(QSqlDatabase::database());
-    QSqlRecord record = dao.getRecordWithMemberId(MemberTable::TABLENAME, id);
-    QCOMPARE(record.value(MemberTable::NickName).toString(), QString("Spock"));
-
-    record.setValue(MemberTable::NickName, QVariant("Spitzohr"));
-    record.setValue(MemberTable::MemberId, QVariant(1030));
-    QVERIFY(dao.saveNewRecordWithMemberId(MemberTable::TABLENAME, id, record));
-
-    id = 1030;
-    whereClause = QString(" where %1=%2").arg(
-                      MemberTable::COLUMNNAME[MemberTable::MemberId])
-                  .arg(id);
-    query = QSqlQuery("select * from " + MemberTable::TABLENAME + whereClause);
-
-    query.exec();
-    query.next();
-    QCOMPARE(query.value(MemberTable::NickName).toString(), QString("Spitzohr"));
-}
-
 void MemberDaoTest::testDeleteMember()
 {
     int id = 1025;

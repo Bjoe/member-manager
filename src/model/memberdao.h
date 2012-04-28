@@ -25,9 +25,6 @@ public:
     void deleteMember(int aMemberId);
     QSqlRecord getRecordWithMemberId(const QString &aTableName, int aMemberId,
                                      int aSortColumn = -1, Qt::SortOrder aSortOrder = Qt::DescendingOrder);
-    bool saveNewRecordWithMemberId(const QString &aTableName, int aMemberId, const QSqlRecord &aRecord,
-                                   int aSortColumn = -1, Qt::SortOrder aSortOrder = Qt::DescendingOrder);
-
 
 private:
     QObject *object;

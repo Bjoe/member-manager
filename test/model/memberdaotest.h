@@ -19,7 +19,6 @@ private slots:
     void testGetRecordWithMemberId();
     void testGetRecordWithMemberIdWithSort();
     void testSaveRecord();
-    void testSaveNewRecord();
     void testDeleteMember();
 };
 

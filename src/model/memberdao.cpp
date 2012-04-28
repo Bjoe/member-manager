@@ -44,26 +44,6 @@ QSqlRecord MemberDao::getRecordWithMemberId(const QString &aTableName, int aMemb
     return record;
 }
 
-bool MemberDao::saveNewRecordWithMemberId(const QString &aTableName, int aMemberId
-        , const QSqlRecord &aRecord, int aSortColumn, Qt::SortOrder aSortOrder)
-{
-    QSqlTableModel model(object, database);
-    selectTableModel(model, aTableName, aMemberId, aSortColumn, aSortOrder);
-    bool successful = model.insertRecord(-1, aRecord);
-    printSqlError(model.lastError());
-    return successful;
-}
-
-void MemberDao::selectTableModel(QSqlTableModel &aModel, const QString &aTableName, int aMemberId
-                                 , int aSortColumn, Qt::SortOrder aSortOrder)
-{
-    aModel.setTable(aTableName);
-    aModel.setFilter(MemberFilter::build().withMemberId(aMemberId).createFilter());
-    if (aSortColumn != -1)
-        aModel.setSort(aSortColumn, aSortOrder);
-    aModel.select();
-}
-
 /// \todo createMember()
 int MemberDao::newMember()
 {
@@ -179,6 +159,16 @@ bool MemberDao::saveRecordWithMemberId(const QString &aTableName, int aMemberId
     bool successful = model.submitAll();
     printSqlError(model.lastError());
     return successful;
+}
+
+void MemberDao::selectTableModel(QSqlTableModel &aModel, const QString &aTableName, int aMemberId
+                                 , int aSortColumn, Qt::SortOrder aSortOrder)
+{
+    aModel.setTable(aTableName);
+    aModel.setFilter(MemberFilter::build().withMemberId(aMemberId).createFilter());
+    if (aSortColumn != -1)
+        aModel.setSort(aSortColumn, aSortOrder);
+    aModel.select();
 }
 
 void MemberDao::printSqlError(const QSqlError &anError)
