@@ -24,13 +24,14 @@ Member MemberFactory::createNewMember()
     model::MemberDao dao(QSqlDatabase::database());
     int id = dao.newMember();
 
-    return createMember(id);
+    return dao.findByMemberId(id);
 }
 
+/// \todo getMemberById(id)
 Member MemberFactory::createMember(int anId)
 {
-    Member member(anId);
-    return member;
+    model::MemberDao memberDao(QSqlDatabase::database());
+    return memberDao.findByMemberId(anId);
 }
 
 MemberFactory::MemberFactory()

@@ -15,9 +15,8 @@ class MemberDaoTest : public qttestutil::TestCoverageObject
 
 private slots:
     void initTestCase();
+    void testFindByMemberId();
     void testNewMember();
-    void testGetRecordWithMemberId();
-    void testGetRecordWithMemberIdWithSort();
     void testSaveRecord();
     void testDeleteMember();
 };

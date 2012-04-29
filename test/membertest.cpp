@@ -2,6 +2,8 @@
 
 #include "member.h"
 
+#include "model/memberdao.h"
+
 #include "testconfig.h"
 #include "database/databaseutil.h"
 
@@ -17,7 +19,9 @@ void MemberTest::initTestCase()
 
 void MemberTest::testGetMember()
 {
-    membermanager::Member member(1025);
+    membermanager::model::MemberDao memberDao(QSqlDatabase::database());
+    membermanager::Member member = memberDao.findByMemberId(1025);
+
     QCOMPARE(member.getMemberId(), 1025);
     QCOMPARE(member.getName(), QString("Kirk"));
     QCOMPARE(member.getFirstname(), QString("James T"));
@@ -38,7 +42,8 @@ void MemberTest::testGetMember()
 
 void MemberTest::testSetMember()
 {
-    membermanager::Member member(1025);
+    membermanager::model::MemberDao memberDao(QSqlDatabase::database());
+    membermanager::Member member = memberDao.findByMemberId(1025);
 
     member.setName("Archer");
     member.setFirstname("Jonathan");

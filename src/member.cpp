@@ -1,7 +1,6 @@
 #include "member.h"
 
 #include "model/databasestructure.h"
-#include "model/memberdao.h"
 
 namespace membermanager
 {
@@ -9,17 +8,6 @@ namespace membermanager
 Member::Member() :
     memberRecord(), addressRecord(), bankRecord(), ressourcenRecord()
 {
-}
-
-Member::Member(int aMemberId) :
-    memberRecord(), addressRecord(), bankRecord(), ressourcenRecord()
-{
-    model::MemberDao dao(QSqlDatabase::database());
-
-    addressRecord = dao.getRecordWithMemberId(model::AddressTable::TABLENAME, aMemberId);
-    bankRecord = dao.getRecordWithMemberId(model::BankAccountTable::TABLENAME, aMemberId);
-    ressourcenRecord = dao.getRecordWithMemberId(model::RessourcenTable::TABLENAME, aMemberId);
-    memberRecord = dao.getRecordWithMemberId(model::MemberTable::TABLENAME, aMemberId);
 }
 
 int Member::getMemberId() const

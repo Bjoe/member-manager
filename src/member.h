@@ -1,8 +1,9 @@
 #ifndef MEMBER_H
 #define MEMBER_H
 
-#include <QtGui>
-#include <QtSql>
+#include <QString>
+#include <QDate>
+#include <QSqlRecord>
 
 #include "model/memberdao.h"
 
@@ -15,7 +16,6 @@ class Member
 {
 public:
     Member();
-    Member(int aMemberId);
 
     int getMemberId() const;
     QString getName() const;

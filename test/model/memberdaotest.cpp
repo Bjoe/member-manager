@@ -20,6 +20,15 @@ void MemberDaoTest::initTestCase()
     database.read(SQLTESTFILE);
 }
 
+void MemberDaoTest::testFindByMemberId()
+{
+    membermanager::model::MemberDao memberDao(QSqlDatabase::database());
+
+    membermanager::Member member = memberDao.findByMemberId(1025);
+
+    QCOMPARE(member.getName(), QString("Kirk"));
+}
+
 void MemberDaoTest::testNewMember()
 {
     membermanager::model::MemberDao dao(QSqlDatabase::database());
@@ -50,28 +59,11 @@ void MemberDaoTest::testNewMember()
 }
 
 
-void MemberDaoTest::testGetRecordWithMemberId()
-{
-    using membermanager::model::MemberTable;
-    membermanager::model::MemberDao dao(QSqlDatabase::database());
-    QSqlRecord record = dao.getRecordWithMemberId(MemberTable::TABLENAME, 1026);
-    QCOMPARE(record.value(MemberTable::FirstName).toString(), QString("Spock"));
-}
-
-void MemberDaoTest::testGetRecordWithMemberIdWithSort()
-{
-    using membermanager::model::ContributionTable;
-    membermanager::model::MemberDao dao(QSqlDatabase::database());
-    QSqlRecord record = dao.getRecordWithMemberId(ContributionTable::TABLENAME, 1025,
-                        ContributionTable::ValidFrom, Qt::DescendingOrder);
-    QCOMPARE(record.value(ContributionTable::Fee).toString(), QString("99"));
-}
-
 void MemberDaoTest::testSaveRecord()
 {
     membermanager::model::MemberDao dao(QSqlDatabase::database());
+    membermanager::Member member = dao.findByMemberId(1025);
 
-    membermanager::Member member(1025);
     QCOMPARE(member.getMemberId(), 1025);
     QCOMPARE(member.getName(), QString("Kirk"));
     QCOMPARE(member.getFirstname(), QString("James T"));

@@ -34,11 +34,22 @@ bool MemberDao::saveRecord(const Member &aMember)
     return successful;
 }
 
-QSqlRecord MemberDao::getRecordWithMemberId(const QString &aTableName, int aMemberId
-        , int aSortColumn, Qt::SortOrder aSortOrder)
+Member MemberDao::findByMemberId(int aMemberId)
+{
+    Member member;
+
+    member.addressRecord = getRecordWithMemberId(model::AddressTable::TABLENAME, aMemberId);
+    member.bankRecord = getRecordWithMemberId(model::BankAccountTable::TABLENAME, aMemberId);
+    member.ressourcenRecord = getRecordWithMemberId(model::RessourcenTable::TABLENAME, aMemberId);
+    member.memberRecord = getRecordWithMemberId(model::MemberTable::TABLENAME, aMemberId);
+
+    return member;
+}
+
+QSqlRecord MemberDao::getRecordWithMemberId(const QString &aTableName, int aMemberId)
 {
     QSqlTableModel model(object, database);
-    selectTableModel(model, aTableName, aMemberId, aSortColumn, aSortOrder);
+    selectTableModel(model, aTableName, aMemberId);
     QSqlRecord record = model.record(0);
     printSqlError(model.lastError());
     return record;
@@ -161,13 +172,10 @@ bool MemberDao::saveRecordWithMemberId(const QString &aTableName, int aMemberId
     return successful;
 }
 
-void MemberDao::selectTableModel(QSqlTableModel &aModel, const QString &aTableName, int aMemberId
-                                 , int aSortColumn, Qt::SortOrder aSortOrder)
+void MemberDao::selectTableModel(QSqlTableModel &aModel, const QString &aTableName, int aMemberId)
 {
     aModel.setTable(aTableName);
     aModel.setFilter(MemberFilter::build().withMemberId(aMemberId).createFilter());
-    if (aSortColumn != -1)
-        aModel.setSort(aSortColumn, aSortOrder);
     aModel.select();
 }
 
