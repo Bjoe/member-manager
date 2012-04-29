@@ -9,7 +9,6 @@
 #include "testconfig.h"
 #include "database/databaseutil.h"
 #include "model/databasestructure.h"
-#include "model/memberfilter.h"
 
 namespace membermanagertest
 {
@@ -37,7 +36,8 @@ void MemberFactoryTest::testCreateMemberList()
 {
     QSqlTableModel model;
     model.setTable(membermanager::model::MemberTable::TABLENAME);
-    model.setFilter(membermanager::model::MemberFilter::build().withDeleted(false).createFilter());
+    QString columname = membermanager::model::MemberTable::COLUMNNAME[membermanager::model::MemberTable::Deleted];
+    model.setFilter(QString("%1 = 'false'").arg(columname));
     model.select();
 
     QList<membermanager::Member> list = membermanager::MemberFactory::createMemberList(&model);

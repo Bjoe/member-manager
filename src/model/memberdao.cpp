@@ -1,17 +1,30 @@
 #include "model/memberdao.h"
 #include "model/databasestructure.h"
-#include "model/memberfilter.h"
 
 namespace membermanager
 {
 namespace model
 {
 
-/// \todo constructor(Object, database)
-MemberDao::MemberDao(const QSqlDatabase &aDatabase) :
-    object(new QObject()), database(aDatabase),  pkey(model::MemberTable::COLUMNNAME[model::MemberTable::MemberId])
-
+MemberDao::MemberDao(const QSqlDatabase &aDatabase, QObject *aParent) :
+    database(aDatabase),
+    memberModel(new QSqlTableModel(aParent, aDatabase)),
+    ressourcenModel(new QSqlTableModel(aParent, aDatabase)),
+    bankModel(new QSqlTableModel(aParent, aDatabase)),
+    addressModel(new QSqlTableModel(aParent, aDatabase))
 {
+    memberModel->setTable(model::MemberTable::TABLENAME);
+    memberModel->setObjectName(model::MemberTable::TABLENAME);
+    memberModel->select();
+
+    ressourcenModel->setTable(model::RessourcenTable::TABLENAME);
+    ressourcenModel->setObjectName(model::RessourcenTable::TABLENAME);
+
+    bankModel->setTable(model::BankAccountTable::TABLENAME);
+    bankModel->setObjectName(model::BankAccountTable::TABLENAME);
+
+    addressModel->setTable(model::AddressTable::TABLENAME);
+    addressModel->setObjectName(model::AddressTable::TABLENAME);
 }
 
 bool MemberDao::saveRecord(const Member &aMember)
@@ -20,16 +33,21 @@ bool MemberDao::saveRecord(const Member &aMember)
     bool successful = true;
 
     QSqlRecord record = aMember.memberRecord;
-    successful &= saveRecordWithMemberId(model::MemberTable::TABLENAME, memberId, record);
+    QString columnId = model::MemberTable::COLUMNNAME[model::MemberTable::MemberId];
+    selectTableModel(memberModel, columnId, memberId);
+    successful &= saveRecordOnModel(memberModel, record);
 
+    selectTableModel(ressourcenModel, model::RessourcenTable::COLUMNNAME[model::RessourcenTable::MemberId], memberId);
     record = aMember.ressourcenRecord;
-    successful &= saveRecordWithMemberId(model::RessourcenTable::TABLENAME, memberId, record);
+    successful &= saveRecordOnModel(ressourcenModel, record);
 
+    selectTableModel(bankModel, model::BankAccountTable::COLUMNNAME[model::BankAccountTable::MemberId], memberId);
     record = aMember.bankRecord;
-    successful &= saveRecordWithMemberId(model::BankAccountTable::TABLENAME, memberId, record);
+    successful &= saveRecordOnModel(bankModel, record);
 
+    selectTableModel(addressModel, model::AddressTable::COLUMNNAME[model::AddressTable::MemberId], memberId);
     record = aMember.addressRecord;
-    successful &= saveRecordWithMemberId(model::AddressTable::TABLENAME, memberId, record);
+    successful &= saveRecordOnModel(addressModel, record);
 
     return successful;
 }
@@ -38,21 +56,62 @@ Member MemberDao::findByMemberId(int aMemberId)
 {
     Member member;
 
-    member.addressRecord = getRecordWithMemberId(model::AddressTable::TABLENAME, aMemberId);
-    member.bankRecord = getRecordWithMemberId(model::BankAccountTable::TABLENAME, aMemberId);
-    member.ressourcenRecord = getRecordWithMemberId(model::RessourcenTable::TABLENAME, aMemberId);
-    member.memberRecord = getRecordWithMemberId(model::MemberTable::TABLENAME, aMemberId);
+    selectTableModel(addressModel, model::AddressTable::COLUMNNAME[model::AddressTable::MemberId], aMemberId);
+    member.addressRecord = record(addressModel);
+
+    selectTableModel(bankModel, model::BankAccountTable::COLUMNNAME[model::BankAccountTable::MemberId], aMemberId);
+    member.bankRecord = record(bankModel);
+
+    selectTableModel(ressourcenModel, model::RessourcenTable::COLUMNNAME[model::RessourcenTable::MemberId], aMemberId);
+    member.ressourcenRecord = record(ressourcenModel);
+
+    selectTableModel(memberModel, model::MemberTable::COLUMNNAME[model::MemberTable::MemberId], aMemberId);
+    member.memberRecord = record(memberModel);
 
     return member;
 }
 
-QSqlRecord MemberDao::getRecordWithMemberId(const QString &aTableName, int aMemberId)
+Member MemberDao::findByRow(int aRowNr)
 {
-    QSqlTableModel model(object, database);
-    selectTableModel(model, aTableName, aMemberId);
-    QSqlRecord record = model.record(0);
-    printSqlError(model.lastError());
-    return record;
+    Member member;
+
+    member.memberRecord = memberModel->record(aRowNr);
+
+    int memberId = member.getMemberId();
+    selectTableModel(bankModel, model::BankAccountTable::COLUMNNAME[model::BankAccountTable::MemberId], memberId);
+    member.bankRecord = record(bankModel);
+
+    selectTableModel(ressourcenModel, model::RessourcenTable::COLUMNNAME[model::RessourcenTable::MemberId], memberId);
+    member.ressourcenRecord = record(ressourcenModel);
+
+    selectTableModel(memberModel, model::MemberTable::COLUMNNAME[model::MemberTable::MemberId], memberId);
+    member.memberRecord = record(memberModel);
+
+    return member;
+}
+
+QSqlTableModel *MemberDao::modelWithFilter(bool isDeleted)
+{
+    QSqlTableModel *model = new QSqlTableModel();
+    model->setTable(model::MemberTable::TABLENAME);
+    model->setObjectName(model::MemberTable::TABLENAME);
+    model->setHeaderData(MemberTable::MemberId, Qt::Horizontal, memberModel->tr("Nr."));
+    model->setHeaderData(MemberTable::FirstName, Qt::Horizontal, memberModel->tr("Vorname"));
+    model->setHeaderData(MemberTable::Name, Qt::Horizontal, memberModel->tr("Name"));
+    model->setHeaderData(MemberTable::NickName, Qt::Horizontal, memberModel->tr("Nickname"));
+    model->setHeaderData(MemberTable::EntryDate, Qt::Horizontal, memberModel->tr("Eintritts Datum"));
+
+    QString deleted = "'false'";
+    if(isDeleted) {
+        deleted = "'true'";
+    }
+
+    QString columnname = MemberTable::COLUMNNAME[MemberTable::Deleted];
+    QString filter = QString("%1 = %2").arg(columnname).arg(deleted);
+    model->setFilter(filter);
+    model->select();
+
+    return model;
 }
 
 /// \todo createMember()
@@ -130,7 +189,8 @@ int MemberDao::newMember()
 
 void MemberDao::deleteMember(int aMemberId)
 {
-    const QString whereClause = QString(" where %1").arg(MemberFilter::build().withMemberId(aMemberId).createFilter());
+    const QString columnId = MemberTable::COLUMNNAME[MemberTable::MemberId];
+    const QString whereClause = QString(" where %1 = %2").arg(columnId).arg(aMemberId);
     const QString columnDeteled = MemberTable::COLUMNNAME[MemberTable::Deleted];
 
     QSqlQuery query("select * from " + MemberTable::TABLENAME + whereClause
@@ -160,23 +220,27 @@ void MemberDao::rollback(const QSqlQuery &aQuery)
     database.rollback();
 }
 
-bool MemberDao::saveRecordWithMemberId(const QString &aTableName, int aMemberId
-                                       , const QSqlRecord &aRecord)
+bool MemberDao::saveRecordOnModel(QSqlTableModel *aTableModel, const QSqlRecord &aRecord)
 {
-    QSqlTableModel model(object, database);
-    selectTableModel(model, aTableName, aMemberId);
-    model.setRecord(0, aRecord);
-    printSqlError(model.lastError());
-    bool successful = model.submitAll();
-    printSqlError(model.lastError());
+    aTableModel->setRecord(0, aRecord);
+    printSqlError(aTableModel->lastError());
+    bool successful = aTableModel->submitAll();
+    printSqlError(aTableModel->lastError());
     return successful;
 }
 
-void MemberDao::selectTableModel(QSqlTableModel &aModel, const QString &aTableName, int aMemberId)
+QSqlRecord MemberDao::record(const QSqlTableModel *aTableModel)
 {
-    aModel.setTable(aTableName);
-    aModel.setFilter(MemberFilter::build().withMemberId(aMemberId).createFilter());
-    aModel.select();
+    QSqlRecord record = aTableModel->record(0);
+    printSqlError(aTableModel->lastError());
+    return record;
+}
+
+void MemberDao::selectTableModel(QSqlTableModel *aModel, const QString &aColumnnameId, int aMemberId)
+{
+    QString filterId = QString("%1 = %2").arg(aColumnnameId).arg(aMemberId);
+    aModel->setFilter(filterId);
+    aModel->select();
 }
 
 void MemberDao::printSqlError(const QSqlError &anError)

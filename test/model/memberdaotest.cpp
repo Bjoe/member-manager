@@ -29,6 +29,25 @@ void MemberDaoTest::testFindByMemberId()
     QCOMPARE(member.getName(), QString("Kirk"));
 }
 
+void MemberDaoTest::testFindByRow()
+{
+    membermanager::model::MemberDao memberDao(QSqlDatabase::database());
+
+    membermanager::Member member = memberDao.findByRow(1);
+
+    QCOMPARE(member.getName(), QString("Spock"));
+}
+
+void MemberDaoTest::testGetModel()
+{
+    membermanager::model::MemberDao memberDao(QSqlDatabase::database());
+
+    QSqlTableModel *model = memberDao.modelWithFilter(true);
+    QCOMPARE(model->rowCount(), 1);
+    QSqlRecord record = model->record(0);
+    QCOMPARE(record.value("name").toString(), QString("Spock"));
+}
+
 void MemberDaoTest::testNewMember()
 {
     membermanager::model::MemberDao dao(QSqlDatabase::database());
@@ -57,7 +76,6 @@ void MemberDaoTest::testNewMember()
     query.exec(select + membermanager::model::RessourcenTable::TABLENAME + whereClause);
     QVERIFY(query.next());
 }
-
 
 void MemberDaoTest::testSaveRecord()
 {

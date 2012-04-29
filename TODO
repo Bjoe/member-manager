@@ -1,8 +1,7 @@
 /*! \mainpage TODO
  * 
- * \todo MemberModel nach MemberDao Refactoren (siehe ContributionDao)
  * \todo Member nach MemberEntry Refactoren.
- * \todo MemberFilter entfernen
+ * \todo MemberFactory refactoren
  * \todo namespace model nach dao refactoren
  * 
  * \todo Test Warnungen Fixen: connection 'qt_sql_default_connection' is still in use, all queries will cease to work.

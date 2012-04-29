@@ -26,9 +26,7 @@ set(QT_SRCS
     gui/contributiondialog.cpp
     gui/summarywindow.cpp
 
-    model/membermodel.cpp
     model/kassamodel.cpp
-    model/memberfilter.cpp
     model/databasestructure.cpp
     model/memberdao.cpp
     model/balancedao.cpp

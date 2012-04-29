@@ -1,10 +1,10 @@
 #include "gui/mainwindow.h"
 
 #include "memberfactory.h"
-#include "model/memberfilter.h"
 #include "gui/summarywindow.h"
 #include "cashsumsummary.h"
 #include "debitsumsummary.h"
+#include "model/databasestructure.h"
 
 namespace membermanager
 {
@@ -13,12 +13,31 @@ namespace gui
 
 MainWindow::MainWindow(const QSqlDatabase &aDatabase,
                        QWidget *parent) :
-    QMainWindow(parent), ui(), memberModel(this, aDatabase), memberDetailView(&ui, this), showDeleted(false)
+    QMainWindow(parent), ui(), memberModel(new QSqlTableModel(this, aDatabase)), memberDao(aDatabase, this), memberDetailView(&ui, this), showDeleted(false)
 {
     ui.setupUi(this);
 
-    ui.tableView->setModel(memberModel.getModel());
+    memberModel->setTable(model::MemberTable::TABLENAME);
+    memberModel->setObjectName(model::MemberTable::TABLENAME);
+    memberModel->setHeaderData(model::MemberTable::MemberId, Qt::Horizontal, tr("Nr."));
+    memberModel->setHeaderData(model::MemberTable::FirstName, Qt::Horizontal, tr("Vorname"));
+    memberModel->setHeaderData(model::MemberTable::Name, Qt::Horizontal, tr("Name"));
+    memberModel->setHeaderData(model::MemberTable::NickName, Qt::Horizontal, tr("Nickname"));
+    memberModel->setHeaderData(model::MemberTable::EntryDate, Qt::Horizontal, tr("Eintritts Datum"));
 
+    ui.tableView->setModel(memberModel);
+    ui.tableView->setColumnHidden(model::MemberTable::Deleted, true);
+    ui.tableView->setColumnHidden(model::MemberTable::FOO_CCC, true);
+    ui.tableView->setColumnHidden(model::MemberTable::FOO_ChaosNr, true);
+    ui.tableView->setColumnHidden(model::MemberTable::FOO_ClubAdress, true);
+    ui.tableView->setColumnHidden(model::MemberTable::FOO_Einzug, true);
+    ui.tableView->setColumnHidden(model::MemberTable::FOO_intern, true);
+    ui.tableView->setColumnHidden(model::MemberTable::FOO_Shell, true);
+    ui.tableView->setColumnHidden(model::MemberTable::Info, true);
+    ui.tableView->resizeColumnsToContents();
+
+    connect(ui.tableView->selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
+            SLOT(updateMemberDetailView(QItemSelection, QItemSelection)));
     showMembers();
 
     connect(ui.saldoButton, SIGNAL(clicked()), &memberDetailView, SLOT(showSaldoDialog()));
@@ -31,14 +50,14 @@ MainWindow::MainWindow(const QSqlDatabase &aDatabase,
     connect(ui.actionNewMember, SIGNAL(triggered()), SLOT(newMember()));
     connect(ui.actionSummary, SIGNAL(triggered()), SLOT(managerSummary()));
     //connect(ui.actionShowSaldo, SIGNAL(triggered()), SLOT(showSaldo()));
-   connect(ui.tableView->selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
-            SLOT(updateMemberDetailView(QItemSelection, QItemSelection)));
+
 }
 
 void MainWindow::newMember()
 {
     ui.tableView->selectionModel()->clearSelection();
-    memberDetailView.showMember(MemberFactory::createNewMember());
+    int id = memberDao.newMember();
+    memberDetailView.showMember(memberDao.findByMemberId(id));
 }
 
 void MainWindow::saveMember()
@@ -52,12 +71,12 @@ void MainWindow::saveMember()
 void MainWindow::updateMemberDetailView(const QItemSelection &aSelected, const QItemSelection &aDeselected)
 {
     QModelIndexList indexList = aSelected.indexes();
-    int id = 0;
+    Member member;
     if (indexList.size() > 0) {
         QModelIndex index = indexList.first();
-        id = memberModel.getMemberId(index.row());
+        int id = index.data().toInt();
+        member = memberDao.findByMemberId(id);
     }
-    Member member = MemberFactory::createMember(id);
     memberDetailView.showMember(member);
 }
 
@@ -74,7 +93,7 @@ void MainWindow::showMemberView()
     showMembers();
 }
 
-void MainWindow::showMembers(int aRow)
+void MainWindow::showMembers()
 {
     updateTableView();
 
@@ -88,21 +107,28 @@ void MainWindow::showMembers(int aRow)
         ui.actionShowDeletedMember->setChecked(false);
         ui.actionShowMember->setChecked(true);
     }
-    ui.tableView->selectRow(aRow);
-    int id = memberModel.getMemberId(aRow);
-    Member member = MemberFactory::createMember(id);
+    ui.tableView->selectRow(0);
+    Member member = memberDao.findByRow(0);
     memberDetailView.showMember(member);
 }
 
 void MainWindow::updateTableView()
 {
-    memberModel.setFilter(model::MemberFilter::build().withDeleted(showDeleted).createFilter());
-    ui.tableView->resizeColumnsToContents();
+    QString deleted = "'false'";
+    if(showDeleted) {
+        deleted = "'true'";
+    }
+
+    QString columnname = model::MemberTable::COLUMNNAME[model::MemberTable::Deleted];
+    QString filter = QString("%1 = %2").arg(columnname).arg(deleted);
+
+    memberModel->setFilter(filter);
+    memberModel->select();
 }
 
 void MainWindow::managerSummary()
 {
-    QList<Member> memberList = MemberFactory::createMemberList(memberModel.getModel());
+    QList<Member> memberList = MemberFactory::createMemberList(memberDao.modelWithFilter(showDeleted));
     CashSumSummary cashSum(memberList);
     DebitSumSummary debitSum(memberList);
 

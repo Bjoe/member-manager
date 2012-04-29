@@ -5,7 +5,6 @@
 
 #include "testconfig.h"
 #include "database/databaseutil.h"
-#include "model/membermodel.h"
 
 #include <QtSql>
 #include <QtGui>
@@ -27,6 +26,9 @@ void MainWindowTest::init()
 void MainWindowTest::testNewMember()
 {
     membermanager::gui::MainWindow mainWindow(QSqlDatabase::database());
+    QTableView *view = mainWindow.findChild<QTableView *> ("tableView");
+    QAbstractItemModel *model = view->model();
+    QCOMPARE(model->rowCount(), 1);
 
     QAction *actionNewMember = mainWindow.findChild<QAction *> (
                                    "actionNewMember");
@@ -36,8 +38,8 @@ void MainWindowTest::testNewMember()
                                            "actionShowDeletedMember");
     actionShowDeletedMember->trigger();
 
-    QTableView *view = mainWindow.findChild<QTableView *> ("tableView");
-    QAbstractItemModel *model = view->model();
+    view = mainWindow.findChild<QTableView *> ("tableView");
+    model = view->model();
     QCOMPARE(model->rowCount(), 2);
 }
 
