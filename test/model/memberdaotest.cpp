@@ -38,6 +38,17 @@ void MemberDaoTest::testFindByRow()
     QCOMPARE(member.getName(), QString("Spock"));
 }
 
+void MemberDaoTest::testFindByDeleted()
+{
+    membermanager::model::MemberDao memberDao(QSqlDatabase::database());
+
+    QList<membermanager::Member> memberList = memberDao.findByDeleted(true);
+
+    membermanager::Member member = memberList.at(0);
+
+    QCOMPARE(member.getName(), QString("Spock"));
+}
+
 void MemberDaoTest::testGetModel()
 {
     membermanager::model::MemberDao memberDao(QSqlDatabase::database());

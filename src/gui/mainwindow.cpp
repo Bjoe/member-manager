@@ -1,6 +1,5 @@
 #include "gui/mainwindow.h"
 
-#include "memberfactory.h"
 #include "gui/summarywindow.h"
 #include "cashsumsummary.h"
 #include "debitsumsummary.h"
@@ -122,7 +121,7 @@ void MainWindow::updateTableView()
 
 void MainWindow::managerSummary()
 {
-    QList<Member> memberList = MemberFactory::createMemberList(memberModel);
+    QList<Member> memberList = memberDao.findByDeleted(showDeleted);
     CashSumSummary cashSum(memberList);
     DebitSumSummary debitSum(memberList);
 

@@ -17,6 +17,7 @@ private slots:
     void initTestCase();
     void testFindByMemberId();
     void testFindByRow();
+    void testFindByDeleted();
     void testGetModel();
     void testNewMember();
     void testSaveRecord();

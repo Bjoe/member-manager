@@ -90,6 +90,30 @@ Member MemberDao::findByRow(int aRowNr)
     return member;
 }
 
+QList<Member> MemberDao::findByDeleted(bool isDeleted)
+{
+    QString deleted = "'false'";
+    if(isDeleted) {
+        deleted = "'true'";
+    }
+
+    QString columnname = model::MemberTable::COLUMNNAME[model::MemberTable::Deleted];
+    QString filter = QString("%1 = %2").arg(columnname).arg(deleted);
+
+    QSqlTableModel *tableModel = model();
+    tableModel->setFilter(filter);
+    tableModel->select();
+
+    QList<Member> list;
+    for(int row = 0; row < tableModel->rowCount(); row++) {
+        QModelIndex index = tableModel->index(row, model::MemberTable::MemberId);
+        QVariant variant = index.data();
+        Member member = findByMemberId(variant.toInt());
+        list.append(member);
+    }
+    return list;
+}
+
 QSqlTableModel *MemberDao::model()
 {
     QSqlTableModel *model = new QSqlTableModel();

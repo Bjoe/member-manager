@@ -36,7 +36,6 @@ set(QT_SRCS
     accounting/contributionentry.cpp
 
     member.cpp
-    memberfactory.cpp
     cashsumsummary.cpp
     debitsumsummary.cpp
     contributionreceipt.cpp

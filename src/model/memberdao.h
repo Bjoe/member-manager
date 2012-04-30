@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QString>
+#include <QList>
 #include <QtSql>
 
 #include "member.h"
@@ -23,6 +24,7 @@ public:
 
     Member findByMemberId(int aMemberId);
     Member findByRow(int aRowNr);
+    QList<Member> findByDeleted(bool isDeleted);
     QSqlTableModel *model();
 
     int newMember();

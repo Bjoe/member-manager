@@ -6,8 +6,8 @@
 #include "database/databaseutil.h"
 #include "model/databasestructure.h"
 #include "member.h"
-#include "memberfactory.h"
 #include "summarywriter.h"
+#include "model/memberdao.h"
 
 #include <QString>
 #include <QSqlTableModel>
@@ -39,7 +39,9 @@ void DebitSumSummaryTest::testDebitSum()
     model.setTable(membermanager::model::MemberTable::TABLENAME);
     model.select();
 
-    QList<membermanager::Member> memberList = membermanager::MemberFactory::createMemberList(&model);
+    membermanager::model::MemberDao memberDao;
+    QList<membermanager::Member> memberList = memberDao.findByDeleted(false);
+
     membermanager::DebitSumSummary debitSum(memberList);
 
     QCOMPARE(debitSum.getTitle(), QString("Saldo"));
