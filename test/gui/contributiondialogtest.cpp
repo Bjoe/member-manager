@@ -4,7 +4,7 @@
 
 #include "testconfig.h"
 #include "database/databaseutil.h"
-#include "model/databasestructure.h"
+#include "dao/databasestructure.h"
 
 #include <QTableView>
 #include <QModelIndex>
@@ -33,7 +33,7 @@ void ContributionDialogTest::testShowDialog()
     const QAbstractItemModel *model = tableView->model();
     QVERIFY(model != 0);
     QCOMPARE(model->rowCount(), 5);
-    using membermanager::model::ContributionTable;
+    using membermanager::dao::ContributionTable;
     const QModelIndex index = model->index(0, ContributionTable::ValidFrom -1);
     const QVariant value = model->data(index);
     QCOMPARE(value.toString(), QString("2009-03-10"));

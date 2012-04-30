@@ -1,10 +1,10 @@
 #include "kassamodeltest.h"
 
-#include "model/kassamodel.h"
+#include "dao/kassamodel.h"
 
 #include "testconfig.h"
 #include "database/databaseutil.h"
-#include "model/databasestructure.h"
+#include "dao/databasestructure.h"
 
 #include <QSqlTableModel>
 #include <QSqlRecord>
@@ -12,7 +12,7 @@
 
 namespace membermanagertest
 {
-namespace model
+namespace dao
 {
 
 void KassaModelTest::initTestCase()
@@ -24,9 +24,9 @@ void KassaModelTest::initTestCase()
 
 void KassaModelTest::testModel()
 {
-    membermanager::model::KassaModel kassaModel(QSqlDatabase::database());
+    membermanager::dao::KassaModel kassaModel(QSqlDatabase::database());
 
-    using membermanager::model::KassaTable;
+    using membermanager::dao::KassaTable;
     const QSqlTableModel *model = kassaModel.findChild<QSqlTableModel *> (KassaTable::TABLENAME);
     QVERIFY(model);
     QCOMPARE(model->rowCount(), 3);
@@ -37,5 +37,5 @@ void KassaModelTest::testModel()
 }
 }
 
-QTEST_MAIN(membermanagertest::model::KassaModelTest)
+QTEST_MAIN(membermanagertest::dao::KassaModelTest)
 #include "kassamodeltest.moc"

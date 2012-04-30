@@ -1,7 +1,5 @@
 /*! \mainpage TODO
  * 
- * \todo namespace model nach dao refactoren
- * 
  * \todo Test Warnungen Fixen: connection 'qt_sql_default_connection' is still in use, all queries will cease to work.
  * \todo Einpaar Denglische Datenbankfelder und member attribute auf Englisch Refactoren.
  * \todo Einige unsinnige Datenbankfelder rauswerfen und Tabellen mergen. Wird erst nach der ersten lauffaehigen Version umgesetzt damit Parrallel mit der alten Perl Applikation weiter gearbeitet werden kann.

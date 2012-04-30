@@ -1,9 +1,9 @@
-#include "model/memberdao.h"
-#include "model/databasestructure.h"
+#include "dao/memberdao.h"
+#include "dao/databasestructure.h"
 
 namespace membermanager
 {
-namespace model
+namespace dao
 {
 
 MemberDao::MemberDao(const QSqlDatabase &aDatabase, QObject *aParent) :
@@ -13,18 +13,18 @@ MemberDao::MemberDao(const QSqlDatabase &aDatabase, QObject *aParent) :
     bankModel(new QSqlTableModel(aParent, aDatabase)),
     addressModel(new QSqlTableModel(aParent, aDatabase))
 {
-    memberModel->setTable(model::MemberTable::TABLENAME);
-    memberModel->setObjectName(model::MemberTable::TABLENAME);
+    memberModel->setTable(dao::MemberTable::TABLENAME);
+    memberModel->setObjectName(dao::MemberTable::TABLENAME);
     memberModel->select();
 
-    ressourcenModel->setTable(model::RessourcenTable::TABLENAME);
-    ressourcenModel->setObjectName(model::RessourcenTable::TABLENAME);
+    ressourcenModel->setTable(dao::RessourcenTable::TABLENAME);
+    ressourcenModel->setObjectName(dao::RessourcenTable::TABLENAME);
 
-    bankModel->setTable(model::BankAccountTable::TABLENAME);
-    bankModel->setObjectName(model::BankAccountTable::TABLENAME);
+    bankModel->setTable(dao::BankAccountTable::TABLENAME);
+    bankModel->setObjectName(dao::BankAccountTable::TABLENAME);
 
-    addressModel->setTable(model::AddressTable::TABLENAME);
-    addressModel->setObjectName(model::AddressTable::TABLENAME);
+    addressModel->setTable(dao::AddressTable::TABLENAME);
+    addressModel->setObjectName(dao::AddressTable::TABLENAME);
 }
 
 bool MemberDao::saveRecord(const Member &aMember)
@@ -33,19 +33,19 @@ bool MemberDao::saveRecord(const Member &aMember)
     bool successful = true;
 
     QSqlRecord record = aMember.memberRecord;
-    QString columnId = model::MemberTable::COLUMNNAME[model::MemberTable::MemberId];
+    QString columnId = dao::MemberTable::COLUMNNAME[dao::MemberTable::MemberId];
     selectTableModel(memberModel, columnId, memberId);
     successful &= saveRecordOnModel(memberModel, record);
 
-    selectTableModel(ressourcenModel, model::RessourcenTable::COLUMNNAME[model::RessourcenTable::MemberId], memberId);
+    selectTableModel(ressourcenModel, dao::RessourcenTable::COLUMNNAME[dao::RessourcenTable::MemberId], memberId);
     record = aMember.ressourcenRecord;
     successful &= saveRecordOnModel(ressourcenModel, record);
 
-    selectTableModel(bankModel, model::BankAccountTable::COLUMNNAME[model::BankAccountTable::MemberId], memberId);
+    selectTableModel(bankModel, dao::BankAccountTable::COLUMNNAME[dao::BankAccountTable::MemberId], memberId);
     record = aMember.bankRecord;
     successful &= saveRecordOnModel(bankModel, record);
 
-    selectTableModel(addressModel, model::AddressTable::COLUMNNAME[model::AddressTable::MemberId], memberId);
+    selectTableModel(addressModel, dao::AddressTable::COLUMNNAME[dao::AddressTable::MemberId], memberId);
     record = aMember.addressRecord;
     successful &= saveRecordOnModel(addressModel, record);
 
@@ -56,16 +56,16 @@ Member MemberDao::findByMemberId(int aMemberId)
 {
     Member member;
 
-    selectTableModel(addressModel, model::AddressTable::COLUMNNAME[model::AddressTable::MemberId], aMemberId);
+    selectTableModel(addressModel, dao::AddressTable::COLUMNNAME[dao::AddressTable::MemberId], aMemberId);
     member.addressRecord = record(addressModel);
 
-    selectTableModel(bankModel, model::BankAccountTable::COLUMNNAME[model::BankAccountTable::MemberId], aMemberId);
+    selectTableModel(bankModel, dao::BankAccountTable::COLUMNNAME[dao::BankAccountTable::MemberId], aMemberId);
     member.bankRecord = record(bankModel);
 
-    selectTableModel(ressourcenModel, model::RessourcenTable::COLUMNNAME[model::RessourcenTable::MemberId], aMemberId);
+    selectTableModel(ressourcenModel, dao::RessourcenTable::COLUMNNAME[dao::RessourcenTable::MemberId], aMemberId);
     member.ressourcenRecord = record(ressourcenModel);
 
-    selectTableModel(memberModel, model::MemberTable::COLUMNNAME[model::MemberTable::MemberId], aMemberId);
+    selectTableModel(memberModel, dao::MemberTable::COLUMNNAME[dao::MemberTable::MemberId], aMemberId);
     member.memberRecord = record(memberModel);
 
     return member;
@@ -78,13 +78,13 @@ Member MemberDao::findByRow(int aRowNr)
     member.memberRecord = memberModel->record(aRowNr);
 
     int memberId = member.getMemberId();
-    selectTableModel(bankModel, model::BankAccountTable::COLUMNNAME[model::BankAccountTable::MemberId], memberId);
+    selectTableModel(bankModel, dao::BankAccountTable::COLUMNNAME[dao::BankAccountTable::MemberId], memberId);
     member.bankRecord = record(bankModel);
 
-    selectTableModel(ressourcenModel, model::RessourcenTable::COLUMNNAME[model::RessourcenTable::MemberId], memberId);
+    selectTableModel(ressourcenModel, dao::RessourcenTable::COLUMNNAME[dao::RessourcenTable::MemberId], memberId);
     member.ressourcenRecord = record(ressourcenModel);
 
-    selectTableModel(memberModel, model::MemberTable::COLUMNNAME[model::MemberTable::MemberId], memberId);
+    selectTableModel(memberModel, dao::MemberTable::COLUMNNAME[dao::MemberTable::MemberId], memberId);
     member.memberRecord = record(memberModel);
 
     return member;
@@ -97,7 +97,7 @@ QList<Member> MemberDao::findByDeleted(bool isDeleted)
         deleted = "'true'";
     }
 
-    QString columnname = model::MemberTable::COLUMNNAME[model::MemberTable::Deleted];
+    QString columnname = dao::MemberTable::COLUMNNAME[dao::MemberTable::Deleted];
     QString filter = QString("%1 = %2").arg(columnname).arg(deleted);
 
     QSqlTableModel *tableModel = model();
@@ -106,7 +106,7 @@ QList<Member> MemberDao::findByDeleted(bool isDeleted)
 
     QList<Member> list;
     for(int row = 0; row < tableModel->rowCount(); row++) {
-        QModelIndex index = tableModel->index(row, model::MemberTable::MemberId);
+        QModelIndex index = tableModel->index(row, dao::MemberTable::MemberId);
         QVariant variant = index.data();
         Member member = findByMemberId(variant.toInt());
         list.append(member);
@@ -117,8 +117,8 @@ QList<Member> MemberDao::findByDeleted(bool isDeleted)
 QSqlTableModel *MemberDao::model()
 {
     QSqlTableModel *model = new QSqlTableModel();
-    model->setTable(model::MemberTable::TABLENAME);
-    model->setObjectName(model::MemberTable::TABLENAME);
+    model->setTable(dao::MemberTable::TABLENAME);
+    model->setObjectName(dao::MemberTable::TABLENAME);
     model->setHeaderData(MemberTable::MemberId, Qt::Horizontal, memberModel->tr("Nr."));
     model->setHeaderData(MemberTable::FirstName, Qt::Horizontal, memberModel->tr("Vorname"));
     model->setHeaderData(MemberTable::Name, Qt::Horizontal, memberModel->tr("Name"));

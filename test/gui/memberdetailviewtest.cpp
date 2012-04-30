@@ -4,7 +4,7 @@
 
 #include "ui_mainwindow.h"
 #include "member.h"
-#include "model/databasestructure.h"
+#include "dao/databasestructure.h"
 #include "testconfig.h"
 #include "triggerthread.h"
 #include "gui/dialogbuttonboxhandler.h"
@@ -233,12 +233,12 @@ void MemberDetailViewTest::testChangeMember()
     QVERIFY(deleted->isChecked() == true);
     QVERIFY(collection->isChecked() == false);
 
-    using membermanager::model::MemberTable;
+    using membermanager::dao::MemberTable;
     const QString whereClause = QString(" where %1=%2").arg(
                                     MemberTable::COLUMNNAME[MemberTable::MemberId])
                                 .arg(1025);
 
-    using membermanager::model::MemberTable;
+    using membermanager::dao::MemberTable;
     QSqlQuery query;
     query.exec("select * from " + MemberTable::TABLENAME + whereClause);
     query.next();
@@ -250,14 +250,14 @@ void MemberDetailViewTest::testChangeMember()
     QVERIFY(query.value(MemberTable::Deleted).toBool() == true);
     QVERIFY(query.value(MemberTable::FOO_Einzug).toBool() == false);
 
-    using membermanager::model::AddressTable;
+    using membermanager::dao::AddressTable;
     query.exec("select * from " + AddressTable::TABLENAME + whereClause);
     query.next();
     QCOMPARE(query.value(AddressTable::Street).toString(), QString("NCC-1701"));
     QCOMPARE(query.value(AddressTable::ZipCode).toString(), QString("98765"));
     QCOMPARE(query.value(AddressTable::Town).toString(), QString("Dtown"));
 
-    using membermanager::model::ContributionTable;
+    using membermanager::dao::ContributionTable;
     query.exec("select * from " + ContributionTable::TABLENAME + whereClause +
                " order by " + ContributionTable::COLUMNNAME[ContributionTable::ValidFrom] + " desc");
     query.next();
@@ -265,14 +265,14 @@ void MemberDetailViewTest::testChangeMember()
     QCOMPARE(query.value(ContributionTable::Donation).toInt(), 100);
     QCOMPARE(query.value(ContributionTable::Info).toString(), QString("Kohle"));
 
-    using membermanager::model::BankAccountTable;
+    using membermanager::dao::BankAccountTable;
     query.exec("select * from " + BankAccountTable::TABLENAME + whereClause);
     query.next();
     QCOMPARE(query.value(BankAccountTable::Code).toInt(), 98765432);
     QCOMPARE(query.value(BankAccountTable::AccountNr).toInt(), 123456789);
     QCOMPARE(query.value(BankAccountTable::BankName).toString(), QString("Galaxy"));
 
-    using membermanager::model::RessourcenTable;
+    using membermanager::dao::RessourcenTable;
     query.exec("select * from " + RessourcenTable::TABLENAME + whereClause);
     query.next();
     QCOMPARE(query.value(RessourcenTable::EmailAdress).toString(), QString("foo@bar.tx"));
@@ -393,12 +393,12 @@ void MemberDetailViewTest::testChangeMemberWithNewContribution()
     QCOMPARE(code->text(), QString("98765432"));
     QCOMPARE(info->toPlainText(), QString("Lalala"));
 
-    using membermanager::model::MemberTable;
+    using membermanager::dao::MemberTable;
     const QString whereClause = QString(" where %1=%2").arg(
                                     MemberTable::COLUMNNAME[MemberTable::MemberId])
                                 .arg(1025);
 
-    using membermanager::model::MemberTable;
+    using membermanager::dao::MemberTable;
     QSqlQuery query;
     query.exec("select * from " + MemberTable::TABLENAME + whereClause);
     query.next();
@@ -407,14 +407,14 @@ void MemberDetailViewTest::testChangeMemberWithNewContribution()
     QCOMPARE(query.value(MemberTable::NickName).toString(), QString("Captain"));
     QCOMPARE(query.value(MemberTable::Info).toString(), QString("Lalala"));
 
-    using membermanager::model::AddressTable;
+    using membermanager::dao::AddressTable;
     query.exec("select * from " + AddressTable::TABLENAME + whereClause);
     query.next();
     QCOMPARE(query.value(AddressTable::Street).toString(), QString("NCC-1701"));
     QCOMPARE(query.value(AddressTable::ZipCode).toString(), QString("98765"));
     QCOMPARE(query.value(AddressTable::Town).toString(), QString("Dtown"));
 
-    using membermanager::model::ContributionTable;
+    using membermanager::dao::ContributionTable;
     query.exec("select * from " + ContributionTable::TABLENAME + whereClause +
                " order by " + ContributionTable::COLUMNNAME[ContributionTable::ValidFrom] + " desc");
     query.next();
@@ -422,14 +422,14 @@ void MemberDetailViewTest::testChangeMemberWithNewContribution()
     QCOMPARE(query.value(ContributionTable::Donation).toInt(), 0);
     QCOMPARE(query.value(ContributionTable::Info).toString(), QString("Beitragsänderung"));
 
-    using membermanager::model::BankAccountTable;
+    using membermanager::dao::BankAccountTable;
     query.exec("select * from " + BankAccountTable::TABLENAME + whereClause);
     query.next();
     QCOMPARE(query.value(BankAccountTable::Code).toInt(), 98765432);
     QCOMPARE(query.value(BankAccountTable::AccountNr).toInt(), 123456789);
     QCOMPARE(query.value(BankAccountTable::BankName).toString(), QString("Galaxy"));
 
-    using membermanager::model::RessourcenTable;
+    using membermanager::dao::RessourcenTable;
     query.exec("select * from " + RessourcenTable::TABLENAME + whereClause);
     query.next();
     QCOMPARE(query.value(RessourcenTable::EmailAdress).toString(), QString("foo@bar.tx"));

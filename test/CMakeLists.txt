@@ -33,7 +33,7 @@ set(test_additional
 )
 
 add_subdirectory(gui)
-add_subdirectory(model)
+add_subdirectory(dao)
 add_subdirectory(accounting)
 
 qt4_add_test(member membertest.cpp)

@@ -4,8 +4,8 @@
 #include <QDate>
 #include <QMap>
 
-#include "model/contributiondao.h"
-#include "model/balancedao.h"
+#include "dao/contributiondao.h"
+#include "dao/balancedao.h"
 #include "accounting/contributionentry.h"
 #include "accounting/balanceentry.h"
 
@@ -30,8 +30,8 @@ void CashSumSummary::setWriter(SummaryWriter *aWriter)
 void CashSumSummary::handleHtmlText()
 {
     QDate date = QDate::currentDate();
-    model::ContributionDao contributionDao(QSqlDatabase::database());
-    model::BalanceDao balanceDao(QSqlDatabase::database());
+    dao::ContributionDao contributionDao(QSqlDatabase::database());
+    dao::BalanceDao balanceDao(QSqlDatabase::database());
     QMap<double, double> sumMap;
     QMap<double, int> countMember;
     double total = 0;

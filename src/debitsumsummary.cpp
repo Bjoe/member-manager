@@ -2,7 +2,7 @@
 
 #include <QSqlDatabase>
 
-#include "model/balancedao.h"
+#include "dao/balancedao.h"
 #include "accounting/balanceentry.h"
 
 namespace membermanager
@@ -25,7 +25,7 @@ void DebitSumSummary::setWriter(SummaryWriter *aWriter)
 
 void DebitSumSummary::handleHtmlText()
 {
-    model::BalanceDao balanceDao(QSqlDatabase::database());
+    dao::BalanceDao balanceDao(QSqlDatabase::database());
 
     double saldoSum = 0;
     foreach(Member member, memberList) {

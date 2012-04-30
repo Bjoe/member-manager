@@ -1,16 +1,16 @@
 #include "memberdaotest.h"
 
-#include "model/memberdao.h"
+#include "dao/memberdao.h"
 
 #include "testconfig.h"
-#include "model/databasestructure.h"
+#include "dao/databasestructure.h"
 #include "database/databaseutil.h"
 
 #include "member.h"
 
 namespace membermanagertest
 {
-namespace model
+namespace dao
 {
 
 void MemberDaoTest::initTestCase()
@@ -22,7 +22,7 @@ void MemberDaoTest::initTestCase()
 
 void MemberDaoTest::testFindByMemberId()
 {
-    membermanager::model::MemberDao memberDao(QSqlDatabase::database());
+    membermanager::dao::MemberDao memberDao(QSqlDatabase::database());
 
     membermanager::Member member = memberDao.findByMemberId(1025);
 
@@ -31,7 +31,7 @@ void MemberDaoTest::testFindByMemberId()
 
 void MemberDaoTest::testFindByRow()
 {
-    membermanager::model::MemberDao memberDao(QSqlDatabase::database());
+    membermanager::dao::MemberDao memberDao(QSqlDatabase::database());
 
     membermanager::Member member = memberDao.findByRow(1);
 
@@ -40,7 +40,7 @@ void MemberDaoTest::testFindByRow()
 
 void MemberDaoTest::testFindByDeleted()
 {
-    membermanager::model::MemberDao memberDao(QSqlDatabase::database());
+    membermanager::dao::MemberDao memberDao(QSqlDatabase::database());
 
     QList<membermanager::Member> memberList = memberDao.findByDeleted(true);
 
@@ -51,7 +51,7 @@ void MemberDaoTest::testFindByDeleted()
 
 void MemberDaoTest::testGetModel()
 {
-    membermanager::model::MemberDao memberDao(QSqlDatabase::database());
+    membermanager::dao::MemberDao memberDao(QSqlDatabase::database());
 
     QSqlTableModel *model = memberDao.model();
     QCOMPARE(model->rowCount(), 2);
@@ -61,11 +61,11 @@ void MemberDaoTest::testGetModel()
 
 void MemberDaoTest::testNewMember()
 {
-    membermanager::model::MemberDao dao(QSqlDatabase::database());
+    membermanager::dao::MemberDao dao(QSqlDatabase::database());
     int id = dao.newMember();
     QVERIFY(id);
 
-    using membermanager::model::MemberTable;
+    using membermanager::dao::MemberTable;
     const QString whereClause = QString(" where %1=%2").arg(
                                     MemberTable::COLUMNNAME[MemberTable::MemberId])
                                 .arg(id);
@@ -75,22 +75,22 @@ void MemberDaoTest::testNewMember()
     query.exec(select + MemberTable::TABLENAME + whereClause);
     QVERIFY(query.next());
 
-    query.exec(select + membermanager::model::AddressTable::TABLENAME + whereClause);
+    query.exec(select + membermanager::dao::AddressTable::TABLENAME + whereClause);
     QVERIFY(query.next());
 
-    query.exec(select + membermanager::model::BankAccountTable::TABLENAME + whereClause);
+    query.exec(select + membermanager::dao::BankAccountTable::TABLENAME + whereClause);
     QVERIFY(query.next());
 
-    query.exec(select + membermanager::model::ContributionTable::TABLENAME + whereClause);
+    query.exec(select + membermanager::dao::ContributionTable::TABLENAME + whereClause);
     QVERIFY(query.next());
 
-    query.exec(select + membermanager::model::RessourcenTable::TABLENAME + whereClause);
+    query.exec(select + membermanager::dao::RessourcenTable::TABLENAME + whereClause);
     QVERIFY(query.next());
 }
 
 void MemberDaoTest::testSaveRecord()
 {
-    membermanager::model::MemberDao dao(QSqlDatabase::database());
+    membermanager::dao::MemberDao dao(QSqlDatabase::database());
     membermanager::Member member = dao.findByMemberId(1025);
 
     QCOMPARE(member.getMemberId(), 1025);
@@ -130,7 +130,7 @@ void MemberDaoTest::testSaveRecord()
 
     const QString whereClause(" where dorfmitglied_pkey=1025");
 
-    using membermanager::model::MemberTable;
+    using membermanager::dao::MemberTable;
     QSqlQuery query;
     query.exec("select * from " + MemberTable::TABLENAME + whereClause);
     query.next();
@@ -142,21 +142,21 @@ void MemberDaoTest::testSaveRecord()
     QVERIFY(query.value(MemberTable::FOO_Einzug).toBool() == false);
     QVERIFY(query.value(MemberTable::Deleted).toBool() == false);
 
-    using membermanager::model::AddressTable;
+    using membermanager::dao::AddressTable;
     query.exec("select * from " + AddressTable::TABLENAME + whereClause);
     query.next();
     QCOMPARE(query.value(AddressTable::Street).toString(), QString("NCC-1701"));
     QCOMPARE(query.value(AddressTable::ZipCode).toString(), QString("98765"));
     QCOMPARE(query.value(AddressTable::Town).toString(), QString("Dtown"));
 
-    using membermanager::model::BankAccountTable;
+    using membermanager::dao::BankAccountTable;
     query.exec("select * from " + BankAccountTable::TABLENAME + whereClause);
     query.next();
     QCOMPARE(query.value(BankAccountTable::Code).toInt(), 98765432);
     QCOMPARE(query.value(BankAccountTable::AccountNr).toInt(), 123456789);
     QCOMPARE(query.value(BankAccountTable::BankName).toString(), QString("Galaxy"));
 
-    using membermanager::model::RessourcenTable;
+    using membermanager::dao::RessourcenTable;
     query.exec("select * from " + RessourcenTable::TABLENAME + whereClause);
     query.next();
     QCOMPARE(query.value(RessourcenTable::EmailAdress).toString(), QString("foo@bar.tx"));
@@ -165,7 +165,7 @@ void MemberDaoTest::testSaveRecord()
 void MemberDaoTest::testDeleteMember()
 {
     int id = 1025;
-    using membermanager::model::MemberTable;
+    using membermanager::dao::MemberTable;
     const QString whereClause = QString(" where %1=%2").arg(
                                     MemberTable::COLUMNNAME[MemberTable::MemberId])
                                 .arg(id);
@@ -175,7 +175,7 @@ void MemberDaoTest::testDeleteMember()
     query.next();
     QVERIFY(!query.value(MemberTable::Deleted).toBool());
 
-    membermanager::model::MemberDao dao(QSqlDatabase::database());
+    membermanager::dao::MemberDao dao(QSqlDatabase::database());
     dao.deleteMember(id);
 
     query.exec();
@@ -191,5 +191,5 @@ void MemberDaoTest::testDeleteMember()
 }
 }
 
-QTEST_MAIN(membermanagertest::model::MemberDaoTest)
+QTEST_MAIN(membermanagertest::dao::MemberDaoTest)
 #include "memberdaotest.moc"

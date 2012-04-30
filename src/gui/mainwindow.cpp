@@ -3,7 +3,7 @@
 #include "gui/summarywindow.h"
 #include "cashsumsummary.h"
 #include "debitsumsummary.h"
-#include "model/databasestructure.h"
+#include "dao/databasestructure.h"
 
 namespace membermanager
 {
@@ -17,14 +17,14 @@ MainWindow::MainWindow(const QSqlDatabase &aDatabase,
     ui.setupUi(this);
 
     ui.tableView->setModel(memberModel);
-    ui.tableView->setColumnHidden(model::MemberTable::Deleted, true);
-    ui.tableView->setColumnHidden(model::MemberTable::FOO_CCC, true);
-    ui.tableView->setColumnHidden(model::MemberTable::FOO_ChaosNr, true);
-    ui.tableView->setColumnHidden(model::MemberTable::FOO_ClubAdress, true);
-    ui.tableView->setColumnHidden(model::MemberTable::FOO_Einzug, true);
-    ui.tableView->setColumnHidden(model::MemberTable::FOO_intern, true);
-    ui.tableView->setColumnHidden(model::MemberTable::FOO_Shell, true);
-    ui.tableView->setColumnHidden(model::MemberTable::Info, true);
+    ui.tableView->setColumnHidden(dao::MemberTable::Deleted, true);
+    ui.tableView->setColumnHidden(dao::MemberTable::FOO_CCC, true);
+    ui.tableView->setColumnHidden(dao::MemberTable::FOO_ChaosNr, true);
+    ui.tableView->setColumnHidden(dao::MemberTable::FOO_ClubAdress, true);
+    ui.tableView->setColumnHidden(dao::MemberTable::FOO_Einzug, true);
+    ui.tableView->setColumnHidden(dao::MemberTable::FOO_intern, true);
+    ui.tableView->setColumnHidden(dao::MemberTable::FOO_Shell, true);
+    ui.tableView->setColumnHidden(dao::MemberTable::Info, true);
 
     showMembers();
 
@@ -109,7 +109,7 @@ void MainWindow::updateTableView()
         deleted = "'true'";
     }
 
-    QString columnname = model::MemberTable::COLUMNNAME[model::MemberTable::Deleted];
+    QString columnname = dao::MemberTable::COLUMNNAME[dao::MemberTable::Deleted];
     QString filter = QString("%1 = %2").arg(columnname).arg(deleted);
 
     memberModel->setFilter(filter);

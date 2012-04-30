@@ -4,13 +4,13 @@
 #include <QVariant>
 #include <QSqlField>
 
-#include "model/databasestructure.h"
+#include "dao/databasestructure.h"
 
 namespace membermanager
 {
 namespace accounting
 {
-using model::SaldoTable;
+using dao::SaldoTable;
 
 BalanceEntry::BalanceEntry(int aMemberId) : balanceRecord()
 {

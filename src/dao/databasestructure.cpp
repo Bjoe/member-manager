@@ -1,8 +1,8 @@
-#include "model/databasestructure.h"
+#include "dao/databasestructure.h"
 
 namespace membermanager
 {
-namespace model
+namespace dao
 {
 
 const QString AddressTable::TABLENAME = "adresse";

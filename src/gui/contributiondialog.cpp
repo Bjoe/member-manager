@@ -1,7 +1,7 @@
 #include "gui/contributiondialog.h"
 
 #include <QModelIndex>
-#include "model/databasestructure.h"
+#include "dao/databasestructure.h"
 
 namespace membermanager
 {
@@ -18,9 +18,9 @@ ContributionDialog::ContributionDialog(int aMemberId, QWidget *parent) :
     QSqlTableModel *model = contributionDao.getModelByMemberId(memberId);
     ui.contributionTableView->setModel(model);
 
-    ui.contributionTableView->hideColumn(model::ContributionTable::ContributionId);
-    ui.contributionTableView->hideColumn(model::ContributionTable::MemberId);
-    ui.contributionTableView->sortByColumn(model::ContributionTable::ValidFrom -1, Qt::DescendingOrder);
+    ui.contributionTableView->hideColumn(dao::ContributionTable::ContributionId);
+    ui.contributionTableView->hideColumn(dao::ContributionTable::MemberId);
+    ui.contributionTableView->sortByColumn(dao::ContributionTable::ValidFrom -1, Qt::DescendingOrder);
 
     ui.contributionTableView->resizeColumnsToContents();
 

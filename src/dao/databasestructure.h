@@ -6,7 +6,7 @@
 
 namespace membermanager
 {
-namespace model
+namespace dao
 {
 
 class AddressTable

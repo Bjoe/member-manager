@@ -1,9 +1,9 @@
 #include "balancedao.h"
 
-#include "model/databasestructure.h"
+#include "dao/databasestructure.h"
 
 namespace membermanager {
-namespace model {
+namespace dao {
 
 BalanceDao::BalanceDao(const QSqlDatabase &aDatabase, QObject *aParent) : model(new QSqlTableModel(aParent, aDatabase))
 {

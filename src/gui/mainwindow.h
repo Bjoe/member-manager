@@ -5,7 +5,7 @@
 
 #include "ui_mainwindow.h"
 #include "gui/memberdetailview.h"
-#include "model/memberdao.h"
+#include "dao/memberdao.h"
 
 namespace membermanager
 {
@@ -30,7 +30,7 @@ private slots:
 
 private:
     Ui::MainWindow ui;
-    model::MemberDao memberDao;
+    dao::MemberDao memberDao;
     MemberDetailView memberDetailView;
     QSqlTableModel *memberModel;
     bool showDeleted;

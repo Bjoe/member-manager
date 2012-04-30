@@ -8,7 +8,7 @@
 
 namespace membermanager
 {
-namespace model
+namespace dao
 {
 
 class KassaModel: public QObject

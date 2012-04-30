@@ -5,7 +5,7 @@
 
 #include "ui_balancedialog.h"
 
-#include "model/balancedao.h"
+#include "dao/balancedao.h"
 
 namespace membermanager
 {
@@ -24,7 +24,7 @@ private slots:
     void calculateSum();
 
 private:
-    model::BalanceDao balanceDao;
+    dao::BalanceDao balanceDao;
     Ui::BalanceDialogClass ui;
     int memberId;
 };

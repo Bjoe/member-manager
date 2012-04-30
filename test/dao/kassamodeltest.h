@@ -6,7 +6,7 @@
 
 namespace membermanagertest
 {
-namespace model
+namespace dao
 {
 /// \todo rename Kassa in Cash
 class KassaModelTest: public qttestutil::TestCoverageObject

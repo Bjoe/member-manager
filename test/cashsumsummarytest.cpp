@@ -3,11 +3,11 @@
 #include "cashsumsummary.h"
 
 #include "testconfig.h"
-#include "model/databasestructure.h"
+#include "dao/databasestructure.h"
 #include "database/databaseutil.h"
 #include "member.h"
 #include "summarywriter.h"
-#include "model/memberdao.h"
+#include "dao/memberdao.h"
 
 #include <QString>
 #include <QSqlTableModel>
@@ -36,7 +36,7 @@ void CashSumSummaryTest::testCashSum()
         }
     } writer;
 
-    membermanager::model::MemberDao memberDao;
+    membermanager::dao::MemberDao memberDao;
     QList<membermanager::Member> memberList = memberDao.findByDeleted(false);
 
     membermanager::CashSumSummary cashSum(memberList);

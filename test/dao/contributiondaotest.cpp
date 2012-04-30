@@ -1,6 +1,6 @@
 #include "contributiondaotest.h"
 
-#include "model/contributiondao.h"
+#include "dao/contributiondao.h"
 
 #include <QDate>
 #include <QSqlRecord>
@@ -8,17 +8,17 @@
 
 #include "accounting/contributionentry.h"
 
-#include "model/databasestructure.h"
+#include "dao/databasestructure.h"
 
 #include "testconfig.h"
 #include "database/databaseutil.h"
 
-using membermanager::model::ContributionDao;
-using membermanager::model::ContributionTable;
+using membermanager::dao::ContributionDao;
+using membermanager::dao::ContributionTable;
 using membermanager::accounting::ContributionEntry;
 
 namespace membermanagertest {
-namespace model {
+namespace dao {
 
 void ContributionDaoTest::initTestCase()
 {
@@ -97,5 +97,5 @@ void ContributionDaoTest::testInsertNewEmptyRowAndDeletRow()
 } // namespace model
 } // namespace membermanagertest
 
-QTEST_MAIN(membermanagertest::model::ContributionDaoTest)
+QTEST_MAIN(membermanagertest::dao::ContributionDaoTest)
 #include "contributiondaotest.moc"

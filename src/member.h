@@ -5,11 +5,11 @@
 #include <QDate>
 #include <QSqlRecord>
 
-#include "model/memberdao.h"
+#include "dao/memberdao.h"
 
 namespace membermanager
 {
-namespace model { class MemberDao; }
+namespace dao { class MemberDao; }
 
 /// \todo Refactor, rename to MemberEntry
 class Member
@@ -50,7 +50,7 @@ public:
     bool isDeleted() const;
     void setDeleted(bool aDeleted);
 
-    friend class model::MemberDao;
+    friend class dao::MemberDao;
 
 private:
     QSqlRecord memberRecord;

@@ -2,7 +2,7 @@
 
 #include "member.h"
 
-#include "model/memberdao.h"
+#include "dao/memberdao.h"
 
 #include "testconfig.h"
 #include "database/databaseutil.h"
@@ -19,7 +19,7 @@ void MemberTest::initTestCase()
 
 void MemberTest::testGetMember()
 {
-    membermanager::model::MemberDao memberDao(QSqlDatabase::database());
+    membermanager::dao::MemberDao memberDao(QSqlDatabase::database());
     membermanager::Member member = memberDao.findByMemberId(1025);
 
     QCOMPARE(member.getMemberId(), 1025);
@@ -42,7 +42,7 @@ void MemberTest::testGetMember()
 
 void MemberTest::testSetMember()
 {
-    membermanager::model::MemberDao memberDao(QSqlDatabase::database());
+    membermanager::dao::MemberDao memberDao(QSqlDatabase::database());
     membermanager::Member member = memberDao.findByMemberId(1025);
 
     member.setName("Archer");

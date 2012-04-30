@@ -4,7 +4,7 @@
 
 #include <QDate>
 
-#include "model/balancedao.h"
+#include "dao/balancedao.h"
 
 namespace membermanagertest
 {

@@ -12,7 +12,7 @@ namespace membermanager
 {
 class Member;
 
-namespace model
+namespace dao
 {
 
 class MemberDao

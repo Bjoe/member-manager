@@ -6,7 +6,7 @@
 
 namespace membermanagertest
 {
-namespace model
+namespace dao
 {
 
 class MemberDaoTest : public qttestutil::TestCoverageObject

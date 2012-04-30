@@ -26,11 +26,11 @@ set(QT_SRCS
     gui/contributiondialog.cpp
     gui/summarywindow.cpp
 
-    model/kassamodel.cpp
-    model/databasestructure.cpp
-    model/memberdao.cpp
-    model/balancedao.cpp
-    model/contributiondao.cpp
+    dao/kassamodel.cpp
+    dao/databasestructure.cpp
+    dao/memberdao.cpp
+    dao/balancedao.cpp
+    dao/contributiondao.cpp
 
     accounting/balanceentry.cpp
     accounting/contributionentry.cpp

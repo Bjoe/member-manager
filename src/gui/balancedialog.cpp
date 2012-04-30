@@ -5,7 +5,7 @@
 #include <QSqlTableModel>
 #include <QModelIndex>
 
-#include "model/databasestructure.h"
+#include "dao/databasestructure.h"
 
 namespace membermanager
 {
@@ -21,9 +21,9 @@ BalanceDialog::BalanceDialog(int aMemberId, QWidget *parent) :
 
     QSqlTableModel *model = balanceDao.getModelByMemberId(memberId);
     ui.balanceTableView->setModel(model);
-    ui.balanceTableView->setColumnHidden(model::SaldoTable::saldo_pkey, true);
-    ui.balanceTableView->setColumnHidden(model::SaldoTable::dorfmitglied_pkey, true);
-    ui.balanceTableView->sortByColumn(model::SaldoTable::datum, Qt::DescendingOrder);
+    ui.balanceTableView->setColumnHidden(dao::SaldoTable::saldo_pkey, true);
+    ui.balanceTableView->setColumnHidden(dao::SaldoTable::dorfmitglied_pkey, true);
+    ui.balanceTableView->sortByColumn(dao::SaldoTable::datum, Qt::DescendingOrder);
     ui.balanceTableView->resizeColumnsToContents();
 
     calculateSum();

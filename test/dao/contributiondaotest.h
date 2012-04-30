@@ -1,11 +1,11 @@
-#ifndef MEMBERMANAGERTEST_MODEL_CONTRIBUTIONDAOTEST_H
-#define MEMBERMANAGERTEST_MODEL_CONTRIBUTIONDAOTEST_H
+#ifndef MEMBERMANAGERTEST_DAO_CONTRIBUTIONDAOTEST_H
+#define MEMBERMANAGERTEST_DAO_CONTRIBUTIONDAOTEST_H
 
 #include <QtTest/QtTest>
 #include "testcoverageobject.h"
 
 namespace membermanagertest {
-namespace model {
+namespace dao {
 
 class ContributionDaoTest : public qttestutil::TestCoverageObject
 {
@@ -24,4 +24,4 @@ private slots:
 } // namespace model
 } // namespace membermanagertest
 
-#endif // MEMBERMANAGERTEST_MODEL_CONTRIBUTIONDAOTEST_H
+#endif // MEMBERMANAGERTEST_DAO_CONTRIBUTIONDAOTEST_H

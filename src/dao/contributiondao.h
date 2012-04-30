@@ -1,5 +1,5 @@
-#ifndef MEMBERMANAGER_MODEL_CONTRIBUTIONDAO_H
-#define MEMBERMANAGER_MODEL_CONTRIBUTIONDAO_H
+#ifndef MEMBERMANAGER_DAO_CONTRIBUTIONDAO_H
+#define MEMBERMANAGER_DAO_CONTRIBUTIONDAO_H
 
 #include <QtSql>
 #include <QDate>
@@ -12,7 +12,7 @@ namespace accounting {
 class ContributionEntry;
 
 }
-namespace model {
+namespace dao {
 
 class ContributionDao
 {
@@ -36,4 +36,4 @@ private:
 } // namespace model
 } // namespace membermanager
 
-#endif // MEMBERMANAGER_MODEL_CONTRIBUTIONDAO_H
+#endif // MEMBERMANAGER_DAO_CONTRIBUTIONDAO_H

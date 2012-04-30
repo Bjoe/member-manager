@@ -1,5 +1,5 @@
-#ifndef MEMBERMANAGER_MODEL_BALANCEDAO_H
-#define MEMBERMANAGER_MODEL_BALANCEDAO_H
+#ifndef MEMBERMANAGER_DAO_BALANCEDAO_H
+#define MEMBERMANAGER_DAO_BALANCEDAO_H
 
 #include <QtSql>
 #include <QList>
@@ -9,7 +9,7 @@
 namespace membermanager {
 namespace accounting{class BalanceEntry;}
 
-namespace model {
+namespace dao {
 
 class BalanceDao
 {
@@ -32,4 +32,4 @@ private:
 } // namespace model
 } // namespace membermanager
 
-#endif // MEMBERMANAGER_MODEL_BALANCEDAO_H
+#endif // MEMBERMANAGER_DAO_BALANCEDAO_H

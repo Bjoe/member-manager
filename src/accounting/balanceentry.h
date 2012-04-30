@@ -4,10 +4,10 @@
 #include <QSqlRecord>
 #include <QDate>
 
-#include "model/balancedao.h"
+#include "dao/balancedao.h"
 
 namespace membermanager {
-namespace model{class BalanceDao;}
+namespace dao{class BalanceDao;}
 
 namespace accounting
 {
@@ -30,7 +30,7 @@ public:
     void setAccount(int anAccount);
     int getAccount() const;
 
-    friend class model::BalanceDao;
+    friend class dao::BalanceDao;
 
 private:
     QSqlRecord balanceRecord;

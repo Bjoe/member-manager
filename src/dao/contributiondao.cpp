@@ -1,9 +1,9 @@
 #include "contributiondao.h"
 
-#include "model/databasestructure.h"
+#include "dao/databasestructure.h"
 
 namespace membermanager {
-namespace model {
+namespace dao {
 
 ContributionDao::ContributionDao(const QSqlDatabase &aDatabase, QObject *aParent) : model(new QSqlTableModel(aParent, aDatabase))
 {

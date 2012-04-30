@@ -1,10 +1,10 @@
-#include "model/kassamodel.h"
+#include "dao/kassamodel.h"
 
-#include "model/databasestructure.h"
+#include "dao/databasestructure.h"
 
 namespace membermanager
 {
-namespace model
+namespace dao
 {
 
 KassaModel::KassaModel(const QSqlDatabase &aDb) :

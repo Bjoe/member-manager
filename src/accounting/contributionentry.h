@@ -6,10 +6,10 @@
 #include <QDate>
 #include <QSqlRecord>
 
-#include "model/contributiondao.h"
+#include "dao/contributiondao.h"
 
 namespace membermanager {
-namespace model {
+namespace dao {
 
 class ContributionDao;
 
@@ -31,7 +31,7 @@ public:
     QDate getValidFrom() const;
     void setValidFrom(const QDate &aDate);
 
-    friend class model::ContributionDao;
+    friend class dao::ContributionDao;
 
 private:
     QSqlRecord contributionRecord;

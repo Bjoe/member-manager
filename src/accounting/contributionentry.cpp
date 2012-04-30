@@ -2,12 +2,12 @@
 
 #include <QSqlField>
 
-#include "model/databasestructure.h"
+#include "dao/databasestructure.h"
 
 namespace membermanager {
 namespace accounting {
 
-using model::ContributionTable;
+using dao::ContributionTable;
 
 ContributionEntry::ContributionEntry(int aMemberId) : contributionRecord()
 {

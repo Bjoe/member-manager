@@ -2,8 +2,8 @@
 #include "gui/contributiondialog.h"
 #include "gui/balancedialog.h"
 
-#include "model/contributiondao.h"
-#include "model/memberdao.h"
+#include "dao/contributiondao.h"
+#include "dao/memberdao.h"
 
 namespace membermanager
 {
@@ -17,7 +17,7 @@ MemberDetailView::MemberDetailView(const Ui::MainWindow *anUi, QWidget *aParent)
 
 void MemberDetailView::showMember(int aMemberId)
 {
-    model::MemberDao memberDao(QSqlDatabase::database(), this);
+    dao::MemberDao memberDao(QSqlDatabase::database(), this);
     member = memberDao.findByMemberId(aMemberId);
 
     ui->memberId->setText(QString::number(aMemberId));
@@ -37,7 +37,7 @@ void MemberDetailView::showMember(int aMemberId)
     ui->account->setText(member.getAccountNr());
     ui->deleted->setChecked(member.isDeleted());
 
-    model::ContributionDao contributionDao(QSqlDatabase::database());
+    dao::ContributionDao contributionDao(QSqlDatabase::database());
     memberContribution = contributionDao.findLastDateByMemberId(aMemberId);
     ui->fee->setText(QString::number(memberContribution.getFee()));
     ui->donation->setText(QString::number(memberContribution.getDonation()));
@@ -82,10 +82,10 @@ void MemberDetailView::saveMember()
     memberContribution.setInfo(ui->contributionInfo->text());
     memberContribution.setValidFrom(ui->validFrom->date());
 
-    model::MemberDao memberDao(QSqlDatabase::database(), this);
+    dao::MemberDao memberDao(QSqlDatabase::database(), this);
     memberDao.saveRecord(member);
 
-    model::ContributionDao contributionDao(QSqlDatabase::database(), this);
+    dao::ContributionDao contributionDao(QSqlDatabase::database(), this);
     contributionDao.saveRecord(memberContribution);
 }
 

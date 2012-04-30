@@ -1,6 +1,6 @@
 #include "balancedaotest.h"
 
-#include "model/balancedao.h"
+#include "dao/balancedao.h"
 
 #include <QSqlRecord>
 #include <QSqlTableModel>
@@ -11,11 +11,11 @@
 #include "testconfig.h"
 #include "database/databaseutil.h"
 
-#include "model/databasestructure.h"
+#include "dao/databasestructure.h"
 
 namespace membermanagertest
 {
-namespace model
+namespace dao
 {
 
 void BalanceDaoTest::initTestCase()
@@ -27,13 +27,13 @@ void BalanceDaoTest::initTestCase()
 
 void BalanceDaoTest::testSaveBalance()
 {
-    membermanager::model::BalanceDao balanceDao(QSqlDatabase::database());
+    membermanager::dao::BalanceDao balanceDao(QSqlDatabase::database());
     QVERIFY(balanceDao.saveRecord(membermanager::accounting::BalanceEntry(1)));
 }
 
 void BalanceDaoTest::testGetMemberBalance()
 {
-    membermanager::model::BalanceDao balanceDao(QSqlDatabase::database());
+    membermanager::dao::BalanceDao balanceDao(QSqlDatabase::database());
 
     QList<membermanager::accounting::BalanceEntry> balanceList = balanceDao.findByMemberId(1025);
 
@@ -50,20 +50,20 @@ void BalanceDaoTest::testGetMemberBalance()
 
 void BalanceDaoTest::testGetModelByMemberId()
 {
-    membermanager::model::BalanceDao balanceDao(QSqlDatabase::database());
+    membermanager::dao::BalanceDao balanceDao(QSqlDatabase::database());
 
     QSqlTableModel *model = balanceDao.getModelByMemberId(1025);
 
     QVERIFY(model);
     QCOMPARE(model->rowCount(), 2);
     QSqlRecord record = model->record(0);
-    QCOMPARE(record.value(membermanager::model::SaldoTable::bezeichnung).toString(), QString("Mitgliedsbeitrag Sep"));
-    QCOMPARE(record.value(membermanager::model::SaldoTable::betrag).toString(), QString("-15"));
+    QCOMPARE(record.value(membermanager::dao::SaldoTable::bezeichnung).toString(), QString("Mitgliedsbeitrag Sep"));
+    QCOMPARE(record.value(membermanager::dao::SaldoTable::betrag).toString(), QString("-15"));
 }
 
 void BalanceDaoTest::testInsertNewEmptyRowAndDeletRow()
 {
-   membermanager::model::BalanceDao balanceDao;
+   membermanager::dao::BalanceDao balanceDao;
 
     QSqlTableModel *model = balanceDao.getModelByMemberId(1025);
     QVERIFY(model);
@@ -83,5 +83,5 @@ void BalanceDaoTest::testInsertNewEmptyRowAndDeletRow()
 }
 }
 
-QTEST_MAIN(membermanagertest::model::BalanceDaoTest)
+QTEST_MAIN(membermanagertest::dao::BalanceDaoTest)
 #include "balancedaotest.moc"
