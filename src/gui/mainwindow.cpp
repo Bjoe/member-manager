@@ -13,17 +13,9 @@ namespace gui
 
 MainWindow::MainWindow(const QSqlDatabase &aDatabase,
                        QWidget *parent) :
-    QMainWindow(parent), ui(), memberModel(new QSqlTableModel(this, aDatabase)), memberDao(aDatabase, this), memberDetailView(&ui, this), showDeleted(false)
+    QMainWindow(parent), ui(), memberDao(aDatabase, this), memberDetailView(&ui, this), memberModel(memberDao.model()), showDeleted(false)
 {
     ui.setupUi(this);
-
-    memberModel->setTable(model::MemberTable::TABLENAME);
-    memberModel->setObjectName(model::MemberTable::TABLENAME);
-    memberModel->setHeaderData(model::MemberTable::MemberId, Qt::Horizontal, tr("Nr."));
-    memberModel->setHeaderData(model::MemberTable::FirstName, Qt::Horizontal, tr("Vorname"));
-    memberModel->setHeaderData(model::MemberTable::Name, Qt::Horizontal, tr("Name"));
-    memberModel->setHeaderData(model::MemberTable::NickName, Qt::Horizontal, tr("Nickname"));
-    memberModel->setHeaderData(model::MemberTable::EntryDate, Qt::Horizontal, tr("Eintritts Datum"));
 
     ui.tableView->setModel(memberModel);
     ui.tableView->setColumnHidden(model::MemberTable::Deleted, true);
@@ -34,11 +26,11 @@ MainWindow::MainWindow(const QSqlDatabase &aDatabase,
     ui.tableView->setColumnHidden(model::MemberTable::FOO_intern, true);
     ui.tableView->setColumnHidden(model::MemberTable::FOO_Shell, true);
     ui.tableView->setColumnHidden(model::MemberTable::Info, true);
-    ui.tableView->resizeColumnsToContents();
+
+    showMembers();
 
     connect(ui.tableView->selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
             SLOT(updateMemberDetailView(QItemSelection, QItemSelection)));
-    showMembers();
 
     connect(ui.saldoButton, SIGNAL(clicked()), &memberDetailView, SLOT(showSaldoDialog()));
     connect(ui.feeButton, SIGNAL(clicked()), &memberDetailView, SLOT(showContributionDialog()));
@@ -124,11 +116,13 @@ void MainWindow::updateTableView()
 
     memberModel->setFilter(filter);
     memberModel->select();
+
+    ui.tableView->resizeColumnsToContents();
 }
 
 void MainWindow::managerSummary()
 {
-    QList<Member> memberList = MemberFactory::createMemberList(memberDao.modelWithFilter(showDeleted));
+    QList<Member> memberList = MemberFactory::createMemberList(memberModel);
     CashSumSummary cashSum(memberList);
     DebitSumSummary debitSum(memberList);
 

@@ -42,10 +42,10 @@ void MemberDaoTest::testGetModel()
 {
     membermanager::model::MemberDao memberDao(QSqlDatabase::database());
 
-    QSqlTableModel *model = memberDao.modelWithFilter(true);
-    QCOMPARE(model->rowCount(), 1);
+    QSqlTableModel *model = memberDao.model();
+    QCOMPARE(model->rowCount(), 2);
     QSqlRecord record = model->record(0);
-    QCOMPARE(record.value("name").toString(), QString("Spock"));
+    QCOMPARE(record.value("name").toString(), QString("Kirk"));
 }
 
 void MemberDaoTest::testNewMember()

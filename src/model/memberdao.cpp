@@ -90,7 +90,7 @@ Member MemberDao::findByRow(int aRowNr)
     return member;
 }
 
-QSqlTableModel *MemberDao::modelWithFilter(bool isDeleted)
+QSqlTableModel *MemberDao::model()
 {
     QSqlTableModel *model = new QSqlTableModel();
     model->setTable(model::MemberTable::TABLENAME);
@@ -100,15 +100,6 @@ QSqlTableModel *MemberDao::modelWithFilter(bool isDeleted)
     model->setHeaderData(MemberTable::Name, Qt::Horizontal, memberModel->tr("Name"));
     model->setHeaderData(MemberTable::NickName, Qt::Horizontal, memberModel->tr("Nickname"));
     model->setHeaderData(MemberTable::EntryDate, Qt::Horizontal, memberModel->tr("Eintritts Datum"));
-
-    QString deleted = "'false'";
-    if(isDeleted) {
-        deleted = "'true'";
-    }
-
-    QString columnname = MemberTable::COLUMNNAME[MemberTable::Deleted];
-    QString filter = QString("%1 = %2").arg(columnname).arg(deleted);
-    model->setFilter(filter);
     model->select();
 
     return model;

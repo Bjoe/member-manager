@@ -23,7 +23,7 @@ public:
 
     Member findByMemberId(int aMemberId);
     Member findByRow(int aRowNr);
-    QSqlTableModel *modelWithFilter(bool isDeleted);
+    QSqlTableModel *model();
 
     int newMember();
     void deleteMember(int aMemberId);

@@ -30,9 +30,9 @@ private slots:
 
 private:
     Ui::MainWindow ui;
-    QSqlTableModel *memberModel;
     model::MemberDao memberDao;
     MemberDetailView memberDetailView;
+    QSqlTableModel *memberModel;
     bool showDeleted;
 
     void showMembers();
