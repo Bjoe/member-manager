@@ -11,15 +11,16 @@ namespace gui
 {
 
 MemberDetailView::MemberDetailView(const Ui::MainWindow *anUi, QWidget *aParent) :
-    QWidget(aParent), newContribution(false), member(), memberContribution(), ui(anUi)
+    QWidget(aParent), ui(anUi), member(), memberContribution(), newContribution(false)
 {
 }
 
-void MemberDetailView::showMember(Member aMember)
+void MemberDetailView::showMember(int aMemberId)
 {
-    member = aMember;
-    int memberId = member.getMemberId();
-    ui->memberId->setText(QString::number(memberId));
+    model::MemberDao memberDao(QSqlDatabase::database(), this);
+    member = memberDao.findByMemberId(aMemberId);
+
+    ui->memberId->setText(QString::number(aMemberId));
     ui->firstName->setText(member.getFirstname());
     ui->memberName->setText(member.getName());
     ui->nickname->setText(member.getNickname());
@@ -37,7 +38,7 @@ void MemberDetailView::showMember(Member aMember)
     ui->deleted->setChecked(member.isDeleted());
 
     model::ContributionDao contributionDao(QSqlDatabase::database());
-    memberContribution = contributionDao.findLastDateByMemberId(memberId);
+    memberContribution = contributionDao.findLastDateByMemberId(aMemberId);
     ui->fee->setText(QString::number(memberContribution.getFee()));
     ui->donation->setText(QString::number(memberContribution.getDonation()));
     ui->contributionInfo->setText(memberContribution.getInfo());
@@ -81,10 +82,10 @@ void MemberDetailView::saveMember()
     memberContribution.setInfo(ui->contributionInfo->text());
     memberContribution.setValidFrom(ui->validFrom->date());
 
-    model::MemberDao memberDao(QSqlDatabase::database());
+    model::MemberDao memberDao(QSqlDatabase::database(), this);
     memberDao.saveRecord(member);
 
-    model::ContributionDao contributionDao(QSqlDatabase::database());
+    model::ContributionDao contributionDao(QSqlDatabase::database(), this);
     contributionDao.saveRecord(memberContribution);
 }
 

@@ -1,7 +1,5 @@
 /*! \mainpage TODO
  * 
- * \todo Member nach MemberEntry Refactoren.
- * \todo MemberFactory refactoren
  * \todo namespace model nach dao refactoren
  * 
  * \todo Test Warnungen Fixen: connection 'qt_sql_default_connection' is still in use, all queries will cease to work.

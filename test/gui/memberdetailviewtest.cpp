@@ -8,7 +8,6 @@
 #include "testconfig.h"
 #include "triggerthread.h"
 #include "gui/dialogbuttonboxhandler.h"
-#include "model/memberdao.h"
 
 #include <QtCore>
 #include <QtSql>
@@ -40,8 +39,7 @@ void MemberDetailViewTest::testShowMember()
     mainWindow.setupUi(qmainWindow);
     membermanager::gui::MemberDetailView memberDetailView(&mainWindow);
 
-    membermanager::model::MemberDao memberDao;
-    memberDetailView.showMember(memberDao.findByMemberId(1025));
+    memberDetailView.showMember(1025);
 
     QLabel *memberId = mainWindow.memberId;
     QCOMPARE(memberId->text(), QString("1025"));
@@ -111,8 +109,7 @@ void MemberDetailViewTest::testChangeMember()
     mainWindow.setupUi(qmainWindow);
     membermanager::gui::MemberDetailView memberDetailView(&mainWindow);
 
-    membermanager::model::MemberDao memberDao;
-    memberDetailView.showMember(memberDao.findByMemberId(1025));
+    memberDetailView.showMember(1025);
 
     QLabel *id = mainWindow.memberId;
     QCOMPARE(id->text(), QString("1025"));
@@ -288,8 +285,7 @@ void MemberDetailViewTest::testChangeMemberWithNewContribution()
     mainWindow.setupUi(qmainWindow);
     membermanager::gui::MemberDetailView memberDetailView(&mainWindow);
 
-    membermanager::model::MemberDao memberDao;
-    memberDetailView.showMember(memberDao.findByMemberId(1025));
+    memberDetailView.showMember(1025);
 
     QLabel *id = mainWindow.memberId;
     QCOMPARE(id->text(), QString("1025"));
@@ -446,8 +442,7 @@ void MemberDetailViewTest::testShowSaldoDialog()
     mainWindow.setupUi(qmainWindow);
     membermanager::gui::MemberDetailView memberDetailView(&mainWindow);
 
-    membermanager::model::MemberDao memberDao;
-    memberDetailView.showMember(memberDao.findByMemberId(1025));
+    memberDetailView.showMember(1025);
 
     qttestutil::gui::DialogButtonBoxHandler handler(QDialogButtonBox::Close);
     qttestutil::TriggerThread thread(this, &handler);
@@ -462,8 +457,7 @@ void MemberDetailViewTest::testShowContributionDialog()
     mainWindow.setupUi(qmainWindow);
     membermanager::gui::MemberDetailView memberDetailView(&mainWindow);
 
-    membermanager::model::MemberDao memberDao;
-    memberDetailView.showMember(memberDao.findByMemberId(1025));
+    memberDetailView.showMember(1025);
 
     qttestutil::gui::DialogButtonBoxHandler handler(QDialogButtonBox::Close);
     qttestutil::TriggerThread thread(this, &handler);

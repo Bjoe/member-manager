@@ -48,7 +48,7 @@ void MainWindow::newMember()
 {
     ui.tableView->selectionModel()->clearSelection();
     int id = memberDao.newMember();
-    memberDetailView.showMember(memberDao.findByMemberId(id));
+    memberDetailView.showMember(id);
 }
 
 void MainWindow::saveMember()
@@ -62,13 +62,12 @@ void MainWindow::saveMember()
 void MainWindow::updateMemberDetailView(const QItemSelection &aSelected, const QItemSelection &aDeselected)
 {
     QModelIndexList indexList = aSelected.indexes();
-    Member member;
+    int id = 0;
     if (indexList.size() > 0) {
         QModelIndex index = indexList.first();
-        int id = index.data().toInt();
-        member = memberDao.findByMemberId(id);
+        id = index.data().toInt();
     }
-    memberDetailView.showMember(member);
+    memberDetailView.showMember(id);
 }
 
 
@@ -100,7 +99,7 @@ void MainWindow::showMembers()
     }
     ui.tableView->selectRow(0);
     Member member = memberDao.findByRow(0);
-    memberDetailView.showMember(member);
+    memberDetailView.showMember(member.getMemberId());
 }
 
 void MainWindow::updateTableView()

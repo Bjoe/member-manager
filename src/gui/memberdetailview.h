@@ -18,7 +18,7 @@ class MemberDetailView : public QWidget
 public:
     explicit MemberDetailView(const Ui::MainWindow *anUi, QWidget *aParent = 0);
 
-    void showMember(Member aMember);
+    void showMember(int aMemberId);
     void saveMember();
 
 public slots:
@@ -27,10 +27,10 @@ public slots:
     void showContributionDialog();
 
 private:
-    bool newContribution;
+    const Ui::MainWindow *ui;
     Member member;
     accounting::ContributionEntry memberContribution;
-    const Ui::MainWindow *ui;
+    bool newContribution;
 };
 
 }
