@@ -5,6 +5,7 @@ set(QT_MOC_HEADERS
     gui/connectiondialog.h
     gui/balancedialog.h
     gui/contributiondialog.h
+    gui/contributionreceiptdialog.h
     gui/summarywindow.h
 
     summaryhandler.h
@@ -15,6 +16,7 @@ set(QT_UI
     gui/connectiondialog.ui
     gui/balancedialog.ui
     gui/contributiondialog.ui
+    gui/contributionreceiptdialog.ui
     gui/summarywindow.ui
     )
 
@@ -24,6 +26,7 @@ set(QT_SRCS
     gui/connectiondialog.cpp
     gui/balancedialog.cpp
     gui/contributiondialog.cpp
+    gui/contributionreceiptdialog.cpp
     gui/summarywindow.cpp
 
     dao/kassamodel.cpp
@@ -38,7 +41,6 @@ set(QT_SRCS
     member.cpp
     cashsumsummary.cpp
     debitsumsummary.cpp
-    contributionreceipt.cpp
     )
 
 # configure a header file to pass some of the CMake settings

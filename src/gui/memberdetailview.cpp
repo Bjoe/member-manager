@@ -1,5 +1,6 @@
 #include "gui/memberdetailview.h"
 #include "gui/contributiondialog.h"
+#include "gui/contributionreceiptdialog.h"
 #include "gui/balancedialog.h"
 
 #include "dao/contributiondao.h"
@@ -100,6 +101,13 @@ void MemberDetailView::showContributionDialog()
 {
     int memberId = member.getMemberId();
     ContributionDialog dialog(memberId, this);
+    dialog.exec();
+}
+
+void MemberDetailView::showContributionReceiptDialog()
+{
+    int memberId = member.getMemberId();
+    ContributionReceiptDialog dialog(memberId, this);
     dialog.exec();
 }
 

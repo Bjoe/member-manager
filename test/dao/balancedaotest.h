@@ -17,6 +17,7 @@ private slots:
     void initTestCase();
     void testSaveBalance();
     void testGetMemberBalance();
+    void testFindContributionByMemberIdAndYear();
     void testGetModelByMemberId();
     void testInsertNewEmptyRowAndDeletRow();
 };

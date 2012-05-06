@@ -25,6 +25,7 @@ public slots:
     void newFee();
     void showSaldoDialog();
     void showContributionDialog();
+    void showContributionReceiptDialog();
 
 private:
     const Ui::MainWindow *ui;

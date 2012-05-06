@@ -37,6 +37,40 @@ QList<accounting::BalanceEntry> BalanceDao::findByMemberId(int aMemberId)
    return entryList;
 }
 
+QList<accounting::BalanceEntry> BalanceDao::findContributionByMemberIdAndYear(int aMemberId, int aYear)
+{
+    QString columnnameId = SaldoTable::COLUMNNAME[SaldoTable::dorfmitglied_pkey];
+    QString memberFilter = QString("%1 = %2").arg(columnnameId).arg(aMemberId);
+
+    QString columnnameType = SaldoTable::COLUMNNAME[SaldoTable::konten];
+    QString typeFilter = QString("(%1 = 11 OR %1 = 12)").arg(columnnameType);
+
+    /*
+      I think SQL sucks
+    QString columnnameValuta = SaldoTable::COLUMNNAME[SaldoTable::datum];
+    QString valutaFilter = QString("%1 BETWEEN to_date('01.01.%2', 'DD.MM.YYYY') AND to_date('31.12.%2', 'DD.MM.YYYY')")
+            .arg(columnnameValuta).arg(aYear);
+    */
+
+    QString filter = QString("%1 AND %2").arg(memberFilter).arg(typeFilter);
+
+    model->setFilter(filter);
+    model->setSort(SaldoTable::datum, Qt::AscendingOrder);
+    model->select();
+    printSqlError(model->lastError());
+
+    QList<accounting::BalanceEntry> entryList;
+    for(int row = 0; row < model->rowCount(); row++) {
+        accounting::BalanceEntry entry(aMemberId);
+        entry.balanceRecord = model->record(row);
+        int year = entry.getValuta().year();
+        if(year == aYear) {
+            entryList.append(entry);
+        }
+   }
+   return entryList;
+}
+
 QSqlTableModel* BalanceDao::getModelByMemberId(int aMemberId)
 {
     model->setHeaderData(SaldoTable::betrag, Qt::Horizontal, model->tr("Betrag"));

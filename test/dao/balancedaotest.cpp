@@ -5,6 +5,7 @@
 #include <QSqlRecord>
 #include <QSqlTableModel>
 #include <QModelIndex>
+#include <QDate>
 
 #include "accounting/balanceentry.h"
 
@@ -37,14 +38,14 @@ void BalanceDaoTest::testGetMemberBalance()
 
     QList<membermanager::accounting::BalanceEntry> balanceList = balanceDao.findByMemberId(1025);
 
-    QCOMPARE(balanceList.size(), 2);
+    QCOMPARE(balanceList.size(), 15);
 
     membermanager::accounting::BalanceEntry balance = balanceList.at(0);
-    double value = -15.0;
+    double value = 8.0;
     QCOMPARE(balance.getValue(), value);
 
     balance = balanceList.at(1);
-    value = 0;
+    value = -5;
     QCOMPARE(balance.getValue(), value);
 }
 
@@ -55,10 +56,29 @@ void BalanceDaoTest::testGetModelByMemberId()
     QSqlTableModel *model = balanceDao.getModelByMemberId(1025);
 
     QVERIFY(model);
-    QCOMPARE(model->rowCount(), 2);
+    QCOMPARE(model->rowCount(), 15);
     QSqlRecord record = model->record(0);
-    QCOMPARE(record.value(membermanager::dao::SaldoTable::bezeichnung).toString(), QString("Mitgliedsbeitrag Sep"));
-    QCOMPARE(record.value(membermanager::dao::SaldoTable::betrag).toString(), QString("-15"));
+    QCOMPARE(record.value(membermanager::dao::SaldoTable::bezeichnung).toString(), QString("ZAHLUNGSEINGANG  1025 Ali Baba MITGLIEDSSCHULDEN"));
+    QCOMPARE(record.value(membermanager::dao::SaldoTable::betrag).toString(), QString("8"));
+}
+
+void BalanceDaoTest::testFindContributionByMemberIdAndYear()
+{
+    membermanager::dao::BalanceDao balanceDao(QSqlDatabase::database());
+
+    QList<membermanager::accounting::BalanceEntry> balanceList = balanceDao.findContributionByMemberIdAndYear(1025, 2007);
+
+    QCOMPARE(balanceList.size(), 4);
+
+    membermanager::accounting::BalanceEntry balance = balanceList.at(0);
+    double value = 15.0;
+    QCOMPARE(balance.getValue(), value);
+    QCOMPARE(balance.getValuta(), QDate(2007,3,8));
+
+    balance = balanceList.at(3);
+    value = 10;
+    QCOMPARE(balance.getValue(), value);
+    QCOMPARE(balance.getValuta(), QDate(2007,4,5));
 }
 
 void BalanceDaoTest::testInsertNewEmptyRowAndDeletRow()
@@ -67,17 +87,17 @@ void BalanceDaoTest::testInsertNewEmptyRowAndDeletRow()
 
     QSqlTableModel *model = balanceDao.getModelByMemberId(1025);
     QVERIFY(model);
-    QCOMPARE(model->rowCount(), 2);
+    QCOMPARE(model->rowCount(), 15);
 
     QModelIndex index = balanceDao.insertNewEmptyRowWithMemberId(1025);
 
     model->select();
-    QCOMPARE(model->rowCount(), 3);
-    QCOMPARE(index.row(), 2);
+    QCOMPARE(model->rowCount(), 16);
+    QCOMPARE(index.row(), 15);
 
     QVERIFY(balanceDao.deleteRow(index));
     model->select();
-    QCOMPARE(model->rowCount(), 2);
+    QCOMPARE(model->rowCount(), 15);
 }
 
 }

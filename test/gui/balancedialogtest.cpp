@@ -34,10 +34,10 @@ void BalanceDialogTest::testShowDialog()
     QTableView *tableView = dialog.findChild<QTableView *> ("balanceTableView");
     const QAbstractItemModel *model = tableView->model();
     QVERIFY(model != 0);
-    QCOMPARE(model->rowCount(), 2);
+    QCOMPARE(model->rowCount(), 15);
     QModelIndex index = model->index(0, 3);
     QVariant value = model->data(index);
-    QCOMPARE(value.toString(), QString("2005-09-18"));
+    QCOMPARE(value.toString(), QString("2012-02-10"));
 }
 
 void BalanceDialogTest::testWindowTitle()
@@ -52,7 +52,7 @@ void BalanceDialogTest::testShowSum()
     membermanager::gui::BalanceDialog dialog(1025);
 
     QLabel *sumLabel = dialog.findChild<QLabel *> ("sumLabel");
-    QCOMPARE(sumLabel->text(), QString("Summe: -15"));
+    QCOMPARE(sumLabel->text(), QString("Summe: -10"));
 }
 
 void BalanceDialogTest::testInsertAndDeleteRow()
@@ -62,17 +62,17 @@ void BalanceDialogTest::testInsertAndDeleteRow()
     QTableView *tableView = dialog.findChild<QTableView *> ("balanceTableView");
     const QAbstractItemModel *model = tableView->model();
     QVERIFY(model != 0);
-    QCOMPARE(model->rowCount(), 2);
+    QCOMPARE(model->rowCount(), 15);
 
     QPushButton *button = dialog.findChild<QPushButton *> ("newRowButton");
     QTest::mouseClick(button, Qt::LeftButton);
 
-    QCOMPARE(model->rowCount(), 3);
+    QCOMPARE(model->rowCount(), 16);
 
     button = dialog.findChild<QPushButton *> ("deleteRowButton");
     QTest::mouseClick(button, Qt::LeftButton);
 
-    QCOMPARE(model->rowCount(), 2);
+    QCOMPARE(model->rowCount(), 15);
 }
 
 } // namespace gui

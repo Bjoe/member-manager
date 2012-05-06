@@ -18,6 +18,7 @@ public:
 
     bool saveRecord(const accounting::BalanceEntry &anEntry);
     QList<accounting::BalanceEntry> findByMemberId(int aMemberId);
+    QList<accounting::BalanceEntry> findContributionByMemberIdAndYear(int aMemberId, int aYear);
 
     QSqlTableModel *getModelByMemberId(int aMemberId);
     QModelIndex insertNewEmptyRowWithMemberId(int aMemberId);

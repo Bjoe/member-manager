@@ -29,6 +29,7 @@ private slots:
     void testChangeMemberWithNewContribution();
     void testShowSaldoDialog();
     void testShowContributionDialog();
+    void testShowContributionReceiptDialog();
 
 private:
     QString id;

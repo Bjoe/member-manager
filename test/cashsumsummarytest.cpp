@@ -48,7 +48,7 @@ void CashSumSummaryTest::testCashSum()
     QDate date = QDate::currentDate();
     cashSum.handleHtmlText();
 
-    QCOMPARE(writer.content, QString("Anzahl 1 * Beitrag 99 Gesamt = 99<br><br>Gesamt Spenden: 1.5<br><br>Gesamt Mitglieder: 1 Einahmen: 100.5<br><br>Gesamt Einzuege Mitglieder: 1 Einahmen: 100.5<br><br>Gesamt Saldo: -15<br>Stand: %1<br>").arg(date.toString()));
+    QCOMPARE(writer.content, QString("Anzahl 1 * Beitrag 99 Gesamt = 99<br><br>Gesamt Spenden: 1.5<br><br>Gesamt Mitglieder: 1 Einahmen: 100.5<br><br>Gesamt Einzuege Mitglieder: 1 Einahmen: 100.5<br><br>Gesamt Saldo: -10<br>Stand: %1<br>").arg(date.toString()));
 }
 
 }

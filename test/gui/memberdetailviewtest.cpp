@@ -465,6 +465,22 @@ void MemberDetailViewTest::testShowContributionDialog()
     thread.syncStart();
 }
 
+void MemberDetailViewTest::testShowContributionReceiptDialog()
+{
+    QMainWindow *qmainWindow = new QMainWindow();
+    Ui::MainWindow mainWindow;
+
+    mainWindow.setupUi(qmainWindow);
+    membermanager::gui::MemberDetailView memberDetailView(&mainWindow);
+
+    memberDetailView.showMember(1025);
+
+    qttestutil::gui::DialogButtonBoxHandler handler(QDialogButtonBox::Close);
+    qttestutil::TriggerThread thread(this, &handler);
+    connect(&thread, SIGNAL(triggered()), &memberDetailView, SLOT(showContributionReceiptDialog()));
+    thread.syncStart();
+}
+
 void MemberDetailViewTest::handle()
 {
     bool next = true;

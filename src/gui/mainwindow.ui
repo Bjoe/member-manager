@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>677</width>
-    <height>538</height>
+    <width>971</width>
+    <height>644</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -373,6 +373,13 @@
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout">
            <item>
+            <widget class="QPushButton" name="contributionButton">
+             <property name="text">
+              <string>Spenden Quittung</string>
+             </property>
+            </widget>
+           </item>
+           <item>
             <widget class="QPushButton" name="saldoButton">
              <property name="text">
               <string>Saldo Anzeigen</string>
@@ -500,8 +507,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>677</width>
-     <height>20</height>
+     <width>971</width>
+     <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuEdit">

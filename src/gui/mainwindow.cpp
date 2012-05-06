@@ -34,6 +34,7 @@ MainWindow::MainWindow(const QSqlDatabase &aDatabase,
     connect(ui.saldoButton, SIGNAL(clicked()), &memberDetailView, SLOT(showSaldoDialog()));
     connect(ui.feeButton, SIGNAL(clicked()), &memberDetailView, SLOT(showContributionDialog()));
     connect(ui.newFeeButton, SIGNAL(clicked()), &memberDetailView, SLOT(newFee()));
+    connect(ui.contributionButton, SIGNAL(clicked()), &memberDetailView, SLOT(showContributionReceiptDialog()));
 
     connect(ui.buttonBox, SIGNAL(accepted()), SLOT(saveMember()));
     connect(ui.actionShowMember, SIGNAL(triggered()), SLOT(showMemberView()));

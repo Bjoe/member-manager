@@ -7,6 +7,7 @@ configure_file (
 include_directories(../)
 
 qt4_add_test(contributiondialog contributiondialogtest.cpp)
+qt4_add_test(contributionreceiptdialog contributionreceiptdialogtest.cpp)
 qt4_add_test(connectiondialog connectiondialogtest.cpp)
 qt4_add_test(balancedialog balancedialogtest.cpp)
 qt4_add_test(summarywindow summarywindowtest.cpp)

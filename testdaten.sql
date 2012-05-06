@@ -222,8 +222,84 @@ INSERT INTO saldo (
                      info)
             VALUES (1,1025,0.00,date('2005-08-11'),'Start Saldo','Start Saldo');
 
-
 INSERT INTO saldo (
                     saldo_pkey, dorfmitglied_pkey, betrag, datum, bezeichnung, 
                      info)
             VALUES (2,1025,-15.00,date('2005-09-18'),'Mitgliedsbeitrag Sep','Automatische Monats Abbuchung');
+
+
+INSERT INTO saldo (
+                    saldo_pkey, dorfmitglied_pkey, betrag, datum, bezeichnung, 
+                     info)
+            VALUES (3,1026,-15.00,date('2005-09-18'),'Mitgliedsbeitrag Sep','Automatische Monats Abbuchung');
+
+INSERT INTO saldo (
+                    saldo_pkey, dorfmitglied_pkey, betrag, datum, bezeichnung, 
+                     info)
+            VALUES (4,1026,15.00,date('2007-09-18'),'Mitgliedsbeitrag Sep','Automatische Monats Abbuchung');
+
+INSERT INTO saldo (
+                    saldo_pkey, dorfmitglied_pkey, betrag, datum, bezeichnung, 
+                     info)
+            VALUES (5,1025,-15.00,date('2007-03-08'),'Mitgliedsbeitrag Mar','Automatische Monats Abbuchung ');
+
+INSERT INTO saldo (
+                    saldo_pkey, dorfmitglied_pkey, betrag, datum, bezeichnung, 
+                     info)
+            VALUES (6,1025,-10.00,date('2007-03-08'),'Spende Mar','Automatische Monats Abbuchung ');
+
+INSERT INTO saldo (
+                    saldo_pkey, dorfmitglied_pkey, betrag, datum, bezeichnung, 
+                     info, konten)
+            VALUES (7,1025,15.00,date('2007-03-08'),'Mitgliedsbeitrag Mar','Automatische Monats Lastschrift', 11);
+
+INSERT INTO saldo (
+                    saldo_pkey, dorfmitglied_pkey, betrag, datum, bezeichnung, 
+                     info, konten)
+            VALUES (8,1025,10.00,date('2007-03-08'),'Spende Mar','Automatische Monats Lastschrift', 12);
+
+INSERT INTO saldo (
+                    saldo_pkey, dorfmitglied_pkey, betrag, datum, bezeichnung, 
+                     info)
+            VALUES (9,1025,-15.00,date('2007-04-05'),'Mitgliedsbeitrag Apr','Automatische Monats Abbuchung ');
+
+INSERT INTO saldo (
+                    saldo_pkey, dorfmitglied_pkey, betrag, datum, bezeichnung, 
+                     info)
+            VALUES (10,1025,-10.00,date('2007-04-05'),'Spende Apr','Automatische Monats Abbuchung ');
+
+INSERT INTO saldo (
+                    saldo_pkey, dorfmitglied_pkey, betrag, datum, bezeichnung, 
+                     info, konten)
+            VALUES (11,1025,15.00,date('2007-04-05'),'Mitgliedsbeitrag Apr','Automatische Monats Lastschrift', 11);
+
+INSERT INTO saldo (
+                    saldo_pkey, dorfmitglied_pkey, betrag, datum, bezeichnung, 
+                     info, konten)
+            VALUES (12,1025,10.00,date('2007-04-05'),'Spende Apr','Automatische Monats Lastschrift', 12);
+
+INSERT INTO saldo (
+                    saldo_pkey, dorfmitglied_pkey, betrag, datum, bezeichnung, 
+                     info, konten)
+            VALUES (13,1025,5.00,date('2012-01-09'),'Mitgliedsbeitrag Jan','Automatische Monats Lastschrift', 11);
+
+INSERT INTO saldo (
+                    saldo_pkey, dorfmitglied_pkey, betrag, datum, bezeichnung, 
+                     info, konten)
+            VALUES (14,1025,-8.00,date('2012-01-10'),'RÜCKBELASTUNG  1025 MITGLIEDSBEITRAG JAN VORGELEGT AM 10.01.12 NICHT BEZAHLT EU         5,00ENT- GELT FREMD00,00EIGEN03,00EU','Automatische Buchung', 11);
+
+INSERT INTO saldo (
+                    saldo_pkey, dorfmitglied_pkey, betrag, datum, bezeichnung, 
+                     info)
+            VALUES (15,1025,-5.00,date('2012-02-08'),'Mitgliedsbeitrag Feb','Automatische Monats Abbuchung ');
+
+INSERT INTO saldo (
+                    saldo_pkey, dorfmitglied_pkey, betrag, datum, bezeichnung, 
+                     info, konten)
+            VALUES (20,1025,5.00,date('2012-02-08'),'Mitgliedsbeitrag Feb','Automatische Monats Lastschrift', 11);
+
+INSERT INTO saldo (
+                    saldo_pkey, dorfmitglied_pkey, betrag, datum, bezeichnung, 
+                     info, konten)
+            VALUES (21,1025,8.00,date('2012-02-10'),'ZAHLUNGSEINGANG  1025 Ali Baba MITGLIEDSSCHULDEN','Automatische Buchung', 11);
+
