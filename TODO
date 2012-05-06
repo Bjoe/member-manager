@@ -1,4 +1,8 @@
 /*! \mainpage TODO
+ *
+ * \todo In der Saldo Tabelle einen SaldoTyp hinzufügen. Anhand des Types können dann die unterschiedlichen Buchungen unterschieden werden. Zb. Rücklastschrift, Einzug, Bargeld eingang etc. Vielleicht konto umbenennen.
+ * 
+ * \todo Die Dialoge Contribution, ContributionReceipt, Balance aus MemberDetailView nach MainWindow Refactoren.
  * 
  * \todo Test Warnungen Fixen: connection 'qt_sql_default_connection' is still in use, all queries will cease to work.
  * \todo Einpaar Denglische Datenbankfelder und member attribute auf Englisch Refactoren.
