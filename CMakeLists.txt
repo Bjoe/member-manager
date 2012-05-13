@@ -17,7 +17,10 @@ find_doxygen()
 
 add_subdirectory(src)
 
-# The following are required to uses CTest, Dart and the Cdash dashboard
-enable_testing(true)
-include(CTest)
-add_subdirectory(test)
+set(NOTEST "false" CACHE BOOL "Without tests")
+if(NOT ${NOTEST})
+    # The following are required to uses CTest, Dart and the Cdash dashboard
+    enable_testing(true)
+    include(CTest)
+    add_subdirectory(test)
+endif(NOT ${NOTEST})
