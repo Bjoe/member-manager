@@ -12,11 +12,11 @@ namespace gui
 
 MainWindow::MainWindow(const QSqlDatabase &aDatabase,
                        QWidget *parent) :
-    QMainWindow(parent), ui(), memberDao(aDatabase, this), memberDetailView(&ui, this), memberModel(memberDao.model()), showDeleted(false)
+    QMainWindow(parent), ui(), memberDao(aDatabase, this), memberDetailView(&ui, this), showDeleted(false)
 {
     ui.setupUi(this);
 
-    ui.tableView->setModel(memberModel);
+    ui.tableView->setModel(memberDao.model());
     ui.tableView->setColumnHidden(dao::MemberTable::Deleted, true);
     ui.tableView->setColumnHidden(dao::MemberTable::FOO_CCC, true);
     ui.tableView->setColumnHidden(dao::MemberTable::FOO_ChaosNr, true);
@@ -25,8 +25,6 @@ MainWindow::MainWindow(const QSqlDatabase &aDatabase,
     ui.tableView->setColumnHidden(dao::MemberTable::FOO_intern, true);
     ui.tableView->setColumnHidden(dao::MemberTable::FOO_Shell, true);
     ui.tableView->setColumnHidden(dao::MemberTable::Info, true);
-
-    showMembers();
 
     connect(ui.tableView->selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
             SLOT(updateMemberDetailView(QItemSelection, QItemSelection)));
@@ -43,6 +41,7 @@ MainWindow::MainWindow(const QSqlDatabase &aDatabase,
     connect(ui.actionSummary, SIGNAL(triggered()), SLOT(managerSummary()));
     //connect(ui.actionShowSaldo, SIGNAL(triggered()), SLOT(showSaldo()));
 
+    showMembers();
 }
 
 void MainWindow::newMember()
@@ -105,23 +104,14 @@ void MainWindow::showMembers()
 
 void MainWindow::updateTableView()
 {
-    QString deleted = "'false'";
-    if(showDeleted) {
-        deleted = "'true'";
-    }
-
-    QString columnname = dao::MemberTable::COLUMNNAME[dao::MemberTable::Deleted];
-    QString filter = QString("%1 = %2").arg(columnname).arg(deleted);
-
-    memberModel->setFilter(filter);
-    memberModel->select();
-
+    memberDao.selectDeleted(showDeleted);
     ui.tableView->resizeColumnsToContents();
 }
 
 void MainWindow::managerSummary()
 {
-    QList<Member> memberList = memberDao.findByDeleted(showDeleted);
+    dao::MemberDao dao;
+    QList<Member> memberList = dao.findByDeleted(showDeleted);
     CashSumSummary cashSum(memberList);
     DebitSumSummary debitSum(memberList);
 

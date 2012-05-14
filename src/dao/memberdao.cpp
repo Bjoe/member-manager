@@ -15,6 +15,11 @@ MemberDao::MemberDao(const QSqlDatabase &aDatabase, QObject *aParent) :
 {
     memberModel->setTable(dao::MemberTable::TABLENAME);
     memberModel->setObjectName(dao::MemberTable::TABLENAME);
+    memberModel->setHeaderData(MemberTable::MemberId, Qt::Horizontal, memberModel->tr("Nr."));
+    memberModel->setHeaderData(MemberTable::FirstName, Qt::Horizontal, memberModel->tr("Vorname"));
+    memberModel->setHeaderData(MemberTable::Name, Qt::Horizontal, memberModel->tr("Name"));
+    memberModel->setHeaderData(MemberTable::NickName, Qt::Horizontal, memberModel->tr("Nickname"));
+    memberModel->setHeaderData(MemberTable::EntryDate, Qt::Horizontal, memberModel->tr("Eintritts Datum"));
     memberModel->select();
 
     ressourcenModel->setTable(dao::RessourcenTable::TABLENAME);
@@ -84,13 +89,10 @@ Member MemberDao::findByRow(int aRowNr)
     selectTableModel(ressourcenModel, dao::RessourcenTable::COLUMNNAME[dao::RessourcenTable::MemberId], memberId);
     member.ressourcenRecord = record(ressourcenModel);
 
-    selectTableModel(memberModel, dao::MemberTable::COLUMNNAME[dao::MemberTable::MemberId], memberId);
-    member.memberRecord = record(memberModel);
-
     return member;
 }
 
-QList<Member> MemberDao::findByDeleted(bool isDeleted)
+QSqlTableModel *MemberDao::selectDeleted(bool isDeleted)
 {
     QString deleted = "'false'";
     if(isDeleted) {
@@ -100,13 +102,19 @@ QList<Member> MemberDao::findByDeleted(bool isDeleted)
     QString columnname = dao::MemberTable::COLUMNNAME[dao::MemberTable::Deleted];
     QString filter = QString("%1 = %2").arg(columnname).arg(deleted);
 
-    QSqlTableModel *tableModel = model();
-    tableModel->setFilter(filter);
-    tableModel->select();
+    memberModel->setFilter(filter);
+    memberModel->select();
+
+    return memberModel;
+}
+
+QList<Member> MemberDao::findByDeleted(bool isDeleted)
+{
+    selectDeleted(isDeleted);
 
     QList<Member> list;
-    for(int row = 0; row < tableModel->rowCount(); row++) {
-        QModelIndex index = tableModel->index(row, dao::MemberTable::MemberId);
+    for(int row = 0; row < memberModel->rowCount(); row++) {
+        QModelIndex index = memberModel->index(row, dao::MemberTable::MemberId);
         QVariant variant = index.data();
         Member member = findByMemberId(variant.toInt());
         list.append(member);
@@ -116,17 +124,7 @@ QList<Member> MemberDao::findByDeleted(bool isDeleted)
 
 QSqlTableModel *MemberDao::model()
 {
-    QSqlTableModel *model = new QSqlTableModel();
-    model->setTable(dao::MemberTable::TABLENAME);
-    model->setObjectName(dao::MemberTable::TABLENAME);
-    model->setHeaderData(MemberTable::MemberId, Qt::Horizontal, memberModel->tr("Nr."));
-    model->setHeaderData(MemberTable::FirstName, Qt::Horizontal, memberModel->tr("Vorname"));
-    model->setHeaderData(MemberTable::Name, Qt::Horizontal, memberModel->tr("Name"));
-    model->setHeaderData(MemberTable::NickName, Qt::Horizontal, memberModel->tr("Nickname"));
-    model->setHeaderData(MemberTable::EntryDate, Qt::Horizontal, memberModel->tr("Eintritts Datum"));
-    model->select();
-
-    return model;
+    return memberModel;
 }
 
 /// \todo createMember()

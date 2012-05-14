@@ -32,7 +32,6 @@ private:
     Ui::MainWindow ui;
     dao::MemberDao memberDao;
     MemberDetailView memberDetailView;
-    QSqlTableModel *memberModel;
     bool showDeleted;
 
     void showMembers();

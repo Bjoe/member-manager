@@ -25,6 +25,7 @@ public:
     Member findByMemberId(int aMemberId);
     Member findByRow(int aRowNr);
     QList<Member> findByDeleted(bool isDeleted);
+    QSqlTableModel *selectDeleted(bool isDeleted);
     QSqlTableModel *model();
 
     int newMember();

@@ -49,6 +49,16 @@ void MemberDaoTest::testFindByDeleted()
     QCOMPARE(member.getName(), QString("Spock"));
 }
 
+void MemberDaoTest::testSelectDeleted()
+{
+    membermanager::dao::MemberDao memberDao(QSqlDatabase::database());
+
+    QSqlTableModel *model = memberDao.selectDeleted(true);
+    QCOMPARE(model->rowCount(), 1);
+    QSqlRecord record = model->record(0);
+    QCOMPARE(record.value("name").toString(), QString("Spock"));
+}
+
 void MemberDaoTest::testGetModel()
 {
     membermanager::dao::MemberDao memberDao(QSqlDatabase::database());
