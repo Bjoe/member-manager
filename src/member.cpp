@@ -125,6 +125,7 @@ void Member::setZipCode(const QString &aCode)
     addressRecord.setValue(dao::AddressTable::ZipCode, QVariant(aCode));
 }
 
+/// \todo Refactor: Rename AccountNumber()
 QString Member::getAccountNr() const
 {
     return bankRecord.value(dao::BankAccountTable::AccountNr).toString();
@@ -145,6 +146,7 @@ void Member::setBankName(const QString &aName)
     bankRecord.setValue(dao::BankAccountTable::BankName, QVariant(aName));
 }
 
+/// \todo Refactor: Rename BankCode()
 QString Member::getCode() const
 {
     return bankRecord.value(dao::BankAccountTable::Code).toString();
