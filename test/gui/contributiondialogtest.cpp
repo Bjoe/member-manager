@@ -32,7 +32,7 @@ void ContributionDialogTest::testShowDialog()
     const QTableView *tableView = dialog.findChild<QTableView *> ("contributionTableView");
     const QAbstractItemModel *model = tableView->model();
     QVERIFY(model != 0);
-    QCOMPARE(model->rowCount(), 5);
+    QCOMPARE(model->rowCount(), 7);
     using membermanager::dao::ContributionTable;
     const QModelIndex index = model->index(0, ContributionTable::ValidFrom -1);
     const QVariant value = model->data(index);
@@ -53,18 +53,18 @@ void ContributionDialogTest::testInsertAndDeleteRow()
     const QTableView *tableView = dialog.findChild<QTableView *> ("contributionTableView");
     const QAbstractItemModel *model = tableView->model();
     QVERIFY(model != 0);
-    QCOMPARE(model->rowCount(), 5);
+    QCOMPARE(model->rowCount(), 7);
 
     QPushButton *button = dialog.findChild<QPushButton *> ("newRowButton");
     QTest::mouseClick(button, Qt::LeftButton);
 
-    QCOMPARE(model->rowCount(), 6);
+    QCOMPARE(model->rowCount(), 8);
 
 
     button = dialog.findChild<QPushButton *> ("deleteRowButton");
     QTest::mouseClick(button, Qt::LeftButton);
 
-    QCOMPARE(model->rowCount(), 5);
+    QCOMPARE(model->rowCount(), 7);
 }
 
 }

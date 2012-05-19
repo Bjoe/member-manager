@@ -39,6 +39,21 @@ CREATE TABLE beitragstab (
 INSERT INTO beitragstab(
             beitragstab_pkey, dorfmitglied_pkey, beitrag, spende, schulden,
             gueltigab, info)
+    VALUES (4,1025,80.00,1.50,0.00,date('2006-03-10'),'Beitragsaenderung');
+
+INSERT INTO beitragstab(
+            beitragstab_pkey, dorfmitglied_pkey, beitrag, spende, schulden,
+            gueltigab, info)
+    VALUES (6,1026,101.00,1.50,0.00,date('2009-03-10'),'Beitragsaenderung');
+
+INSERT INTO beitragstab(
+            beitragstab_pkey, dorfmitglied_pkey, beitrag, spende, schulden,
+            gueltigab, info)
+    VALUES (9,1025,9.00,1.50,0.00,date('2006-02-1'),'Beitragsaenderung');
+
+INSERT INTO beitragstab(
+            beitragstab_pkey, dorfmitglied_pkey, beitrag, spende, schulden,
+            gueltigab, info)
     VALUES (10,1025,99.00,1.50,0.00,date('2009-03-10'),'Beitragsaenderung');
 
 INSERT INTO beitragstab(

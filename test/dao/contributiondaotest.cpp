@@ -68,7 +68,7 @@ void ContributionDaoTest::testGetModelByMemberId()
     const QSqlTableModel *model = contributionDao.getModelByMemberId(1025);
 
     QVERIFY(model);
-    QCOMPARE(model->rowCount(), 5);
+    QCOMPARE(model->rowCount(), 7);
     QSqlRecord record = model->record(0);
     QCOMPARE(record.value(ContributionTable::Info -1).toString(), QString("Beitragsaenderung"));
     QCOMPARE(record.value(ContributionTable::Fee).toString(), QString("99"));
@@ -80,18 +80,18 @@ void ContributionDaoTest::testInsertNewEmptyRowAndDeletRow()
 
     QSqlTableModel *model = contributionDao.getModelByMemberId(1025);
     QVERIFY(model);
-    QCOMPARE(model->rowCount(), 5);
+    QCOMPARE(model->rowCount(), 7);
 
     QModelIndex index = contributionDao.insertNewEmptyRowWithMemberId(1025);
 
-    QCOMPARE(index.row(), 5);
+    QCOMPARE(index.row(), 7);
     model->select();
-    QCOMPARE(model->rowCount(), 6);
+    QCOMPARE(model->rowCount(), 8);
 
     QVERIFY(contributionDao.deleteRow(index));
 
     model->select();
-    QCOMPARE(model->rowCount(), 5);
+    QCOMPARE(model->rowCount(), 7);
 }
 
 } // namespace model
