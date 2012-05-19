@@ -37,6 +37,7 @@ set(QT_SRCS
 
     accounting/balanceentry.cpp
     accounting/contributionentry.cpp
+    accounting/pay.cpp
 
     member.cpp
     cashsumsummary.cpp
@@ -61,4 +62,4 @@ add_library(memberManagerLib STATIC ${QT_SRCS} ${MOC_OUTFILES} ${UI_OUTFILES})
 
 add_executable(memberManager main.cpp)
 
-target_link_libraries(memberManager memberManagerLib ${QT_LIBRARIES})
+target_link_libraries(memberManager memberManagerLib ${QT_LIBRARIES} ${QIABANKING_LIBRARIES} ${AQB_LIBRARIES} ${GWEN_LIBRARIES})

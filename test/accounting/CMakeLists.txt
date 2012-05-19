@@ -8,3 +8,4 @@ include_directories(../)
 
 qt4_add_test(balanceentry balanceentrytest.cpp)
 qt4_add_test(contributionentry contributionentrytest.cpp)
+qt4_add_test(pay paytest.cpp)

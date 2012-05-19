@@ -10,6 +10,11 @@ set (MemberManager_VERSION_MINOR 1)
 set (MemberManager_VERSION_PATCH 0)
 
 find_package(Qt4 4.7.0 REQUIRED QtCore QtGui QtSql)
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(AQB REQUIRED aqbanking)
+find_package(QIABanking)
+
+include_directories(${QIABANKING_INCLUDE_DIR} ${AQB_INCLUDE_DIRS})
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON) 
 
