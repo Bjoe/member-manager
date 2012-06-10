@@ -4,6 +4,7 @@
 #include "cashsumsummary.h"
 #include "debitsumsummary.h"
 #include "dao/databasestructure.h"
+#include "accounting/pay.h"
 
 namespace membermanager
 {
@@ -39,6 +40,8 @@ MainWindow::MainWindow(const QSqlDatabase &aDatabase,
     connect(ui.actionShowDeletedMember, SIGNAL(triggered()), SLOT(showDeletedMemberView()));
     connect(ui.actionNewMember, SIGNAL(triggered()), SLOT(newMember()));
     connect(ui.actionSummary, SIGNAL(triggered()), SLOT(managerSummary()));
+    connect(ui.actionMemberCollectionWithBooking, SIGNAL(triggered()), SLOT(memberCollectionWithBooking()));
+    connect(ui.actionMemberCollectionWithoutBooking, SIGNAL(triggered()), SLOT(memberCollectionWithoutBooking()));
     //connect(ui.actionShowSaldo, SIGNAL(triggered()), SLOT(showSaldo()));
 
     showMembers();
@@ -119,6 +122,48 @@ void MainWindow::managerSummary()
     summaryWindow.addSummary(&cashSum);
     summaryWindow.addSummary(&debitSum);
     summaryWindow.exec();
+}
+
+void MainWindow::memberCollectionWithBooking()
+{
+    memberCollection(true);
+}
+
+void MainWindow::memberCollectionWithoutBooking()
+{
+    memberCollection(false);
+}
+
+void MainWindow::memberCollection(bool isBooking)
+{
+    QDate date = QDate::currentDate();
+
+    QSettings settings;
+    QString bankName = settings.value("bank/name").toString();
+    QString bankCode = settings.value("bank/code").toString();
+    QString accountNumber = settings.value("bank/account").toString();
+
+    membermanager::accounting::Pay pay(accountNumber, bankName, bankCode);
+
+    dao::MemberDao dao;
+    QList<Member> memberList = dao.findByDeleted(false);
+    foreach(const Member member, memberList) {
+       pay.payment(member, date.toString("MMM"), date, isBooking);
+    }
+
+    QString filename = QString("DTAUS_%1.txt").arg(date.toString(Qt::ISODate));
+    QList<double> sum = pay.balancing("DTAUS0.txt");
+
+    filename = QString("sum-%1.csv").arg(date.toString(Qt::ISODate));
+    QFile file(filename);
+    if(!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        return;
+    }
+
+    QTextStream out(&file);
+    out << date.toString("dd.MM.yyyy") << ";" << "Einzug 011" << ";" << "011 Mitgliedsbeitraege" << ";" << sum[0] << "\n";
+    out << date.toString("dd.MM.yyyy") << ";" << "Einzug 012" << ";" << "012 Spenden" << ";" << sum[1] << "\n";
+    file.close();
 }
 
 }

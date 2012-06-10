@@ -27,6 +27,8 @@ private slots:
     void saveMember();
     void updateMemberDetailView(const QItemSelection &aSelected, const QItemSelection &aDeselected);
     void managerSummary();
+    void memberCollectionWithBooking();
+    void memberCollectionWithoutBooking();
 
 private:
     Ui::MainWindow ui;
@@ -36,6 +38,7 @@ private:
 
     void showMembers();
     void updateTableView();
+    void memberCollection(bool isBooking);
 };
 
 }
