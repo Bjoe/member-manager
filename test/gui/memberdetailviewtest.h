@@ -24,6 +24,11 @@ public:
 private slots:
     void initTestCase();
     void initTest();
+
+    void testNewMember();
+    void testSelectedMember();
+    void testMemberView();
+    void testDeletedMemberView();
     void testShowMember();
     void testChangeMember();
     void testChangeMemberWithNewContribution();

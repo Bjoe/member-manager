@@ -13,6 +13,7 @@ set(QT_MOC_HEADERS
 
 set(QT_UI
     gui/mainwindow.ui
+    gui/memberdetailview.ui
     gui/connectiondialog.ui
     gui/balancedialog.ui
     gui/contributiondialog.ui

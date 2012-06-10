@@ -56,8 +56,7 @@ int main(int argc, char *argv[])
     settings.setValue(hostnameKey, dialog.getHostname());
     settings.setValue(portKey, dialog.getPort());
 
-    membermanager::gui::MainWindow *mainWindow = new membermanager::gui::MainWindow(
-        db);
+    membermanager::gui::MainWindow *mainWindow = new membermanager::gui::MainWindow();
     mainWindow->show();
 
     return app.exec();

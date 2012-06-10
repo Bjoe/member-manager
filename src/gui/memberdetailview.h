@@ -3,8 +3,9 @@
 
 #include <QtCore>
 #include <QtGui>
-#include "ui_mainwindow.h"
+#include "ui_memberdetailview.h"
 #include "member.h"
+#include "dao/memberdao.h"
 #include "accounting/contributionentry.h"
 
 namespace membermanager
@@ -16,19 +17,23 @@ class MemberDetailView : public QWidget
 {
     Q_OBJECT
 public:
-    explicit MemberDetailView(const Ui::MainWindow *anUi, QWidget *aParent = 0);
+    explicit MemberDetailView(bool isDeleted, QWidget *aParent = 0);
 
     void showMember(int aMemberId);
-    void saveMember();
 
 public slots:
+    void updateMemberDetailView(const QItemSelection &aSelected, const QItemSelection &aDeselected);
+    void newMember();
+    void saveMember();
     void newFee();
     void showSaldoDialog();
     void showContributionDialog();
     void showContributionReceiptDialog();
 
 private:
-    const Ui::MainWindow *ui;
+    Ui::MemberDetailView ui;
+
+    dao::MemberDao memberDao;
     Member member;
     accounting::ContributionEntry memberContribution;
     bool newContribution;

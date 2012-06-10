@@ -16,10 +16,6 @@ class MainWindowTest: public qttestutil::TestCoverageObject
 private slots:
     void init();
 
-    void testNewMember();
-    void testSelectedMember();
-    void testMemberView();
-    void testDeletedMemberView();
 };
 
 }
