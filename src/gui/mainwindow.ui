@@ -522,8 +522,8 @@
     <property name="title">
      <string>Datei</string>
     </property>
-    <addaction name="actionExit"/>
     <addaction name="actionSummary"/>
+    <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
