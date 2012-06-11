@@ -2,6 +2,8 @@
 
 #include "gui/summarywindow.h"
 #include "gui/memberdetailview.h"
+#include "gui/summaryview.h"
+
 #include "cashsumsummary.h"
 #include "debitsumsummary.h"
 #include "accounting/pay.h"
@@ -17,12 +19,14 @@ MainWindow::MainWindow(QWidget *parent) :
     ui.setupUi(this);
 
     listWidget = new QListWidget();
+    listWidget->addItem(tr("Gesamt Ueberblick"));
     listWidget->addItem(tr("Mitglieder"));
     listWidget->addItem(tr("geloeschte Mitglieder"));
 
     stackedLayout = new QStackedWidget();
-    stackedLayout->addWidget(new MemberDetailView(false));
-    stackedLayout->addWidget(new MemberDetailView(true));
+    stackedLayout->addWidget(new SummaryView(this));
+    stackedLayout->addWidget(new MemberDetailView(false, this));
+    stackedLayout->addWidget(new MemberDetailView(true, this));
 
     ui.horizontalLayout->addWidget(listWidget);
     ui.horizontalLayout->addWidget(stackedLayout, 1);
