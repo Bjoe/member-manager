@@ -3,14 +3,16 @@
 
 #include <QWidget>
 
-namespace Ui {
-class SummaryView;
-}
-
 namespace membermanager
 {
 namespace gui
 {
+
+namespace Ui
+{
+class SummaryView;
+}
+
 
 class SummaryView : public QWidget
 {
