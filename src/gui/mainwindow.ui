@@ -38,7 +38,6 @@
     <property name="title">
      <string>Datei</string>
     </property>
-    <addaction name="actionSummary"/>
     <addaction name="actionMemberCollectionWithoutBooking"/>
     <addaction name="actionMemberCollectionWithBooking"/>
     <addaction name="separator"/>
@@ -49,14 +48,6 @@
   <action name="actionExit">
    <property name="text">
     <string>Exit</string>
-   </property>
-  </action>
-  <action name="actionSummary">
-   <property name="text">
-    <string>Übersicht</string>
-   </property>
-   <property name="toolTip">
-    <string>Vereins Übersicht</string>
    </property>
   </action>
   <action name="actionMemberCollectionWithBooking">

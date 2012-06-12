@@ -1,12 +1,9 @@
 #include "gui/mainwindow.h"
 
-#include "gui/summarywindow.h"
 #include "gui/memberdetailview.h"
 #include "gui/memberdebtview.h"
 #include "gui/summaryview.h"
 
-#include "cashsumsummary.h"
-#include "debitsumsummary.h"
 #include "accounting/pay.h"
 
 namespace membermanager
@@ -39,25 +36,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     listWidget->setCurrentRow(0);
 
-    connect(ui.actionSummary, SIGNAL(triggered()), SLOT(managerSummary()));
     connect(ui.actionMemberCollectionWithBooking, SIGNAL(triggered()), SLOT(memberCollectionWithBooking()));
     connect(ui.actionMemberCollectionWithoutBooking, SIGNAL(triggered()), SLOT(memberCollectionWithoutBooking()));
 }
 
 
-
-void MainWindow::managerSummary()
-{
-    dao::MemberDao dao;
-    QList<Member> memberList = dao.findByDeleted(false);
-    CashSumSummary cashSum(memberList);
-    DebitSumSummary debitSum(memberList);
-
-    SummaryWindow summaryWindow(this);
-    summaryWindow.addSummary(&cashSum);
-    summaryWindow.addSummary(&debitSum);
-    summaryWindow.exec();
-}
 
 void MainWindow::memberCollectionWithBooking()
 {

@@ -18,7 +18,6 @@ public:
     MainWindow(QWidget *parent = 0);
 
 public slots:
-    void managerSummary();
     void memberCollectionWithBooking();
     void memberCollectionWithoutBooking();
 

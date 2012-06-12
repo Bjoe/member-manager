@@ -40,5 +40,3 @@ add_subdirectory(dao)
 add_subdirectory(accounting)
 
 qt4_add_test(member membertest.cpp)
-qt4_add_test(cashsumsummary cashsumsummarytest.cpp)
-qt4_add_test(debitsumsummary debitsumsummarytest.cpp)
