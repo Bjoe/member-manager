@@ -17,8 +17,8 @@ MemberDetailView::MemberDetailView(bool isDeleted, QWidget *aParent) :
 {
     ui.setupUi(this);
 
-    memberDao.selectDeleted(isDeleted);
-    ui.tableView->setModel(memberDao.model());
+    QSqlTableModel* model = memberDao.modelSelectDeleted(isDeleted);
+    ui.tableView->setModel(model);
     ui.tableView->setColumnHidden(dao::MemberTable::Deleted, true);
     ui.tableView->setColumnHidden(dao::MemberTable::FOO_CCC, true);
     ui.tableView->setColumnHidden(dao::MemberTable::FOO_ChaosNr, true);
@@ -38,15 +38,12 @@ MemberDetailView::MemberDetailView(bool isDeleted, QWidget *aParent) :
     connect(ui.saveButton, SIGNAL(clicked()), SLOT(saveMember()));
     connect(ui.pushButton, SIGNAL(clicked()), SLOT(newMember()));
 
-    ui.tableView->selectRow(0);
-    dao::MemberDao mDao(QSqlDatabase::database(), this);
-    int memberId = mDao.findByRow(0).getMemberId();
-    showMember(memberId);
+    ui.tableView->setCurrentIndex(model->index(0,0));
 }
 
-void MemberDetailView::updateMemberDetailView(const QItemSelection &aSelected, const QItemSelection &aDeselected)
+void MemberDetailView::updateMemberDetailView(const QItemSelection &aItemSelection, const QItemSelection &)
 {
-    QModelIndexList indexList = aSelected.indexes();
+    QModelIndexList indexList = aItemSelection.indexes();
     int id = 0;
     if (indexList.size() > 0) {
         QModelIndex index = indexList.first();
@@ -57,8 +54,7 @@ void MemberDetailView::updateMemberDetailView(const QItemSelection &aSelected, c
 
 void MemberDetailView::showMember(int aMemberId)
 {
-    dao::MemberDao mDao(QSqlDatabase::database(), this);
-    member = mDao.findByMemberId(aMemberId);
+    member = memberDao.findByMemberId(aMemberId);
 
     ui.memberId->setText(QString::number(aMemberId));
     ui.firstName->setText(member.getFirstname());
@@ -102,9 +98,9 @@ void MemberDetailView::newFee()
 void MemberDetailView::newMember()
 {
     ui.tableView->selectionModel()->clearSelection();
-    int id = memberDao.newMember();
+    int id = memberDao.createMember();
     showMember(id);
-    memberDao.model()->select();
+    refreshTableView();
 }
 
 void MemberDetailView::saveMember()
@@ -132,15 +128,22 @@ void MemberDetailView::saveMember()
     memberContribution.setInfo(ui.contributionInfo->text());
     memberContribution.setValidFrom(ui.validFrom->date());
 
-    dao::MemberDao mDao(QSqlDatabase::database(), this);
-    mDao.saveRecord(member);
+    memberDao.saveRecord(member);
 
     dao::ContributionDao contributionDao(QSqlDatabase::database(), this);
     contributionDao.saveRecord(memberContribution);
 
-    memberDao.model()->select();
-    ui.tableView->resizeColumnsToContents();
+    refreshTableView();
     ui.tableView->selectRow(index.row());
+}
+
+void MemberDetailView::refreshTableView()
+{
+    QAbstractItemModel *model = ui.tableView->model();
+    QSqlTableModel *sqlModel = static_cast<QSqlTableModel *>(model);
+    sqlModel->select();
+
+    ui.tableView->resizeColumnsToContents();
 }
 
 void MemberDetailView::showSaldoDialog()

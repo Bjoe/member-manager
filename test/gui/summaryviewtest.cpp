@@ -51,16 +51,16 @@ void SummaryViewTest::testSummary()
     QCOMPARE(totalDonation->text(), QString("   1,50 Euro"));
     QCOMPARE(totalCollection->text(), QString(" 100,50 Euro"));
     QCOMPARE(totalSaldo->text(), QString(" -10,00 Euro"));
-    QCOMPARE(totalMembers->text(), QString("1"));
-    QCOMPARE(totalMemberCollection->text(), QString("1"));
+    QCOMPARE(totalMembers->text(), QString("3"));
+    QCOMPARE(totalMemberCollection->text(), QString("2"));
     QCOMPARE(totalMemberDonation->text(), QString("1"));
-    QCOMPARE(tableWidget->rowCount(), 1);
+    QCOMPARE(tableWidget->rowCount(), 2);
 
-    QTableWidgetItem *item1 = tableWidget->item(0,0);
+    QTableWidgetItem *item1 = tableWidget->item(1,0);
     QCOMPARE(item1->text(), QString("1"));
-    QTableWidgetItem *item2 = tableWidget->item(0,1);
+    QTableWidgetItem *item2 = tableWidget->item(1,1);
     QCOMPARE(item2->text(), QString("  99,00 Euro"));
-    QTableWidgetItem *item3 = tableWidget->item(0,2);
+    QTableWidgetItem *item3 = tableWidget->item(1,2);
     QCOMPARE(item3->text(), QString("=    99,00 Euro"));
 }
 

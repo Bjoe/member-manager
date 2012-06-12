@@ -22,13 +22,15 @@ public:
     void showMember(int aMemberId);
 
 public slots:
-    void updateMemberDetailView(const QItemSelection &aSelected, const QItemSelection &aDeselected);
+    void updateMemberDetailView(const QItemSelection &, const QItemSelection &);
     void newMember();
     void saveMember();
     void newFee();
     void showSaldoDialog();
     void showContributionDialog();
     void showContributionReceiptDialog();
+
+    void refreshTableView();
 
 private:
     Ui::MemberDetailView ui;

@@ -6,7 +6,7 @@ namespace membermanager
 {
 
 Member::Member() :
-    memberRecord(), addressRecord(), bankRecord(), ressourcenRecord()
+    memberRecord(), addressRecord(), bankRecord(), resourceRecord()
 {
 }
 
@@ -57,12 +57,12 @@ void Member::setCollection(bool aCollection)
 
 QString Member::getEmail() const
 {
-    return ressourcenRecord.value(dao::RessourcenTable::EmailAdress).toString();
+    return resourceRecord.value(dao::RessourcenTable::EmailAdress).toString();
 }
 
 void Member::setEmail(const QString &anEmailAddress)
 {
-    ressourcenRecord.setValue(dao::RessourcenTable::EmailAdress, QVariant(anEmailAddress));
+    resourceRecord.setValue(dao::RessourcenTable::EmailAdress, QVariant(anEmailAddress));
 }
 
 QDate Member::getEntryDate() const

@@ -109,7 +109,23 @@ INSERT INTO dorfmitglied (
     VALUES (1026,'true','Spock','Spock','Spock','spock@chaosdorf.de',
             'spock@chaosdorf.de','spock@chaosdorf.de','spock',0,1234,date('2002-05-26'),'Strange vulcanier');
 
+INSERT INTO dorfmitglied (
+            dorfmitglied_pkey, deleted, vorname, name, nickname, chaosdorfadr,
+            intern, ccc, shell, einzug, chaosnr, eintrittsdatum, info)
+    VALUES (1030,'false','Montgomery','Scott','Scotty','scott@chaosdorf.de',
+            'scott@chaosdorf.de','scott@chaosdorf.de','scott',1,9876,date('2001-04-24'),'Ingenuer');
 
+INSERT INTO dorfmitglied (
+            dorfmitglied_pkey, deleted, vorname, name, nickname, chaosdorfadr,
+            intern, ccc, shell, einzug, chaosnr, eintrittsdatum, info)
+    VALUES (1031,'true','Spock','Spock','Spock','spock@chaosdorf.de',
+            'spock@chaosdorf.de','spock@chaosdorf.de','spock',0,5678,date('2004-02-20'),'Strange vulcanier');
+
+INSERT INTO dorfmitglied (
+            dorfmitglied_pkey, deleted, vorname, name, nickname, chaosdorfadr,
+            intern, ccc, shell, einzug, chaosnr, eintrittsdatum, info)
+    VALUES (1033,'false','Leonard H.','McCoy','Dr. McCoy','mccoy@chaosdorf.de',
+            'mccoy@chaosdorf.de','mccoy@chaosdorf.de','mccoy',0,8765,date('2003-010-15'),'Strange vulcanier');
 
 DROP TABLE kasse;
 

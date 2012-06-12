@@ -37,14 +37,14 @@ void MemberDetailViewTest::testNewMember()
     membermanager::gui::MemberDetailView detailView(true);
     QTableView *view = detailView.findChild<QTableView *> ("tableView");
     QAbstractItemModel *model = view->model();
-    QCOMPARE(model->rowCount(), 1);
+    QCOMPARE(model->rowCount(), 2);
 
     QPushButton *pushButton = detailView.findChild<QPushButton *> ("pushButton");
     QTest::mouseClick(pushButton, Qt::LeftButton);
     QPushButton *saveButton = detailView.findChild<QPushButton *> ("saveButton");
     QTest::mouseClick(saveButton, Qt::LeftButton);
 
-    QCOMPARE(model->rowCount(), 2);
+    QCOMPARE(model->rowCount(), 3);
 }
 
 
@@ -74,7 +74,7 @@ void MemberDetailViewTest::testMemberView()
     QVERIFY(index.isValid());
     const QAbstractItemModel *model = index.model();
     QVERIFY(model != 0);
-    QCOMPARE(model->rowCount(), 1);
+    QCOMPARE(model->rowCount(), 3);
     QVariant value = model->data(index);
     QCOMPARE(value.toInt(), 1025);
 
@@ -92,7 +92,7 @@ void MemberDetailViewTest::testDeletedMemberView()
     QVERIFY(index.isValid());
     const QAbstractItemModel *model = index.model();
     QVERIFY(model != 0);
-    QCOMPARE(model->rowCount(), 1);
+    QCOMPARE(model->rowCount(), 2);
     QVariant value = model->data(index);
     QCOMPARE(value.toInt(), 1026);
 

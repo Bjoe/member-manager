@@ -29,23 +29,14 @@ void MemberDaoTest::testFindByMemberId()
     QCOMPARE(member.getName(), QString("Kirk"));
 }
 
-void MemberDaoTest::testFindByRow()
-{
-    membermanager::dao::MemberDao memberDao(QSqlDatabase::database());
-
-    membermanager::Member member = memberDao.findByRow(1);
-
-    QCOMPARE(member.getName(), QString("Spock"));
-}
-
 void MemberDaoTest::testFindByDeleted()
 {
     membermanager::dao::MemberDao memberDao(QSqlDatabase::database());
 
     QList<membermanager::Member> memberList = memberDao.findByDeleted(true);
 
+    QCOMPARE(memberList.size(), 2);
     membermanager::Member member = memberList.at(0);
-
     QCOMPARE(member.getName(), QString("Spock"));
 }
 
@@ -53,26 +44,16 @@ void MemberDaoTest::testSelectDeleted()
 {
     membermanager::dao::MemberDao memberDao(QSqlDatabase::database());
 
-    QSqlTableModel *model = memberDao.selectDeleted(true);
-    QCOMPARE(model->rowCount(), 1);
-    QSqlRecord record = model->record(0);
-    QCOMPARE(record.value("name").toString(), QString("Spock"));
-}
-
-void MemberDaoTest::testGetModel()
-{
-    membermanager::dao::MemberDao memberDao(QSqlDatabase::database());
-
-    QSqlTableModel *model = memberDao.model();
+    QSqlTableModel *model = memberDao.modelSelectDeleted(true);
     QCOMPARE(model->rowCount(), 2);
     QSqlRecord record = model->record(0);
-    QCOMPARE(record.value("name").toString(), QString("Kirk"));
+    QCOMPARE(record.value("name").toString(), QString("Spock"));
 }
 
 void MemberDaoTest::testNewMember()
 {
     membermanager::dao::MemberDao dao(QSqlDatabase::database());
-    int id = dao.newMember();
+    int id = dao.createMember();
     QVERIFY(id);
 
     using membermanager::dao::MemberTable;

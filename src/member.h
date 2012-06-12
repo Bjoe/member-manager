@@ -56,7 +56,7 @@ private:
     QSqlRecord memberRecord;
     QSqlRecord addressRecord;
     QSqlRecord bankRecord;
-    QSqlRecord ressourcenRecord;
+    QSqlRecord resourceRecord;
 };
 
 }
