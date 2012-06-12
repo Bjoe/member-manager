@@ -37,6 +37,7 @@ MemberDetailView::MemberDetailView(bool isDeleted, QWidget *aParent) :
     connect(ui.contributionButton, SIGNAL(clicked()), SLOT(showContributionReceiptDialog()));
     connect(ui.saveButton, SIGNAL(clicked()), SLOT(saveMember()));
     connect(ui.pushButton, SIGNAL(clicked()), SLOT(newMember()));
+    connect(ui.refreshButton, SIGNAL(clicked()), SLOT(refreshTableView()));
 
     ui.tableView->setCurrentIndex(model->index(0,0));
 }
