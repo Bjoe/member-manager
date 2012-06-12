@@ -7,6 +7,7 @@ set(QT_MOC_HEADERS
     gui/contributiondialog.h
     gui/contributionreceiptdialog.h
     gui/summaryview.h
+    gui/memberdebtview.h
     gui/summarywindow.h
 
     summaryhandler.h
@@ -20,6 +21,7 @@ set(QT_UI
     gui/contributiondialog.ui
     gui/contributionreceiptdialog.ui
     gui/summaryview.ui
+    gui/memberdebtview.ui
     gui/summarywindow.ui
     )
 
@@ -31,6 +33,7 @@ set(QT_SRCS
     gui/contributiondialog.cpp
     gui/contributionreceiptdialog.cpp
     gui/summaryview.cpp
+    gui/memberdebtview.cpp
     gui/summarywindow.cpp
 
     dao/kassamodel.cpp

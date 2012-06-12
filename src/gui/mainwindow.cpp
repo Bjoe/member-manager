@@ -2,6 +2,7 @@
 
 #include "gui/summarywindow.h"
 #include "gui/memberdetailview.h"
+#include "gui/memberdebtview.h"
 #include "gui/summaryview.h"
 
 #include "cashsumsummary.h"
@@ -22,11 +23,13 @@ MainWindow::MainWindow(QWidget *parent) :
     listWidget->addItem(tr("Gesamt Ueberblick"));
     listWidget->addItem(tr("Mitglieder"));
     listWidget->addItem(tr("geloeschte Mitglieder"));
+    listWidget->addItem(tr("Mitglieder Schulden"));
 
     stackedLayout = new QStackedWidget();
     stackedLayout->addWidget(new SummaryView(this));
     stackedLayout->addWidget(new MemberDetailView(false, this));
     stackedLayout->addWidget(new MemberDetailView(true, this));
+    stackedLayout->addWidget(new MemberDebtView(this));
 
     ui.horizontalLayout->addWidget(listWidget);
     ui.horizontalLayout->addWidget(stackedLayout, 1);
