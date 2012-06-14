@@ -4,8 +4,7 @@
 #include "gui/memberdebtview.h"
 #include "gui/summaryview.h"
 #include "gui/paymentview.h"
-
-#include "accounting/pay.h"
+#include "gui/settingsdialog.h"
 
 namespace membermanager
 {
@@ -38,6 +37,14 @@ MainWindow::MainWindow(QWidget *parent) :
             stackedLayout, SLOT(setCurrentIndex(int)));
 
     listWidget->setCurrentRow(0);
+
+    connect(ui.actionSettings, SIGNAL(triggered()), SLOT(showSettingsDialog()));
+}
+
+void MainWindow::showSettingsDialog()
+{
+    SettingsDialog settingsDialog;
+    settingsDialog.exec();
 }
 
 }

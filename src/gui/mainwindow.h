@@ -17,6 +17,9 @@ class MainWindow: public QMainWindow
 public:
     MainWindow(QWidget *parent = 0);
 
+private slots:
+    void showSettingsDialog();
+
 private:
     Ui::MainWindow ui;
     QListWidget *listWidget;
