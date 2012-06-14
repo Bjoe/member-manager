@@ -47,13 +47,13 @@ void SummaryViewTest::testSummary()
 
     QTest::mouseClick(pushButton, Qt::LeftButton);
 
-    QCOMPARE(totalCash->text(), QString(" 100,50 Euro"));
-    QCOMPARE(totalDonation->text(), QString("   1,50 Euro"));
-    QCOMPARE(totalCollection->text(), QString(" 100,50 Euro"));
+    QCOMPARE(totalCash->text(), QString(" 262,00 Euro"));
+    QCOMPARE(totalDonation->text(), QString("   3,00 Euro"));
+    QCOMPARE(totalCollection->text(), QString(" 180,50 Euro"));
     QCOMPARE(totalSaldo->text(), QString(" -10,00 Euro"));
     QCOMPARE(totalMembers->text(), QString("3"));
     QCOMPARE(totalMemberCollection->text(), QString("2"));
-    QCOMPARE(totalMemberDonation->text(), QString("1"));
+    QCOMPARE(totalMemberDonation->text(), QString("2"));
     QCOMPARE(tableWidget->rowCount(), 2);
 
     QTableWidgetItem *item1 = tableWidget->item(1,0);

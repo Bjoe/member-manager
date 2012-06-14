@@ -77,6 +77,15 @@ INSERT INTO beitragstab(
             gueltigab, info)
     VALUES (1,1025,13.00,0.00,2.00,date('2006-05-01'),'Spende wird eingestellt');
 
+INSERT INTO beitragstab(
+            beitragstab_pkey, dorfmitglied_pkey, beitrag, spende, schulden,
+            gueltigab, info)
+    VALUES (20,1030,80.00,0.00,0.00,date('2006-03-10'),'Beitragsaenderung');
+
+INSERT INTO beitragstab(
+            beitragstab_pkey, dorfmitglied_pkey, beitrag, spende, schulden,
+            gueltigab, info)
+    VALUES (21,1033,80.00,1.50,0.00,date('2006-03-10'),'Beitragsaenderung');
 
 
 
@@ -230,6 +239,15 @@ CREATE TABLE kontodaten (
 INSERT INTO kontodaten (
         kontodaten_pkey, dorfmitglied_pkey, kontonr, bank, blz)
 VALUES (1,1025,12234569,'sparstrumpf',9004010);
+INSERT INTO kontodaten (
+        kontodaten_pkey, dorfmitglied_pkey, kontonr, bank, blz)
+VALUES (2,1030,19779,'sparsocke',2940284);
+INSERT INTO kontodaten (
+        kontodaten_pkey, dorfmitglied_pkey, kontonr, bank, blz)
+VALUES (3,1033,123629,'Kasse',90035410);
+INSERT INTO kontodaten (
+        kontodaten_pkey, dorfmitglied_pkey, kontonr, bank, blz)
+VALUES (5,1026,345634569,'Stadt Socke',10835810);
 
 
 
