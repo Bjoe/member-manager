@@ -17,17 +17,10 @@ class MainWindow: public QMainWindow
 public:
     MainWindow(QWidget *parent = 0);
 
-public slots:
-    void memberCollectionWithBooking();
-    void memberCollectionWithoutBooking();
-
 private:
     Ui::MainWindow ui;
     QListWidget *listWidget;
     QStackedWidget *stackedLayout;
-
-
-    void memberCollection(bool isBooking);
 };
 
 }

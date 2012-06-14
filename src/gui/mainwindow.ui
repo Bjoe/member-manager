@@ -38,8 +38,6 @@
     <property name="title">
      <string>Datei</string>
     </property>
-    <addaction name="actionMemberCollectionWithoutBooking"/>
-    <addaction name="actionMemberCollectionWithBooking"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
@@ -48,16 +46,6 @@
   <action name="actionExit">
    <property name="text">
     <string>Exit</string>
-   </property>
-  </action>
-  <action name="actionMemberCollectionWithBooking">
-   <property name="text">
-    <string>Monatseinzug mit Buchung</string>
-   </property>
-  </action>
-  <action name="actionMemberCollectionWithoutBooking">
-   <property name="text">
-    <string>Monatseinzug ohne Buchung</string>
    </property>
   </action>
  </widget>
