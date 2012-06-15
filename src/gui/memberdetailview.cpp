@@ -77,6 +77,7 @@ void MemberDetailView::showMember(int aMemberId)
     dao::ContributionDao contributionDao(QSqlDatabase::database());
     memberContribution = contributionDao.findLastDateByMemberId(aMemberId);
     ui.fee->setText(QString::number(memberContribution.getFee()));
+    ui.additionalFee->setText(QString::number(memberContribution.getAdditionalFee()));
     ui.donation->setText(QString::number(memberContribution.getDonation()));
     ui.contributionInfo->setText(memberContribution.getInfo());
     ui.validFrom->setDate(memberContribution.getValidFrom());
@@ -86,6 +87,8 @@ void MemberDetailView::newFee()
 {
     ui.fee->clear();
     ui.fee->setText(QString("15"));
+    ui.additionalFee->clear();
+    ui.additionalFee->setText(QString("0"));
     ui.donation->clear();
     ui.donation->setText(QString("0"));
     ui.contributionInfo->clear();
@@ -125,6 +128,7 @@ void MemberDetailView::saveMember()
     member.setDeleted(ui.deleted->isChecked());
 
     memberContribution.setFee(ui.fee->text().toDouble());
+    memberContribution.setAdditionalFee(ui.additionalFee->text().toDouble());
     memberContribution.setDonation(ui.donation->text().toDouble());
     memberContribution.setInfo(ui.contributionInfo->text());
     memberContribution.setValidFrom(ui.validFrom->date());

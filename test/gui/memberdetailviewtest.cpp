@@ -120,6 +120,7 @@ void MemberDetailViewTest::testShowMember()
     QLineEdit *contributionInfo = detailView.findChild<QLineEdit *> ("contributionInfo");
     QLineEdit *donation = detailView.findChild<QLineEdit *> ("donation");
     QLineEdit *fee = detailView.findChild<QLineEdit *> ("fee");
+    QLineEdit *additionalFee = detailView.findChild<QLineEdit *> ("additionalFee");
     QDateEdit *validFrom = detailView.findChild<QDateEdit *> ("validFrom");
     QLineEdit *account = detailView.findChild<QLineEdit *> ("account");
     QLineEdit *code = detailView.findChild<QLineEdit *> ("code");
@@ -141,6 +142,7 @@ void MemberDetailViewTest::testShowMember()
     QCOMPARE(contributionInfo->text(), QString("Beitragsaenderung"));
     QCOMPARE(donation->text(), QString("1.5"));
     QCOMPARE(fee->text(), QString("99"));
+    QCOMPARE(additionalFee->text(), QString("0"));
     QCOMPARE(validFrom->text(), QString("10.03.09"));
     QCOMPARE(account->text(), QString("12234569"));
     QCOMPARE(code->text(), QString("9004010"));
@@ -169,6 +171,7 @@ void MemberDetailViewTest::testChangeMember()
     QLineEdit *contributionInfo = detailView.findChild<QLineEdit *> ("contributionInfo");
     QLineEdit *donation = detailView.findChild<QLineEdit *> ("donation");
     QLineEdit *fee = detailView.findChild<QLineEdit *> ("fee");
+    QLineEdit *additionalFee = detailView.findChild<QLineEdit *> ("additionalFee");
     QDateEdit *validFrom = detailView.findChild<QDateEdit *> ("validFrom");
     QLineEdit *account = detailView.findChild<QLineEdit *> ("account");
     QLineEdit *code = detailView.findChild<QLineEdit *> ("code");
@@ -190,6 +193,7 @@ void MemberDetailViewTest::testChangeMember()
     QCOMPARE(contributionInfo->text(), QString("Beitragsaenderung"));
     QCOMPARE(donation->text(), QString("1.5"));
     QCOMPARE(fee->text(), QString("99"));
+    QCOMPARE(additionalFee->text(), QString("0"));
     QCOMPARE(validFrom->text(), QString("10.03.09"));
     QCOMPARE(account->text(), QString("12234569"));
     QCOMPARE(code->text(), QString("9004010"));
@@ -219,6 +223,8 @@ void MemberDetailViewTest::testChangeMember()
 
     fee->clear();
     QTest::keyClicks(fee, "105");
+    additionalFee->clear();
+    QTest::keyClicks(additionalFee, "10");
     donation->clear();
     QTest::keyClicks(donation, "100");
     contributionInfo->clear();
@@ -288,6 +294,7 @@ void MemberDetailViewTest::testChangeMember()
                " order by " + ContributionTable::COLUMNNAME[ContributionTable::ValidFrom] + " desc");
     query.next();
     QCOMPARE(query.value(ContributionTable::Fee).toInt(), 105);
+    QCOMPARE(query.value(ContributionTable::AdditionalFee).toInt(), 10);
     QCOMPARE(query.value(ContributionTable::Donation).toInt(), 100);
     QCOMPARE(query.value(ContributionTable::Info).toString(), QString("Kohle"));
 
@@ -324,6 +331,7 @@ void MemberDetailViewTest::testChangeMemberWithNewContribution()
     QLineEdit *contributionInfo = detailView.findChild<QLineEdit *> ("contributionInfo");
     QLineEdit *donation = detailView.findChild<QLineEdit *> ("donation");
     QLineEdit *fee = detailView.findChild<QLineEdit *> ("fee");
+    QLineEdit *additionalFee = detailView.findChild<QLineEdit *> ("additionalFee");
     QDateEdit *validFrom = detailView.findChild<QDateEdit *> ("validFrom");
     QLineEdit *account = detailView.findChild<QLineEdit *> ("account");
     QLineEdit *code = detailView.findChild<QLineEdit *> ("code");
@@ -343,7 +351,9 @@ void MemberDetailViewTest::testChangeMemberWithNewContribution()
     QCOMPARE(entryDate->text(), QString("24.04.01"));
     QCOMPARE(contributionInfo->text(), QString("Beitragsaenderung"));
     QCOMPARE(donation->text(), QString("1.5"));
+    QCOMPARE(additionalFee->text(), QString("0"));
     QCOMPARE(fee->text(), QString("99"));
+    QCOMPARE(additionalFee->text(), QString("0"));
     QCOMPARE(validFrom->text(), QString("10.03.09"));
     QCOMPARE(account->text(), QString("12234569"));
     QCOMPARE(code->text(), QString("9004010"));
@@ -353,6 +363,7 @@ void MemberDetailViewTest::testChangeMemberWithNewContribution()
 
     QCOMPARE(validFrom->date(), QDate::currentDate());
     QCOMPARE(donation->text(), QString("0"));
+    QCOMPARE(additionalFee->text(), QString("0"));
     QCOMPARE(fee->text(), QString("15"));
     QCOMPARE(contributionInfo->text(), QString("Beitragsänderung"));
 
@@ -397,6 +408,7 @@ void MemberDetailViewTest::testChangeMemberWithNewContribution()
     //QCOMPARE(entryDate->text(), QString("15.07.06"));
     QCOMPARE(contributionInfo->text(), QString("Beitragsänderung"));
     QCOMPARE(donation->text(), QString("0"));
+    QCOMPARE(additionalFee->text(), QString("0"));
     QCOMPARE(fee->text(), QString("15"));
     QCOMPARE(account->text(), QString("123456789"));
     QCOMPARE(bankName->text(), QString("Galaxy"));
@@ -429,6 +441,7 @@ void MemberDetailViewTest::testChangeMemberWithNewContribution()
                " order by " + ContributionTable::COLUMNNAME[ContributionTable::ValidFrom] + " desc");
     query.next();
     QCOMPARE(query.value(ContributionTable::Fee).toInt(), 15);
+    QCOMPARE(query.value(ContributionTable::AdditionalFee).toInt(), 0);
     QCOMPARE(query.value(ContributionTable::Donation).toInt(), 0);
     QCOMPARE(query.value(ContributionTable::Info).toString(), QString("Beitragsänderung"));
 
