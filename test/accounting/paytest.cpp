@@ -39,7 +39,7 @@ void PayTest::testPay()
 
     pay.payment(member, "April", date, true);
 
-    QList<double> sum = pay.balancing("DTAUS0.txt");
+    QList<double> sum = pay.balancing("DTAUS0");
 
     double expected = 80.0;
     QCOMPARE(sum.at(0), expected);
@@ -63,6 +63,17 @@ void PayTest::testPay()
                            "                                                   ").arg(today.toString("ddMMyy")));
     file.close();
 
+    QFile csvFile("DTAUS0.csv");
+    if(!csvFile.open(QIODevice::ReadOnly | QIODevice::Text))
+        QFAIL("DTAUS.csv cant open");
+
+    QTextStream csvIn(&csvFile);
+
+    line = csvIn.readLine();
+    QCOMPARE(line, QString("01.04.2006;Lastschrift Einzug 011;011 Mitgliedsbeitrag Kirk James T;80"));
+    line = csvIn.readLine();
+    QCOMPARE(line, QString("01.04.2006;Lastschrift Einzug 012;012 Spende Kirk James T;1.5"));
+    QVERIFY(csvIn.atEnd());
 
     QString sqlQuery = "SELECT * FROM %1 WHERE %2 = %3 AND %4 = %5 AND %6 = '%7' AND %8 = '%9' AND %10 = '%11'";
     QString select = QString(sqlQuery)
@@ -149,7 +160,7 @@ void PayTest::testPayWithoutBooking()
 
     pay.payment(member, "April", date);
 
-    QList<double> sum = pay.balancing("DTAUS0.txt");
+    QList<double> sum = pay.balancing("DTAUS0");
 
     double expected = 80.0;
     QCOMPARE(sum.at(0), expected);
@@ -158,12 +169,12 @@ void PayTest::testPayWithoutBooking()
 
     QDate today = QDate::currentDate();
 
-    QFile file("DTAUS0.txt");
-    if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
-        QFAIL("DTAUS cant open");
+    QFile dtausFile("DTAUS0.txt");
+    if(!dtausFile.open(QIODevice::ReadOnly | QIODevice::Text))
+        QFAIL("DTAUS.txt cant open");
 
-    QTextStream in(&file);
-    QString line = in.readLine();
+    QTextStream dtausIn(&dtausFile);
+    QString line = dtausIn.readLine();
     QCOMPARE(line, QString("0128ALK3005099900000000SPASSKASSE                 %1    "
                            "00001234560000000000                                               "
                            "10187C30050999029402840000019779000000000000005000 0000000000030050999000012345600000008000"
@@ -171,8 +182,17 @@ void PayTest::testPayWithoutBooking()
                            "00                                                                     0128E     "
                            "0000001000000000000000000000000019779000000000029402840000000008000"
                            "                                                   ").arg(today.toString("ddMMyy")));
-    file.close();
+    dtausFile.close();
 
+    QFile csvFile("DTAUS0.csv");
+    if(!csvFile.open(QIODevice::ReadOnly | QIODevice::Text))
+        QFAIL("DTAUS.csv cant open");
+
+    QTextStream csvIn(&csvFile);
+
+    line = csvIn.readLine();
+    QCOMPARE(line, QString("05.04.2006;Lastschrift Einzug 011;011 Mitgliedsbeitrag Scott Montgomery;80"));
+    QVERIFY(csvIn.atEnd());
 
     QString sqlQuery = "SELECT * FROM %1 WHERE %2 = %3 AND %4 = %5 AND %6 = '%7' AND %8 = '%9' AND %10 = '%11'";
     QString select = QString(sqlQuery)
@@ -258,7 +278,7 @@ void PayTest::testPaySum()
     pay.payment(member, "April", date);
     pay.payment(member, "April", date);
 
-    QList<double> sum = pay.balancing("DTAUS0.txt");
+    QList<double> sum = pay.balancing("DTAUS0");
 
     double expected = 160.0;
     QCOMPARE(sum.at(0), expected);

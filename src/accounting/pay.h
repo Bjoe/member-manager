@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <QDate>
+#include <QByteArray>
 #include <QList>
 #include "member.h"
 #include "dao/contributiondao.h"
@@ -25,6 +26,7 @@ private:
     dao::ContributionDao contributionDao;
     dao::BalanceDao balanceDao;
     qiabanking::Exporter exporter;
+    QByteArray data;
     QList<double> sum;
     QString accountNumber;
     QString bankCode;

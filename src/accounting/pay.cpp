@@ -9,7 +9,7 @@ namespace membermanager {
 namespace accounting {
 
 Pay::Pay(const QString &anAccountNumber, const QString &aBankName, const QString &aBankCode) :
-   exporter(anAccountNumber,aBankName,aBankCode,"EUR"), sum(), contributionDao(), balanceDao(),
+   exporter(anAccountNumber,aBankName,aBankCode,"EUR"), data(), sum(), contributionDao(), balanceDao(),
     accountNumber(anAccountNumber), bankCode(aBankCode), bankName(aBankName)
 {
     sum << 0.0 << 0.0;
@@ -28,10 +28,17 @@ bool Pay::payment(const Member &aMember, const QString &aMonth, const QDate &aDa
     if(aMember.isCollection()) {
         QString name;
         name.append(aMember.getName()).append(' ').append(aMember.getFirstname());
+
+        data.append(QString("%1;Lastschrift Einzug 011;011 Mitgliedsbeitrag %2;%3\n").arg(aDate.toString("dd.MM.yyyy")).arg(name).arg(fee));
+        sum[0] += fee;
+
         QString withDonation = "";
         if(donation > 0) {
             withDonation = "und Spende ";
+            sum[1] += donation;
+            data.append(QString("%1;Lastschrift Einzug 012;012 Spende %2;%3\n").arg(aDate.toString("dd.MM.yyyy")).arg(name).arg(donation));
         }
+
         QString purpose = QString("%1 Mitgliedsbeitrag %2%3").arg(memberId).arg(withDonation).arg(aMonth);
         qiabanking::Transaction transaction = qiabanking::DtausTransactionBuilder()
                 .withLocalName(bankName)
@@ -45,9 +52,6 @@ bool Pay::payment(const Member &aMember, const QString &aMonth, const QDate &aDa
                 .withPurpose(purpose)
                 .build();
         exporter.addTransaction(transaction);
-
-        sum[0] += fee;
-        sum[1] += donation;
     }
 
     if(withBooking) {
@@ -85,7 +89,17 @@ bool Pay::payment(const Member &aMember, const QString &aMonth, const QDate &aDa
 
 QList<double> Pay::balancing(const QString &aFilename)
 {
-    exporter.createDtausFile(aFilename);
+    QString dtausFilename = QString("%1.txt").arg(aFilename);
+    exporter.createDtausFile(dtausFilename);
+
+    QString csvFilename = QString("%1.csv").arg(aFilename);
+    QFile csvFile(csvFilename);
+
+    if(csvFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        QTextStream out(&csvFile);
+        out << data;
+        csvFile.close();
+    }
     return sum;
 }
 

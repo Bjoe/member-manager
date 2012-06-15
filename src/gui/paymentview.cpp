@@ -109,7 +109,7 @@ void PaymentView::memberCollection()
         pay.payment(member, purposeItem->text() , date, booking);
     }
 
-    QString filename = QString("DTAUS_%1.txt").arg(date.toString(Qt::ISODate));
+    QString filename = QString("DTAUS_%1").arg(date.toString(Qt::ISODate));
     QList<double> sum = pay.balancing(filename);
 
     filename = QString("sum-%1.csv").arg(date.toString(Qt::ISODate));
