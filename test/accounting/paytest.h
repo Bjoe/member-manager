@@ -14,6 +14,7 @@ class PayTest : public qttestutil::TestCoverageObject
 private slots:
     void initTestCase();
     void testPay();
+    void testAdditionalPay();
     void testPayWithoutBooking();
     void testPaySum();
 };

@@ -12,7 +12,7 @@ Pay::Pay(const QString &anAccountNumber, const QString &aBankName, const QString
    exporter(anAccountNumber,aBankName,aBankCode,"EUR"), data(), sum(), contributionDao(), balanceDao(),
     accountNumber(anAccountNumber), bankCode(aBankCode), bankName(aBankName)
 {
-    sum << 0.0 << 0.0;
+    sum << 0.0 << 0.0 << 0.0;
 }
 
 bool Pay::payment(const Member &aMember, const QString &aMonth, const QDate &aDate, bool withBooking)
@@ -24,22 +24,28 @@ bool Pay::payment(const Member &aMember, const QString &aMonth, const QDate &aDa
     ContributionEntry contributionEntry = contributionDao.findByMemberIdWithPointInTime(memberId, aDate);
     double fee = contributionEntry.getFee();
     double donation = contributionEntry.getDonation();
+    double additionalFee = contributionEntry.getAdditionalFee();
 
     if(aMember.isCollection()) {
         QString name;
         name.append(aMember.getName()).append(' ').append(aMember.getFirstname());
 
+        QString purpose = QString("%1 Mitgliedsbeitrag %3 %L2 EUR").arg(memberId).arg(fee, 5, 'f', 2).arg(aMonth);
         data.append(QString("%1;Lastschrift Einzug 011;011 Mitgliedsbeitrag %2;%3\n").arg(aDate.toString("dd.MM.yyyy")).arg(name).arg(fee));
         sum[0] += fee;
 
-        QString withDonation = "";
         if(donation > 0) {
-            withDonation = "und Spende ";
-            sum[1] += donation;
+            purpose.append(QString(" und Spende %L1 EUR").arg(donation, 5, 'f', 2));
             data.append(QString("%1;Lastschrift Einzug 012;012 Spende %2;%3\n").arg(aDate.toString("dd.MM.yyyy")).arg(name).arg(donation));
+            sum[1] += donation;
         }
 
-        QString purpose = QString("%1 Mitgliedsbeitrag %2%3").arg(memberId).arg(withDonation).arg(aMonth);
+        if(additionalFee > 0) {
+            purpose.append(QString(" und CCC Beitrag %L1 EUR").arg(additionalFee, 5, 'f', 2));
+            data.append(QString("%1;Lastschrift Einzug 004;004 Durchlaufender Posten / CCC Beitrag %2;%3\n").arg(aDate.toString("dd.MM.yyyy")).arg(name).arg(additionalFee));
+            sum[2] += additionalFee;
+        }
+
         qiabanking::Transaction transaction = qiabanking::DtausTransactionBuilder()
                 .withLocalName(bankName)
                 .withLocalAccountNumber(accountNumber)
@@ -47,7 +53,7 @@ bool Pay::payment(const Member &aMember, const QString &aMonth, const QDate &aDa
                 .withRemoteName(name)
                 .withRemoteAccountNumber(aMember.getAccountNr())
                 .withRemoteBankCode(aMember.getCode())
-                .withValue(fee + donation)
+                .withValue(fee + donation + additionalFee)
                 .withTextKey(5)
                 .withPurpose(purpose)
                 .build();
@@ -80,6 +86,21 @@ bool Pay::payment(const Member &aMember, const QString &aMonth, const QDate &aDa
                 donationEntry.setInfo("Automatische Monats Lastschrift");
                 donationEntry.setAccount(12);
                 balanceDao.saveRecord(donationEntry);
+            }
+        }
+
+        if(additionalFee > 0) {
+            BalanceEntry additionlFeeEntry(memberId);
+            additionlFeeEntry.setValuta(aDate);
+            additionlFeeEntry.setValue(additionalFee * -1);
+            additionlFeeEntry.setPurpose(QString("CCC Beitrag %1").arg(aMonth));
+            additionlFeeEntry.setInfo("Automatische Monats Abbuchung");
+            balanceDao.saveRecord(additionlFeeEntry);
+            if(aMember.isCollection()) {
+                additionlFeeEntry.setValue(additionalFee);
+                additionlFeeEntry.setInfo("Automatische Monats Lastschrift");
+                additionlFeeEntry.setAccount(4);
+                balanceDao.saveRecord(additionlFeeEntry);
             }
         }
    }
