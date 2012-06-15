@@ -56,9 +56,9 @@ void PayTest::testPay()
     QString line = in.readLine();
     QCOMPARE(line, QString("0128ALK3005099900000000SPASSKASSE                 %1    "
                            "00001234560000000000                                               "
-                           "10187C30050999090040100012234569000000000000005000 0000000000030050999000012345600000008150"
-                           "   KIRK JAMES T                       SPASSKASSE                 1025 MITGLIEDSBEITRAG APRIL1  "
-                           "00                                                                     0128E     "
+                           "10216C30050999090040100012234569000000000000005000 0000000000030050999000012345600000008150"
+                           "   KIRK JAMES T                       SPASSKASSE                 1025 MITGLIEDSBEITRAG UND S1  "
+                           "0102PENDE APRIL                                                        0128E     "
                            "0000001000000000000000000000012234569000000000090040100000000008150"
                            "                                                   ").arg(today.toString("ddMMyy")));
     file.close();
@@ -144,7 +144,7 @@ void PayTest::testPayWithoutBooking()
 
     membermanager::dao::MemberDao dao;
 
-    membermanager::Member member = dao.findByMemberId(1025);
+    membermanager::Member member = dao.findByMemberId(1030);
     QDate date(2006,4,5);
 
     pay.payment(member, "April", date);
@@ -153,7 +153,7 @@ void PayTest::testPayWithoutBooking()
 
     double expected = 80.0;
     QCOMPARE(sum.at(0), expected);
-    expected = 1.5;
+    expected = 0.0;
     QCOMPARE(sum.at(1), expected);
 
     QDate today = QDate::currentDate();
@@ -166,10 +166,10 @@ void PayTest::testPayWithoutBooking()
     QString line = in.readLine();
     QCOMPARE(line, QString("0128ALK3005099900000000SPASSKASSE                 %1    "
                            "00001234560000000000                                               "
-                           "10187C30050999090040100012234569000000000000005000 0000000000030050999000012345600000008150"
-                           "   KIRK JAMES T                       SPASSKASSE                 1025 MITGLIEDSBEITRAG APRIL1  "
+                           "10187C30050999029402840000019779000000000000005000 0000000000030050999000012345600000008000"
+                           "   SCOTT MONTGOMERY                   SPASSKASSE                 1030 MITGLIEDSBEITRAG APRIL1  "
                            "00                                                                     0128E     "
-                           "0000001000000000000000000000012234569000000000090040100000000008150"
+                           "0000001000000000000000000000000019779000000000029402840000000008000"
                            "                                                   ").arg(today.toString("ddMMyy")));
     file.close();
 
@@ -178,7 +178,7 @@ void PayTest::testPayWithoutBooking()
     QString select = QString(sqlQuery)
             .arg(membermanager::dao::SaldoTable::TABLENAME)
             .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::dorfmitglied_pkey])
-            .arg(1025)
+            .arg(1030)
             .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::betrag])
             .arg(-80)
             .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::datum])
@@ -195,9 +195,9 @@ void PayTest::testPayWithoutBooking()
     select = QString(sqlQuery)
             .arg(membermanager::dao::SaldoTable::TABLENAME)
             .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::dorfmitglied_pkey])
-            .arg(1025)
+            .arg(1030)
             .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::betrag])
-            .arg(-1.5)
+            .arg(0.0)
             .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::datum])
             .arg(date.toString(Qt::ISODate))
             .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::bezeichnung])
@@ -212,7 +212,7 @@ void PayTest::testPayWithoutBooking()
     select = QString(sqlQuery)
             .arg(membermanager::dao::SaldoTable::TABLENAME)
             .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::dorfmitglied_pkey])
-            .arg(1025)
+            .arg(1030)
             .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::betrag])
             .arg(80)
             .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::datum])
@@ -230,9 +230,9 @@ void PayTest::testPayWithoutBooking()
     select = QString(sqlQuery)
             .arg(membermanager::dao::SaldoTable::TABLENAME)
             .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::dorfmitglied_pkey])
-            .arg(1025)
+            .arg(1030)
             .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::betrag])
-            .arg(1.5)
+            .arg(0.0)
             .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::datum])
             .arg(date.toString(Qt::ISODate))
             .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::bezeichnung])
@@ -244,8 +244,6 @@ void PayTest::testPayWithoutBooking()
 
     QVERIFY(query.exec(select));
     QVERIFY(query.next() == false);
-
-
 }
 
 void PayTest::testPaySum()

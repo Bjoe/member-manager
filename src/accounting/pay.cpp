@@ -28,7 +28,11 @@ bool Pay::payment(const Member &aMember, const QString &aMonth, const QDate &aDa
     if(aMember.isCollection()) {
         QString name;
         name.append(aMember.getName()).append(' ').append(aMember.getFirstname());
-        QString purpose = QString("%1 Mitgliedsbeitrag %2").arg(memberId).arg(aMonth);
+        QString withDonation = "";
+        if(donation > 0) {
+            withDonation = "und Spende ";
+        }
+        QString purpose = QString("%1 Mitgliedsbeitrag %2%3").arg(memberId).arg(withDonation).arg(aMonth);
         qiabanking::Transaction transaction = qiabanking::DtausTransactionBuilder()
                 .withLocalName(bankName)
                 .withLocalAccountNumber(accountNumber)
