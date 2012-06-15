@@ -24,7 +24,7 @@ class ContributionTable
 public:
     static const QString TABLENAME;
     enum column {
-        ContributionId, MemberId, Fee, Donation, Debit, ValidFrom, Info
+        ContributionId, MemberId, Fee, Donation, AdditionalFee, ValidFrom, Info
     };
     static const QStringList COLUMNNAME;
 };

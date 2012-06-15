@@ -65,7 +65,7 @@ QSqlTableModel* ContributionDao::getModelByMemberId(int aMemberId)
 {
     model->setHeaderData(ContributionTable::Fee, Qt::Horizontal, model->tr("Beitrag"));
     model->setHeaderData(ContributionTable::Donation, Qt::Horizontal, model->tr("Spende"));
-    model->removeColumn(ContributionTable::Debit);
+    model->removeColumn(ContributionTable::AdditionalFee);
     model->setHeaderData(ContributionTable::ValidFrom -1, Qt::Horizontal, model->tr("Gueltig ab"));
     model->setHeaderData(ContributionTable::Info -1, Qt::Horizontal, model->tr("Info"));
 

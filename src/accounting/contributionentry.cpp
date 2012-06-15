@@ -4,8 +4,10 @@
 
 #include "dao/databasestructure.h"
 
-namespace membermanager {
-namespace accounting {
+namespace membermanager
+{
+namespace accounting
+{
 
 using dao::ContributionTable;
 
@@ -29,6 +31,17 @@ double ContributionEntry::getFee() const
 void ContributionEntry::setFee(double aFee)
 {
     setValueOnField(ContributionTable::Fee, QVariant::Double, QVariant(aFee));
+}
+
+double ContributionEntry::getAdditionalFee() const
+{
+    QString fieldname = ContributionTable::COLUMNNAME[ContributionTable::AdditionalFee];
+    return contributionRecord.value(fieldname).toDouble();
+}
+
+void ContributionEntry::setAdditionalFee(double aFee)
+{
+    setValueOnField(ContributionTable::AdditionalFee, QVariant::Double, QVariant(aFee));
 }
 
 double ContributionEntry::getDonation() const

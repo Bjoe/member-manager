@@ -24,6 +24,8 @@ public:
     int getMemberId() const;
     double getFee() const;
     void setFee(double aFee);
+    double getAdditionalFee() const;
+    void setAdditionalFee(double aFee);
     double getDonation() const;
     void setDonation(double aDonation);
     QString getInfo() const;

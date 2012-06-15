@@ -14,6 +14,7 @@ void ContributionEntryTest::testCreateEntry()
     membermanager::accounting::ContributionEntry entry(1);
     entry.setDonation(5.50);
     entry.setFee(15);
+    entry.setAdditionalFee(5);
     entry.setInfo("foo");
     entry.setValidFrom(date);
 
@@ -22,6 +23,8 @@ void ContributionEntryTest::testCreateEntry()
     QCOMPARE(entry.getDonation(), donation);
     double fee = 15.00;
     QCOMPARE(entry.getFee(), fee);
+    double additionalFee = 5.00;
+    QCOMPARE(entry.getAdditionalFee(), additionalFee);
     QCOMPARE(entry.getValidFrom(), date);
 }
 
