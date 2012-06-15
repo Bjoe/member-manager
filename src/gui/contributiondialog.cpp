@@ -20,7 +20,7 @@ ContributionDialog::ContributionDialog(int aMemberId, QWidget *parent) :
 
     ui.contributionTableView->hideColumn(dao::ContributionTable::ContributionId);
     ui.contributionTableView->hideColumn(dao::ContributionTable::MemberId);
-    ui.contributionTableView->sortByColumn(dao::ContributionTable::ValidFrom -1, Qt::DescendingOrder);
+    ui.contributionTableView->sortByColumn(dao::ContributionTable::ValidFrom, Qt::DescendingOrder);
 
     ui.contributionTableView->resizeColumnsToContents();
 

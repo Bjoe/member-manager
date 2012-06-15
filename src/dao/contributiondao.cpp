@@ -65,14 +65,14 @@ QSqlTableModel* ContributionDao::getModelByMemberId(int aMemberId)
 {
     model->setHeaderData(ContributionTable::Fee, Qt::Horizontal, model->tr("Beitrag"));
     model->setHeaderData(ContributionTable::Donation, Qt::Horizontal, model->tr("Spende"));
-    model->removeColumn(ContributionTable::AdditionalFee);
-    model->setHeaderData(ContributionTable::ValidFrom -1, Qt::Horizontal, model->tr("Gueltig ab"));
-    model->setHeaderData(ContributionTable::Info -1, Qt::Horizontal, model->tr("Info"));
+    model->setHeaderData(ContributionTable::AdditionalFee, Qt::Horizontal, model->tr("CCC Beitrag"));
+    model->setHeaderData(ContributionTable::ValidFrom, Qt::Horizontal, model->tr("Gueltig ab"));
+    model->setHeaderData(ContributionTable::Info, Qt::Horizontal, model->tr("Info"));
 
     QString columnnameId = ContributionTable::COLUMNNAME[ContributionTable::MemberId];
     QString filterId = QString("%1 = %2").arg(columnnameId).arg(aMemberId);
     model->setFilter(filterId);
-    model->setSort(ContributionTable::ValidFrom -1, Qt::DescendingOrder);
+    model->setSort(ContributionTable::ValidFrom, Qt::DescendingOrder);
     model->select();
 
     return model;

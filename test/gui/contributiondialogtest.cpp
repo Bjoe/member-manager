@@ -34,7 +34,7 @@ void ContributionDialogTest::testShowDialog()
     QVERIFY(model != 0);
     QCOMPARE(model->rowCount(), 7);
     using membermanager::dao::ContributionTable;
-    const QModelIndex index = model->index(0, ContributionTable::ValidFrom -1);
+    const QModelIndex index = model->index(0, ContributionTable::ValidFrom);
     const QVariant value = model->data(index);
     QCOMPARE(value.toString(), QString("2009-03-10"));
 }

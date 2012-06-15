@@ -70,7 +70,7 @@ void ContributionDaoTest::testGetModelByMemberId()
     QVERIFY(model);
     QCOMPARE(model->rowCount(), 7);
     QSqlRecord record = model->record(0);
-    QCOMPARE(record.value(ContributionTable::Info -1).toString(), QString("Beitragsaenderung"));
+    QCOMPARE(record.value(ContributionTable::Info).toString(), QString("Beitragsaenderung"));
     QCOMPARE(record.value(ContributionTable::Fee).toString(), QString("99"));
 }
 
