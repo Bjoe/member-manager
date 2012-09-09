@@ -11,6 +11,7 @@ set(QT_MOC_HEADERS
     gui/paymentview.h
     gui/accountingentryimporterview.h
     gui/settingsdialog.h
+    gui/memberlistdelegate.h
     )
 
 set(QT_UI
@@ -39,6 +40,7 @@ set(QT_SRCS
     gui/paymentview.cpp
     gui/accountingentryimporterview.cpp
     gui/settingsdialog.cpp
+    gui/memberlistdelegate.cpp
 
     dao/kassamodel.cpp
     dao/databasestructure.cpp

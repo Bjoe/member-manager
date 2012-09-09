@@ -3,10 +3,13 @@
 
 #include <QWidget>
 
-namespace membermanager {
-namespace gui {
+namespace membermanager
+{
+namespace gui
+{
 
-namespace Ui {
+namespace Ui
+{
 class AccountingEntryImporterView;
 }
 
