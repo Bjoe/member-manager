@@ -75,7 +75,7 @@ void MemberDetailView::showMember(int aMemberId)
     ui.deleted->setChecked(member.isDeleted());
 
     dao::ContributionDao contributionDao(QSqlDatabase::database());
-    memberContribution = contributionDao.findLastDateByMemberId(aMemberId);
+    memberContribution = contributionDao.findLastEntryByMemberId(aMemberId);
     ui.fee->setText(QString::number(memberContribution.getFee()));
     ui.additionalFee->setText(QString::number(memberContribution.getAdditionalFee()));
     ui.donation->setText(QString::number(memberContribution.getDonation()));

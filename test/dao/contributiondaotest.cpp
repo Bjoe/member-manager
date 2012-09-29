@@ -36,7 +36,7 @@ void ContributionDaoTest::testSaveNewRecord()
 void ContributionDaoTest::testSaveRecord()
 {
     ContributionDao contributionDao(QSqlDatabase::database());
-    ContributionEntry entry = contributionDao.findLastDateByMemberId(1025);
+    ContributionEntry entry = contributionDao.findLastEntryByMemberId(1025);
 
     QVERIFY(contributionDao.saveRecord(entry));
 }
@@ -55,7 +55,7 @@ void ContributionDaoTest::testFindLastDateByMemberId()
 {
     ContributionDao contributionDao(QSqlDatabase::database());
 
-    ContributionEntry entry = contributionDao.findLastDateByMemberId(1025);
+    ContributionEntry entry = contributionDao.findLastEntryByMemberId(1025);
 
     double fee = 99.00;
     QCOMPARE(entry.getFee(), fee);

@@ -48,7 +48,7 @@ accounting::ContributionEntry ContributionDao::findByMemberIdWithPointInTime(int
     return entry;
 }
 
-accounting::ContributionEntry ContributionDao::findLastDateByMemberId(int aMemberId)
+accounting::ContributionEntry ContributionDao::findLastEntryByMemberId(int aMemberId)
 {
     QString columnnameId = ContributionTable::COLUMNNAME[ContributionTable::MemberId];
     QString filterId = QString("%1 = %2").arg(columnnameId).arg(aMemberId);

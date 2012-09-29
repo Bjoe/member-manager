@@ -21,7 +21,7 @@ public:
 
     bool saveRecord(const accounting::ContributionEntry &anEntry);
     accounting::ContributionEntry findByMemberIdWithPointInTime(int aMemberId, const QDate &aDate);
-    accounting::ContributionEntry findLastDateByMemberId(int aMemberId);
+    accounting::ContributionEntry findLastEntryByMemberId(int aMemberId);
 
     QSqlTableModel *getModelByMemberId(int aMemberId);
     QModelIndex insertNewEmptyRowWithMemberId(int aMemberId);
