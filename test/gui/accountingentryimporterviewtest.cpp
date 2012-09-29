@@ -29,21 +29,21 @@ void AccountingEntryImporterViewTest::testImport()
 
     QTableWidget *tableWidget = accountingEntryImportView.findChild<QTableWidget *>("tableWidget");
 
-    QCOMPARE(tableWidget->columnCount(), 7);
+    QCOMPARE(tableWidget->columnCount(), 8);
     QHeaderView *headerView = tableWidget->horizontalHeader();
-    QCOMPARE(headerView->count(), 7);
+    QCOMPARE(headerView->count(), 8);
     QCOMPARE(tableWidget->rowCount(), 2);
-    QVERIFY(tableWidget->itemDelegateForColumn(0));
+    QVERIFY(tableWidget->itemDelegateForColumn(1));
 
     QTableWidgetItem *item = tableWidget->item(0, 0);
     QVariant variant = item->data(Qt::DisplayRole);
     QVERIFY(item->flags() & Qt::ItemIsEditable);
-    QCOMPARE(variant.toString(), QString("ignore"));
+    QCOMPARE(variant.toString(), QString("0"));
 
     item = tableWidget->item(0, 1);
     variant = item->data(Qt::DisplayRole);
     QVERIFY(item->flags() & Qt::ItemIsEditable);
-    QCOMPARE(variant.toString(), QString("0"));
+    QCOMPARE(variant.toString(), QString("ignore"));
 
     item = tableWidget->item(0, 2);
     variant = item->data(Qt::DisplayRole);
@@ -57,15 +57,20 @@ void AccountingEntryImporterViewTest::testImport()
 
     item = tableWidget->item(0, 4);
     variant = item->data(Qt::DisplayRole);
-    QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
-    QCOMPARE(variant.toDate(), QDate(2012,8,9));
+    QVERIFY(item->flags() & Qt::ItemIsEditable);
+    QCOMPARE(variant.toString(), QString("0"));
 
     item = tableWidget->item(0, 5);
     variant = item->data(Qt::DisplayRole);
     QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
-    QCOMPARE(variant.toString(), QString("530"));
+    QCOMPARE(variant.toDate(), QDate(2012,8,9));
 
     item = tableWidget->item(0, 6);
+    variant = item->data(Qt::DisplayRole);
+    QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
+    QCOMPARE(variant.toString(), QString("530"));
+
+    item = tableWidget->item(0, 7);
     variant = item->data(Qt::DisplayRole);
     QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
     QCOMPARE(variant.toString(), QString("Miete"));
@@ -76,34 +81,39 @@ void AccountingEntryImporterViewTest::testImport()
     item = tableWidget->item(1, 0);
     variant = item->data(Qt::DisplayRole);
     QVERIFY(item->flags() & Qt::ItemIsEditable);
-    QCOMPARE(variant.toString(), QString("James T. Kirk"));
+    QCOMPARE(variant.toString(), QString("1000"));
 
     item = tableWidget->item(1, 1);
     variant = item->data(Qt::DisplayRole);
     QVERIFY(item->flags() & Qt::ItemIsEditable);
-    QCOMPARE(variant.toString(), QString("15"));
+    QCOMPARE(variant.toString(), QString("James T. Kirk"));
 
     item = tableWidget->item(1, 2);
     variant = item->data(Qt::DisplayRole);
     QVERIFY(item->flags() & Qt::ItemIsEditable);
-    QCOMPARE(variant.toString(), QString("10"));
+    QCOMPARE(variant.toString(), QString("15"));
 
     item = tableWidget->item(1, 3);
     variant = item->data(Qt::DisplayRole);
     QVERIFY(item->flags() & Qt::ItemIsEditable);
-    QCOMPARE(variant.toString(), QString("5"));
+    QCOMPARE(variant.toString(), QString("10"));
 
     item = tableWidget->item(1, 4);
     variant = item->data(Qt::DisplayRole);
-    QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
-    QCOMPARE(variant.toDate(), QDate(2012,8,10));
+    QVERIFY(item->flags() & Qt::ItemIsEditable);
+    QCOMPARE(variant.toString(), QString("5"));
 
     item = tableWidget->item(1, 5);
     variant = item->data(Qt::DisplayRole);
     QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
-    QCOMPARE(variant.toString(), QString("30"));
+    QCOMPARE(variant.toDate(), QDate(2012,8,10));
 
     item = tableWidget->item(1, 6);
+    variant = item->data(Qt::DisplayRole);
+    QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
+    QCOMPARE(variant.toString(), QString("30"));
+
+    item = tableWidget->item(1, 7);
     variant = item->data(Qt::DisplayRole);
     QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
     QCOMPARE(variant.toString(), QString("Mitgliedsbeitrag"));
