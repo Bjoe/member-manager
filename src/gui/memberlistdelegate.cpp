@@ -7,8 +7,6 @@
 #include "accounting/contributionentry.h"
 #include "member.h"
 
-#include <QDebug>
-
 namespace membermanager
 {
 namespace gui
@@ -21,6 +19,9 @@ MemberListDelegate::MemberListDelegate(QObject *aParent) :
     model(0)
 {
     model = memberDao.modelSelectDeleted(false);
+    model->insertRow(0);
+    QModelIndex index = model->index(0, dao::MemberTable::Name);
+    model->setData(index, QVariant(QString("-")));
 }
 
 MemberListDelegate::~MemberListDelegate()
@@ -30,7 +31,6 @@ MemberListDelegate::~MemberListDelegate()
 
 QWidget* MemberListDelegate::createEditor(QWidget *aParent, const QStyleOptionViewItem &anOption, const QModelIndex &anIndex) const
 {
-    qDebug() << "createEditor ";
     QComboBox *comboBox = new QComboBox(aParent);
     comboBox->setModel(model);
     comboBox->setModelColumn(dao::MemberTable::Name);
@@ -39,24 +39,22 @@ QWidget* MemberListDelegate::createEditor(QWidget *aParent, const QStyleOptionVi
 
 void MemberListDelegate::setEditorData(QWidget *anEditor, const QModelIndex &anIndex) const
 {
-    qDebug() << "setEditorData " << anIndex;
     QVariant variant = anIndex.data();
 
-    QComboBox *comboBox = static_cast<QComboBox *>(anEditor);
+    QComboBox *comboBox = qobject_cast<QComboBox *>(anEditor);
     int index = comboBox->findData(variant, Qt::DisplayRole);
     comboBox->setCurrentIndex(index);
 }
 
 void MemberListDelegate::setModelData(QWidget *anEditor, QAbstractItemModel *aModel, const QModelIndex &anIndex) const
 {
-    QComboBox *comboBox = static_cast<QComboBox *>(anEditor);
+    QComboBox *comboBox = qobject_cast<QComboBox *>(anEditor);
     QString value = comboBox->currentText();
     aModel->setData(anIndex, value);
 
     int comboRow = comboBox->currentIndex();
     QModelIndex comboIndex = model->index(comboRow, dao::MemberTable::MemberId);
     int memberId = model->data(comboIndex).toInt();
-    qDebug() << "setModelData " << memberId;
     accounting::ContributionEntry contributionEntry = contributionDao.findLastEntryByMemberId(memberId);
 
     int row = anIndex.row();

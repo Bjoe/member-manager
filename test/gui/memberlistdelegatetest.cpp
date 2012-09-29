@@ -43,23 +43,21 @@ void MemberListDelegateTest::testCreateEditor()
     QStyleOptionViewItem item;
     QModelIndex index;
     QWidget *widget = delegate.createEditor(0, item, index);
-    QComboBox *comboBox = dynamic_cast<QComboBox *>(widget);
+    QComboBox *comboBox = qobject_cast<QComboBox *>(widget);
 
-    QCOMPARE(comboBox->itemData(0, Qt::DisplayRole).toString(), QString("Kirk"));
-    QCOMPARE(comboBox->itemData(1, Qt::DisplayRole).toString(), QString("Scott"));
+    QCOMPARE(comboBox->itemData(0, Qt::DisplayRole).toString(), QString("-"));
+    QCOMPARE(comboBox->itemData(1, Qt::DisplayRole).toString(), QString("Kirk"));
+    QCOMPARE(comboBox->itemData(2, Qt::DisplayRole).toString(), QString("Scott"));
 }
 
 void MemberListDelegateTest::testSetEditorData()
 {
+    QStyleOptionViewItem emptyItem;
+    QModelIndex emptyIndex;
+
     membermanager::gui::MemberListDelegate delegate;
-
-    membermanager::dao::MemberDao memberDao(QSqlDatabase::database());
-    QSqlTableModel *model = memberDao.modelSelectDeleted(false);
-
-    QComboBox *comboBox = new QComboBox();
-    comboBox->setModel(model);
-    comboBox->setModelColumn(membermanager::dao::MemberTable::Name);
-
+    QWidget *widget = delegate.createEditor(0, emptyItem, emptyIndex);
+    QComboBox *comboBox = qobject_cast<QComboBox *>(widget);
     QStandardItemModel *testModel = new QStandardItemModel();
     QList<QStandardItem *> row0;
     row0.append(new QStandardItem("9999"));
@@ -79,20 +77,19 @@ void MemberListDelegateTest::testSetEditorData()
 
     delegate.setEditorData(comboBox, index);
 
-    QCOMPARE(comboBox->currentIndex(), 2);
+    QCOMPARE(comboBox->currentIndex(), 3);
     QCOMPARE(comboBox->currentText(), QString("McCoy"));
 }
 
 void MemberListDelegateTest::testSetModelData()
 {
+    QStyleOptionViewItem emptyItem;
+    QModelIndex emptyIndex;
+
     membermanager::gui::MemberListDelegate delegate;
-
-    membermanager::dao::MemberDao memberDao(QSqlDatabase::database());
-    QSqlTableModel *model = memberDao.modelSelectDeleted(false);
-
-    QComboBox *comboBox = new QComboBox();
-    comboBox->setModel(model);
-    comboBox->setModelColumn(membermanager::dao::MemberTable::Name);
+    QWidget *widget = delegate.createEditor(0, emptyItem, emptyIndex);
+    QComboBox *comboBox = qobject_cast<QComboBox *>(widget);
+    comboBox->setCurrentIndex(1);
 
     QStandardItemModel *testModel = new QStandardItemModel();
     QList<QStandardItem *> row0;

@@ -39,7 +39,7 @@ AccountingEntryImporterView::AccountingEntryImporterView(QWidget *parent) :
     accountingEntryTable->setItem(0, 0, item);
 
     item = new QTableWidgetItem();
-    item->setData(Qt::DisplayRole, QVariant(QString("ignore")));
+    item->setData(Qt::DisplayRole, QVariant(QString("-")));
     accountingEntryTable->setItem(0, 1, item);
 
     item = new QTableWidgetItem();

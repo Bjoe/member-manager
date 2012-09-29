@@ -37,13 +37,13 @@ void AccountingEntryImporterViewTest::testImport()
 
     QTableWidgetItem *item = tableWidget->item(0, 0);
     QVariant variant = item->data(Qt::DisplayRole);
-    QVERIFY(item->flags() & Qt::ItemIsEditable);
+    QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
     QCOMPARE(variant.toString(), QString("0"));
 
     item = tableWidget->item(0, 1);
     variant = item->data(Qt::DisplayRole);
     QVERIFY(item->flags() & Qt::ItemIsEditable);
-    QCOMPARE(variant.toString(), QString("ignore"));
+    QCOMPARE(variant.toString(), QString("-"));
 
     item = tableWidget->item(0, 2);
     variant = item->data(Qt::DisplayRole);
@@ -80,7 +80,7 @@ void AccountingEntryImporterViewTest::testImport()
 
     item = tableWidget->item(1, 0);
     variant = item->data(Qt::DisplayRole);
-    QVERIFY(item->flags() & Qt::ItemIsEditable);
+    QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
     QCOMPARE(variant.toString(), QString("1000"));
 
     item = tableWidget->item(1, 1);
