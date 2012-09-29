@@ -11,7 +11,7 @@ ContributionDao::ContributionDao(const QSqlDatabase &aDatabase, QObject *aParent
     model->setObjectName(ContributionTable::TABLENAME);
 }
 
-bool ContributionDao::saveRecord(const accounting::ContributionEntry &anEntry)
+bool ContributionDao::saveRecord(const accounting::ContributionEntry &anEntry) const
 {
     bool successful = false;
     QString primaryKeyName = ContributionTable::COLUMNNAME[ContributionTable::ContributionId];
@@ -31,7 +31,7 @@ bool ContributionDao::saveRecord(const accounting::ContributionEntry &anEntry)
     return successful;
 }
 
-accounting::ContributionEntry ContributionDao::findByMemberIdWithPointInTime(int aMemberId, const QDate &aDate)
+accounting::ContributionEntry ContributionDao::findByMemberIdWithPointInTime(int aMemberId, const QDate &aDate) const
 {
     QString columnnameDate = ContributionTable::COLUMNNAME[ContributionTable::ValidFrom];
     QString filterDate = QString("%1 <= '%2'").arg(columnnameDate).arg(aDate.toString(Qt::ISODate));
@@ -48,7 +48,7 @@ accounting::ContributionEntry ContributionDao::findByMemberIdWithPointInTime(int
     return entry;
 }
 
-accounting::ContributionEntry ContributionDao::findLastEntryByMemberId(int aMemberId)
+accounting::ContributionEntry ContributionDao::findLastEntryByMemberId(int aMemberId) const
 {
     QString columnnameId = ContributionTable::COLUMNNAME[ContributionTable::MemberId];
     QString filterId = QString("%1 = %2").arg(columnnameId).arg(aMemberId);
@@ -61,7 +61,7 @@ accounting::ContributionEntry ContributionDao::findLastEntryByMemberId(int aMemb
     return entry;
 }
 
-QSqlTableModel* ContributionDao::getModelByMemberId(int aMemberId)
+QSqlTableModel* ContributionDao::getModelByMemberId(int aMemberId) const
 {
     model->setHeaderData(ContributionTable::Fee, Qt::Horizontal, model->tr("Beitrag"));
     model->setHeaderData(ContributionTable::Donation, Qt::Horizontal, model->tr("Spende"));
@@ -78,7 +78,7 @@ QSqlTableModel* ContributionDao::getModelByMemberId(int aMemberId)
     return model;
 }
 
-QModelIndex ContributionDao::insertNewEmptyRowWithMemberId(int aMemberId)
+QModelIndex ContributionDao::insertNewEmptyRowWithMemberId(int aMemberId) const
 {
     int row = model->rowCount();
     model->insertRow(row);
@@ -88,14 +88,14 @@ QModelIndex ContributionDao::insertNewEmptyRowWithMemberId(int aMemberId)
     return model->index(row, ContributionTable::Fee);
 }
 
-bool ContributionDao::deleteRow(const QModelIndex &anIndex)
+bool ContributionDao::deleteRow(const QModelIndex &anIndex) const
 {
     bool successful = model->removeRow(anIndex.row());
     printSqlError(model->lastError());
     return successful;
 }
 
-void ContributionDao::printSqlError(const QSqlError &anError)
+void ContributionDao::printSqlError(const QSqlError &anError) const
 {
     if (anError.type() != QSqlError::NoError) {
         /// \todo Publish error to the statusbar as event.
