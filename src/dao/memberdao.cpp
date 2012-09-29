@@ -46,7 +46,7 @@ bool MemberDao::saveRecord(const Member &aMember)
     return successful;
 }
 
-Member MemberDao::findByMemberId(int aMemberId)
+Member MemberDao::findByMemberId(int aMemberId) const
 {
     Member member;
 
@@ -74,14 +74,14 @@ Member MemberDao::findByMemberId(int aMemberId)
     return member;
 }
 
-QSqlTableModel *MemberDao::modelSelectDeleted(bool isDeleted)
+QSqlTableModel *MemberDao::modelSelectDeleted(bool isDeleted) const
 {
     QSqlTableModel* memberModel = createMemberModel();
     selectDeleted(memberModel, isDeleted);
     return memberModel;
 }
 
-QList<Member> MemberDao::findByDeleted(bool isDeleted)
+QList<Member> MemberDao::findByDeleted(bool isDeleted) const
 {
     QSqlTableModel* memberModel = createMemberModel();
     selectDeleted(memberModel, isDeleted);
@@ -99,7 +99,7 @@ QList<Member> MemberDao::findByDeleted(bool isDeleted)
     return list;
 }
 
-void MemberDao::selectDeleted(QSqlTableModel *aModel, bool isDeleted)
+void MemberDao::selectDeleted(QSqlTableModel *aModel, bool isDeleted) const
 {
     QString deleted = "'false'";
     if(isDeleted) {
@@ -113,7 +113,7 @@ void MemberDao::selectDeleted(QSqlTableModel *aModel, bool isDeleted)
     aModel->select();
 }
 
-QSqlTableModel *MemberDao::createMemberModel()
+QSqlTableModel *MemberDao::createMemberModel() const
 {
     QSqlTableModel *memberModel = new QSqlTableModel(parent, database);
     memberModel->setTable(dao::MemberTable::TABLENAME);
@@ -126,7 +126,7 @@ QSqlTableModel *MemberDao::createMemberModel()
     return memberModel;
 }
 
-QSqlTableModel *MemberDao::createResourceModel()
+QSqlTableModel *MemberDao::createResourceModel() const
 {
     QSqlTableModel *resourceModel = new QSqlTableModel(parent, database);
     resourceModel->setTable(dao::RessourcenTable::TABLENAME);
@@ -134,7 +134,7 @@ QSqlTableModel *MemberDao::createResourceModel()
     return resourceModel;
 }
 
-QSqlTableModel* MemberDao::createBankModel()
+QSqlTableModel* MemberDao::createBankModel() const
 {
     QSqlTableModel *bankModel = new QSqlTableModel(parent, database);
     bankModel->setTable(dao::BankAccountTable::TABLENAME);
@@ -142,7 +142,7 @@ QSqlTableModel* MemberDao::createBankModel()
     return bankModel;
 }
 
-QSqlTableModel* MemberDao::createAddressModel()
+QSqlTableModel* MemberDao::createAddressModel() const
 {
     QSqlTableModel *addressModel = new QSqlTableModel(parent, database);
     addressModel->setTable(dao::AddressTable::TABLENAME);
@@ -150,21 +150,21 @@ QSqlTableModel* MemberDao::createAddressModel()
     return addressModel;
 }
 
-QSqlRecord MemberDao::record(const QSqlTableModel *aTableModel)
+QSqlRecord MemberDao::record(const QSqlTableModel *aTableModel) const
 {
     QSqlRecord record = aTableModel->record(0);
     printSqlError(aTableModel->lastError());
     return record;
 }
 
-void MemberDao::selectTableModel(QSqlTableModel *aModel, const QString &aColumnnameId, int aMemberId)
+void MemberDao::selectTableModel(QSqlTableModel *aModel, const QString &aColumnnameId, int aMemberId) const
 {
     QString filterId = QString("%1 = %2").arg(aColumnnameId).arg(aMemberId);
     aModel->setFilter(filterId);
     aModel->select();
 }
 
-void MemberDao::printSqlError(const QSqlError &anError)
+void MemberDao::printSqlError(const QSqlError &anError) const
 {
     if (anError.type() != QSqlError::NoError) {
         /// \todo Publish error to the statusbar as event.

@@ -20,10 +20,10 @@ class MemberDao
 public:
     MemberDao(const QSqlDatabase &aDatabase = QSqlDatabase::database(), QObject *aParent = 0);
 
-    Member findByMemberId(int aMemberId);
-    QList<Member> findByDeleted(bool isDeleted);
+    Member findByMemberId(int aMemberId) const;
+    QList<Member> findByDeleted(bool isDeleted) const;
 
-    QSqlTableModel *modelSelectDeleted(bool isDeleted);
+    QSqlTableModel *modelSelectDeleted(bool isDeleted) const;
 
     bool saveRecord(const Member &aMember);
 
@@ -34,17 +34,17 @@ private:
     QSqlDatabase database;
     QObject *parent;
 
-    QSqlTableModel *createMemberModel();
-    QSqlTableModel *createBankModel();
-    QSqlTableModel *createAddressModel();
-    QSqlTableModel *createResourceModel();
+    QSqlTableModel *createMemberModel() const;
+    QSqlTableModel *createBankModel() const;
+    QSqlTableModel *createAddressModel() const;
+    QSqlTableModel *createResourceModel() const;
 
     void rollback(const QSqlQuery &aQuery);
-    void printSqlError(const QSqlError &anError);
-    void selectDeleted(QSqlTableModel *aModel, bool isDeleted);
-    void selectTableModel(QSqlTableModel *aModel, const QString &aColumnnameId, int aMemberId);
+    void printSqlError(const QSqlError &anError) const;
+    void selectDeleted(QSqlTableModel *aModel, bool isDeleted) const;
+    void selectTableModel(QSqlTableModel *aModel, const QString &aColumnnameId, int aMemberId) const;
     bool saveRecordOnModel(QSqlTableModel *aTableModel, const QSqlRecord &aRecord);
-    QSqlRecord record(const QSqlTableModel *aTableModel);
+    QSqlRecord record(const QSqlTableModel *aTableModel) const;
 };
 
 }
