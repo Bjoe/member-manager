@@ -1,6 +1,7 @@
 #ifndef MEMBERMANAGER_GUI_ACCOUNTINGENTRYIMPORTERVIEW_H
 #define MEMBERMANAGER_GUI_ACCOUNTINGENTRYIMPORTERVIEW_H
 
+#include <QVariant>
 #include <QWidget>
 
 namespace membermanager
@@ -20,9 +21,14 @@ class AccountingEntryImporterView : public QWidget
 public:
     explicit AccountingEntryImporterView(QWidget *parent = 0);
     ~AccountingEntryImporterView();
+
+private slots:
+    void bookBalance();
     
 private:
     Ui::AccountingEntryImporterView *ui;
+
+    QVariant getData(int aRow, int aColumn);
 };
 
 

@@ -16,6 +16,7 @@ class AccountingEntryImporterViewTest : public qttestutil::TestCoverageObject
 private slots:
     void initTestCase();
     void testImport();
+    void testBookBalance();
 };
 
 } // namespace gui

@@ -4,12 +4,17 @@
 
 #include <QVariant>
 #include <QComboBox>
+#include <QPushButton>
 #include <QHeaderView>
 #include <QTableWidget>
 #include <QTableWidgetItem>
+#include <QSqlRecord>
+#include <QSqlTableModel>
 
 #include "testconfig.h"
 #include "database/databaseutil.h"
+#include "dao/databasestructure.h"
+#include "dao/balancedao.h"
 
 namespace membermanagertest
 {
@@ -81,27 +86,27 @@ void AccountingEntryImporterViewTest::testImport()
     item = tableWidget->item(1, 0);
     variant = item->data(Qt::DisplayRole);
     QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
-    QCOMPARE(variant.toString(), QString("1000"));
+    QCOMPARE(variant.toString(), QString("1025"));
 
     item = tableWidget->item(1, 1);
     variant = item->data(Qt::DisplayRole);
     QVERIFY(item->flags() & Qt::ItemIsEditable);
-    QCOMPARE(variant.toString(), QString("James T. Kirk"));
+    QCOMPARE(variant.toString(), QString("Kirk"));
 
     item = tableWidget->item(1, 2);
     variant = item->data(Qt::DisplayRole);
     QVERIFY(item->flags() & Qt::ItemIsEditable);
-    QCOMPARE(variant.toString(), QString("15"));
+    QCOMPARE(variant.toString(), QString("99"));
 
     item = tableWidget->item(1, 3);
     variant = item->data(Qt::DisplayRole);
     QVERIFY(item->flags() & Qt::ItemIsEditable);
-    QCOMPARE(variant.toString(), QString("10"));
+    QCOMPARE(variant.toString(), QString("1.5"));
 
     item = tableWidget->item(1, 4);
     variant = item->data(Qt::DisplayRole);
     QVERIFY(item->flags() & Qt::ItemIsEditable);
-    QCOMPARE(variant.toString(), QString("5"));
+    QCOMPARE(variant.toString(), QString("0"));
 
     item = tableWidget->item(1, 5);
     variant = item->data(Qt::DisplayRole);
@@ -111,12 +116,46 @@ void AccountingEntryImporterViewTest::testImport()
     item = tableWidget->item(1, 6);
     variant = item->data(Qt::DisplayRole);
     QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
-    QCOMPARE(variant.toString(), QString("30"));
+    QCOMPARE(variant.toString(), QString("100.5"));
 
     item = tableWidget->item(1, 7);
     variant = item->data(Qt::DisplayRole);
     QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
     QCOMPARE(variant.toString(), QString("Mitgliedsbeitrag"));
+}
+
+void AccountingEntryImporterViewTest::testBookBalance()
+{
+    membermanager::dao::BalanceDao balanceDao;
+    QSqlTableModel *balanceTableModel = balanceDao.getModelByMemberId(1025);
+
+    membermanager::gui::AccountingEntryImporterView accountingEntryImportView;
+    QTableWidget *tableWidget = accountingEntryImportView.findChild<QTableWidget *>("tableWidget");
+
+
+    QCOMPARE(balanceTableModel->rowCount(), 15);
+
+    QPushButton *bookingButton = accountingEntryImportView.findChild<QPushButton *>("bookingButton");
+    QTest::mouseClick(bookingButton, Qt::LeftButton);
+
+    using membermanager::dao::SaldoTable;
+    balanceTableModel->setSort(SaldoTable::saldo_pkey, Qt::DescendingOrder);
+    balanceTableModel->select();
+    QCOMPARE(balanceTableModel->rowCount(), 17);
+
+    QSqlRecord record = balanceTableModel->record(0);
+    float value = 1.5;
+    QCOMPARE(record.value(SaldoTable::betrag).toFloat(), value);
+    value = 12;
+    QCOMPARE(record.value(SaldoTable::konten - 1).toFloat(), value);
+    QCOMPARE(record.value(SaldoTable::kasse_pkey - 1).toInt(), 123456);
+
+    record = balanceTableModel->record(1);
+    value = 99;
+    QCOMPARE(record.value(SaldoTable::betrag).toFloat(), value);
+    value = 11;
+    QCOMPARE(record.value(SaldoTable::konten - 1).toFloat(), value);
+    QCOMPARE(record.value(SaldoTable::kasse_pkey - 1).toInt(), 123456);
 }
 
 } // namespace gui
