@@ -29,6 +29,8 @@ public:
     QString getInfo() const;
     void setAccount(int anAccount);
     int getAccount() const;
+    void setCashKey(int aKey);
+    int getCashKey() const;
 
     friend class dao::BalanceDao;
 

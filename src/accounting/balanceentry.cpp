@@ -78,6 +78,17 @@ int BalanceEntry::getAccount() const
     return balanceRecord.value(fieldname).toInt();
 }
 
+void BalanceEntry::setCashKey(int aKey)
+{
+    setValueOnField(SaldoTable::kasse_pkey, QVariant::Int, QVariant(aKey));
+}
+
+int BalanceEntry::getCashKey() const
+{
+    QString fieldname = SaldoTable::COLUMNNAME[SaldoTable::kasse_pkey];
+    return balanceRecord.value(fieldname).toInt();
+}
+
 void BalanceEntry::setValueOnField(int aIndex, QVariant::Type aType, const QVariant &aValue)
 {
     QString fieldname = SaldoTable::COLUMNNAME[aIndex];

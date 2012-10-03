@@ -21,6 +21,7 @@ void BalanceEntryTest::testCreateEntry()
     balanceEntry.setAccount(10);
     balanceEntry.setInfo("foo");
     balanceEntry.setPurpose("bar");
+    balanceEntry.setCashKey(12345);
 
     QCOMPARE(balanceEntry.getMemberId(), 1);
     double value = 15.00;
@@ -29,6 +30,7 @@ void BalanceEntryTest::testCreateEntry()
     QCOMPARE(balanceEntry.getAccount(), 10);
     QCOMPARE(balanceEntry.getInfo(), QString("foo"));
     QCOMPARE(balanceEntry.getPurpose(), QString("bar"));
+    QCOMPARE(balanceEntry.getCashKey(), 12345);
 }
 
 }
