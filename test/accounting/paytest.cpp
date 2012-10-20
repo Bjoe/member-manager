@@ -12,7 +12,7 @@
 #include "dao/balancedao.h"
 #include "member.h"
 #include "accounting/balanceentry.h"
-#include "exporter.h"
+#include "dtaus/exporter.h"
 
 #include "testconfig.h"
 #include "database/databaseutil.h"

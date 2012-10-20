@@ -8,7 +8,7 @@
 #include "member.h"
 #include "dao/contributiondao.h"
 #include "dao/balancedao.h"
-#include "exporter.h"
+#include "dtaus/exporter.h"
 
 namespace membermanager {
 namespace accounting {
@@ -25,7 +25,7 @@ public:
 private:
     dao::ContributionDao contributionDao;
     dao::BalanceDao balanceDao;
-    qiabanking::Exporter exporter;
+    qiabanking::dtaus::Exporter exporter;
     QByteArray data;
     QList<double> sum;
     QString accountNumber;

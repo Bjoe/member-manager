@@ -2,8 +2,8 @@
 
 #include "contributionentry.h"
 #include "balanceentry.h"
-#include "dtaustransactionbuilder.h"
-#include "transaction.h"
+#include "dtaus/transactionbuilder.h"
+#include "dtaus/transaction.h"
 
 namespace membermanager {
 namespace accounting {
@@ -46,7 +46,7 @@ bool Pay::payment(const Member &aMember, const QString &aMonth, const QDate &aDa
             sum[2] += additionalFee;
         }
 
-        qiabanking::Transaction transaction = qiabanking::DtausTransactionBuilder()
+        qiabanking::dtaus::Transaction transaction = qiabanking::dtaus::TransactionBuilder()
                 .withLocalName(bankName)
                 .withLocalAccountNumber(accountNumber)
                 .withLocalBankCode(bankCode)
