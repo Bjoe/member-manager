@@ -33,12 +33,16 @@ void AccountingEntryImporterViewTest::testImport()
     membermanager::gui::AccountingEntryImporterView accountingEntryImportView;
 
     QTableWidget *tableWidget = accountingEntryImportView.findChild<QTableWidget *>("tableWidget");
-
-    QCOMPARE(tableWidget->columnCount(), 8);
+    QCOMPARE(tableWidget->columnCount(), 9);
     QHeaderView *headerView = tableWidget->horizontalHeader();
-    QCOMPARE(headerView->count(), 8);
-    QCOMPARE(tableWidget->rowCount(), 2);
+    QCOMPARE(headerView->count(), 9);
+    QCOMPARE(tableWidget->rowCount(), 0);
     QVERIFY(tableWidget->itemDelegateForColumn(1));
+
+    QPushButton *importButton = accountingEntryImportView.findChild<QPushButton *>("importButton");
+    QTest::mouseClick(importButton, Qt::LeftButton);
+
+    QCOMPARE(tableWidget->rowCount(), 2);
 
     QTableWidgetItem *item = tableWidget->item(0, 0);
     QVariant variant = item->data(Qt::DisplayRole);
@@ -80,7 +84,9 @@ void AccountingEntryImporterViewTest::testImport()
     QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
     QCOMPARE(variant.toString(), QString("Miete"));
 
-
+    item = tableWidget->item(0, 8);
+    QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
+    QVERIFY(item->checkState() == Qt::Unchecked);
 
 
     item = tableWidget->item(1, 0);
@@ -122,6 +128,10 @@ void AccountingEntryImporterViewTest::testImport()
     variant = item->data(Qt::DisplayRole);
     QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
     QCOMPARE(variant.toString(), QString("Mitgliedsbeitrag"));
+
+    item = tableWidget->item(1, 8);
+    QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
+    QVERIFY(item->checkState() == Qt::Unchecked);
 }
 
 void AccountingEntryImporterViewTest::testBookBalance()
@@ -130,8 +140,12 @@ void AccountingEntryImporterViewTest::testBookBalance()
     QSqlTableModel *balanceTableModel = balanceDao.getModelByMemberId(1025);
 
     membermanager::gui::AccountingEntryImporterView accountingEntryImportView;
+    QPushButton *importButton = accountingEntryImportView.findChild<QPushButton *>("importButton");
+    QTest::mouseClick(importButton, Qt::LeftButton);
     QTableWidget *tableWidget = accountingEntryImportView.findChild<QTableWidget *>("tableWidget");
 
+    QTableWidgetItem *item = tableWidget->item(1, 8);
+    QVERIFY(item->checkState() == Qt::Unchecked);
 
     QCOMPARE(balanceTableModel->rowCount(), 15);
 
@@ -156,6 +170,9 @@ void AccountingEntryImporterViewTest::testBookBalance()
     value = 11;
     QCOMPARE(record.value(SaldoTable::konten - 1).toFloat(), value);
     QCOMPARE(record.value(SaldoTable::kasse_pkey - 1).toInt(), 123456);
+
+    item = tableWidget->item(1, 8);
+    QVERIFY(item->checkState() == Qt::Checked);
 }
 
 } // namespace gui

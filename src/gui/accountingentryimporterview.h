@@ -24,6 +24,7 @@ public:
 
 private slots:
     void bookBalance();
+    void importTransactions();
     
 private:
     Ui::AccountingEntryImporterView *ui;

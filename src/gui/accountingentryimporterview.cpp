@@ -25,16 +25,35 @@ AccountingEntryImporterView::AccountingEntryImporterView(QWidget *parent) :
     ui->setupUi(this);
 
     connect(ui->bookingButton, SIGNAL(clicked()), SLOT(bookBalance()));
+    connect(ui->importButton, SIGNAL(clicked()), SLOT(importTransactions()));
 
     QTableWidget *accountingEntryTable = ui->tableWidget;
-    accountingEntryTable->setColumnCount(8);
+    accountingEntryTable->setColumnCount(9);
 
     QStringList headerStringList;
-    headerStringList << tr("Mitglieds Nr") << tr("Mitglied") << tr("Beitrag") << tr("Spende") << tr("CCC") << tr("Datum") << tr("Betrag") << tr("Transaction");
+    headerStringList << tr("Mitglieds Nr")
+                     << tr("Mitglied")
+                     << tr("Beitrag")
+                     << tr("Spende")
+                     << tr("CCC")
+                     << tr("Datum")
+                     << tr("Betrag")
+                     << tr("Transaction")
+                     << tr("Booked");
     accountingEntryTable->setHorizontalHeaderLabels(headerStringList);
     accountingEntryTable->setItemDelegateForColumn(1, new MemberListDelegate());
 
+}
+
+AccountingEntryImporterView::~AccountingEntryImporterView()
+{
+    delete ui;
+}
+
+void AccountingEntryImporterView::importTransactions()
+{
     // TODO only for tests
+    QTableWidget *accountingEntryTable = ui->tableWidget;
     accountingEntryTable->insertRow(0);
 
     QTableWidgetItem *item = new QTableWidgetItem();
@@ -72,6 +91,11 @@ AccountingEntryImporterView::AccountingEntryImporterView(QWidget *parent) :
     item->setData(Qt::DisplayRole, QVariant(QString("Miete")));
     item->setFlags(item->flags() ^ Qt::ItemIsEditable);
     accountingEntryTable->setItem(0, 7, item);
+
+    item = new QTableWidgetItem();
+    item->setFlags(Qt::ItemIsUserCheckable);
+    item->setCheckState(Qt::Unchecked);
+    accountingEntryTable->setItem(0, 8, item);
 
 
     accountingEntryTable->insertRow(1);
@@ -113,11 +137,10 @@ AccountingEntryImporterView::AccountingEntryImporterView(QWidget *parent) :
     item->setFlags(item->flags() ^ Qt::ItemIsEditable);
     accountingEntryTable->setItem(1, 7, item);
 
-}
-
-AccountingEntryImporterView::~AccountingEntryImporterView()
-{
-    delete ui;
+    item = new QTableWidgetItem();
+    item->setFlags(Qt::ItemIsUserCheckable);
+    item->setCheckState(Qt::Unchecked);
+    accountingEntryTable->setItem(1, 8, item);
 }
 
 void AccountingEntryImporterView::bookBalance()
@@ -167,7 +190,8 @@ void AccountingEntryImporterView::bookBalance()
                     balanceEntry.setAccount(4);
                     balanceDao.saveRecord(balanceEntry);
                 }
-                // TODO Tabelle eintrag sperren
+                item = ui->tableWidget->item(i, 8);
+                item->setCheckState(Qt::Checked);
             } // else
             // TODO Tabellen Eintrag rot faerben. Summe stimmt nicht!
         }
