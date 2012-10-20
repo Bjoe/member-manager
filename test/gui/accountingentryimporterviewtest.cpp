@@ -1,4 +1,5 @@
-#include "accountingentryimporterviewtest.h"
+#include <QtTest/QtTest>
+#include "testcoverageobject.h"
 
 #include "gui/accountingentryimporterview.h"
 
@@ -20,6 +21,15 @@ namespace membermanagertest
 {
 namespace gui
 {
+
+class AccountingEntryImporterViewTest : public qttestutil::TestCoverageObject
+{
+    Q_OBJECT
+
+private slots:
+    void initTestCase();
+    void testImport();
+};
 
 void AccountingEntryImporterViewTest::initTestCase()
 {
@@ -134,49 +144,8 @@ void AccountingEntryImporterViewTest::testImport()
     QVERIFY(item->checkState() == Qt::Unchecked);
 }
 
-void AccountingEntryImporterViewTest::testBookBalance()
-{
-    membermanager::dao::BalanceDao balanceDao;
-    QSqlTableModel *balanceTableModel = balanceDao.getModelByMemberId(1025);
-
-    membermanager::gui::AccountingEntryImporterView accountingEntryImportView;
-    QPushButton *importButton = accountingEntryImportView.findChild<QPushButton *>("importButton");
-    QTest::mouseClick(importButton, Qt::LeftButton);
-    QTableWidget *tableWidget = accountingEntryImportView.findChild<QTableWidget *>("tableWidget");
-
-    QTableWidgetItem *item = tableWidget->item(1, 8);
-    QVERIFY(item->checkState() == Qt::Unchecked);
-
-    QCOMPARE(balanceTableModel->rowCount(), 15);
-
-    QPushButton *bookingButton = accountingEntryImportView.findChild<QPushButton *>("bookingButton");
-    QTest::mouseClick(bookingButton, Qt::LeftButton);
-
-    using membermanager::dao::SaldoTable;
-    balanceTableModel->setSort(SaldoTable::saldo_pkey, Qt::DescendingOrder);
-    balanceTableModel->select();
-    QCOMPARE(balanceTableModel->rowCount(), 17);
-
-    QSqlRecord record = balanceTableModel->record(0);
-    float value = 1.5;
-    QCOMPARE(record.value(SaldoTable::betrag).toFloat(), value);
-    value = 12;
-    QCOMPARE(record.value(SaldoTable::konten - 1).toFloat(), value);
-    QCOMPARE(record.value(SaldoTable::kasse_pkey - 1).toInt(), 123456);
-
-    record = balanceTableModel->record(1);
-    value = 99;
-    QCOMPARE(record.value(SaldoTable::betrag).toFloat(), value);
-    value = 11;
-    QCOMPARE(record.value(SaldoTable::konten - 1).toFloat(), value);
-    QCOMPARE(record.value(SaldoTable::kasse_pkey - 1).toInt(), 123456);
-
-    item = tableWidget->item(1, 8);
-    QVERIFY(item->checkState() == Qt::Checked);
-}
-
 } // namespace gui
 } // namespace membermanagertest
 
 QTEST_MAIN(membermanagertest::gui::AccountingEntryImporterViewTest)
-#include "accountingentryimporterviewtest.moc"
+#include "moc_accountingentryimporterviewtest.cxx"

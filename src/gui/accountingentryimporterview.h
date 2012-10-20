@@ -4,6 +4,8 @@
 #include <QVariant>
 #include <QWidget>
 
+#include "accounting/balancepersister.h"
+
 namespace membermanager
 {
 namespace gui
@@ -23,13 +25,11 @@ public:
     ~AccountingEntryImporterView();
 
 private slots:
-    void bookBalance();
     void importTransactions();
     
 private:
     Ui::AccountingEntryImporterView *ui;
-
-    QVariant getData(int aRow, int aColumn);
+    accounting::BalancePersister* balancePersister;
 };
 
 

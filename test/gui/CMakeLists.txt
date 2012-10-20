@@ -15,6 +15,7 @@ qt4_add_test(memberdetailview memberdetailviewtest.cpp)
 qt4_add_test(memberdebtview memberdebtviewtest.cpp)
 qt4_add_test(summaryview summaryviewtest.cpp)
 qt4_add_test(paymentview paymentviewtest.cpp)
-qt4_add_test(accountingentryimporterview accountingentryimporterviewtest.cpp)
 qt4_add_test(memberlistdelegate memberlistdelegatetest.cpp)
 qt4_add_test(settingsdialog settingsdialogtest.cpp)
+
+qt4_test(accountingentryimporterview accountingentryimporterviewtest.cpp)

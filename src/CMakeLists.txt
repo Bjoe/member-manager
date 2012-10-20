@@ -12,6 +12,8 @@ set(QT_MOC_HEADERS
     gui/accountingentryimporterview.h
     gui/settingsdialog.h
     gui/memberlistdelegate.h
+
+    accounting/balancepersister.h
     )
 
 set(QT_UI
@@ -48,9 +50,11 @@ set(QT_SRCS
     dao/balancedao.cpp
     dao/contributiondao.cpp
 
+    accounting/balancepersister.cpp
     accounting/balanceentry.cpp
     accounting/contributionentry.cpp
     accounting/pay.cpp
+    accounting/transactionimporter.cpp
 
     member.cpp
     )

@@ -1,61 +1,49 @@
-#include "accountingentryimporterview.h"
-#include "ui_accountingentryimporterview.h"
+
+#include <QtTest/QtTest>
 
 #include <QVariant>
-#include <QString>
-#include <QDate>
-#include <QStringList>
-#include <QTableWidgetItem>
+#include <QComboBox>
+#include <QPushButton>
+#include <QHeaderView>
 #include <QTableWidget>
-#include <QAbstractItemModel>
+#include <QTableWidgetItem>
+#include <QSqlRecord>
+#include <QSqlTableModel>
 
-#include "gui/memberlistdelegate.h"
+#include "accounting/balancepersister.h"
+
+#include "testconfig.h"
+#include "testcoverageobject.h"
+#include "database/databaseutil.h"
+#include "dao/databasestructure.h"
 #include "dao/balancedao.h"
-#include "accounting/balanceentry.h"
 
-namespace membermanager
+namespace membermanagertest
 {
-namespace gui
+namespace accounting
 {
 
-AccountingEntryImporterView::AccountingEntryImporterView(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::AccountingEntryImporterView),
-    balancePersister(0)
+class BalancePersisterTest : public qttestutil::TestCoverageObject
 {
-    ui->setupUi(this);
+    Q_OBJECT
 
-    QTableWidget *accountingEntryTable = ui->tableWidget;
+private slots:
+    void initTestCase();
+    void testBook();
+};
+
+void BalancePersisterTest::initTestCase()
+{
+    qttestutil::database::DatabaseUtil database(DATABASEDRIVER);
+    database.open(DATABASE);
+    database.read(SQLTESTFILE);
+}
+
+void BalancePersisterTest::testBook()
+{
+    QTableWidget *accountingEntryTable = new QTableWidget();
     accountingEntryTable->setColumnCount(9);
 
-    QStringList headerStringList;
-    headerStringList << tr("Mitglieds Nr")
-                     << tr("Mitglied")
-                     << tr("Beitrag")
-                     << tr("Spende")
-                     << tr("CCC")
-                     << tr("Datum")
-                     << tr("Betrag")
-                     << tr("Transaction")
-                     << tr("Booked");
-    accountingEntryTable->setHorizontalHeaderLabels(headerStringList);
-    accountingEntryTable->setItemDelegateForColumn(1, new MemberListDelegate());
-
-    balancePersister = new accounting::BalancePersister(accountingEntryTable, this);
-    connect(ui->bookingButton, SIGNAL(clicked()), balancePersister, SLOT(booking()));
-    connect(ui->importButton, SIGNAL(clicked()), SLOT(importTransactions()));
-}
-
-AccountingEntryImporterView::~AccountingEntryImporterView()
-{
-    delete balancePersister;
-    delete ui;
-}
-
-void AccountingEntryImporterView::importTransactions()
-{
-    // TODO only for tests
-    QTableWidget *accountingEntryTable = ui->tableWidget;
     accountingEntryTable->insertRow(0);
 
     QTableWidgetItem *item = new QTableWidgetItem();
@@ -143,7 +131,40 @@ void AccountingEntryImporterView::importTransactions()
     item->setFlags(Qt::ItemIsUserCheckable);
     item->setCheckState(Qt::Unchecked);
     accountingEntryTable->setItem(1, 8, item);
+
+    membermanager::dao::BalanceDao balanceDao;
+    QSqlTableModel *balanceTableModel = balanceDao.getModelByMemberId(1025);
+    QCOMPARE(balanceTableModel->rowCount(), 15);
+
+    membermanager::accounting::BalancePersister balancePersister(accountingEntryTable);
+    balancePersister.booking();
+
+    using membermanager::dao::SaldoTable;
+    balanceTableModel->setSort(SaldoTable::saldo_pkey, Qt::DescendingOrder);
+    balanceTableModel->select();
+    QCOMPARE(balanceTableModel->rowCount(), 17);
+
+    QSqlRecord record = balanceTableModel->record(0);
+    float value = 1.5;
+    QCOMPARE(record.value(SaldoTable::betrag).toFloat(), value);
+    value = 12;
+    QCOMPARE(record.value(SaldoTable::konten - 1).toFloat(), value);
+    QCOMPARE(record.value(SaldoTable::kasse_pkey - 1).toInt(), 123456);
+
+    record = balanceTableModel->record(1);
+    value = 99;
+    QCOMPARE(record.value(SaldoTable::betrag).toFloat(), value);
+    value = 11;
+    QCOMPARE(record.value(SaldoTable::konten - 1).toFloat(), value);
+    QCOMPARE(record.value(SaldoTable::kasse_pkey - 1).toInt(), 123456);
+
+    item = accountingEntryTable->item(1, 8);
+    QVERIFY(item->checkState() == Qt::Checked);
 }
 
-} // namespace gui
-} // namespace membermanager
+} // namespace accounting
+} // namespace membermanagertest
+
+
+QTEST_MAIN(membermanagertest::accounting::BalancePersisterTest)
+#include "moc_balancepersistertest.cxx"
