@@ -3,7 +3,7 @@
 namespace membermanager {
 namespace accounting {
 
-TransactionImporter::TransactionImporter()
+TransactionImporter::TransactionImporter(QObject *parent) : QObject(parent)
 {
 }
 

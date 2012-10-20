@@ -12,3 +12,4 @@ qt4_add_test(pay paytest.cpp)
 
 qt4_test(transactionimporter transactionimportertest.cpp)
 qt4_test(balancepersister balancepersistertest.cpp)
+qt4_test(accountingentryimportermain accountingentryimportermaintest.cpp)

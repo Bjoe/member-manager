@@ -1,13 +1,19 @@
 #ifndef MEMBERMANAGER_ACCOUNTING_TRANSACTIONIMPORTER_H
 #define MEMBERMANAGER_ACCOUNTING_TRANSACTIONIMPORTER_H
 
-namespace membermanager {
-namespace accounting {
+#include <QObject>
 
-class TransactionImporter
+namespace membermanager
 {
+namespace accounting
+{
+
+class TransactionImporter : public QObject
+{
+    Q_OBJECT
+
 public:
-    TransactionImporter();
+    TransactionImporter(QObject *parent = 0);
 };
 
 } // namespace accounting

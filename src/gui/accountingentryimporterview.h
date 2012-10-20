@@ -1,10 +1,8 @@
 #ifndef MEMBERMANAGER_GUI_ACCOUNTINGENTRYIMPORTERVIEW_H
 #define MEMBERMANAGER_GUI_ACCOUNTINGENTRYIMPORTERVIEW_H
 
-#include <QVariant>
 #include <QWidget>
-
-#include "accounting/balancepersister.h"
+#include <QTableWidget>
 
 namespace membermanager
 {
@@ -24,12 +22,18 @@ public:
     explicit AccountingEntryImporterView(QWidget *parent = 0);
     ~AccountingEntryImporterView();
 
+    QTableWidget *getAccountingEntryTable() const;
+
+signals:
+    void importClicked();
+    void bookClicked();
+
 private slots:
-    void importTransactions();
-    
+    void importClick();
+    void bookClick();
+
 private:
     Ui::AccountingEntryImporterView *ui;
-    accounting::BalancePersister* balancePersister;
 };
 
 
