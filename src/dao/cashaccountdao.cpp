@@ -1,12 +1,13 @@
-#include "dao/kassamodel.h"
+#include "cashaccountdao.h"
 
-#include "dao/databasestructure.h"
+namespace membermanager {
+namespace dao {
 
-namespace membermanager
+CashAccountDao::CashAccountDao()
 {
-namespace dao
-{
+}
 
+/*
 KassaModel::KassaModel(const QSqlDatabase &aDb) :
     model(new QSqlTableModel(this, aDb))
 {
@@ -39,6 +40,6 @@ void KassaModel::initTableView(QTableView *aTableView) const
 
     aTableView->sortByColumn(KassaTable::kasse_pkey, Qt::DescendingOrder);
 }
-
-}
-}
+*/
+} // namespace dao
+} // namespace membermanager

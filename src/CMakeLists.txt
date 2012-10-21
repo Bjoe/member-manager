@@ -46,7 +46,7 @@ set(QT_SRCS
     gui/settingsdialog.cpp
     gui/memberlistdelegate.cpp
 
-    dao/kassamodel.cpp
+    dao/cashaccountdao.cpp
     dao/databasestructure.cpp
     dao/memberdao.cpp
     dao/balancedao.cpp
