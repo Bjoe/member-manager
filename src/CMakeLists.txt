@@ -11,7 +11,6 @@ set(QT_MOC_HEADERS
     gui/paymentview.h
     gui/accountingentryimporterview.h
     gui/settingsdialog.h
-    gui/memberlistdelegate.h
 
     accounting/accountingentryimportermain.h
     accounting/balancepersister.h
@@ -80,4 +79,4 @@ add_library(memberManagerLib STATIC ${QT_SRCS} ${MOC_OUTFILES} ${UI_OUTFILES})
 
 add_executable(memberManager main.cpp)
 
-target_link_libraries(memberManager memberManagerLib ${QT_LIBRARIES} ${QIABANKING_LIBRARIES} ${AQB_LIBRARIES} ${GWEN_LIBRARIES})
+target_link_libraries(memberManager memberManagerLib ${QT_LIBRARIES} ${QIABANKING_LIBRARIES} ${AQB_LIBRARIES} ${GWN_LIBRARIES})
