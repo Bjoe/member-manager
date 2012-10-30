@@ -1,23 +1,27 @@
 #ifndef MEMBERMANAGER_DAO_CASHACCOUNTDAO_H
 #define MEMBERMANAGER_DAO_CASHACCOUNTDAO_H
 
-namespace membermanager {
-namespace dao {
+#include <QVariant>
+#include <QList>
+#include <QTableWidget>
+
+#include "swift/transaction.h"
+
+namespace membermanager
+{
+namespace dao
+{
 
 class CashAccountDao
 {
 public:
     CashAccountDao();
 
-/*
-    void setDefaultFilter();
-    void refresh();
-
-    void initTableView(QTableView *aTableView) const;
+    bool importTransactions(QList<qiabanking::swift::Transaction *> aTransactionList);
+    bool addTransaction(QTableWidget *aTable);
 
 private:
-    QSqlTableModel *model;
-    */
+    QTableWidgetItem *createItem(QVariant aVariant);
 };
 
 } // namespace dao
