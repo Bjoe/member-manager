@@ -35,7 +35,10 @@ bool CashAccountDao::addTransaction(QTableWidget *aTable)
 
         QTableWidgetItem *item = new QTableWidgetItem();
         item->setFlags(Qt::ItemIsUserCheckable);
-        item->setData(Qt::DisplayRole, record.value(KassaTable::erfasst));
+        item->setCheckState(Qt::Unchecked);
+        if(record.value(KassaTable::erfasst).toBool()) {
+            item->setCheckState(Qt::Checked);
+        }
         aTable->setItem(y + x, 8, item);
     }
 }

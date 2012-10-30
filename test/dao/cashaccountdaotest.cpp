@@ -48,7 +48,7 @@ void CashAccountDaoTest::testReadTransaction()
     membermanager::dao::CashAccountDao dao;
     dao.addTransaction(tableWidget);
 
-    QCOMPARE(tableWidget->rowCount(), 3);
+    QCOMPARE(tableWidget->rowCount(), 4);
 
     QTableWidgetItem *item = tableWidget->item(0, 5);
     QVariant variant = item->data(Qt::DisplayRole);
@@ -68,6 +68,38 @@ void CashAccountDaoTest::testReadTransaction()
     item = tableWidget->item(0, 8);
     QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
     QVERIFY(item->checkState() == Qt::Unchecked);
+
+
+
+/*
+    item = tableWidget->item(3, 0);
+    variant = item->data(Qt::DisplayRole);
+    QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
+    QCOMPARE(variant.toString(), QString("1033"));
+
+    item = tableWidget->item(3, 1);
+    variant = item->data(Qt::DisplayRole);
+    QVERIFY(item->flags() & Qt::ItemIsEditable == false);
+    QCOMPARE(variant.toString(), QString("Leonard H."));
+*/
+    item = tableWidget->item(3, 5);
+    variant = item->data(Qt::DisplayRole);
+    QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
+    QCOMPARE(variant.toDate(), QDate(2012,11,22));
+
+    item = tableWidget->item(3, 6);
+    variant = item->data(Qt::DisplayRole);
+    QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
+    QCOMPARE(variant.toString(), QString("81,5"));
+
+    item = tableWidget->item(3, 7);
+    variant = item->data(Qt::DisplayRole);
+    QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
+    QCOMPARE(variant.toString(), QString("Mitgliedsbeitrag"));
+
+    item = tableWidget->item(3, 8);
+    QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
+    QVERIFY(item->checkState() == Qt::Checked);
 }
 
 void CashAccountDaoTest::testImportTransaction()
@@ -104,13 +136,13 @@ void CashAccountDaoTest::testImportTransaction()
     QSqlTableModel *model = new QSqlTableModel();
     model->setTable(membermanager::dao::KassaTable::TABLENAME);
     model->select();
-    QCOMPARE(model->rowCount(), 4);
+    QCOMPARE(model->rowCount(), 5);
 
     membermanager::dao::CashAccountDao dao;
     dao.importTransactions(transactions);
 
     model->select();
-    QCOMPARE(model->rowCount(), 5);
+    QCOMPARE(model->rowCount(), 6);
 
     model->setFilter(membermanager::dao::KassaTable::COLUMNNAME[membermanager::dao::KassaTable::bezeichnung] + "='PurposeText'");
     model->select();

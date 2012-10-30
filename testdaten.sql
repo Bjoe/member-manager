@@ -200,6 +200,13 @@ INSERT INTO kasse (
         374.56,date('2006-02-01'),date('2006-01-31'),'debit',4.74,805,80020510,0,'-',
         'ABSCHLUSS  Abrechnung 30.01.2006 siehe Anlage','false');
 
+insert into kasse ("kasse_pkey", "deleted", "einlesedatum", "einleseid", "auszug", "zwshkenn60", "zwbudatum60", 
+		    "zwischensaldo60", "zwshkenn62", "zwbudatum62", "zwischensaldo62", "valutadatum", "buchungsdatum", 
+		    "shkenn", "betrag", "buschl", "bankbuschl", "fremdblz", "fremdktnr", "fremdname", "bezeichnung", "barkonto", 
+		    "konten", "dorfmitglied_pkey", "erfasst") 
+	  values ('5', 'false', '2012-10-30T17:41:13', 'abc123', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 
+		  '2012-11-19T10:30:00', '2012-11-22T00:05:30', NULL, '81,5', 'DAUERAUFRTAG', '23', '80070011', '1234567890', 
+		  'McCoy', 'Mitgliedsbeitrag', NULL, NULL, '1033', 'true');
 
 
 DROP TABLE kommunikation;
