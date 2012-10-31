@@ -5,13 +5,14 @@
 #include <QSqlTableModel>
 
 #include "databasestructure.h"
+#include "member.h"
 
 namespace membermanager
 {
 namespace dao
 {
 
-CashAccountDao::CashAccountDao()
+CashAccountDao::CashAccountDao() : memberDao()
 {
 }
 
@@ -32,15 +33,40 @@ bool CashAccountDao::addTransaction(QTableWidget *aTable)
         aTable->setItem(y + x, 5, createItem(record.value(KassaTable::buchungsdatum)));
         aTable->setItem(y + x, 6, createItem(record.value(KassaTable::betrag)));
         aTable->setItem(y + x, 7, createItem(record.value(KassaTable::bezeichnung)));
+        aTable->setItem(y + x, 8, createItem(record.value(KassaTable::fremdname)));
 
         QTableWidgetItem *item = new QTableWidgetItem();
         item->setFlags(Qt::ItemIsUserCheckable);
-        item->setCheckState(Qt::Unchecked);
+
         if(record.value(KassaTable::erfasst).toBool()) {
             item->setCheckState(Qt::Checked);
+
+            QVariant memberId = record.value(KassaTable::dorfmitglied_pkey);
+            Member member = memberDao.findByMemberId(memberId.toInt());
+
+            aTable->setItem(y + x, 0, createItem(memberId));
+            aTable->setItem(y + x, 1, createItem(member.getFirstname()));
+            aTable->setItem(y + x, 2, createItem(""));
+            aTable->setItem(y + x, 3, createItem(""));
+            aTable->setItem(y + x, 4, createItem(""));
+        } else {
+            item->setCheckState(Qt::Unchecked);
+
+            aTable->setItem(y + x, 0, createItem(""));
+            aTable->setItem(y + x, 1, createEditableItem("-"));
+            aTable->setItem(y + x, 2, createEditableItem(""));
+            aTable->setItem(y + x, 3, createEditableItem(""));
+            aTable->setItem(y + x, 4, createEditableItem(""));
         }
-        aTable->setItem(y + x, 8, item);
+        aTable->setItem(y + x, 9, item);
     }
+}
+
+QTableWidgetItem *CashAccountDao::createEditableItem(QVariant aVariant)
+{
+    QTableWidgetItem *item = new QTableWidgetItem();
+    item->setData(Qt::DisplayRole, aVariant);
+    return item;
 }
 
 QTableWidgetItem *CashAccountDao::createItem(QVariant aVariant)

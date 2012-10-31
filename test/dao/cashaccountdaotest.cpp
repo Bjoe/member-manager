@@ -43,15 +43,40 @@ void CashAccountDaoTest::initTestCase()
 void CashAccountDaoTest::testReadTransaction()
 {
     QTableWidget *tableWidget = new QTableWidget();
-    tableWidget->setColumnCount(9);
+    tableWidget->setColumnCount(10);
 
     membermanager::dao::CashAccountDao dao;
     dao.addTransaction(tableWidget);
 
     QCOMPARE(tableWidget->rowCount(), 4);
 
-    QTableWidgetItem *item = tableWidget->item(0, 5);
+    QTableWidgetItem *item = tableWidget->item(0, 0);
     QVariant variant = item->data(Qt::DisplayRole);
+    QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
+    QCOMPARE(variant.toString(), QString(""));
+
+    item = tableWidget->item(0, 1);
+    variant = item->data(Qt::DisplayRole);
+    QVERIFY(item->flags() & Qt::ItemIsEditable);
+    QCOMPARE(variant.toString(), QString("-"));
+
+    item = tableWidget->item(0, 2);
+    variant = item->data(Qt::DisplayRole);
+    QVERIFY(item->flags() & Qt::ItemIsEditable);
+    QCOMPARE(variant.toString(), QString(""));
+
+    item = tableWidget->item(0, 3);
+    variant = item->data(Qt::DisplayRole);
+    QVERIFY(item->flags() & Qt::ItemIsEditable);
+    QCOMPARE(variant.toString(), QString(""));
+
+    item = tableWidget->item(0, 4);
+    variant = item->data(Qt::DisplayRole);
+    QVERIFY(item->flags() & Qt::ItemIsEditable);
+    QCOMPARE(variant.toString(), QString(""));
+
+    item = tableWidget->item(0, 5);
+    variant = item->data(Qt::DisplayRole);
     QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
     QCOMPARE(variant.toDate(), QDate(2006,1,23));
 
@@ -66,12 +91,73 @@ void CashAccountDaoTest::testReadTransaction()
     QCOMPARE(variant.toString(), QString("LASTSCHRIFT  KDNR 1234 RGN 987"));
 
     item = tableWidget->item(0, 8);
+    variant = item->data(Qt::DisplayRole);
+    QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
+    QCOMPARE(variant.toString(), QString("INTERNET GMBH"));
+
+    item = tableWidget->item(0, 9);
     QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
     QVERIFY(item->checkState() == Qt::Unchecked);
 
 
 
-/*
+
+
+
+    item = tableWidget->item(2, 0);
+    variant = item->data(Qt::DisplayRole);
+    QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
+    QCOMPARE(variant.toString(), QString(""));
+
+    item = tableWidget->item(2, 1);
+    variant = item->data(Qt::DisplayRole);
+    QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
+    QCOMPARE(variant.toString(), QString(""));
+
+    item = tableWidget->item(2, 2);
+    variant = item->data(Qt::DisplayRole);
+    QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
+    QCOMPARE(variant.toString(), QString(""));
+
+    item = tableWidget->item(2, 3);
+    variant = item->data(Qt::DisplayRole);
+    QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
+    QCOMPARE(variant.toString(), QString(""));
+
+    item = tableWidget->item(2, 4);
+    variant = item->data(Qt::DisplayRole);
+    QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
+    QCOMPARE(variant.toString(), QString(""));
+
+    item = tableWidget->item(2, 5);
+    variant = item->data(Qt::DisplayRole);
+    QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
+    QCOMPARE(variant.toDate(), QDate(2006,1,31));
+
+    item = tableWidget->item(2, 6);
+    variant = item->data(Qt::DisplayRole);
+    QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
+    QCOMPARE(variant.toString(), QString("4.74"));
+
+    item = tableWidget->item(2, 7);
+    variant = item->data(Qt::DisplayRole);
+    QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
+    QCOMPARE(variant.toString(), QString("ABSCHLUSS  Abrechnung 30.01.2006 siehe Anlage"));
+
+    item = tableWidget->item(2, 8);
+    variant = item->data(Qt::DisplayRole);
+    QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
+    QCOMPARE(variant.toString(), QString("-"));
+
+    item = tableWidget->item(2, 9);
+    QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
+    QVERIFY(item->checkState() == Qt::Checked);
+
+
+
+
+
+
     item = tableWidget->item(3, 0);
     variant = item->data(Qt::DisplayRole);
     QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
@@ -79,9 +165,24 @@ void CashAccountDaoTest::testReadTransaction()
 
     item = tableWidget->item(3, 1);
     variant = item->data(Qt::DisplayRole);
-    QVERIFY(item->flags() & Qt::ItemIsEditable == false);
+    QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
     QCOMPARE(variant.toString(), QString("Leonard H."));
-*/
+
+    item = tableWidget->item(3, 2);
+    variant = item->data(Qt::DisplayRole);
+    QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
+    QCOMPARE(variant.toString(), QString(""));
+
+    item = tableWidget->item(3, 3);
+    variant = item->data(Qt::DisplayRole);
+    QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
+    QCOMPARE(variant.toString(), QString(""));
+
+    item = tableWidget->item(3, 4);
+    variant = item->data(Qt::DisplayRole);
+    QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
+    QCOMPARE(variant.toString(), QString(""));
+
     item = tableWidget->item(3, 5);
     variant = item->data(Qt::DisplayRole);
     QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
@@ -98,6 +199,11 @@ void CashAccountDaoTest::testReadTransaction()
     QCOMPARE(variant.toString(), QString("Mitgliedsbeitrag"));
 
     item = tableWidget->item(3, 8);
+    variant = item->data(Qt::DisplayRole);
+    QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
+    QCOMPARE(variant.toString(), QString("McCoy"));
+
+    item = tableWidget->item(3, 9);
     QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
     QVERIFY(item->checkState() == Qt::Checked);
 }

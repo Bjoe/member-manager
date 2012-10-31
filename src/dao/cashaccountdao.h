@@ -6,6 +6,7 @@
 #include <QTableWidget>
 
 #include "swift/transaction.h"
+#include "dao/memberdao.h"
 
 namespace membermanager
 {
@@ -21,7 +22,10 @@ public:
     bool addTransaction(QTableWidget *aTable);
 
 private:
+    MemberDao memberDao;
+
     QTableWidgetItem *createItem(QVariant aVariant);
+    QTableWidgetItem *createEditableItem(QVariant aVariant);
 };
 
 } // namespace dao

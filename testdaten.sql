@@ -198,7 +198,7 @@ INSERT INTO kasse (
                     fremdblz, fremdktnr, fremdname, bezeichnung, erfasst)
             VALUES (4,'false','',1,1,'credit',date('2006-01-27'),318.16,'credit',date('2006-01-31'),
         374.56,date('2006-02-01'),date('2006-01-31'),'debit',4.74,805,80020510,0,'-',
-        'ABSCHLUSS  Abrechnung 30.01.2006 siehe Anlage','false');
+        'ABSCHLUSS  Abrechnung 30.01.2006 siehe Anlage','true');
 
 insert into kasse ("kasse_pkey", "deleted", "einlesedatum", "einleseid", "auszug", "zwshkenn60", "zwbudatum60", 
 		    "zwischensaldo60", "zwshkenn62", "zwbudatum62", "zwischensaldo62", "valutadatum", "buchungsdatum", 
