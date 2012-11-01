@@ -46,7 +46,7 @@ void CashAccountDaoTest::testReadTransaction()
     tableWidget->setColumnCount(10);
 
     membermanager::dao::CashAccountDao dao;
-    dao.addTransaction(tableWidget);
+    dao.clearAndAddTransaction(tableWidget);
 
     QCOMPARE(tableWidget->rowCount(), 4);
 

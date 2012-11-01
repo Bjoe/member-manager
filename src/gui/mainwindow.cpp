@@ -4,7 +4,7 @@
 #include "gui/memberdebtview.h"
 #include "gui/summaryview.h"
 #include "gui/paymentview.h"
-#include "accounting/accountingentryimportermain.h"
+#include "gui/accountingentryimporterview.h"
 #include "gui/settingsdialog.h"
 
 namespace membermanager
@@ -31,7 +31,7 @@ MainWindow::MainWindow(QWidget *parent) :
     stackedLayout->addWidget(new MemberDetailView(true, this));
     stackedLayout->addWidget(new MemberDebtView(this));
     stackedLayout->addWidget(new PaymentView(this));
-    stackedLayout->addWidget(new accounting::AccountingEntryImporterMain(this));
+    stackedLayout->addWidget(new AccountingEntryImporterView(this));
 
     ui.horizontalLayout->addWidget(listWidget);
     ui.horizontalLayout->addWidget(stackedLayout, 1);

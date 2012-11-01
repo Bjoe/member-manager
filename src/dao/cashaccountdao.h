@@ -19,7 +19,7 @@ public:
     CashAccountDao();
 
     bool importTransactions(QList<qiabanking::swift::Transaction *> aTransactionList);
-    bool addTransaction(QTableWidget *aTable);
+    bool clearAndAddTransaction(QTableWidget *aTable);
 
 private:
     MemberDao memberDao;

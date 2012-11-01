@@ -4,6 +4,8 @@
 #include <QWidget>
 #include <QTableWidget>
 
+#include "dao/cashaccountdao.h"
+
 namespace membermanager
 {
 namespace gui
@@ -22,18 +24,13 @@ public:
     explicit AccountingEntryImporterView(QWidget *parent = 0);
     ~AccountingEntryImporterView();
 
-    QTableWidget *getAccountingEntryTable() const;
-
-signals:
-    void importClicked();
-    void bookClicked();
-
 private slots:
-    void importClick();
-    void bookClick();
+    void import();
+    void book();
 
 private:
     Ui::AccountingEntryImporterView *ui;
+    dao::CashAccountDao cashAccountdao;
 };
 
 

@@ -28,10 +28,10 @@ void AccountingEntryImporterViewTest::testView()
 {
     membermanager::gui::AccountingEntryImporterView accountingEntryImportView;
 
-    QTableWidget *tableWidget = accountingEntryImportView.getAccountingEntryTable();
-    QCOMPARE(tableWidget->columnCount(), 9);
+    QTableWidget *tableWidget = accountingEntryImportView.findChild<QTableWidget *>("tableWidget");
+    QCOMPARE(tableWidget->columnCount(), 10);
     QHeaderView *headerView = tableWidget->horizontalHeader();
-    QCOMPARE(headerView->count(), 9);
+    QCOMPARE(headerView->count(), 10);
     QCOMPARE(tableWidget->rowCount(), 0);
     QVERIFY(tableWidget->itemDelegateForColumn(1));
 }

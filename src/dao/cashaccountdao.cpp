@@ -16,7 +16,7 @@ CashAccountDao::CashAccountDao() : memberDao()
 {
 }
 
-bool CashAccountDao::addTransaction(QTableWidget *aTable)
+bool CashAccountDao::clearAndAddTransaction(QTableWidget *aTable)
 {
     QSqlTableModel *model = new QSqlTableModel();
     model->setTable(KassaTable::TABLENAME);
@@ -26,14 +26,16 @@ bool CashAccountDao::addTransaction(QTableWidget *aTable)
     model->setFilter(whereClause);
     model->select();
 
-    int y = aTable->rowCount();
+    for(int y = aTable->rowCount()-1; 0 <= y; --y) {
+        aTable->removeRow(y);
+    }
     for(int x=0; x < model->rowCount(); ++x) {
         QSqlRecord record = model->record(x);
-        aTable->insertRow(y + x);
-        aTable->setItem(y + x, 5, createItem(record.value(KassaTable::buchungsdatum)));
-        aTable->setItem(y + x, 6, createItem(record.value(KassaTable::betrag)));
-        aTable->setItem(y + x, 7, createItem(record.value(KassaTable::bezeichnung)));
-        aTable->setItem(y + x, 8, createItem(record.value(KassaTable::fremdname)));
+        aTable->insertRow(x);
+        aTable->setItem(x, 5, createItem(record.value(KassaTable::buchungsdatum)));
+        aTable->setItem(x, 6, createItem(record.value(KassaTable::betrag)));
+        aTable->setItem(x, 7, createItem(record.value(KassaTable::bezeichnung)));
+        aTable->setItem(x, 8, createItem(record.value(KassaTable::fremdname)));
 
         QTableWidgetItem *item = new QTableWidgetItem();
         item->setFlags(Qt::ItemIsUserCheckable);
@@ -44,22 +46,23 @@ bool CashAccountDao::addTransaction(QTableWidget *aTable)
             QVariant memberId = record.value(KassaTable::dorfmitglied_pkey);
             Member member = memberDao.findByMemberId(memberId.toInt());
 
-            aTable->setItem(y + x, 0, createItem(memberId));
-            aTable->setItem(y + x, 1, createItem(member.getFirstname()));
-            aTable->setItem(y + x, 2, createItem(""));
-            aTable->setItem(y + x, 3, createItem(""));
-            aTable->setItem(y + x, 4, createItem(""));
+            aTable->setItem(x, 0, createItem(memberId));
+            aTable->setItem(x, 1, createItem(member.getFirstname()));
+            aTable->setItem(x, 2, createItem(""));
+            aTable->setItem(x, 3, createItem(""));
+            aTable->setItem(x, 4, createItem(""));
         } else {
             item->setCheckState(Qt::Unchecked);
 
-            aTable->setItem(y + x, 0, createItem(""));
-            aTable->setItem(y + x, 1, createEditableItem("-"));
-            aTable->setItem(y + x, 2, createEditableItem(""));
-            aTable->setItem(y + x, 3, createEditableItem(""));
-            aTable->setItem(y + x, 4, createEditableItem(""));
+            aTable->setItem(x, 0, createItem(""));
+            aTable->setItem(x, 1, createEditableItem("-"));
+            aTable->setItem(x, 2, createEditableItem(""));
+            aTable->setItem(x, 3, createEditableItem(""));
+            aTable->setItem(x, 4, createEditableItem(""));
         }
-        aTable->setItem(y + x, 9, item);
+        aTable->setItem(x, 9, item);
     }
+    return true;
 }
 
 QTableWidgetItem *CashAccountDao::createEditableItem(QVariant aVariant)
