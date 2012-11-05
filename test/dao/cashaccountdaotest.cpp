@@ -9,6 +9,8 @@
 
 #include "dao/cashaccountdao.h"
 
+#include "accounting/statemententry.h"
+
 #include "testconfig.h"
 #include "testcoverageobject.h"
 #include "database/databaseutil.h"
@@ -29,6 +31,9 @@ class CashAccountDaoTest : public qttestutil::TestCoverageObject
 
 private slots:
     void initTestCase();
+    void testSaveRecord();
+    void testReadRecord();
+    void testUpdateRecord();
     void testReadTransaction();
     void testImportTransaction();
 };
@@ -40,6 +45,64 @@ void CashAccountDaoTest::initTestCase()
     database.read(SQLTESTFILE);
 }
 
+void CashAccountDaoTest::testUpdateRecord()
+{
+    membermanager::dao::CashAccountDao dao;
+    membermanager::accounting::StatementEntry entry = dao.findById(2);
+
+    entry.setValue(9999.99);
+
+    QVERIFY(dao.updateRecord(entry));
+
+    QSqlTableModel model;
+    model.setTable(membermanager::dao::KassaTable::TABLENAME);
+    model.setFilter(QString("%1=%2")
+                    .arg(membermanager::dao::KassaTable::COLUMNNAME[membermanager::dao::KassaTable::kasse_pkey])
+                    .arg(2));
+    model.select();
+
+    QSqlRecord record = model.record(0);
+    QCOMPARE(record.value(membermanager::dao::KassaTable::betrag).toString(), QString("9999.99"));
+}
+
+void CashAccountDaoTest::testSaveRecord()
+{
+    membermanager::accounting::StatementEntry entry(7);
+    entry.setRemoteName("PETER MUSTERMANN");
+    entry.setRemoteAccountNumber("99994444");
+    entry.setPurpose("test insert");
+    entry.setTransactionText("action");
+
+    membermanager::dao::CashAccountDao dao;
+    QVERIFY(dao.saveRecord(entry));
+
+    QSqlTableModel model;
+    model.setTable(membermanager::dao::KassaTable::TABLENAME);
+    model.setFilter(QString("%1=%2")
+                    .arg(membermanager::dao::KassaTable::COLUMNNAME[membermanager::dao::KassaTable::kasse_pkey])
+                    .arg(7));
+    model.select();
+
+    QCOMPARE(model.rowCount(), 1);
+
+    QSqlRecord record = model.record(0);
+    QCOMPARE(record.value(membermanager::dao::KassaTable::fremdname).toString(), QString("PETER MUSTERMANN"));
+    QCOMPARE(record.value(membermanager::dao::KassaTable::fremdktnr).toString(), QString("99994444"));
+    QCOMPARE(record.value(membermanager::dao::KassaTable::bezeichnung).toString(), QString("test insert"));
+    QCOMPARE(record.value(membermanager::dao::KassaTable::buschl).toString(), QString("action"));
+}
+
+void CashAccountDaoTest::testReadRecord()
+{
+    membermanager::dao::CashAccountDao dao;
+    membermanager::accounting::StatementEntry entry = dao.findById(5);
+
+    QCOMPARE(entry.getMemberId(), 1033);
+    QCOMPARE(entry.getRemoteName(), QString("McCoy"));
+    double value = 81.5;
+    QCOMPARE(entry.getValue(), value);
+}
+
 void CashAccountDaoTest::testReadTransaction()
 {
     QTableWidget *tableWidget = new QTableWidget();
@@ -48,7 +111,7 @@ void CashAccountDaoTest::testReadTransaction()
     membermanager::dao::CashAccountDao dao;
     dao.clearAndAddTransaction(tableWidget);
 
-    QCOMPARE(tableWidget->rowCount(), 4);
+    QCOMPARE(tableWidget->rowCount(), 6);
 
     QTableWidgetItem *item = tableWidget->item(0, 0);
     QVariant variant = item->data(Qt::DisplayRole);
@@ -242,13 +305,13 @@ void CashAccountDaoTest::testImportTransaction()
     QSqlTableModel *model = new QSqlTableModel();
     model->setTable(membermanager::dao::KassaTable::TABLENAME);
     model->select();
-    QCOMPARE(model->rowCount(), 5);
+    QCOMPARE(model->rowCount(), 7);
 
     membermanager::dao::CashAccountDao dao;
     dao.importTransactions(transactions);
 
     model->select();
-    QCOMPARE(model->rowCount(), 6);
+    QCOMPARE(model->rowCount(), 8);
 
     model->setFilter(membermanager::dao::KassaTable::COLUMNNAME[membermanager::dao::KassaTable::bezeichnung] + "='PurposeText'");
     model->select();

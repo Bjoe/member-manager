@@ -4,6 +4,8 @@
 #include <QTableWidgetItem>
 #include <QSqlTableModel>
 
+#include <QDebug>
+
 #include "databasestructure.h"
 #include "member.h"
 
@@ -108,6 +110,60 @@ bool CashAccountDao::importTransactions(QList<qiabanking::swift::Transaction *> 
     model->submit();
 
     return true;
+}
+
+accounting::StatementEntry CashAccountDao::findById(int aKeyId)
+{
+    QSqlTableModel *model = new QSqlTableModel();
+    model->setTable(KassaTable::TABLENAME);
+    model->setFilter(QString("%1=%2")
+                     .arg(KassaTable::COLUMNNAME[KassaTable::kasse_pkey])
+                     .arg(aKeyId));
+    model->select();
+    printSqlError(model->lastError());
+
+    accounting::StatementEntry entry(aKeyId);
+    entry.statementRecord = model->record(0);
+    return entry;
+}
+
+bool CashAccountDao::saveRecord(const accounting::StatementEntry aStatementEntry)
+{
+    QSqlTableModel *model = new QSqlTableModel();
+    model->setTable(KassaTable::TABLENAME);
+    model->select();
+
+    QSqlRecord record = aStatementEntry.statementRecord;
+    bool successful = model->insertRecord(-1, record);
+    printSqlError(model->lastError());
+    return successful;
+}
+
+bool CashAccountDao::updateRecord(const accounting::StatementEntry aStatementEntry)
+{
+    QSqlRecord record = aStatementEntry.statementRecord;
+    int pKey = record.value(KassaTable::kasse_pkey).toInt();
+
+    QSqlTableModel *model = new QSqlTableModel();
+    model->setTable(KassaTable::TABLENAME);
+    model->setFilter(QString("%1=%2")
+                     .arg(KassaTable::COLUMNNAME[KassaTable::kasse_pkey])
+                     .arg(pKey));
+    model->select();
+    if(model->rowCount() != 1) {
+        return false;
+    }
+    bool successful = model->setRecord(0, record);
+    successful &= model->submitAll();
+    return successful;
+}
+
+void CashAccountDao::printSqlError(const QSqlError &anError)
+{
+    if (anError.type() != QSqlError::NoError) {
+        /// \todo Publish error to the statusbar as event.
+        qDebug() << anError.text();
+    }
 }
 
 } // namespace dao
