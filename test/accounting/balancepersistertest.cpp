@@ -137,9 +137,14 @@ void BalancePersisterTest::testBook()
     tableWidget->setItem(1, 7, item);
 
     item = new QTableWidgetItem();
+    item->setData(Qt::DisplayRole, QVariant(QString("Kirk")));
+    item->setFlags(item->flags() ^ Qt::ItemIsEditable);
+    tableWidget->setItem(1, 8, item);
+
+    item = new QTableWidgetItem();
     item->setFlags(Qt::ItemIsUserCheckable);
     item->setCheckState(Qt::Unchecked);
-    tableWidget->setItem(1, 8, item);
+    tableWidget->setItem(1, 9, item);
 
     membermanager::accounting::BalancePersister balancePersister(tableWidget);
     balancePersister.booking();
@@ -294,9 +299,14 @@ void BalancePersisterTest::testWrongValueToLow()
     tableWidget->setItem(1, 7, item);
 
     item = new QTableWidgetItem();
+    item->setData(Qt::DisplayRole, QVariant(QString("Scott")));
+    item->setFlags(item->flags() ^ Qt::ItemIsEditable);
+    tableWidget->setItem(1, 8, item);
+
+    item = new QTableWidgetItem();
     item->setFlags(Qt::ItemIsUserCheckable);
     item->setCheckState(Qt::Unchecked);
-    tableWidget->setItem(1, 8, item);
+    tableWidget->setItem(1, 9, item);
 
     membermanager::accounting::BalancePersister balancePersister(tableWidget);
     balancePersister.booking();
@@ -420,9 +430,14 @@ void BalancePersisterTest::testWrongValueToHigh()
     tableWidget->setItem(1, 7, item);
 
     item = new QTableWidgetItem();
+    item->setData(Qt::DisplayRole, QVariant(QString("Scott")));
+    item->setFlags(item->flags() ^ Qt::ItemIsEditable);
+    tableWidget->setItem(1, 8, item);
+
+    item = new QTableWidgetItem();
     item->setFlags(Qt::ItemIsUserCheckable);
     item->setCheckState(Qt::Unchecked);
-    tableWidget->setItem(1, 8, item);
+    tableWidget->setItem(1, 9, item);
 
     membermanager::accounting::BalancePersister balancePersister(tableWidget);
     balancePersister.booking();

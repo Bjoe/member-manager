@@ -68,11 +68,20 @@ void BalancePersister::booking() const
                         balanceDao.saveRecord(balanceEntry);
                     }
 
-                    item = accountingEntryTable->item(i, 8);
+                    item = accountingEntryTable->item(i, 9);
                     item->setCheckState(Qt::Checked);
                     statementEntry.setBooked(true);
                     statementEntry.setMemberId(memberId);
                     cashAccountDao.updateRecord(statementEntry);
+
+                    item = accountingEntryTable->item(i, 1);
+                    item->setFlags(item->flags() ^ Qt::ItemIsEditable);
+                    item = accountingEntryTable->item(i, 2);
+                    item->setFlags(item->flags() ^ Qt::ItemIsEditable);
+                    item = accountingEntryTable->item(i, 3);
+                    item->setFlags(item->flags() ^ Qt::ItemIsEditable);
+                    item = accountingEntryTable->item(i, 4);
+                    item->setFlags(item->flags() ^ Qt::ItemIsEditable);
                 } else {
                     item->setBackground(QBrush(Qt::red));
                 }
