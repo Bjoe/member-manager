@@ -17,8 +17,9 @@ namespace gui
 
 AccountingEntryImporterView::AccountingEntryImporterView(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::AccountingEntryImporterView),
-    cashAccountdao()
+    cashAccountdao(),
+    balancePersister(0),
+    ui(new Ui::AccountingEntryImporterView)
 {
     ui->setupUi(this);
 
@@ -38,9 +39,11 @@ AccountingEntryImporterView::AccountingEntryImporterView(QWidget *parent) :
                      << tr("Booked");
     accountingEntryTable->setHorizontalHeaderLabels(headerStringList);
     accountingEntryTable->setItemDelegateForColumn(1, new MemberListDelegate());
+
+    balancePersister = new accounting::BalancePersister(accountingEntryTable, this);
     cashAccountdao.clearAndAddTransaction(accountingEntryTable);
 
-    connect(ui->bookingButton, SIGNAL(clicked()), SLOT(book()));
+    connect(ui->bookingButton, SIGNAL(clicked()), balancePersister, SLOT(booking()));
     connect(ui->importButton, SIGNAL(clicked()), SLOT(import()));
 }
 
@@ -60,10 +63,6 @@ void AccountingEntryImporterView::import()
     QList<qiabanking::swift::Transaction *> transactionList = importer.importMt940Swift(filename);
     cashAccountdao.importTransactions(transactionList);
     cashAccountdao.clearAndAddTransaction(ui->tableWidget);
-}
-
-void AccountingEntryImporterView::book()
-{
 }
 
 } // namespace gui

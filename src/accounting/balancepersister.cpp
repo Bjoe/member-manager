@@ -1,6 +1,8 @@
 #include "balancepersister.h"
 
 #include <QString>
+#include <QColor>
+#include <QBrush>
 #include <QDate>
 #include <QTableWidgetItem>
 
@@ -27,50 +29,53 @@ void BalancePersister::booking() const
         int memberId = getData(i, 0).toInt();
 
         if(memberId != 0) {
-            QTableWidgetItem *item = accountingEntryTable->item(i, 5);
+            QTableWidgetItem *item = accountingEntryTable->item(i, 6);
             int cashKey = item->data(Qt::UserRole).toInt();
             accounting::StatementEntry statementEntry = cashAccountDao.findById(cashKey);
+            if(statementEntry.isBooked() == false && statementEntry.isDeleted() == false) {
 
-            float fee = getData(i, 2).toFloat();
-            float donation = getData(i, 3).toFloat();
-            float additionalFee = getData(i, 4).toFloat();
+                float fee = getData(i, 2).toFloat();
+                float donation = getData(i, 3).toFloat();
+                float additionalFee = getData(i, 4).toFloat();
 
-            float value = statementEntry.getValue();
-            if((fee + donation + additionalFee) == value) {
-                accounting::BalanceEntry balanceEntry(memberId);
+                float value = statementEntry.getValue();
+                if((fee + donation + additionalFee) == value) {
+                    item->setBackground(QBrush(Qt::NoBrush));
+                    accounting::BalanceEntry balanceEntry(memberId);
 
-                balanceEntry.setValuta(statementEntry.getDate().date());
-                balanceEntry.setCashKey(cashKey);
-                balanceEntry.setInfo("Automatische Buchung");
+                    balanceEntry.setValuta(statementEntry.getDate().date());
+                    balanceEntry.setCashKey(cashKey);
+                    balanceEntry.setInfo("Automatische Buchung");
 
-                if(fee != 0) {
-                    balanceEntry.setPurpose(statementEntry.getPurpose());
-                    balanceEntry.setValue(fee);
-                    balanceEntry.setAccount(11);
-                    balanceDao.saveRecord(balanceEntry);
+                    if(fee != 0) {
+                        balanceEntry.setPurpose(statementEntry.getPurpose());
+                        balanceEntry.setValue(fee);
+                        balanceEntry.setAccount(11);
+                        balanceDao.saveRecord(balanceEntry);
+                    }
+
+                    if(donation != 0) {
+                        balanceEntry.setPurpose(statementEntry.getPurpose());
+                        balanceEntry.setValue(donation);
+                        balanceEntry.setAccount(12);
+                        balanceDao.saveRecord(balanceEntry);
+                    }
+
+                    if(additionalFee != 0) {
+                        balanceEntry.setPurpose(statementEntry.getPurpose());
+                        balanceEntry.setValue(additionalFee);
+                        balanceEntry.setAccount(4);
+                        balanceDao.saveRecord(balanceEntry);
+                    }
+
+                    item = accountingEntryTable->item(i, 8);
+                    item->setCheckState(Qt::Checked);
+                    statementEntry.setBooked(true);
+                    statementEntry.setMemberId(memberId);
+                    cashAccountDao.updateRecord(statementEntry);
+                } else {
+                    item->setBackground(QBrush(Qt::red));
                 }
-
-                if(donation != 0) {
-                    balanceEntry.setPurpose(statementEntry.getPurpose());
-                    balanceEntry.setValue(donation);
-                    balanceEntry.setAccount(12);
-                    balanceDao.saveRecord(balanceEntry);
-                }
-
-                if(additionalFee != 0) {
-                    balanceEntry.setPurpose(statementEntry.getPurpose());
-                    balanceEntry.setValue(additionalFee);
-                    balanceEntry.setAccount(4);
-                    balanceDao.saveRecord(balanceEntry);
-                }
-
-                item = accountingEntryTable->item(i, 8);
-                item->setCheckState(Qt::Checked);
-                statementEntry.setBooked(true);
-                statementEntry.setMemberId(memberId);
-                cashAccountDao.updateRecord(statementEntry);
-            } else {
-                // TODO Tabellen Eintrag rot faerben. Summe stimmt nicht!
             }
         }
     }

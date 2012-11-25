@@ -67,7 +67,7 @@ void CashAccountDaoTest::testUpdateRecord()
 
 void CashAccountDaoTest::testSaveRecord()
 {
-    membermanager::accounting::StatementEntry entry(7);
+    membermanager::accounting::StatementEntry entry(9);
     entry.setRemoteName("PETER MUSTERMANN");
     entry.setRemoteAccountNumber("99994444");
     entry.setPurpose("test insert");
@@ -80,7 +80,7 @@ void CashAccountDaoTest::testSaveRecord()
     model.setTable(membermanager::dao::KassaTable::TABLENAME);
     model.setFilter(QString("%1=%2")
                     .arg(membermanager::dao::KassaTable::COLUMNNAME[membermanager::dao::KassaTable::kasse_pkey])
-                    .arg(7));
+                    .arg(9));
     model.select();
 
     QCOMPARE(model.rowCount(), 1);
@@ -95,7 +95,7 @@ void CashAccountDaoTest::testSaveRecord()
 void CashAccountDaoTest::testReadRecord()
 {
     membermanager::dao::CashAccountDao dao;
-    membermanager::accounting::StatementEntry entry = dao.findById(5);
+    membermanager::accounting::StatementEntry entry = dao.findById(8);
 
     QCOMPARE(entry.getMemberId(), 1033);
     QCOMPARE(entry.getRemoteName(), QString("McCoy"));
@@ -111,7 +111,7 @@ void CashAccountDaoTest::testReadTransaction()
     membermanager::dao::CashAccountDao dao;
     dao.clearAndAddTransaction(tableWidget);
 
-    QCOMPARE(tableWidget->rowCount(), 6);
+    QCOMPARE(tableWidget->rowCount(), 8);
 
     QTableWidgetItem *item = tableWidget->item(0, 0);
     QVariant variant = item->data(Qt::DisplayRole);
@@ -147,6 +147,8 @@ void CashAccountDaoTest::testReadTransaction()
     variant = item->data(Qt::DisplayRole);
     QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
     QCOMPARE(variant.toString(), QString("34.9"));
+    variant = item->data(Qt::UserRole);
+    QCOMPARE(variant.toInt(), 1);
 
     item = tableWidget->item(0, 7);
     variant = item->data(Qt::DisplayRole);
@@ -201,6 +203,8 @@ void CashAccountDaoTest::testReadTransaction()
     variant = item->data(Qt::DisplayRole);
     QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
     QCOMPARE(variant.toString(), QString("4.74"));
+    variant = item->data(Qt::UserRole);
+    QCOMPARE(variant.toInt(), 4);
 
     item = tableWidget->item(2, 7);
     variant = item->data(Qt::DisplayRole);
@@ -221,52 +225,54 @@ void CashAccountDaoTest::testReadTransaction()
 
 
 
-    item = tableWidget->item(3, 0);
+    item = tableWidget->item(6, 0);
     variant = item->data(Qt::DisplayRole);
     QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
     QCOMPARE(variant.toString(), QString("1033"));
 
-    item = tableWidget->item(3, 1);
+    item = tableWidget->item(6, 1);
     variant = item->data(Qt::DisplayRole);
     QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
     QCOMPARE(variant.toString(), QString("Leonard H."));
 
-    item = tableWidget->item(3, 2);
+    item = tableWidget->item(6, 2);
     variant = item->data(Qt::DisplayRole);
     QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
     QCOMPARE(variant.toString(), QString(""));
 
-    item = tableWidget->item(3, 3);
+    item = tableWidget->item(6, 3);
     variant = item->data(Qt::DisplayRole);
     QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
     QCOMPARE(variant.toString(), QString(""));
 
-    item = tableWidget->item(3, 4);
+    item = tableWidget->item(6, 4);
     variant = item->data(Qt::DisplayRole);
     QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
     QCOMPARE(variant.toString(), QString(""));
 
-    item = tableWidget->item(3, 5);
+    item = tableWidget->item(6, 5);
     variant = item->data(Qt::DisplayRole);
     QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
     QCOMPARE(variant.toDate(), QDate(2012,11,22));
 
-    item = tableWidget->item(3, 6);
+    item = tableWidget->item(6, 6);
     variant = item->data(Qt::DisplayRole);
     QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
     QCOMPARE(variant.toString(), QString("81,5"));
+    variant = item->data(Qt::UserRole);
+    QCOMPARE(variant.toInt(), 8);
 
-    item = tableWidget->item(3, 7);
+    item = tableWidget->item(6, 7);
     variant = item->data(Qt::DisplayRole);
     QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
     QCOMPARE(variant.toString(), QString("Mitgliedsbeitrag"));
 
-    item = tableWidget->item(3, 8);
+    item = tableWidget->item(6, 8);
     variant = item->data(Qt::DisplayRole);
     QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
     QCOMPARE(variant.toString(), QString("McCoy"));
 
-    item = tableWidget->item(3, 9);
+    item = tableWidget->item(6, 9);
     QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
     QVERIFY(item->checkState() == Qt::Checked);
 }
@@ -305,13 +311,13 @@ void CashAccountDaoTest::testImportTransaction()
     QSqlTableModel *model = new QSqlTableModel();
     model->setTable(membermanager::dao::KassaTable::TABLENAME);
     model->select();
-    QCOMPARE(model->rowCount(), 7);
+    QCOMPARE(model->rowCount(), 9);
 
     membermanager::dao::CashAccountDao dao;
     dao.importTransactions(transactions);
 
     model->select();
-    QCOMPARE(model->rowCount(), 8);
+    QCOMPARE(model->rowCount(), 10);
 
     model->setFilter(membermanager::dao::KassaTable::COLUMNNAME[membermanager::dao::KassaTable::bezeichnung] + "='PurposeText'");
     model->select();

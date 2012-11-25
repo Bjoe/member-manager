@@ -22,6 +22,7 @@ private slots:
     void initTestCase();
     void testView();
     void testImport();
+    void testBooked();
 };
 
 void AccountingEntryImporterViewTest::initTestCase()
@@ -49,6 +50,14 @@ void AccountingEntryImporterViewTest::testImport()
 
     QPushButton *importButton = accountingEntryImportView.findChild<QPushButton *>("importButton");
     //QTest::mouseClick(importButton, Qt::LeftButton); How can test with QFileDialog ...
+}
+
+void AccountingEntryImporterViewTest::testBooked()
+{
+    membermanager::gui::AccountingEntryImporterView accountingEntryImportView;
+
+    QPushButton *bookingButton = accountingEntryImportView.findChild<QPushButton *>("bookingButton");
+
 }
 
 } // namespace gui

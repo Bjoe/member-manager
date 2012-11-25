@@ -5,6 +5,7 @@
 #include <QTableWidget>
 
 #include "dao/cashaccountdao.h"
+#include "accounting/balancepersister.h"
 
 namespace membermanager
 {
@@ -26,11 +27,11 @@ public:
 
 private slots:
     void import();
-    void book();
 
 private:
-    Ui::AccountingEntryImporterView *ui;
     dao::CashAccountDao cashAccountdao;
+    accounting::BalancePersister *balancePersister;
+    Ui::AccountingEntryImporterView *ui;
 };
 
 

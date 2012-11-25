@@ -35,11 +35,13 @@ bool CashAccountDao::clearAndAddTransaction(QTableWidget *aTable)
         QSqlRecord record = model->record(x);
         aTable->insertRow(x);
         aTable->setItem(x, 5, createItem(record.value(KassaTable::buchungsdatum)));
-        aTable->setItem(x, 6, createItem(record.value(KassaTable::betrag)));
+        QTableWidgetItem *item = createItem(record.value(KassaTable::betrag));
+        item->setData(Qt::UserRole, record.value(KassaTable::kasse_pkey));
+        aTable->setItem(x, 6, item);
         aTable->setItem(x, 7, createItem(record.value(KassaTable::bezeichnung)));
         aTable->setItem(x, 8, createItem(record.value(KassaTable::fremdname)));
 
-        QTableWidgetItem *item = new QTableWidgetItem();
+        item = new QTableWidgetItem();
         item->setFlags(Qt::ItemIsUserCheckable);
 
         if(record.value(KassaTable::erfasst).toBool()) {
