@@ -290,10 +290,10 @@ void CashAccountDaoTest::testImportTransaction()
     AB_VALUE *abValue = AB_Value_fromDouble(100.1);
     AB_Transaction_SetValue(abTransaction, abValue);
 
-    GWEN_TIME *valutaTime = GWEN_Time_new(2012, 10, 19, 10, 30, 0, 0);
+    GWEN_TIME *valutaTime = GWEN_Time_new(2012, 10, 19, 0, 0, 0, 1);
     AB_Transaction_SetValutaDate(abTransaction, valutaTime);
 
-    GWEN_TIME *time = GWEN_Time_new(2012, 10, 22, 0, 5, 30, 0);
+    GWEN_TIME *time = GWEN_Time_new(2012, 10, 22, 0, 0, 0, 1);
     AB_Transaction_SetDate(abTransaction, time);
 
     GWEN_STRINGLIST *purposeStringList = GWEN_StringList_new();
@@ -327,8 +327,8 @@ void CashAccountDaoTest::testImportTransaction()
     QCOMPARE(record.value(membermanager::dao::KassaTable::fremdname).toString(), QString("remoteName"));
     QCOMPARE(record.value(membermanager::dao::KassaTable::fremdblz).toString(), QString("80070011"));
     QCOMPARE(record.value(membermanager::dao::KassaTable::fremdktnr).toString(), QString("1234567890"));
-    QCOMPARE(record.value(membermanager::dao::KassaTable::valutadatum).toString(), QString("2012-11-19T10:30:00"));
-    QCOMPARE(record.value(membermanager::dao::KassaTable::buchungsdatum).toString(), QString("2012-11-22T00:05:30"));
+    QCOMPARE(record.value(membermanager::dao::KassaTable::valutadatum).toString(), QString("2012-11-19"));
+    QCOMPARE(record.value(membermanager::dao::KassaTable::buchungsdatum).toString(), QString("2012-11-22"));
     QCOMPARE(record.value(membermanager::dao::KassaTable::betrag).toString(), QString("100.1"));
     QCOMPARE(record.value(membermanager::dao::KassaTable::buschl).toString(), QString("Transaction Text"));
     QCOMPARE(record.value(membermanager::dao::KassaTable::bankbuschl).toString(), QString("23"));

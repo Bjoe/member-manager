@@ -40,7 +40,7 @@ void AccountingEntryImporterViewTest::testView()
     QCOMPARE(tableWidget->columnCount(), 10);
     QHeaderView *headerView = tableWidget->horizontalHeader();
     QCOMPARE(headerView->count(), 10);
-    QCOMPARE(tableWidget->rowCount(), 5);
+    QCOMPARE(tableWidget->rowCount(), 7);
     QVERIFY(tableWidget->itemDelegateForColumn(1));
 }
 
