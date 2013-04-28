@@ -64,4 +64,4 @@ void AccountingEntryImporterViewTest::testBooked()
 } // namespace membermanagertest
 
 QTEST_MAIN(membermanagertest::gui::AccountingEntryImporterViewTest)
-#include "moc_accountingentryimporterviewtest.cxx"
+#include "moc_accountingentryimporterviewtest.cpp"

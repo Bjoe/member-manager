@@ -1,14 +1,7 @@
 
-configure_file (
-  "${PROJECT_SOURCE_DIR}/testconfig.h.in"
-  "${CMAKE_CURRENT_BINARY_DIR}/testconfig.h"
-  )
+qt_add_test(balanceentry balanceentrytest.cpp)
+qt_add_test(contributionentry contributionentrytest.cpp)
+qt_add_test(pay paytest.cpp)
 
-include_directories(../)
-
-qt4_add_test(balanceentry balanceentrytest.cpp)
-qt4_add_test(contributionentry contributionentrytest.cpp)
-qt4_add_test(pay paytest.cpp)
-
-qt4_test(balancepersister balancepersistertest.cpp)
-qt4_test(statemententry statemententrytest.cpp)
+qt_test(balancepersister balancepersistertest.cpp)
+qt_test(statemententry statemententrytest.cpp)

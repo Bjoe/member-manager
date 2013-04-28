@@ -20,7 +20,14 @@ configure_file (
   "${CMAKE_CURRENT_BINARY_DIR}/testconfig.h"
   )
 
-include_directories(../src ${CMAKE_CURRENT_BINARY_DIR}/../src ${QT_TEST_UTIL_INCLUDE_DIR})
+include_directories(
+  "${CMAKE_CURRENT_BINARY_DIR}"
+  "${CMAKE_CURRENT_BINARY_DIR}/../src"
+  "${CMAKE_CURRENT_BINARY_DIR}/accounting"
+  "${CMAKE_CURRENT_BINARY_DIR}/dao"
+  "${CMAKE_CURRENT_BINARY_DIR}/gui"
+  "${QT_TEST_UTIL_INCLUDE_DIRS}"
+)
 
 set(test_additional_lib
  memberManagerLib
@@ -39,4 +46,4 @@ add_subdirectory(gui)
 add_subdirectory(dao)
 add_subdirectory(accounting)
 
-qt4_add_test(member membertest.cpp)
+qt_add_test(member membertest.cpp)

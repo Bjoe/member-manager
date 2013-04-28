@@ -66,5 +66,5 @@ void StatementEntryTest::testEntry()
 
 
 QTEST_MAIN(membermanagertest::accounting::StatementEntryTest)
-#include "moc_statemententrytest.cxx"
+#include "moc_statemententrytest.cpp"
 

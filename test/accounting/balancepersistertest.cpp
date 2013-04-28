@@ -471,4 +471,4 @@ void BalancePersisterTest::testWrongValueToHigh()
 
 
 QTEST_MAIN(membermanagertest::accounting::BalancePersisterTest)
-#include "moc_balancepersistertest.cxx"
+#include "moc_balancepersistertest.cpp"

@@ -343,4 +343,4 @@ void CashAccountDaoTest::testImportTransaction()
 
 
 QTEST_MAIN(membermanagertest::dao::CashAccountDaoTest)
-#include "moc_cashaccountdaotest.cxx"
+#include "moc_cashaccountdaotest.cpp"
