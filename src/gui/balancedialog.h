@@ -18,7 +18,8 @@ class BalanceDialog : public QDialog
 public:
     explicit BalanceDialog(int aMemberId, QWidget *parent = 0);
 
-private slots:
+public slots:
+    void copy();
     void insertRow();
     void deleteRow();
     void calculateSum();

@@ -2,8 +2,13 @@
 
 #include <QString>
 #include <QList>
+#include <QHash>
+#include <QClipboard>
+#include <QApplication>
 #include <QSqlTableModel>
 #include <QModelIndex>
+#include <QModelIndexList>
+#include <QItemSelectionModel>
 
 #include "dao/databasestructure.h"
 
@@ -30,7 +35,11 @@ BalanceDialog::BalanceDialog(int aMemberId, QWidget *parent) :
 
     connect(ui.newRowButton, SIGNAL(clicked()), SLOT(insertRow()));
     connect(ui.deleteRowButton, SIGNAL(clicked()), SLOT(deleteRow()));
+    connect(ui.actionCopy, SIGNAL(triggered()), SLOT(copy()));
     connect(model, SIGNAL(dataChanged(QModelIndex,QModelIndex)), SLOT(calculateSum()));
+
+    ui.balanceTableView->addAction(ui.actionCopy);
+    ui.balanceTableView->setContextMenuPolicy(Qt::ActionsContextMenu);
 }
 
 void BalanceDialog::insertRow()
@@ -62,6 +71,31 @@ void BalanceDialog::calculateSum()
     } else {
         ui.sumLabel->setStyleSheet("QLabel { color: black }");
     }
+}
+
+void BalanceDialog::copy()
+{
+    QItemSelectionModel *selectionModel = ui.balanceTableView->selectionModel();
+    QModelIndexList indexes = selectionModel->selectedIndexes();
+
+    QHash<int, QString> buffer;
+    QModelIndex index;
+    QVariant data;
+    QString string;
+    int row;
+    foreach(index, indexes) {
+        data = index.data();
+        row = index.row();
+        string = buffer.value(row);
+        buffer.insert(row, QString("%1%2\t").arg(string).arg(data.toString()));
+    }
+
+    QString clipboardText;
+    QHash<int, QString>::const_iterator i;
+    for(i = buffer.constBegin(); i != buffer.constEnd(); ++i) {
+        clipboardText.append(QString("%1\n").arg(i.value()));
+    }
+    QApplication::clipboard()->setText(clipboardText);
 }
 
 } // namespace gui

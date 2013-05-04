@@ -59,6 +59,14 @@
     </widget>
    </item>
   </layout>
+  <action name="actionCopy">
+   <property name="text">
+    <string>copy</string>
+   </property>
+   <property name="toolTip">
+    <string>Copy</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>

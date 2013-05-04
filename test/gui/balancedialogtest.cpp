@@ -1,10 +1,14 @@
-#include "balancedialogtest.h"
 
-#include "gui/balancedialog.h"
+#include <QtTest/QtTest>
+#include "testcoverageobject.h"
 
+#include <QApplication>
+#include <QClipboard>
 #include <QTableView>
 #include <QModelIndex>
 #include <QAbstractItemModel>
+#include <QItemSelection>
+#include <QItemSelectionModel>
 #include <QLabel>
 #include <QVariant>
 #include <QString>
@@ -15,10 +19,25 @@
 #include "triggerthread.h"
 #include "gui/dialogbuttonboxhandler.h"
 
+#include "gui/balancedialog.h"
+
 namespace membermanagertest
 {
 namespace gui
 {
+
+class BalanceDialogTest : public qttestutil::TestCoverageObject
+{
+    Q_OBJECT
+
+private slots:
+    void initTestCase();
+    void testShowDialog();
+    void testWindowTitle();
+    void testShowSum();
+    void testInsertAndDeleteRow();
+    void testCopyToClipboard();
+};
 
 void BalanceDialogTest::initTestCase()
 {
@@ -75,8 +94,27 @@ void BalanceDialogTest::testInsertAndDeleteRow()
     QCOMPARE(model->rowCount(), 15);
 }
 
+void BalanceDialogTest::testCopyToClipboard()
+{
+    membermanager::gui::BalanceDialog dialog(1025);
+
+    QTableView *tableView = dialog.findChild<QTableView *> ("balanceTableView");
+    QItemSelectionModel *selectionModel = tableView->selectionModel();
+    const QAbstractItemModel *model = tableView->model();
+    QModelIndex topLeft = model->index(0, 0);
+    QModelIndex bottomRight = model->index(1, 4);
+    QItemSelection selection(topLeft, bottomRight);
+    selectionModel->select(selection, QItemSelectionModel::Select);
+
+    dialog.copy();
+
+    QClipboard *clipboard = QApplication::clipboard();
+    QCOMPARE(clipboard->text(), QString("21\t1025\t8\t2012-02-10\tZAHLUNGSEINGANG  1025 Ali Baba MITGLIEDSSCHULDEN\t\n"
+                                        "15\t1025\t-5\t2012-02-08\tMitgliedsbeitrag Feb\t\n"));
+}
+
 } // namespace gui
 } // namespace membermanagertest
 
 QTEST_MAIN(membermanagertest::gui::BalanceDialogTest)
-#include "balancedialogtest.moc"
+#include "moc_balancedialogtest.cpp"
