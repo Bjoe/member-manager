@@ -31,41 +31,47 @@ bool CashAccountDao::clearAndAddTransaction(QTableWidget *aTable)
     for(int y = aTable->rowCount()-1; 0 <= y; --y) {
         aTable->removeRow(y);
     }
-    for(int x=0; x < model->rowCount(); ++x) {
-        QSqlRecord record = model->record(x);
-        aTable->insertRow(x);
-        aTable->setItem(x, 5, createItem(record.value(KassaTable::buchungsdatum)));
-        QTableWidgetItem *item = createItem(record.value(KassaTable::betrag));
-        item->setData(Qt::UserRole, record.value(KassaTable::kasse_pkey));
-        aTable->setItem(x, 6, item);
-        aTable->setItem(x, 7, createItem(record.value(KassaTable::bezeichnung)));
-        aTable->setItem(x, 8, createItem(record.value(KassaTable::fremdname)));
+    int x=0;
+    do {
+        model->fetchMore();
+        for(; x < model->rowCount(); ++x) {
+            QSqlRecord record = model->record(x);
+            aTable->insertRow(x);
+            aTable->setItem(x, 5, createItem(record.value(KassaTable::buchungsdatum)));
+            QTableWidgetItem *item = createItem(record.value(KassaTable::betrag));
+            item->setData(Qt::UserRole, record.value(KassaTable::kasse_pkey));
+            aTable->setItem(x, 6, item);
+            aTable->setItem(x, 7, createItem(record.value(KassaTable::bezeichnung)));
+            aTable->setItem(x, 8, createItem(record.value(KassaTable::fremdname)));
 
-        item = new QTableWidgetItem();
-        item->setFlags(Qt::ItemIsUserCheckable);
+            item = new QTableWidgetItem();
+            item->setFlags(Qt::ItemIsUserCheckable);
 
-        if(record.value(KassaTable::erfasst).toBool()) {
-            item->setCheckState(Qt::Checked);
+            if(record.value(KassaTable::erfasst).toBool()) {
+                item->setCheckState(Qt::Checked);
 
-            QVariant memberId = record.value(KassaTable::dorfmitglied_pkey);
-            Member member = memberDao.findByMemberId(memberId.toInt());
+                QVariant memberId = record.value(KassaTable::dorfmitglied_pkey);
+                Member member = memberDao.findByMemberId(memberId.toInt());
 
-            aTable->setItem(x, 0, createItem(memberId));
-            aTable->setItem(x, 1, createItem(member.getFirstname()));
-            aTable->setItem(x, 2, createItem(""));
-            aTable->setItem(x, 3, createItem(""));
-            aTable->setItem(x, 4, createItem(""));
-        } else {
-            item->setCheckState(Qt::Unchecked);
+                aTable->setItem(x, 0, createItem(memberId));
+                aTable->setItem(x, 1, createItem(member.getFirstname()));
+                aTable->setItem(x, 2, createItem(""));
+                aTable->setItem(x, 3, createItem(""));
+                aTable->setItem(x, 4, createItem(""));
+            } else {
+                item->setCheckState(Qt::Unchecked);
 
-            aTable->setItem(x, 0, createItem(""));
-            aTable->setItem(x, 1, createEditableItem("-"));
-            aTable->setItem(x, 2, createEditableItem(""));
-            aTable->setItem(x, 3, createEditableItem(""));
-            aTable->setItem(x, 4, createEditableItem(""));
+                aTable->setItem(x, 0, createItem(""));
+                aTable->setItem(x, 1, createEditableItem("-"));
+                aTable->setItem(x, 2, createEditableItem(""));
+                aTable->setItem(x, 3, createEditableItem(""));
+                aTable->setItem(x, 4, createEditableItem(""));
+            }
+            aTable->setItem(x, 9, item);
         }
-        aTable->setItem(x, 9, item);
     }
+    while(model->canFetchMore());
+
     return true;
 }
 

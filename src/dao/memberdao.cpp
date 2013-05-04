@@ -87,13 +87,18 @@ QList<Member> MemberDao::findByDeleted(bool isDeleted) const
     selectDeleted(memberModel, isDeleted);
 
     QList<Member> list;
-    int rowCount = memberModel->rowCount();
-    for(int row = 0; rowCount > row; row++) {
-        QModelIndex index = memberModel->index(row, dao::MemberTable::MemberId);
-        QVariant variant = index.data();
-        Member member = findByMemberId(variant.toInt());
-        list.append(member);
+    int row = 0;
+    do {
+        memberModel->fetchMore();
+
+        for(; memberModel->rowCount() > row; row++) {
+            QModelIndex index = memberModel->index(row, dao::MemberTable::MemberId);
+            QVariant variant = index.data();
+            Member member = findByMemberId(variant.toInt());
+            list.append(member);
+        }
     }
+    while(memberModel->canFetchMore());
 
     delete memberModel;
     return list;

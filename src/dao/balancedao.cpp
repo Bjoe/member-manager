@@ -29,12 +29,19 @@ QList<accounting::BalanceEntry> BalanceDao::findByMemberId(int aMemberId)
     model->select();
 
     QList<accounting::BalanceEntry> entryList;
-    for(int row = 0; row < model->rowCount(); row++) {
-        accounting::BalanceEntry entry(aMemberId);
-        entry.balanceRecord = model->record(row);
-        entryList.append(entry);
+    int row = 0;
+    do {
+        model->fetchMore();
+
+        for(; row < model->rowCount(); row++) {
+            accounting::BalanceEntry entry(aMemberId);
+            entry.balanceRecord = model->record(row);
+            entryList.append(entry);
+        }
     }
-   return entryList;
+    while(model->canFetchMore());
+
+    return entryList;
 }
 
 QList<accounting::BalanceEntry> BalanceDao::findContributionByMemberIdAndYear(int aMemberId, int aYear)
@@ -60,15 +67,22 @@ QList<accounting::BalanceEntry> BalanceDao::findContributionByMemberIdAndYear(in
     printSqlError(model->lastError());
 
     QList<accounting::BalanceEntry> entryList;
-    for(int row = 0; row < model->rowCount(); row++) {
-        accounting::BalanceEntry entry(aMemberId);
-        entry.balanceRecord = model->record(row);
-        int year = entry.getValuta().year();
-        if(year == aYear) {
-            entryList.append(entry);
+    int row = 0;
+    do {
+        model->fetchMore();
+
+        for(; row < model->rowCount(); row++) {
+            accounting::BalanceEntry entry(aMemberId);
+            entry.balanceRecord = model->record(row);
+            int year = entry.getValuta().year();
+            if(year == aYear) {
+                entryList.append(entry);
+            }
         }
-   }
-   return entryList;
+    }
+    while(model->canFetchMore());
+
+    return entryList;
 }
 
 QSqlTableModel* BalanceDao::getModelByMemberId(int aMemberId)
