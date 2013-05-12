@@ -1,6 +1,7 @@
 #include "gui/connectiondialog.h"
 
 #include <QSqlDatabase>
+#include <QStringList>
 
 namespace membermanager
 {

@@ -1,7 +1,10 @@
 #ifndef CONNECTIONDIALOG_H
 #define CONNECTIONDIALOG_H
 
-#include <QtGui/QDialog>
+#include <QObject>
+#include <QString>
+#include <QWidget>
+#include <QDialog>
 #include "ui_connectiondialog.h"
 
 namespace membermanager
@@ -30,7 +33,7 @@ public:
     void setPort(const int &aPort);
 
 private:
-    Ui::ConnectionDialogClass ui;
+    ::Ui::ConnectionDialogClass ui;
 };
 
 }
