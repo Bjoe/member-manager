@@ -26,9 +26,9 @@ BalanceDialog::BalanceDialog(int aMemberId, QWidget *parent) :
 
     QSqlTableModel *model = balanceDao.getModelByMemberId(memberId);
     ui.balanceTableView->setModel(model);
-    ui.balanceTableView->setColumnHidden(dao::BalanceTable::saldo_pkey, true);
-    ui.balanceTableView->setColumnHidden(dao::BalanceTable::dorfmitglied_pkey, true);
-    ui.balanceTableView->sortByColumn(dao::BalanceTable::datum, Qt::DescendingOrder);
+    ui.balanceTableView->setColumnHidden(dao::BalanceTable::BalanceId, true);
+    ui.balanceTableView->setColumnHidden(dao::BalanceTable::MemberId, true);
+    ui.balanceTableView->sortByColumn(dao::BalanceTable::Date, Qt::DescendingOrder);
     ui.balanceTableView->resizeColumnsToContents();
 
     calculateSum();

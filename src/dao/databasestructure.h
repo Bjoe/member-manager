@@ -110,15 +110,15 @@ class BalanceTable
 public:
     static const QString TABLENAME;
     enum column {
-        saldo_pkey,
-        dorfmitglied_pkey,
-        betrag,
-        datum,
-        bezeichnung,
-        barkonto,
-        konten,
-        kasse_pkey,
-        info
+        BalanceId,
+        MemberId,
+        Amount,
+        Date,
+        Description,
+        FOO_barkonto,
+        BookingAccount,
+        CashId,
+        Info
     };
     static const QStringList COLUMNNAME;
 };

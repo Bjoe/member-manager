@@ -14,78 +14,78 @@ using dao::BalanceTable;
 
 BalanceEntry::BalanceEntry(int aMemberId) : balanceRecord()
 {
-    setValueOnField(BalanceTable::dorfmitglied_pkey, QVariant::Int, QVariant(aMemberId));
+    setValueOnField(BalanceTable::MemberId, QVariant::Int, QVariant(aMemberId));
 }
 
 int BalanceEntry::getMemberId() const
 {
-    QString fieldname = BalanceTable::COLUMNNAME[BalanceTable::dorfmitglied_pkey];
+    QString fieldname = BalanceTable::COLUMNNAME[BalanceTable::MemberId];
     return balanceRecord.value(fieldname).toInt();
 }
 
 void BalanceEntry::setValue(double aValue)
 {
-    setValueOnField(BalanceTable::betrag, QVariant::Double, QVariant(aValue));
+    setValueOnField(BalanceTable::Amount, QVariant::Double, QVariant(aValue));
 }
 
 double BalanceEntry::getValue() const
 {
-    QString fieldname = BalanceTable::COLUMNNAME[BalanceTable::betrag];
+    QString fieldname = BalanceTable::COLUMNNAME[BalanceTable::Amount];
     return balanceRecord.value(fieldname).toDouble();
 }
 
 void BalanceEntry::setValuta(const QDate &aDate)
 {
-    setValueOnField(BalanceTable::datum, QVariant::Date, QVariant(aDate));
+    setValueOnField(BalanceTable::Date, QVariant::Date, QVariant(aDate));
 }
 
 QDate BalanceEntry::getValuta() const
 {
-    QString fieldname = BalanceTable::COLUMNNAME[BalanceTable::datum];
+    QString fieldname = BalanceTable::COLUMNNAME[BalanceTable::Date];
     return balanceRecord.value(fieldname).toDate();
 }
 
 void BalanceEntry::setPurpose(const QString &aPurpose)
 {
-    setValueOnField(BalanceTable::bezeichnung, QVariant::String, QVariant(aPurpose));
+    setValueOnField(BalanceTable::Description, QVariant::String, QVariant(aPurpose));
 }
 
 QString BalanceEntry::getPurpose() const
 {
-    QString fieldname = BalanceTable::COLUMNNAME[BalanceTable::bezeichnung];
+    QString fieldname = BalanceTable::COLUMNNAME[BalanceTable::Description];
     return balanceRecord.value(fieldname).toString();
 }
 
 void BalanceEntry::setInfo(const QString &anInfo)
 {
-    setValueOnField(BalanceTable::info, QVariant::String, QVariant(anInfo));
+    setValueOnField(BalanceTable::Info, QVariant::String, QVariant(anInfo));
 }
 
 QString BalanceEntry::getInfo() const
 {
-    QString fieldname = BalanceTable::COLUMNNAME[BalanceTable::info];
+    QString fieldname = BalanceTable::COLUMNNAME[BalanceTable::Info];
     return balanceRecord.value(fieldname).toString();
 }
 
 void BalanceEntry::setAccount(int anAccount)
 {
-    setValueOnField(BalanceTable::konten, QVariant::Int, QVariant(anAccount));
+    setValueOnField(BalanceTable::BookingAccount, QVariant::Int, QVariant(anAccount));
 }
 
 int BalanceEntry::getAccount() const
 {
-    QString fieldname = BalanceTable::COLUMNNAME[BalanceTable::konten];
+    QString fieldname = BalanceTable::COLUMNNAME[BalanceTable::BookingAccount];
     return balanceRecord.value(fieldname).toInt();
 }
 
 void BalanceEntry::setCashKey(int aKey)
 {
-    setValueOnField(BalanceTable::kasse_pkey, QVariant::Int, QVariant(aKey));
+    setValueOnField(BalanceTable::CashId, QVariant::Int, QVariant(aKey));
 }
 
 int BalanceEntry::getCashKey() const
 {
-    QString fieldname = BalanceTable::COLUMNNAME[BalanceTable::kasse_pkey];
+    QString fieldname = BalanceTable::COLUMNNAME[BalanceTable::CashId];
     return balanceRecord.value(fieldname).toInt();
 }
 

@@ -58,8 +58,8 @@ void BalanceDaoTest::testGetModelByMemberId()
     QVERIFY(model);
     QCOMPARE(model->rowCount(), 15);
     QSqlRecord record = model->record(0);
-    QCOMPARE(record.value(membermanager::dao::BalanceTable::bezeichnung).toString(), QString("ZAHLUNGSEINGANG  1025 Ali Baba MITGLIEDSSCHULDEN"));
-    QCOMPARE(record.value(membermanager::dao::BalanceTable::betrag).toString(), QString("8"));
+    QCOMPARE(record.value(membermanager::dao::BalanceTable::Description).toString(), QString("ZAHLUNGSEINGANG  1025 Ali Baba MITGLIEDSSCHULDEN"));
+    QCOMPARE(record.value(membermanager::dao::BalanceTable::Amount).toString(), QString("8"));
 }
 
 void BalanceDaoTest::testFindContributionByMemberIdAndYear()

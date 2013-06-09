@@ -22,10 +22,10 @@ bool BalanceDao::saveRecord(const accounting::BalanceEntry &anEntry)
 
 QList<accounting::BalanceEntry> BalanceDao::findByMemberId(int aMemberId)
 {
-    QString columnnameId = BalanceTable::COLUMNNAME[BalanceTable::dorfmitglied_pkey];
+    QString columnnameId = BalanceTable::COLUMNNAME[BalanceTable::MemberId];
     QString filter = QString("%1 = %2").arg(columnnameId).arg(aMemberId);
     model->setFilter(filter);
-    model->setSort(BalanceTable::datum, Qt::DescendingOrder);
+    model->setSort(BalanceTable::Date, Qt::DescendingOrder);
     model->select();
 
     QList<accounting::BalanceEntry> entryList;
@@ -46,10 +46,10 @@ QList<accounting::BalanceEntry> BalanceDao::findByMemberId(int aMemberId)
 
 QList<accounting::BalanceEntry> BalanceDao::findContributionByMemberIdAndYear(int aMemberId, int aYear)
 {
-    QString columnnameId = BalanceTable::COLUMNNAME[BalanceTable::dorfmitglied_pkey];
+    QString columnnameId = BalanceTable::COLUMNNAME[BalanceTable::MemberId];
     QString memberFilter = QString("%1 = %2").arg(columnnameId).arg(aMemberId);
 
-    QString columnnameType = BalanceTable::COLUMNNAME[BalanceTable::konten];
+    QString columnnameType = BalanceTable::COLUMNNAME[BalanceTable::BookingAccount];
     QString typeFilter = QString("(%1 = 11 OR %1 = 12)").arg(columnnameType);
 
     /*
@@ -62,7 +62,7 @@ QList<accounting::BalanceEntry> BalanceDao::findContributionByMemberIdAndYear(in
     QString filter = QString("%1 AND %2").arg(memberFilter).arg(typeFilter);
 
     model->setFilter(filter);
-    model->setSort(BalanceTable::datum, Qt::AscendingOrder);
+    model->setSort(BalanceTable::Date, Qt::AscendingOrder);
     model->select();
     printSqlError(model->lastError());
 
@@ -87,18 +87,18 @@ QList<accounting::BalanceEntry> BalanceDao::findContributionByMemberIdAndYear(in
 
 QSqlTableModel* BalanceDao::getModelByMemberId(int aMemberId)
 {
-    model->setHeaderData(BalanceTable::betrag, Qt::Horizontal, model->tr("Betrag"));
-    model->setHeaderData(BalanceTable::datum, Qt::Horizontal, model->tr("Valuta Datum"));
-    model->setHeaderData(BalanceTable::bezeichnung, Qt::Horizontal, model->tr("Bezeichnung"));
-    model->removeColumn(BalanceTable::barkonto);
-    model->setHeaderData(BalanceTable::konten -1, Qt::Horizontal, model->tr("Konten"));
-    model->setHeaderData(BalanceTable::kasse_pkey -1, Qt::Horizontal, model->tr("Kassa Id"));
-    model->setHeaderData(BalanceTable::info -1, Qt::Horizontal, model->tr("Info"));
+    model->setHeaderData(BalanceTable::Amount, Qt::Horizontal, model->tr("Betrag"));
+    model->setHeaderData(BalanceTable::Date, Qt::Horizontal, model->tr("Valuta Datum"));
+    model->setHeaderData(BalanceTable::Description, Qt::Horizontal, model->tr("Bezeichnung"));
+    model->removeColumn(BalanceTable::FOO_barkonto);
+    model->setHeaderData(BalanceTable::BookingAccount -1, Qt::Horizontal, model->tr("Konten"));
+    model->setHeaderData(BalanceTable::CashId -1, Qt::Horizontal, model->tr("Kassa Id"));
+    model->setHeaderData(BalanceTable::Info -1, Qt::Horizontal, model->tr("Info"));
 
-    QString columnnameId = BalanceTable::COLUMNNAME[BalanceTable::dorfmitglied_pkey];
+    QString columnnameId = BalanceTable::COLUMNNAME[BalanceTable::MemberId];
     QString filterId = QString("%1 = %2").arg(columnnameId).arg(aMemberId);
     model->setFilter(filterId);
-    model->setSort(BalanceTable::datum, Qt::DescendingOrder);
+    model->setSort(BalanceTable::Date, Qt::DescendingOrder);
     model->select();
 
     return model;
@@ -108,10 +108,10 @@ QModelIndex BalanceDao::insertNewEmptyRowWithMemberId(int aMemberId)
 {
     int row = model->rowCount();
     model->insertRow(row);
-    model->setData(model->index(row, BalanceTable::dorfmitglied_pkey), aMemberId);
+    model->setData(model->index(row, BalanceTable::MemberId), aMemberId);
     model->submitAll();
     printSqlError(model->lastError());
-    return model->index(row, BalanceTable::betrag);
+    return model->index(row, BalanceTable::Amount);
 }
 
 bool BalanceDao::deleteRow(const QModelIndex &anIndex)
