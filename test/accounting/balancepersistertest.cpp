@@ -161,36 +161,36 @@ void BalancePersisterTest::testBook()
 
 
     QSqlTableModel saldoModel;
-    saldoModel.setTable(membermanager::dao::SaldoTable::TABLENAME);
+    saldoModel.setTable(membermanager::dao::BalanceTable::TABLENAME);
     saldoModel.setFilter(QString("%1=%2")
-                         .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::kasse_pkey])
+                         .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::kasse_pkey])
                          .arg(6));
     saldoModel.select();
     QCOMPARE(saldoModel.rowCount(), 3);
 
     record = saldoModel.record(0);
-    QCOMPARE(record.value(membermanager::dao::SaldoTable::dorfmitglied_pkey).toString(), QString("1025"));
-    QCOMPARE(record.value(membermanager::dao::SaldoTable::betrag).toString(), QString("98"));
-    QCOMPARE(record.value(membermanager::dao::SaldoTable::bezeichnung).toString(), QString("mein Mitgliedsbeitrag"));
-    QCOMPARE(record.value(membermanager::dao::SaldoTable::datum).toString(), QString("2012-11-23"));
-    QCOMPARE(record.value(membermanager::dao::SaldoTable::konten).toString(), QString("11"));
-    QCOMPARE(record.value(membermanager::dao::SaldoTable::info).toString(), QString("Automatische Buchung"));
+    QCOMPARE(record.value(membermanager::dao::BalanceTable::dorfmitglied_pkey).toString(), QString("1025"));
+    QCOMPARE(record.value(membermanager::dao::BalanceTable::betrag).toString(), QString("98"));
+    QCOMPARE(record.value(membermanager::dao::BalanceTable::bezeichnung).toString(), QString("mein Mitgliedsbeitrag"));
+    QCOMPARE(record.value(membermanager::dao::BalanceTable::datum).toString(), QString("2012-11-23"));
+    QCOMPARE(record.value(membermanager::dao::BalanceTable::konten).toString(), QString("11"));
+    QCOMPARE(record.value(membermanager::dao::BalanceTable::info).toString(), QString("Automatische Buchung"));
 
     record = saldoModel.record(1);
-    QCOMPARE(record.value(membermanager::dao::SaldoTable::dorfmitglied_pkey).toString(), QString("1025"));
-    QCOMPARE(record.value(membermanager::dao::SaldoTable::betrag).toString(), QString("1.5"));
-    QCOMPARE(record.value(membermanager::dao::SaldoTable::bezeichnung).toString(), QString("mein Mitgliedsbeitrag"));
-    QCOMPARE(record.value(membermanager::dao::SaldoTable::datum).toString(), QString("2012-11-23"));
-    QCOMPARE(record.value(membermanager::dao::SaldoTable::konten).toString(), QString("12"));
-    QCOMPARE(record.value(membermanager::dao::SaldoTable::info).toString(), QString("Automatische Buchung"));
+    QCOMPARE(record.value(membermanager::dao::BalanceTable::dorfmitglied_pkey).toString(), QString("1025"));
+    QCOMPARE(record.value(membermanager::dao::BalanceTable::betrag).toString(), QString("1.5"));
+    QCOMPARE(record.value(membermanager::dao::BalanceTable::bezeichnung).toString(), QString("mein Mitgliedsbeitrag"));
+    QCOMPARE(record.value(membermanager::dao::BalanceTable::datum).toString(), QString("2012-11-23"));
+    QCOMPARE(record.value(membermanager::dao::BalanceTable::konten).toString(), QString("12"));
+    QCOMPARE(record.value(membermanager::dao::BalanceTable::info).toString(), QString("Automatische Buchung"));
 
     record = saldoModel.record(2);
-    QCOMPARE(record.value(membermanager::dao::SaldoTable::dorfmitglied_pkey).toString(), QString("1025"));
-    QCOMPARE(record.value(membermanager::dao::SaldoTable::betrag).toString(), QString("1"));
-    QCOMPARE(record.value(membermanager::dao::SaldoTable::bezeichnung).toString(), QString("mein Mitgliedsbeitrag"));
-    QCOMPARE(record.value(membermanager::dao::SaldoTable::datum).toString(), QString("2012-11-23"));
-    QCOMPARE(record.value(membermanager::dao::SaldoTable::konten).toString(), QString("4"));
-    QCOMPARE(record.value(membermanager::dao::SaldoTable::info).toString(), QString("Automatische Buchung"));
+    QCOMPARE(record.value(membermanager::dao::BalanceTable::dorfmitglied_pkey).toString(), QString("1025"));
+    QCOMPARE(record.value(membermanager::dao::BalanceTable::betrag).toString(), QString("1"));
+    QCOMPARE(record.value(membermanager::dao::BalanceTable::bezeichnung).toString(), QString("mein Mitgliedsbeitrag"));
+    QCOMPARE(record.value(membermanager::dao::BalanceTable::datum).toString(), QString("2012-11-23"));
+    QCOMPARE(record.value(membermanager::dao::BalanceTable::konten).toString(), QString("4"));
+    QCOMPARE(record.value(membermanager::dao::BalanceTable::info).toString(), QString("Automatische Buchung"));
 
 
     balancePersister.booking();
@@ -323,9 +323,9 @@ void BalancePersisterTest::testWrongValueToLow()
 
 
     QSqlTableModel saldoModel;
-    saldoModel.setTable(membermanager::dao::SaldoTable::TABLENAME);
+    saldoModel.setTable(membermanager::dao::BalanceTable::TABLENAME);
     saldoModel.setFilter(QString("%1=%2")
-                         .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::kasse_pkey])
+                         .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::kasse_pkey])
                          .arg(5));
     saldoModel.select();
     QCOMPARE(saldoModel.rowCount(), 0);
@@ -454,9 +454,9 @@ void BalancePersisterTest::testWrongValueToHigh()
 
 
     QSqlTableModel saldoModel;
-    saldoModel.setTable(membermanager::dao::SaldoTable::TABLENAME);
+    saldoModel.setTable(membermanager::dao::BalanceTable::TABLENAME);
     saldoModel.setFilter(QString("%1=%2")
-                         .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::kasse_pkey])
+                         .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::kasse_pkey])
                          .arg(5));
     saldoModel.select();
     QCOMPARE(saldoModel.rowCount(), 0);

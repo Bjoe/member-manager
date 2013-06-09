@@ -79,16 +79,16 @@ void PayTest::testPay()
 
     QString sqlQuery = "SELECT * FROM %1 WHERE %2 = %3 AND %4 = %5 AND %6 = '%7' AND %8 = '%9' AND %10 = '%11'";
     QString select = QString(sqlQuery)
-            .arg(membermanager::dao::SaldoTable::TABLENAME)
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::dorfmitglied_pkey])
+            .arg(membermanager::dao::BalanceTable::TABLENAME)
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::dorfmitglied_pkey])
             .arg(1025)
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::betrag])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::betrag])
             .arg(-80)
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::datum])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::datum])
             .arg(date.toString(Qt::ISODate))
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::bezeichnung])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::bezeichnung])
             .arg("Mitgliedsbeitrag April")
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::info])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::info])
             .arg("Automatische Monats Abbuchung");
 
     QSqlQuery query;
@@ -96,16 +96,16 @@ void PayTest::testPay()
     QVERIFY(query.next());
 
     select = QString(sqlQuery)
-            .arg(membermanager::dao::SaldoTable::TABLENAME)
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::dorfmitglied_pkey])
+            .arg(membermanager::dao::BalanceTable::TABLENAME)
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::dorfmitglied_pkey])
             .arg(1025)
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::betrag])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::betrag])
             .arg(-1.5)
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::datum])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::datum])
             .arg(date.toString(Qt::ISODate))
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::bezeichnung])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::bezeichnung])
             .arg("Spende April")
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::info])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::info])
             .arg("Automatische Monats Abbuchung");
 
     QVERIFY(query.exec(select));
@@ -113,36 +113,36 @@ void PayTest::testPay()
 
     sqlQuery = "SELECT * FROM %1 WHERE %2 = %3 AND %4 = %5 AND %6 = '%7' AND %8 = '%9' AND %10 = '%11' AND %12 = %13";
     select = QString(sqlQuery)
-            .arg(membermanager::dao::SaldoTable::TABLENAME)
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::dorfmitglied_pkey])
+            .arg(membermanager::dao::BalanceTable::TABLENAME)
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::dorfmitglied_pkey])
             .arg(1025)
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::betrag])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::betrag])
             .arg(80)
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::datum])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::datum])
             .arg(date.toString(Qt::ISODate))
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::bezeichnung])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::bezeichnung])
             .arg("Mitgliedsbeitrag April")
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::info])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::info])
             .arg("Automatische Monats Lastschrift")
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::konten])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::konten])
             .arg(11);
 
     QVERIFY(query.exec(select));
     QVERIFY(query.next());
 
     select = QString(sqlQuery)
-            .arg(membermanager::dao::SaldoTable::TABLENAME)
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::dorfmitglied_pkey])
+            .arg(membermanager::dao::BalanceTable::TABLENAME)
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::dorfmitglied_pkey])
             .arg(1025)
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::betrag])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::betrag])
             .arg(1.5)
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::datum])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::datum])
             .arg(date.toString(Qt::ISODate))
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::bezeichnung])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::bezeichnung])
             .arg("Spende April")
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::info])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::info])
             .arg("Automatische Monats Lastschrift")
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::konten])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::konten])
             .arg(12);
 
     QVERIFY(query.exec(select));
@@ -202,16 +202,16 @@ void PayTest::testAdditionalPay()
 
     QString sqlQuery = "SELECT * FROM %1 WHERE %2 = %3 AND %4 = %5 AND %6 = '%7' AND %8 = '%9' AND %10 = '%11'";
     QString select = QString(sqlQuery)
-            .arg(membermanager::dao::SaldoTable::TABLENAME)
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::dorfmitglied_pkey])
+            .arg(membermanager::dao::BalanceTable::TABLENAME)
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::dorfmitglied_pkey])
             .arg(1025)
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::betrag])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::betrag])
             .arg(-14)
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::datum])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::datum])
             .arg(date.toString(Qt::ISODate))
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::bezeichnung])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::bezeichnung])
             .arg("Mitgliedsbeitrag April")
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::info])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::info])
             .arg("Automatische Monats Abbuchung");
 
     QSqlQuery query;
@@ -219,32 +219,32 @@ void PayTest::testAdditionalPay()
     QVERIFY(query.next());
 
     select = QString(sqlQuery)
-            .arg(membermanager::dao::SaldoTable::TABLENAME)
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::dorfmitglied_pkey])
+            .arg(membermanager::dao::BalanceTable::TABLENAME)
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::dorfmitglied_pkey])
             .arg(1025)
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::betrag])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::betrag])
             .arg(-1)
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::datum])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::datum])
             .arg(date.toString(Qt::ISODate))
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::bezeichnung])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::bezeichnung])
             .arg("Spende April")
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::info])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::info])
             .arg("Automatische Monats Abbuchung");
 
     QVERIFY(query.exec(select));
     QVERIFY(query.next());
 
     select = QString(sqlQuery)
-            .arg(membermanager::dao::SaldoTable::TABLENAME)
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::dorfmitglied_pkey])
+            .arg(membermanager::dao::BalanceTable::TABLENAME)
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::dorfmitglied_pkey])
             .arg(1025)
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::betrag])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::betrag])
             .arg(-5)
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::datum])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::datum])
             .arg(date.toString(Qt::ISODate))
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::bezeichnung])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::bezeichnung])
             .arg("CCC Beitrag April")
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::info])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::info])
             .arg("Automatische Monats Abbuchung");
 
     QVERIFY(query.exec(select));
@@ -252,54 +252,54 @@ void PayTest::testAdditionalPay()
 
     sqlQuery = "SELECT * FROM %1 WHERE %2 = %3 AND %4 = %5 AND %6 = '%7' AND %8 = '%9' AND %10 = '%11' AND %12 = %13";
     select = QString(sqlQuery)
-            .arg(membermanager::dao::SaldoTable::TABLENAME)
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::dorfmitglied_pkey])
+            .arg(membermanager::dao::BalanceTable::TABLENAME)
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::dorfmitglied_pkey])
             .arg(1025)
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::betrag])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::betrag])
             .arg(14)
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::datum])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::datum])
             .arg(date.toString(Qt::ISODate))
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::bezeichnung])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::bezeichnung])
             .arg("Mitgliedsbeitrag April")
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::info])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::info])
             .arg("Automatische Monats Lastschrift")
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::konten])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::konten])
             .arg(11);
 
     QVERIFY(query.exec(select));
     QVERIFY(query.next());
 
     select = QString(sqlQuery)
-            .arg(membermanager::dao::SaldoTable::TABLENAME)
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::dorfmitglied_pkey])
+            .arg(membermanager::dao::BalanceTable::TABLENAME)
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::dorfmitglied_pkey])
             .arg(1025)
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::betrag])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::betrag])
             .arg(1)
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::datum])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::datum])
             .arg(date.toString(Qt::ISODate))
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::bezeichnung])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::bezeichnung])
             .arg("Spende April")
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::info])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::info])
             .arg("Automatische Monats Lastschrift")
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::konten])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::konten])
             .arg(12);
 
     QVERIFY(query.exec(select));
     QVERIFY(query.next());
 
     select = QString(sqlQuery)
-            .arg(membermanager::dao::SaldoTable::TABLENAME)
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::dorfmitglied_pkey])
+            .arg(membermanager::dao::BalanceTable::TABLENAME)
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::dorfmitglied_pkey])
             .arg(1025)
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::betrag])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::betrag])
             .arg(5)
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::datum])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::datum])
             .arg(date.toString(Qt::ISODate))
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::bezeichnung])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::bezeichnung])
             .arg("CCC Beitrag April")
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::info])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::info])
             .arg("Automatische Monats Lastschrift")
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::konten])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::konten])
             .arg(4);
 
     QVERIFY(query.exec(select));
@@ -354,16 +354,16 @@ void PayTest::testPayWithoutBooking()
 
     QString sqlQuery = "SELECT * FROM %1 WHERE %2 = %3 AND %4 = %5 AND %6 = '%7' AND %8 = '%9' AND %10 = '%11'";
     QString select = QString(sqlQuery)
-            .arg(membermanager::dao::SaldoTable::TABLENAME)
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::dorfmitglied_pkey])
+            .arg(membermanager::dao::BalanceTable::TABLENAME)
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::dorfmitglied_pkey])
             .arg(1030)
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::betrag])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::betrag])
             .arg(-80)
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::datum])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::datum])
             .arg(date.toString(Qt::ISODate))
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::bezeichnung])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::bezeichnung])
             .arg("Mitgliedsbeitrag April")
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::info])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::info])
             .arg("Automatische Monats Abbuchung");
 
     QSqlQuery query;
@@ -371,16 +371,16 @@ void PayTest::testPayWithoutBooking()
     QVERIFY(query.next() == false);
 
     select = QString(sqlQuery)
-            .arg(membermanager::dao::SaldoTable::TABLENAME)
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::dorfmitglied_pkey])
+            .arg(membermanager::dao::BalanceTable::TABLENAME)
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::dorfmitglied_pkey])
             .arg(1030)
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::betrag])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::betrag])
             .arg(0.0)
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::datum])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::datum])
             .arg(date.toString(Qt::ISODate))
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::bezeichnung])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::bezeichnung])
             .arg("Spende April")
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::info])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::info])
             .arg("Automatische Monats Abbuchung");
 
     QVERIFY(query.exec(select));
@@ -388,36 +388,36 @@ void PayTest::testPayWithoutBooking()
 
     sqlQuery = "SELECT * FROM %1 WHERE %2 = %3 AND %4 = %5 AND %6 = '%7' AND %8 = '%9' AND %10 = '%11' AND %12 = %13";
     select = QString(sqlQuery)
-            .arg(membermanager::dao::SaldoTable::TABLENAME)
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::dorfmitglied_pkey])
+            .arg(membermanager::dao::BalanceTable::TABLENAME)
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::dorfmitglied_pkey])
             .arg(1030)
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::betrag])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::betrag])
             .arg(80)
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::datum])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::datum])
             .arg(date.toString(Qt::ISODate))
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::bezeichnung])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::bezeichnung])
             .arg("Mitgliedsbeitrag April")
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::info])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::info])
             .arg("Automatische Monats Lastschrift")
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::konten])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::konten])
             .arg(11);
 
     QVERIFY(query.exec(select));
     QVERIFY(query.next() == false);
 
     select = QString(sqlQuery)
-            .arg(membermanager::dao::SaldoTable::TABLENAME)
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::dorfmitglied_pkey])
+            .arg(membermanager::dao::BalanceTable::TABLENAME)
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::dorfmitglied_pkey])
             .arg(1030)
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::betrag])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::betrag])
             .arg(0.0)
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::datum])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::datum])
             .arg(date.toString(Qt::ISODate))
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::bezeichnung])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::bezeichnung])
             .arg("Spende April")
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::info])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::info])
             .arg("Automatische Monats Lastschrift")
-            .arg(membermanager::dao::SaldoTable::COLUMNNAME[membermanager::dao::SaldoTable::konten])
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::konten])
             .arg(12);
 
     QVERIFY(query.exec(select));

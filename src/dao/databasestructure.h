@@ -105,7 +105,7 @@ public:
     static const QStringList COLUMNNAME;
 };
 
-class SaldoTable
+class BalanceTable
 {
 public:
     static const QString TABLENAME;
