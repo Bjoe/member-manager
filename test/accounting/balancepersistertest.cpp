@@ -150,14 +150,14 @@ void BalancePersisterTest::testBook()
     balancePersister.booking();
 
     QSqlTableModel cashModel;
-    cashModel.setTable(membermanager::dao::KassaTable::TABLENAME);
+    cashModel.setTable(membermanager::dao::CashTable::TABLENAME);
     cashModel.setFilter(QString("%1=%2")
-                        .arg(membermanager::dao::KassaTable::COLUMNNAME[membermanager::dao::KassaTable::dorfmitglied_pkey])
+                        .arg(membermanager::dao::CashTable::COLUMNNAME[membermanager::dao::CashTable::dorfmitglied_pkey])
                         .arg(1025));
     cashModel.select();
     QCOMPARE(cashModel.rowCount(), 1);
     QSqlRecord record = cashModel.record(0);
-    QVERIFY(record.value(membermanager::dao::KassaTable::erfasst).toBool());
+    QVERIFY(record.value(membermanager::dao::CashTable::erfasst).toBool());
 
 
     QSqlTableModel saldoModel;
@@ -198,7 +198,7 @@ void BalancePersisterTest::testBook()
     cashModel.select();
     QCOMPARE(cashModel.rowCount(), 1);
     record = cashModel.record(0);
-    QVERIFY(record.value(membermanager::dao::KassaTable::erfasst).toBool());
+    QVERIFY(record.value(membermanager::dao::CashTable::erfasst).toBool());
 
     saldoModel.select();
     QCOMPARE(saldoModel.rowCount(), 3);
@@ -312,14 +312,14 @@ void BalancePersisterTest::testWrongValueToLow()
     balancePersister.booking();
 
     QSqlTableModel cashModel;
-    cashModel.setTable(membermanager::dao::KassaTable::TABLENAME);
+    cashModel.setTable(membermanager::dao::CashTable::TABLENAME);
     cashModel.setFilter(QString("%1=%2")
-                        .arg(membermanager::dao::KassaTable::COLUMNNAME[membermanager::dao::KassaTable::dorfmitglied_pkey])
+                        .arg(membermanager::dao::CashTable::COLUMNNAME[membermanager::dao::CashTable::dorfmitglied_pkey])
                         .arg(1030));
     cashModel.select();
     QCOMPARE(cashModel.rowCount(), 0);
     QSqlRecord record = cashModel.record(0);
-    QVERIFY(record.value(membermanager::dao::KassaTable::erfasst).toBool() == false);
+    QVERIFY(record.value(membermanager::dao::CashTable::erfasst).toBool() == false);
 
 
     QSqlTableModel saldoModel;
@@ -443,14 +443,14 @@ void BalancePersisterTest::testWrongValueToHigh()
     balancePersister.booking();
 
     QSqlTableModel cashModel;
-    cashModel.setTable(membermanager::dao::KassaTable::TABLENAME);
+    cashModel.setTable(membermanager::dao::CashTable::TABLENAME);
     cashModel.setFilter(QString("%1=%2")
-                        .arg(membermanager::dao::KassaTable::COLUMNNAME[membermanager::dao::KassaTable::dorfmitglied_pkey])
+                        .arg(membermanager::dao::CashTable::COLUMNNAME[membermanager::dao::CashTable::dorfmitglied_pkey])
                         .arg(1030));
     cashModel.select();
     QCOMPARE(cashModel.rowCount(), 0);
     QSqlRecord record = cashModel.record(0);
-    QVERIFY(record.value(membermanager::dao::KassaTable::erfasst).toBool() == false);
+    QVERIFY(record.value(membermanager::dao::CashTable::erfasst).toBool() == false);
 
 
     QSqlTableModel saldoModel;

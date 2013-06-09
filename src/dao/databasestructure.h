@@ -71,7 +71,7 @@ public:
     static const QStringList COLUMNNAME;
 };
 
-class KassaTable
+class CashTable
 {
 public:
     static const QString TABLENAME;

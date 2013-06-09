@@ -55,14 +55,14 @@ void CashAccountDaoTest::testUpdateRecord()
     QVERIFY(dao.updateRecord(entry));
 
     QSqlTableModel model;
-    model.setTable(membermanager::dao::KassaTable::TABLENAME);
+    model.setTable(membermanager::dao::CashTable::TABLENAME);
     model.setFilter(QString("%1=%2")
-                    .arg(membermanager::dao::KassaTable::COLUMNNAME[membermanager::dao::KassaTable::kasse_pkey])
+                    .arg(membermanager::dao::CashTable::COLUMNNAME[membermanager::dao::CashTable::kasse_pkey])
                     .arg(2));
     model.select();
 
     QSqlRecord record = model.record(0);
-    QCOMPARE(record.value(membermanager::dao::KassaTable::betrag).toString(), QString("9999.99"));
+    QCOMPARE(record.value(membermanager::dao::CashTable::betrag).toString(), QString("9999.99"));
 }
 
 void CashAccountDaoTest::testSaveRecord()
@@ -77,19 +77,19 @@ void CashAccountDaoTest::testSaveRecord()
     QVERIFY(dao.saveRecord(entry));
 
     QSqlTableModel model;
-    model.setTable(membermanager::dao::KassaTable::TABLENAME);
+    model.setTable(membermanager::dao::CashTable::TABLENAME);
     model.setFilter(QString("%1=%2")
-                    .arg(membermanager::dao::KassaTable::COLUMNNAME[membermanager::dao::KassaTable::kasse_pkey])
+                    .arg(membermanager::dao::CashTable::COLUMNNAME[membermanager::dao::CashTable::kasse_pkey])
                     .arg(9));
     model.select();
 
     QCOMPARE(model.rowCount(), 1);
 
     QSqlRecord record = model.record(0);
-    QCOMPARE(record.value(membermanager::dao::KassaTable::fremdname).toString(), QString("PETER MUSTERMANN"));
-    QCOMPARE(record.value(membermanager::dao::KassaTable::fremdktnr).toString(), QString("99994444"));
-    QCOMPARE(record.value(membermanager::dao::KassaTable::bezeichnung).toString(), QString("test insert"));
-    QCOMPARE(record.value(membermanager::dao::KassaTable::buschl).toString(), QString("action"));
+    QCOMPARE(record.value(membermanager::dao::CashTable::fremdname).toString(), QString("PETER MUSTERMANN"));
+    QCOMPARE(record.value(membermanager::dao::CashTable::fremdktnr).toString(), QString("99994444"));
+    QCOMPARE(record.value(membermanager::dao::CashTable::bezeichnung).toString(), QString("test insert"));
+    QCOMPARE(record.value(membermanager::dao::CashTable::buschl).toString(), QString("action"));
 }
 
 void CashAccountDaoTest::testReadRecord()
@@ -309,7 +309,7 @@ void CashAccountDaoTest::testImportTransaction()
     transactions.append(transaction);
 
     QSqlTableModel *model = new QSqlTableModel();
-    model->setTable(membermanager::dao::KassaTable::TABLENAME);
+    model->setTable(membermanager::dao::CashTable::TABLENAME);
     model->select();
     QCOMPARE(model->rowCount(), 9);
 
@@ -319,23 +319,23 @@ void CashAccountDaoTest::testImportTransaction()
     model->select();
     QCOMPARE(model->rowCount(), 10);
 
-    model->setFilter(membermanager::dao::KassaTable::COLUMNNAME[membermanager::dao::KassaTable::bezeichnung] + "='PurposeText'");
+    model->setFilter(membermanager::dao::CashTable::COLUMNNAME[membermanager::dao::CashTable::bezeichnung] + "='PurposeText'");
     model->select();
     QCOMPARE(model->rowCount(), 1);
 
     QSqlRecord record = model->record(0);
-    QCOMPARE(record.value(membermanager::dao::KassaTable::fremdname).toString(), QString("remoteName"));
-    QCOMPARE(record.value(membermanager::dao::KassaTable::fremdblz).toString(), QString("80070011"));
-    QCOMPARE(record.value(membermanager::dao::KassaTable::fremdktnr).toString(), QString("1234567890"));
-    QCOMPARE(record.value(membermanager::dao::KassaTable::valutadatum).toString(), QString("2012-11-19"));
-    QCOMPARE(record.value(membermanager::dao::KassaTable::buchungsdatum).toString(), QString("2012-11-22"));
-    QCOMPARE(record.value(membermanager::dao::KassaTable::betrag).toString(), QString("100.1"));
-    QCOMPARE(record.value(membermanager::dao::KassaTable::buschl).toString(), QString("Transaction Text"));
-    QCOMPARE(record.value(membermanager::dao::KassaTable::bankbuschl).toString(), QString("23"));
-    QCOMPARE(record.value(membermanager::dao::KassaTable::einleseid).toString(), QString("abc123"));
-    QCOMPARE(record.value(membermanager::dao::KassaTable::bezeichnung).toString(), QString("PurposeText"));
-    QCOMPARE(record.value(membermanager::dao::KassaTable::deleted).toString(), QString("false"));
-    QCOMPARE(record.value(membermanager::dao::KassaTable::erfasst).toString(), QString("false"));
+    QCOMPARE(record.value(membermanager::dao::CashTable::fremdname).toString(), QString("remoteName"));
+    QCOMPARE(record.value(membermanager::dao::CashTable::fremdblz).toString(), QString("80070011"));
+    QCOMPARE(record.value(membermanager::dao::CashTable::fremdktnr).toString(), QString("1234567890"));
+    QCOMPARE(record.value(membermanager::dao::CashTable::valutadatum).toString(), QString("2012-11-19"));
+    QCOMPARE(record.value(membermanager::dao::CashTable::buchungsdatum).toString(), QString("2012-11-22"));
+    QCOMPARE(record.value(membermanager::dao::CashTable::betrag).toString(), QString("100.1"));
+    QCOMPARE(record.value(membermanager::dao::CashTable::buschl).toString(), QString("Transaction Text"));
+    QCOMPARE(record.value(membermanager::dao::CashTable::bankbuschl).toString(), QString("23"));
+    QCOMPARE(record.value(membermanager::dao::CashTable::einleseid).toString(), QString("abc123"));
+    QCOMPARE(record.value(membermanager::dao::CashTable::bezeichnung).toString(), QString("PurposeText"));
+    QCOMPARE(record.value(membermanager::dao::CashTable::deleted).toString(), QString("false"));
+    QCOMPARE(record.value(membermanager::dao::CashTable::erfasst).toString(), QString("false"));
 }
 
 } // namespace accounting

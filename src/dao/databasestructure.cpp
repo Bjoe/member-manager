@@ -30,8 +30,8 @@ const QStringList BankAccountTable::COLUMNNAME = QStringList()
         << "kontodaten_pkey" << "dorfmitglied_pkey" << "kontonr"
         << "bank" << "blz";
 
-const QString KassaTable::TABLENAME = "kasse";
-const QStringList KassaTable::COLUMNNAME = QStringList() << "kasse_pkey"
+const QString CashTable::TABLENAME = "kasse";
+const QStringList CashTable::COLUMNNAME = QStringList() << "kasse_pkey"
         << "deleted" << "einlesedatum" << "einleseid" << "auszug"
         << "zwshkenn60" << "zwbudatum60" << "zwischensaldo60" << "zwshkenn62"
         << "zwbudatum62" << "zwischensaldo62" << "valutadatum"
