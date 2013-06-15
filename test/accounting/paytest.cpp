@@ -77,7 +77,7 @@ void PayTest::testPay()
     QCOMPARE(line, QString("01.04.2006;Lastschrift Einzug 012;012 Spende Kirk James T;1.5"));
     QVERIFY(csvIn.atEnd());
 
-    QString sqlQuery = "SELECT * FROM %1 WHERE %2 = %3 AND %4 = %5 AND %6 = '%7' AND %8 = '%9' AND %10 = '%11'";
+    QString sqlQuery = "SELECT * FROM %1 WHERE %2 = %3 AND %4 = %5 AND %6 = '%7' AND %8 = '%9' AND %10 = '%11' AND %12 = %13";
     QString select = QString(sqlQuery)
             .arg(membermanager::dao::BalanceTable::TABLENAME)
             .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::MemberId])
@@ -89,7 +89,9 @@ void PayTest::testPay()
             .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::Description])
             .arg("Mitgliedsbeitrag April")
             .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::Info])
-            .arg("Automatische Monats Abbuchung");
+            .arg("Automatische Monats Abbuchung")
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::BookingAccount])
+            .arg(-11);
 
     QSqlQuery query;
     QVERIFY(query.exec(select));
@@ -106,12 +108,13 @@ void PayTest::testPay()
             .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::Description])
             .arg("Spende April")
             .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::Info])
-            .arg("Automatische Monats Abbuchung");
+            .arg("Automatische Monats Abbuchung")
+            .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::BookingAccount])
+            .arg(-12);
 
     QVERIFY(query.exec(select));
     QVERIFY(query.next());
 
-    sqlQuery = "SELECT * FROM %1 WHERE %2 = %3 AND %4 = %5 AND %6 = '%7' AND %8 = '%9' AND %10 = '%11' AND %12 = %13";
     select = QString(sqlQuery)
             .arg(membermanager::dao::BalanceTable::TABLENAME)
             .arg(membermanager::dao::BalanceTable::COLUMNNAME[membermanager::dao::BalanceTable::MemberId])

@@ -68,7 +68,7 @@ void BalanceDaoTest::testFindContributionByMemberIdAndYear()
 
     QList<membermanager::accounting::BalanceEntry> balanceList = balanceDao.findContributionByMemberIdAndYear(1025, 2007);
 
-    QCOMPARE(balanceList.size(), 4);
+    QCOMPARE(balanceList.size(), 5);
 
     membermanager::accounting::BalanceEntry balance = balanceList.at(0);
     double value = 15.0;
@@ -76,7 +76,7 @@ void BalanceDaoTest::testFindContributionByMemberIdAndYear()
     QCOMPARE(balance.getValuta(), QDate(2007,3,8));
 
     balance = balanceList.at(3);
-    value = 10;
+    value = 15.0;
     QCOMPARE(balance.getValue(), value);
     QCOMPARE(balance.getValuta(), QDate(2007,4,5));
 }

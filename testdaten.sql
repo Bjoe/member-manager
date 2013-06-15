@@ -304,29 +304,29 @@ INSERT INTO saldo (
 
 INSERT INTO saldo (
                     saldo_pkey, dorfmitglied_pkey, betrag, datum, bezeichnung, 
-                     info)
-            VALUES (2,1025,-15.00,date('2005-09-18'),'Mitgliedsbeitrag Sep','Automatische Monats Abbuchung');
+                     info, konten)
+            VALUES (2,1025,-15.00,date('2005-09-18'),'Mitgliedsbeitrag Sep','Automatische Monats Abbuchung', -11);
 
 
 INSERT INTO saldo (
                     saldo_pkey, dorfmitglied_pkey, betrag, datum, bezeichnung, 
-                     info)
-            VALUES (3,1026,-15.00,date('2005-09-18'),'Mitgliedsbeitrag Sep','Automatische Monats Abbuchung');
+                     info, konten)
+            VALUES (3,1026,-15.00,date('2005-09-18'),'Mitgliedsbeitrag Sep','Automatische Monats Abbuchung', -11);
 
 INSERT INTO saldo (
                     saldo_pkey, dorfmitglied_pkey, betrag, datum, bezeichnung, 
-                     info)
-            VALUES (4,1026,15.00,date('2007-09-18'),'Mitgliedsbeitrag Sep','Automatische Monats Abbuchung');
+                     info, konten)
+            VALUES (4,1026,15.00,date('2007-09-18'),'Mitgliedsbeitrag Sep','Automatische Monats Abbuchung', 11);
 
 INSERT INTO saldo (
                     saldo_pkey, dorfmitglied_pkey, betrag, datum, bezeichnung, 
-                     info)
-            VALUES (5,1025,-15.00,date('2007-03-08'),'Mitgliedsbeitrag Mar','Automatische Monats Abbuchung ');
+                     info, konten)
+            VALUES (5,1025,-15.00,date('2007-03-08'),'Mitgliedsbeitrag Mar','Automatische Monats Abbuchung ', -11);
 
 INSERT INTO saldo (
                     saldo_pkey, dorfmitglied_pkey, betrag, datum, bezeichnung, 
-                     info)
-            VALUES (6,1025,-10.00,date('2007-03-08'),'Spende Mar','Automatische Monats Abbuchung ');
+                     info, konten)
+            VALUES (6,1025,-10.00,date('2007-03-08'),'Spende Mar','Automatische Monats Abbuchung ', -12);
 
 INSERT INTO saldo (
                     saldo_pkey, dorfmitglied_pkey, betrag, datum, bezeichnung, 
@@ -340,13 +340,13 @@ INSERT INTO saldo (
 
 INSERT INTO saldo (
                     saldo_pkey, dorfmitglied_pkey, betrag, datum, bezeichnung, 
-                     info)
-            VALUES (9,1025,-15.00,date('2007-04-05'),'Mitgliedsbeitrag Apr','Automatische Monats Abbuchung ');
+                     info, konten)
+            VALUES (9,1025,-15.00,date('2007-04-05'),'Mitgliedsbeitrag Apr','Automatische Monats Abbuchung ', -11);
 
 INSERT INTO saldo (
                     saldo_pkey, dorfmitglied_pkey, betrag, datum, bezeichnung, 
-                     info)
-            VALUES (10,1025,-10.00,date('2007-04-05'),'Spende Apr','Automatische Monats Abbuchung ');
+                     info, konten)
+            VALUES (10,1025,-10.00,date('2007-04-05'),'Spende Apr','Automatische Monats Abbuchung ', 11);
 
 INSERT INTO saldo (
                     saldo_pkey, dorfmitglied_pkey, betrag, datum, bezeichnung, 
@@ -370,8 +370,8 @@ INSERT INTO saldo (
 
 INSERT INTO saldo (
                     saldo_pkey, dorfmitglied_pkey, betrag, datum, bezeichnung, 
-                     info)
-            VALUES (15,1025,-5.00,date('2012-02-08'),'Mitgliedsbeitrag Feb','Automatische Monats Abbuchung ');
+                     info, konten)
+            VALUES (15,1025,-5.00,date('2012-02-08'),'Mitgliedsbeitrag Feb','Automatische Monats Abbuchung ', -11);
 
 INSERT INTO saldo (
                     saldo_pkey, dorfmitglied_pkey, betrag, datum, bezeichnung, 

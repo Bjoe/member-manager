@@ -66,6 +66,7 @@ bool Pay::payment(const Member &aMember, const QString &aMonth, const QDate &aDa
         balanceEntry.setValue(fee * -1);
         balanceEntry.setPurpose(QString("Mitgliedsbeitrag %1").arg(aMonth));
         balanceEntry.setInfo("Automatische Monats Abbuchung");
+        balanceEntry.setAccount(-11);
         balanceDao.saveRecord(balanceEntry);
         if(aMember.isCollection()) {
             balanceEntry.setValue(fee);
@@ -80,6 +81,7 @@ bool Pay::payment(const Member &aMember, const QString &aMonth, const QDate &aDa
             donationEntry.setValue(donation * -1);
             donationEntry.setPurpose(QString("Spende %1").arg(aMonth));
             donationEntry.setInfo("Automatische Monats Abbuchung");
+            donationEntry.setAccount(-12);
             balanceDao.saveRecord(donationEntry);
             if(aMember.isCollection()) {
                 donationEntry.setValue(donation);
@@ -95,6 +97,7 @@ bool Pay::payment(const Member &aMember, const QString &aMonth, const QDate &aDa
             additionlFeeEntry.setValue(additionalFee * -1);
             additionlFeeEntry.setPurpose(QString("CCC Beitrag %1").arg(aMonth));
             additionlFeeEntry.setInfo("Automatische Monats Abbuchung");
+            additionlFeeEntry.setAccount(-4);
             balanceDao.saveRecord(additionlFeeEntry);
             if(aMember.isCollection()) {
                 additionlFeeEntry.setValue(additionalFee);

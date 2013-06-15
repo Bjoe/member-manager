@@ -40,7 +40,10 @@ void MemberDebtView::calculate()
         double debit = 0;
         accounting::BalanceEntry balanceEntry;
         foreach(balanceEntry, balanceList) {
-            debit += balanceEntry.getValue();
+            if((balanceEntry.getAccount() == 11) || (balanceEntry.getAccount() == 4)
+                    || (balanceEntry.getAccount() == -11) || (balanceEntry.getAccount() == -4)) {
+                debit += balanceEntry.getValue();
+            }
         }
 
         if(debit < 0) {
