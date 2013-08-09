@@ -111,6 +111,7 @@ QModelIndex BalanceDao::insertNewEmptyRowWithMemberId(int aMemberId)
     model->setData(model->index(row, BalanceTable::MemberId), aMemberId);
     model->submitAll();
     printSqlError(model->lastError());
+    model->select();
     return model->index(row, BalanceTable::Amount);
 }
 
@@ -118,6 +119,7 @@ bool BalanceDao::deleteRow(const QModelIndex &anIndex)
 {
     bool successful = model->removeRow(anIndex.row());
     printSqlError(model->lastError());
+    model->select();
     return successful;
 }
 

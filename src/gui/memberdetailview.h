@@ -33,7 +33,7 @@ public slots:
     void refreshTableView();
 
 private:
-    Ui::MemberDetailView ui;
+    ::Ui::MemberDetailView ui;
 
     dao::MemberDao memberDao;
     Member member;

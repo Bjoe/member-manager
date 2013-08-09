@@ -36,7 +36,7 @@ BalanceDialog::BalanceDialog(int aMemberId, QWidget *parent) :
     connect(ui.newRowButton, SIGNAL(clicked()), SLOT(insertRow()));
     connect(ui.deleteRowButton, SIGNAL(clicked()), SLOT(deleteRow()));
     connect(ui.actionCopy, SIGNAL(triggered()), SLOT(copy()));
-    connect(model, SIGNAL(dataChanged(QModelIndex,QModelIndex)), SLOT(calculateSum()));
+    //connect(model, SIGNAL(dataChanged(QModelIndex,QModelIndex)), SLOT(calculateSum()));
 
     ui.balanceTableView->addAction(ui.actionCopy);
     ui.balanceTableView->setContextMenuPolicy(Qt::ActionsContextMenu);

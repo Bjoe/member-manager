@@ -26,7 +26,7 @@ public slots:
 
 private:
     dao::BalanceDao balanceDao;
-    Ui::BalanceDialogClass ui;
+    ::Ui::BalanceDialogClass ui;
     int memberId;
 };
 

@@ -85,13 +85,16 @@ QModelIndex ContributionDao::insertNewEmptyRowWithMemberId(int aMemberId) const
     model->setData(model->index(row, ContributionTable::MemberId), aMemberId);
     model->submitAll();
     printSqlError(model->lastError());
+    model->select();
     return model->index(row, ContributionTable::Fee);
 }
 
 bool ContributionDao::deleteRow(const QModelIndex &anIndex) const
 {
-    bool successful = model->removeRow(anIndex.row());
+    int row = anIndex.row();
+    bool successful = model->removeRow(row);
     printSqlError(model->lastError());
+    model->select();
     return successful;
 }
 

@@ -1,6 +1,7 @@
 #include "gui/mainwindow.h"
 
 #include <QFileDialog>
+#include <QMessageBox>
 
 #include "gui/memberdebtview.h"
 #include "gui/summaryview.h"

@@ -1,7 +1,7 @@
 #ifndef CONTRIBUTIONDIALOG_H
 #define CONTRIBUTIONDIALOG_H
 
-#include <QtGui/QDialog>
+#include <QDialog>
 #include "ui_contributiondialog.h"
 
 #include "dao/contributiondao.h"
@@ -24,7 +24,7 @@ private slots:
     void deleteRow();
 
 private:
-    Ui::ContributionDialogClass ui;
+    ::Ui::ContributionDialogClass ui;
     int memberId;
     dao::ContributionDao contributionDao;
 };
