@@ -22,7 +22,7 @@ private slots:
     void showContribution();
 
 private:
-    Ui::ContributionReceiptDialog ui;
+    ::Ui::ContributionReceiptDialog ui;
     int memberId;
 };
 

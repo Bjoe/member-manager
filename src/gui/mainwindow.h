@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QMainWindow>
 #include <QListWidget>
-#include <QStackedLayout>
+#include <QStackedWidget>
 
 #include "ui_mainwindow.h"
 #include "gui/memberdetailview.h"
