@@ -10,6 +10,8 @@ set (MemberManager_VERSION_MAJOR 0)
 set (MemberManager_VERSION_MINOR 1)
 set (MemberManager_VERSION_PATCH 0)
 
+add_definitions(-std=c++11)
+
 # Instruct CMake to run moc automatically when needed.
 set(CMAKE_AUTOMOC ON)
 
