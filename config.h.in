@@ -4,3 +4,11 @@
 #define MemberManager_VERSION_MAJOR @MemberManager_VERSION_MAJOR@
 #define MemberManager_VERSION_MINOR @MemberManager_VERSION_MINOR@
 #define MemberManager_VERSION_PATCH @MemberManager_VERSION_PATCH@
+
+#define DATABASEDRIVER "QSQLITE"
+
+#define APP_NAME "Dorfverwaltung"
+#define ORGANIZATION "chaosdorf e.V."
+#define ORGANIZATION_DOMAIN "chaosdorf.de"
+
+#define MAIN_QML "qrc:/assets/qml/main.qml"

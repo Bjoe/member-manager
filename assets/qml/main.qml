@@ -1,40 +1,68 @@
 import QtQuick 2.1
 import QtQuick.Controls 1.0
 import QtQuick.Window 2.0
+import QtQuick.Dialogs 1.0
 
 ApplicationWindow {
     id: mainWindow
-    title: qsTr("Membermanager")
+    title: qsTr("Member Mmanager")
     width: 640
     height: 480
 
     signal qmlSettingsTriggered()
+    signal qmlOpenSqlFile(string filename)
+
+    FileDialog {
+        id: fileDialog
+        title: qsTr("SQLite File öffnen")
+        onAccepted: mainWindow.qmlOpenSqlFile(fileDialog.fileUrl)
+    }
+
+    Action {
+        id: openFileAction
+        text: qsTr("Open File")
+        tooltip: qsTr("Öffne SQLite Datei")
+        onTriggered: fileDialog.open()
+    }
+
+    Action {
+        id: openDbAction
+        text: qsTr("Open DB")
+        tooltip: qsTr("Öffne Datenbank")
+    }
+
+    Action {
+        id: openSettings
+        text: qsTr("Settings")
+        tooltip: qsTr("Öffne Einstellungen")
+        onTriggered: mainWindow.qmlSettingsTriggered()
+    }
 
     menuBar: MenuBar {
         Menu {
-            title: qsTr("Datei")
+            title: qsTr("&Datei")
             MenuItem {
-                text: qsTr("Open File")
+                action: openFileAction
             }
 
             MenuItem {
-                text: qsTr("Open DB")
+                action: openDbAction
             }
 
-            MenuSeparator {}
+            MenuSeparator {
+            }
 
             MenuItem {
-                text: qsTr("Settings")
-                onTriggered: mainWindow.qmlSettingsTriggered();
+                action: openSettings
             }
 
-            MenuSeparator {}
+            MenuSeparator {
+            }
 
             MenuItem {
                 text: qsTr("Exit")
-                onTriggered: Qt.quit();
+                onTriggered: Qt.quit()
             }
         }
     }
-
 }

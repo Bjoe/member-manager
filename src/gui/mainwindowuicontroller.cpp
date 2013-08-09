@@ -1,0 +1,46 @@
+#include "mainwindowuicontroller.h"
+
+#include <QtCore/QObject>
+#include <QtCore/QList>
+#include <QtCore/QString>
+#include <QtCore/QUrl>
+
+namespace membermanager {
+namespace gui {
+
+MainWindowUiController::MainWindowUiController(const QUrl &qmlUrl)
+    : m_engine(qmlUrl), m_window(nullptr), m_managerEngine(new membermanager::ManagerEngine())
+{
+}
+
+MainWindowUiController::~MainWindowUiController()
+{
+    delete m_managerEngine;
+    if(m_window)
+        delete m_window;
+}
+
+MainWindowUiController *MainWindowUiController::createInstance(const QUrl &qmlUrl)
+{
+    MainWindowUiController *instance = new MainWindowUiController(qmlUrl);
+    QList<QObject *> list = instance->m_engine.rootObjects();
+    QObject *topLevel = list.value(0);
+    instance->m_window = qobject_cast<QQuickWindow *>(topLevel);
+
+    instance->init();
+
+    return instance;
+}
+
+void MainWindowUiController::show()
+{
+    m_window->show();
+}
+
+void MainWindowUiController::init()
+{
+    m_managerEngine->connect(m_window, SIGNAL(qmlOpenSqlFile(QString)), SLOT(onLoadSqlFile(QString)));
+}
+
+} // namespace gui
+} // namespace membermanager

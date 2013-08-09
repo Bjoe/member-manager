@@ -14,6 +14,8 @@ set(QT_UI
     )
 
 set(QT_SRCS
+    gui/mainwindowuicontroller.cpp
+
     gui/mainwindow.cpp
     gui/memberdetailview.cpp
     gui/connectiondialog.cpp
@@ -40,6 +42,7 @@ set(QT_SRCS
     accounting/pay.cpp
 
     member.cpp
+    managerengine.cpp
     )
 
 set(RESOURCES ../resources.qrc)

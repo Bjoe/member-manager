@@ -50,3 +50,4 @@ add_subdirectory(dao)
 add_subdirectory(accounting)
 
 qt_add_test(member membertest.cpp)
+qt_test(managerEngine managerenginetest.cpp)

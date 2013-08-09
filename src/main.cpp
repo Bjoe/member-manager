@@ -1,32 +1,22 @@
 
 #include <QtCore/QObject>
 #include <QtCore/QString>
-#include <QUrl>
-#include <QtQml>
-#include <QtQuick/QQuickView>
+#include <QtCore/QUrl>
 #include <QtWidgets/QApplication>
 
-#include "gui/mainwindow.h"
+#include "config.h"
+#include "gui/mainwindowuicontroller.h"
 
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-    app.setApplicationName("Dorfverwaltung");
-    app.setOrganizationName("Chaosdorf");
-    app.setOrganizationDomain("www.chaosdorf.de");
+    app.setApplicationName(APP_NAME);
+    app.setOrganizationName(ORGANIZATION);
+    app.setOrganizationDomain(ORGANIZATION_DOMAIN);
 
-    QQmlApplicationEngine engine(QUrl("qrc:/assets/qml/main.qml"));
-    QObject *topLevel = engine.rootObjects().value(0);
-    QQuickWindow *window = qobject_cast<QQuickWindow *>(topLevel);
-    if( !window ) {
-        qWarning("Error: Your root item has to be a Window.");
-        return -1;
-    }
+    membermanager::gui::MainWindowUiController *uiController =
+            membermanager::gui::MainWindowUiController::createInstance(QUrl(MAIN_QML));
 
-    membermanager::gui::MainWindow *mainWindow = new membermanager::gui::MainWindow();
-
-    QObject::connect(topLevel, SIGNAL(qmlSettingsTriggered()), mainWindow, SLOT(showSettingsDialog()));
-
-    window->show();
+    uiController->show();
     return app.exec();
 }
