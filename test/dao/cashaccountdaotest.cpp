@@ -99,8 +99,9 @@ void CashAccountDaoTest::testReadRecord()
 
     QCOMPARE(entry.getMemberId(), 1033);
     QCOMPARE(entry.getRemoteName(), QString("McCoy"));
-    double value = 81.5;
-    QCOMPARE(entry.getValue(), value);
+    double expected = 81.5;
+    double value = entry.getValue();
+    QCOMPARE(value, expected);
 }
 
 void CashAccountDaoTest::testReadTransaction()
@@ -258,7 +259,7 @@ void CashAccountDaoTest::testReadTransaction()
     item = tableWidget->item(6, 6);
     variant = item->data(Qt::DisplayRole);
     QVERIFY((item->flags() & Qt::ItemIsEditable) == false);
-    QCOMPARE(variant.toString(), QString("81,5"));
+    QCOMPARE(variant.toString(), QString("81.5"));
     variant = item->data(Qt::UserRole);
     QCOMPARE(variant.toInt(), 8);
 
@@ -334,8 +335,8 @@ void CashAccountDaoTest::testImportTransaction()
     QCOMPARE(record.value(membermanager::dao::CashTable::bankbuschl).toString(), QString("23"));
     QCOMPARE(record.value(membermanager::dao::CashTable::einleseid).toString(), QString("abc123"));
     QCOMPARE(record.value(membermanager::dao::CashTable::bezeichnung).toString(), QString("PurposeText"));
-    QCOMPARE(record.value(membermanager::dao::CashTable::deleted).toString(), QString("false"));
-    QCOMPARE(record.value(membermanager::dao::CashTable::erfasst).toString(), QString("false"));
+    QVERIFY(record.value(membermanager::dao::CashTable::deleted).toBool() == false);
+    QVERIFY(record.value(membermanager::dao::CashTable::erfasst).toBool() == false);
 }
 
 } // namespace accounting

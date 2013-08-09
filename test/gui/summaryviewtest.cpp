@@ -68,4 +68,4 @@ void SummaryViewTest::testSummary()
 } // namespace membermanagertest
 
 QTEST_MAIN(membermanagertest::gui::SummaryViewTest)
-#include "summaryviewtest.moc"
+#include "moc_summaryviewtest.cpp"

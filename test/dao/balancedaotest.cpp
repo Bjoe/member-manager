@@ -29,7 +29,13 @@ void BalanceDaoTest::initTestCase()
 void BalanceDaoTest::testSaveBalance()
 {
     membermanager::dao::BalanceDao balanceDao(QSqlDatabase::database());
+    QSqlTableModel *model = balanceDao.getModelByMemberId(1);
+    QVERIFY(model);
+    QCOMPARE(model->rowCount(), 0);
+
     QVERIFY(balanceDao.saveRecord(membermanager::accounting::BalanceEntry(1)));
+
+    QCOMPARE(model->rowCount(), 1);
 }
 
 void BalanceDaoTest::testGetMemberBalance()
@@ -83,7 +89,7 @@ void BalanceDaoTest::testFindContributionByMemberIdAndYear()
 
 void BalanceDaoTest::testInsertNewEmptyRowAndDeletRow()
 {
-   membermanager::dao::BalanceDao balanceDao;
+    membermanager::dao::BalanceDao balanceDao;
 
     QSqlTableModel *model = balanceDao.getModelByMemberId(1025);
     QVERIFY(model);
@@ -91,12 +97,10 @@ void BalanceDaoTest::testInsertNewEmptyRowAndDeletRow()
 
     QModelIndex index = balanceDao.insertNewEmptyRowWithMemberId(1025);
 
-    model->select();
     QCOMPARE(model->rowCount(), 16);
     QCOMPARE(index.row(), 15);
 
     QVERIFY(balanceDao.deleteRow(index));
-    model->select();
     QCOMPARE(model->rowCount(), 15);
 }
 
@@ -104,4 +108,4 @@ void BalanceDaoTest::testInsertNewEmptyRowAndDeletRow()
 }
 
 QTEST_MAIN(membermanagertest::dao::BalanceDaoTest)
-#include "balancedaotest.moc"
+#include "moc_balancedaotest.cpp"

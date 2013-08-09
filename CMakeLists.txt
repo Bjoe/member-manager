@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8.9)
+cmake_minimum_required(VERSION 2.8.11)
 
 project(MemberManager)
 
@@ -10,7 +10,22 @@ set (MemberManager_VERSION_MAJOR 0)
 set (MemberManager_VERSION_MINOR 1)
 set (MemberManager_VERSION_PATCH 0)
 
-find_package(Qt4 4.7.0 REQUIRED QtCore QtGui QtSql)
+SET(QT5 "false" CACHE BOOL "Qt5 build")
+if(${QT5})
+    # Instruct CMake to run moc automatically when needed.
+    set(CMAKE_AUTOMOC ON)
+
+    # cmake example from http://qt-project.org/doc/qt-5.1/qtdoc/cmake-manual.html
+    find_package(Qt5Core REQUIRED)
+    find_package(Qt5Widgets REQUIRED)
+    find_package(Qt5Sql REQUIRED)
+
+else(${QT5})
+    find_package(Qt4 4.8.0 REQUIRED QtCore QtGui QtSql)
+    include(${QT_USE_FILE})
+
+endif(${QT5})
+
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(AQB REQUIRED aqbanking)
 pkg_check_modules(GWN REQUIRED gwenhywfar)

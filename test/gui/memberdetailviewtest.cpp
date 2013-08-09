@@ -515,4 +515,4 @@ void MemberDetailViewTest::handle()
 }
 
 QTEST_MAIN(membermanagertest::gui::MemberDetailViewTest)
-#include "memberdetailviewtest.moc"
+#include "moc_memberdetailviewtest.cpp"

@@ -52,4 +52,4 @@ void MemberDebtViewTest::testCalculate()
 } // namespace membermanagertest
 
 QTEST_MAIN(membermanagertest::gui::MemberDebtViewTest)
-#include "memberdebtviewtest.moc"
+#include "moc_memberdebtviewtest.cpp"

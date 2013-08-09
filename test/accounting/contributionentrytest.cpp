@@ -33,4 +33,4 @@ void ContributionEntryTest::testCreateEntry()
 } // namespace membermanagertest
 
 QTEST_MAIN(membermanagertest::accounting::ContributionEntryTest)
-#include "contributionentrytest.moc"
+#include "moc_contributionentrytest.cpp"

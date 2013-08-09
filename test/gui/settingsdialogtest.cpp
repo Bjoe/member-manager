@@ -40,4 +40,4 @@ void SettingsDialogTest::testSettings()
 } // namespace membermanagertest
 
 QTEST_MAIN(membermanagertest::gui::SettingsDialogTest)
-#include "settingsdialogtest.moc"
+#include "moc_settingsdialogtest.cpp"

@@ -2,7 +2,11 @@
 
 #include "gui/connectiondialog.h"
 
-#include <QtGui>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QComboBox>
+#include <QSpinBox>
+#include <QDialogButtonBox>
 
 namespace membermanagertest
 {
@@ -119,4 +123,4 @@ void ConnectionDialogTest::testCancelButton()
 }
 
 QTEST_MAIN(membermanagertest::gui::ConnectionDialogTest)
-#include "connectiondialogtest.moc"
+#include "moc_connectiondialogtest.cpp"

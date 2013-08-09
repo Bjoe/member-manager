@@ -183,4 +183,4 @@ void MemberDaoTest::testDeleteMember()
 }
 
 QTEST_MAIN(membermanagertest::dao::MemberDaoTest)
-#include "memberdaotest.moc"
+#include "moc_memberdaotest.cpp"

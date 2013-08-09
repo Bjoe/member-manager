@@ -451,4 +451,4 @@ void PayTest::testPaySum()
 } // namespace membermanagertest
 
 QTEST_MAIN(membermanagertest::accounting::PayTest)
-#include "paytest.moc"
+#include "moc_paytest.cpp"

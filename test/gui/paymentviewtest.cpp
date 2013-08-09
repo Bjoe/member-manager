@@ -71,4 +71,4 @@ void PaymentViewTest::testCalculate()
 } // namespace membermanagertest
 
 QTEST_MAIN(membermanagertest::gui::PaymentViewTest)
-#include "paymentviewtest.moc"
+#include "moc_paymentviewtest.cpp"

@@ -30,7 +30,13 @@ void ContributionDaoTest::initTestCase()
 void ContributionDaoTest::testSaveNewRecord()
 {
     ContributionDao contributionDao(QSqlDatabase::database());
+    QSqlTableModel *model = contributionDao.getModelByMemberId(1);
+    QVERIFY(model);
+    QCOMPARE(model->rowCount(), 0);
+
     QVERIFY(contributionDao.saveRecord(ContributionEntry(1)));
+
+    QCOMPARE(model->rowCount(), 1);
 }
 
 void ContributionDaoTest::testSaveRecord()
@@ -85,12 +91,9 @@ void ContributionDaoTest::testInsertNewEmptyRowAndDeletRow()
     QModelIndex index = contributionDao.insertNewEmptyRowWithMemberId(1025);
 
     QCOMPARE(index.row(), 7);
-    model->select();
     QCOMPARE(model->rowCount(), 8);
 
     QVERIFY(contributionDao.deleteRow(index));
-
-    model->select();
     QCOMPARE(model->rowCount(), 7);
 }
 
@@ -98,4 +101,4 @@ void ContributionDaoTest::testInsertNewEmptyRowAndDeletRow()
 } // namespace membermanagertest
 
 QTEST_MAIN(membermanagertest::dao::ContributionDaoTest)
-#include "contributiondaotest.moc"
+#include "moc_contributiondaotest.cpp"

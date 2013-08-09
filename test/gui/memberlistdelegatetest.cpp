@@ -133,4 +133,4 @@ QString MemberListDelegateTest::data(int aRow, int aColumn, QAbstractItemModel *
 } // namespace membermanagertest
 
 QTEST_MAIN(membermanagertest::gui::MemberListDelegateTest)
-#include "memberlistdelegatetest.moc"
+#include "moc_memberlistdelegatetest.cpp"

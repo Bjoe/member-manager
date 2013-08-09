@@ -82,4 +82,4 @@ void MemberTest::testSetMember()
 }
 
 QTEST_MAIN(membermanagertest::MemberTest)
-#include "membertest.moc"
+#include "moc_membertest.cpp"

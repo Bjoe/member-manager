@@ -44,4 +44,4 @@ void ContributionReceiptDialogTest::testShowDialog()
 } // namespace membermanagertest
 
 QTEST_MAIN(membermanagertest::gui::ContributionReceiptDialogTest)
-#include "contributionreceiptdialogtest.moc"
+#include "moc_contributionreceiptdialogtest.cpp"

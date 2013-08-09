@@ -71,4 +71,4 @@ void ContributionDialogTest::testInsertAndDeleteRow()
 }
 
 QTEST_MAIN(membermanagertest::gui::ContributionDialogTest)
-#include "contributiondialogtest.moc"
+#include "moc_contributiondialogtest.cpp"

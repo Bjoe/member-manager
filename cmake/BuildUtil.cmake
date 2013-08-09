@@ -12,17 +12,25 @@ MACRO(qt_add_test testname testsrc)
 	  LIST(APPEND special_additional ${_additional})
      ENDFOREACH(_additional)
   
-     if((NOT DEFINED ${QT5}) OR (NOT ${QT5}))
-        qt4_automoc(${test_${testname}_SRCS} ${special_additional})
-     endif((NOT DEFINED ${QT5}) OR (NOT ${QT5}))
+     if(${QT5})
+        get_filename_component(_basename ${test_${testname}_SRCS} NAME_WE)
+        qt5_wrap_cpp(test_${testname}_MOC ${_basename}.h)
+     endif(${QT5})
 
+     if(NOT ${QT5})
+        qt4_automoc(${test_${testname}_SRCS} ${special_additional})
+     endif(NOT ${QT5})
+
+     add_custom_target(moc_${testname}_target DEPENDS ${test_${testname}_MOC})
      add_executable(test_${testname} ${test_${testname}_SRCS} ${special_additional} ${test_additional})
-     target_link_libraries(test_${testname} ${test_additional_lib} ${QT_LIBRARIES})
+     add_dependencies(test_${testname} moc_${testname}_target)
 
      if(${QT5})
-        qt5_use_modules(test_${testname} Test)
+        target_link_libraries(test_${testname} ${test_additional_lib} Qt5::Test)
+     else(${QT5})
+        target_link_libraries(test_${testname} ${test_additional_lib} ${QT_LIBRARIES})
      endif(${QT5})
-  
+
      add_test(test${testname} ${EXECUTABLE_OUTPUT_PATH}/test_${testname})
 
 ENDMACRO()
@@ -47,11 +55,14 @@ MACRO(qt_test testname testsrc)
      add_custom_target(moc_${testname}_target DEPENDS ${test_${testname}_MOC})
      add_executable(test_${testname} ${test_${testname}_SRCS} ${special_additional} ${test_additional})
      add_dependencies(test_${testname} moc_${testname}_target)
-     target_link_libraries(test_${testname} ${test_additional_lib} ${QT_LIBRARIES})
+
 
      if(${QT5})
-        qt5_use_modules(test_${testname} Test)
+        target_link_libraries(test_${testname} ${test_additional_lib} Qt5::Test)
+     else(${QT5})
+        target_link_libraries(test_${testname} ${test_additional_lib} ${QT_LIBRARIES})
      endif(${QT5})
+
   
      add_test(test${testname} ${EXECUTABLE_OUTPUT_PATH}/test_${testname})
 ENDMACRO()

@@ -78,7 +78,7 @@ void BalanceDialogTest::testInsertAndDeleteRow()
 {
     membermanager::gui::BalanceDialog dialog(1025);
 
-    QTableView *tableView = dialog.findChild<QTableView *> ("balanceTableView");
+    const QTableView *tableView = dialog.findChild<QTableView *> ("balanceTableView");
     const QAbstractItemModel *model = tableView->model();
     QVERIFY(model != 0);
     QCOMPARE(model->rowCount(), 15);
@@ -109,8 +109,9 @@ void BalanceDialogTest::testCopyToClipboard()
     dialog.copy();
 
     QClipboard *clipboard = QApplication::clipboard();
-    QCOMPARE(clipboard->text(), QString("21\t1025\t8\t2012-02-10\tZAHLUNGSEINGANG  1025 Ali Baba MITGLIEDSSCHULDEN\t\n"
-                                        "15\t1025\t-5\t2012-02-08\tMitgliedsbeitrag Feb\t\n"));
+    QCOMPARE(clipboard->text(), QString("15\t1025\t-5\t2012-02-08\tMitgliedsbeitrag Feb\t\n"
+                                        "21\t1025\t8\t2012-02-10\tZAHLUNGSEINGANG  1025 Ali Baba MITGLIEDSSCHULDEN\t\n"
+                                        ));
 }
 
 } // namespace gui

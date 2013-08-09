@@ -5,8 +5,18 @@ endif(CMAKE_CROSSCOMPILING)
 
 find_package(QtTestUtil)
 
-find_package(Qt4 4.7 REQUIRED QtTest)
-include(${QT_USE_FILE})
+if(${QT5})
+    # Instruct CMake to run moc automatically when needed.
+    set(CMAKE_AUTOMOC OFF)
+
+    # cmake example from http://qt-project.org/doc/qt-5.1/qtdoc/cmake-manual.html
+    find_package(Qt5Test)
+
+else(${QT5})
+    find_package(Qt4 4.8 REQUIRED QtTest)
+    include(${QT_USE_FILE})
+
+endif(${QT5})
 
 # Test Konfigurationen
 set(DATABASEDRIVER QSQLITE)

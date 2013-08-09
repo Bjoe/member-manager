@@ -37,4 +37,4 @@ void BalanceEntryTest::testCreateEntry()
 }
 
 QTEST_MAIN(membermanagertest::accounting::BalanceEntryTest)
-#include "balanceentrytest.moc"
+#include "moc_balanceentrytest.cpp"
