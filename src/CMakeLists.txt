@@ -59,4 +59,4 @@ target_link_libraries(memberManagerLib Qt5::Widgets Qt5::Sql)
 
 qt5_add_resources(QRC ${RESOURCES})
 add_executable(memberManager main.cpp ${QRC})
-target_link_libraries(memberManager memberManagerLib ${QIABANKING_LIBRARIES} ${AQB_LIBRARIES} ${GWN_LIBRARIES} Qt5::Widgets Qt5::Sql)
+target_link_libraries(memberManager memberManagerLib ${QIABANKING_LIBRARIES} ${AQB_LIBRARIES} ${GWN_LIBRARIES} Qt5::Core Qt5::Widgets Qt5::Qml Qt5::Quick)
