@@ -24,7 +24,7 @@ public:
 
     void loadDatabase();
 
-private slots:
+public slots:
     void showSettingsDialog();
     void showDatabaseDialog();
     void showOpenFileDialog();

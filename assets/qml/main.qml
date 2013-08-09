@@ -3,13 +3,33 @@ import QtQuick.Controls 1.0
 import QtQuick.Window 2.0
 
 ApplicationWindow {
-    title: qsTr("Hello World")
+    id: mainWindow
+    title: qsTr("Membermanager")
     width: 640
     height: 480
 
+    signal qmlSettingsTriggered()
+
     menuBar: MenuBar {
         Menu {
-            title: qsTr("File")
+            title: qsTr("Datei")
+            MenuItem {
+                text: qsTr("Open File")
+            }
+
+            MenuItem {
+                text: qsTr("Open DB")
+            }
+
+            MenuSeparator {}
+
+            MenuItem {
+                text: qsTr("Settings")
+                onTriggered: mainWindow.qmlSettingsTriggered();
+            }
+
+            MenuSeparator {}
+
             MenuItem {
                 text: qsTr("Exit")
                 onTriggered: Qt.quit();
@@ -17,9 +37,4 @@ ApplicationWindow {
         }
     }
 
-    Button {
-        text: qsTr("Hello World")
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenter: parent.verticalCenter
-    }
 }

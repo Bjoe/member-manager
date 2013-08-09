@@ -4,11 +4,13 @@
 #include <QUrl>
 #include <QtQml>
 #include <QtQuick/QQuickView>
-#include <QtGui/QGuiApplication>
+#include <QtWidgets/QApplication>
+
+#include "gui/mainwindow.h"
 
 int main(int argc, char *argv[])
 {
-    QGuiApplication app(argc, argv);
+    QApplication app(argc, argv);
     app.setApplicationName("Dorfverwaltung");
     app.setOrganizationName("Chaosdorf");
     app.setOrganizationDomain("www.chaosdorf.de");
@@ -20,6 +22,11 @@ int main(int argc, char *argv[])
         qWarning("Error: Your root item has to be a Window.");
         return -1;
     }
+
+    membermanager::gui::MainWindow *mainWindow = new membermanager::gui::MainWindow();
+
+    QObject::connect(topLevel, SIGNAL(qmlSettingsTriggered()), mainWindow, SLOT(showSettingsDialog()));
+
     window->show();
     return app.exec();
 }
