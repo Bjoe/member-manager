@@ -10,6 +10,7 @@
 #include "config.h"
 
 #include "entity/member.h"
+#include "entity/contribution.h"
 
 namespace membermanager {
 
@@ -38,6 +39,7 @@ void ManagerEngine::onLoadSqlFile(QString filename)
     QDjango::setDatabase(db);
 
     QDjango::registerModel<membermanager::entity::Member>();
+    QDjango::registerModel<membermanager::entity::Contribution>();
 }
 
 } // namespace membermanager

@@ -9,6 +9,7 @@
 #include "testconfig.h"
 
 #include "entity/member.h"
+#include "entity/contribution.h"
 
 #include "managerengine.h"
 
@@ -36,6 +37,7 @@ void ManagerEngineTest::init()
     }
     QDjango::setDatabase(db);
     QDjango::registerModel<membermanager::entity::Member>();
+    QDjango::registerModel<membermanager::entity::Contribution>();
 
     QDjango::dropTables();
     QDjango::createTables();

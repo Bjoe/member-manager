@@ -15,6 +15,7 @@ set(QT_UI
 
 set(QT_SRCS
     entity/member.cpp
+    entity/contribution.cpp
 
     gui/mainwindowuicontroller.cpp
 
