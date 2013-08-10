@@ -16,6 +16,7 @@ set(QT_UI
 set(QT_SRCS
     entity/member.cpp
     entity/contribution.cpp
+    entity/balance.cpp
 
     gui/mainwindowuicontroller.cpp
 
