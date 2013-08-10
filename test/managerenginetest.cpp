@@ -1,17 +1,20 @@
 
 #include <QtTest/QtTest>
 
+#include <QtCore/QObject>
 #include <QtCore/QString>
 
+#include "QDjango.h"
+
 #include "testconfig.h"
-#include "testcoverageobject.h"
-#include "database/databaseutil.h"
+
+#include "entity/member.h"
 
 #include "managerengine.h"
 
 namespace test {
 
-class ManagerEngineTest : public qttestutil::TestCoverageObject
+class ManagerEngineTest : public QObject
 {
     Q_OBJECT
 
@@ -23,9 +26,21 @@ private slots:
 
 void ManagerEngineTest::init()
 {
-    qttestutil::database::DatabaseUtil database(DATABASEDRIVER);
-    database.open(DATABASE);
-    database.read(SQLTESTFILE);
+    QSqlDatabase db = QSqlDatabase::addDatabase(DATABASEDRIVER);
+    db.setDatabaseName(DATABASE);
+    if (!db.open()) {
+        QSqlError err = db.lastError();
+        if (err.type() != QSqlError::NoError) {
+            qWarning() << err.text();
+        }
+    }
+    QDjango::setDatabase(db);
+    QDjango::registerModel<membermanager::entity::Member>();
+
+    QDjango::dropTables();
+    QDjango::createTables();
+
+    db.close();
 }
 
 void ManagerEngineTest::testLoadDatabase()

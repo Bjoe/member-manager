@@ -34,6 +34,7 @@ void ManagerEngine::onLoadSqlFile(QString filename)
             return;
         }
     }
+
     QDjango::setDatabase(db);
 
     QDjango::registerModel<membermanager::entity::Member>();

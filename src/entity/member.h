@@ -3,7 +3,6 @@
 
 #include <QtCore/QString>
 #include <QtCore/QDate>
-#include <QtCore/QVariant>
 
 #include "QDjangoModel.h"
 
@@ -14,7 +13,17 @@ class Member : public QDjangoModel
 {
     Q_OBJECT
 
-    Q_PROPERTY(long memberId READ memberId WRITE setMemberId)
+    Q_CLASSINFO("__meta__", "db_table=Member")
+    Q_CLASSINFO("memberId", "primary_key=true db_index=true unique=true auto_increment=true")
+    Q_CLASSINFO("nickname", "null=true")
+    Q_CLASSINFO("cancellationDate", "null=true")
+    Q_CLASSINFO("info", "null=true")
+    Q_CLASSINFO("reference", "null=true")
+    Q_CLASSINFO("accountNumber", "null=true")
+    Q_CLASSINFO("bankName", "null=true")
+    Q_CLASSINFO("bankCode", "null=true")
+
+    Q_PROPERTY(int memberId READ memberId WRITE setMemberId)
     Q_PROPERTY(QString name READ name WRITE setName)
     Q_PROPERTY(QString firstname READ firstname WRITE setFirstname)
     Q_PROPERTY(QString nickname READ nickname WRITE setNickname)
@@ -26,16 +35,16 @@ class Member : public QDjangoModel
     Q_PROPERTY(QString street READ street WRITE setStreet)
     Q_PROPERTY(QString city READ city WRITE setCity)
     Q_PROPERTY(QString zipCode READ zipCode WRITE setZipCode)
-    Q_PROPERTY(QVariant collection READ collection WRITE setCollection)
+    Q_PROPERTY(bool collection READ isCollection WRITE setCollection)
     Q_PROPERTY(QString accountNumber READ accountNumber WRITE setAccountNumber)
     Q_PROPERTY(QString bankName READ bankName WRITE setBankName)
     Q_PROPERTY(QString bankCode READ bankCode WRITE setBankCode)
-    Q_PROPERTY(QVariant deleted READ deleted WRITE setDeleted)
+    Q_PROPERTY(bool deleted READ isDeleted WRITE setDeleted)
 
 public:
 
-    long memberId() const;
-    void setMemberId(long id);
+    int memberId() const;
+    void setMemberId(int id);
 
     QString name() const;
     void setName(const QString &name);
@@ -70,8 +79,8 @@ public:
     QString zipCode() const;
     void setZipCode(const QString &code);
 
-    QVariant collection() const;
-    void setCollection(const QVariant &collection);
+    bool isCollection() const;
+    void setCollection(bool collection);
 
     QString accountNumber() const;
     void setAccountNumber(const QString &number);
@@ -82,11 +91,11 @@ public:
     QString bankCode() const;
     void setBankCode(const QString &code);
 
-    QVariant deleted() const;
-    void setDeleted(const QVariant &deleted);
+    bool isDeleted() const;
+    void setDeleted(bool deleted);
 
 private:
-    long m_memberId;
+    int m_memberId;
     QString m_name;
     QString m_firstname;
     QString m_nickname;
@@ -98,11 +107,11 @@ private:
     QString m_street;
     QString m_city;
     QString m_zipCode;
-    QVariant m_collection;
+    bool m_collection;
     QString m_accountNumber;
     QString m_bankName;
     QString m_bankCode;
-    QVariant m_deleted;
+    bool m_deleted;
 };
 
 } // namespace entity

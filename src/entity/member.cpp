@@ -3,12 +3,12 @@
 namespace membermanager {
 namespace entity {
 
-long Member::memberId() const
+int Member::memberId() const
 {
     return m_memberId;
 }
 
-void Member::setMemberId(long id)
+void Member::setMemberId(int id)
 {
     m_memberId = id;
 }
@@ -123,12 +123,12 @@ void Member::setZipCode(const QString &code)
     m_zipCode = code;
 }
 
-QVariant Member::collection() const
+bool Member::isCollection() const
 {
     return m_collection;
 }
 
-void Member::setCollection(const QVariant &collection)
+void Member::setCollection(bool collection)
 {
     m_collection = collection;
 }
@@ -163,12 +163,12 @@ void Member::setBankCode(const QString &code)
     m_bankCode = code;
 }
 
-QVariant Member::deleted() const
+bool Member::isDeleted() const
 {
     return m_deleted;
 }
 
-void Member::setDeleted(const QVariant &deleted)
+void Member::setDeleted(bool deleted)
 {
     m_deleted = deleted;
 }
