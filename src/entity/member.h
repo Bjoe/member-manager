@@ -95,7 +95,6 @@ public:
     void setDeleted(bool deleted);
 
 private:
-    int m_memberId;
     QString m_name;
     QString m_firstname;
     QString m_nickname;
@@ -107,11 +106,12 @@ private:
     QString m_street;
     QString m_city;
     QString m_zipCode;
-    bool m_collection;
     QString m_accountNumber;
     QString m_bankName;
     QString m_bankCode;
+    int m_memberId;
     bool m_deleted;
+    bool m_collection;
 };
 
 } // namespace entity
