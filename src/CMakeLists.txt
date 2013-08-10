@@ -17,6 +17,7 @@ set(QT_SRCS
     entity/member.cpp
     entity/contribution.cpp
     entity/balance.cpp
+    entity/cashaccount.cpp
 
     gui/mainwindowuicontroller.cpp
 

@@ -63,14 +63,14 @@ void Balance::setAccount(int account)
     m_account = account;
 }
 
-int Balance::cashId() const
+int Balance::cashAccountId() const
 {
-    return m_cashId;
+    return m_cashAccountId;
 }
 
-void Balance::setCashId(int id)
+void Balance::setCashAccountId(int id)
 {
-    m_cashId = id;
+    m_cashAccountId = id;
 }
 
 QString Balance::info() const

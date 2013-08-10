@@ -15,7 +15,7 @@ class Balance : public QDjangoModel
 
     Q_CLASSINFO("__meta__", "db_table=Balance")
     Q_CLASSINFO("balanceId", "primary_key=true db_index=true unique=true auto_increment=true")
-    Q_CLASSINFO("cashId", "null=true")
+    Q_CLASSINFO("cashAccountId", "null=true")
     Q_CLASSINFO("info", "null=true")
 
     Q_PROPERTY(int balanceId READ balanceId WRITE setBalanceId)
@@ -24,7 +24,7 @@ class Balance : public QDjangoModel
     Q_PROPERTY(QDate valuta READ valuta WRITE setValuta)
     Q_PROPERTY(QString purpose READ purpose WRITE setPurpose)
     Q_PROPERTY(int account READ account WRITE setAccount)
-    Q_PROPERTY(int cashId READ cashId WRITE setCashId)
+    Q_PROPERTY(int cashAccountId READ cashAccountId WRITE setCashAccountId)
     Q_PROPERTY(QString info READ info WRITE setInfo)
 
 public:
@@ -47,8 +47,8 @@ public:
     int account() const;
     void setAccount(int account);
 
-    int cashId() const;
-    void setCashId(int id);
+    int cashAccountId() const;
+    void setCashAccountId(int id);
 
     QString info() const;
     void setInfo(const QString &info);
@@ -59,7 +59,7 @@ private:
     QDate m_valuta;
     double m_value;
     int m_account;
-    int m_cashId;
+    int m_cashAccountId;
     int m_memberId;
     int m_balanceId;
 };
