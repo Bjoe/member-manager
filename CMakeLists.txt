@@ -23,12 +23,14 @@ find_package(Qt5Qml REQUIRED)
 find_package(Qt5Quick REQUIRED)
 
 find_package(PkgConfig REQUIRED)
+pkg_check_modules(QDJ REQUIRED qdjango-db)
 pkg_check_modules(AQB REQUIRED aqbanking)
 pkg_check_modules(GWN REQUIRED gwenhywfar)
 find_package(QIABanking)
 
 include_directories(
   "${QIABANKING_INCLUDE_DIRS}"
+  "${QDJ_INCLUDE_DIRS}"
   "${AQB_INCLUDE_DIRS}" 
   "${GWN_INCLUDE_DIRS}"
   "${PROJECT_SOURCE_DIR}/src"

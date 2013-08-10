@@ -5,7 +5,11 @@
 #include <QtSql/QSqlError>
 #include <QtWidgets/QMessageBox>
 
+#include "QDjango.h"
+
 #include "config.h"
+
+#include "entity/member.h"
 
 namespace membermanager {
 
@@ -30,10 +34,9 @@ void ManagerEngine::onLoadSqlFile(QString filename)
             return;
         }
     }
-}
+    QDjango::setDatabase(db);
 
-void ManagerEngine::onOpenDatabase()
-{
+    QDjango::registerModel<membermanager::entity::Member>();
 }
 
 } // namespace membermanager

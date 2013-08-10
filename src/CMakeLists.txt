@@ -14,6 +14,8 @@ set(QT_UI
     )
 
 set(QT_SRCS
+    entity/member.cpp
+
     gui/mainwindowuicontroller.cpp
 
     gui/mainwindow.cpp
@@ -62,4 +64,4 @@ target_link_libraries(memberManagerLib Qt5::Widgets Qt5::Sql)
 
 qt5_add_resources(QRC ${RESOURCES})
 add_executable(memberManager main.cpp ${QRC})
-target_link_libraries(memberManager memberManagerLib ${QIABANKING_LIBRARIES} ${AQB_LIBRARIES} ${GWN_LIBRARIES} Qt5::Core Qt5::Widgets Qt5::Qml Qt5::Quick)
+target_link_libraries(memberManager memberManagerLib ${QIABANKING_LIBRARIES} ${QDJ_LDFLAGS} ${AQB_LDFLAGS} ${GWN_LDFLAGS} Qt5::Core Qt5::Widgets Qt5::Qml Qt5::Quick)
