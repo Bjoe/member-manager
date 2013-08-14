@@ -3,6 +3,7 @@
 
 #include <QtCore/QObject>
 #include <QtCore/QString>
+#include <QSignalSpy>
 
 #include "QDjango.h"
 
@@ -22,12 +23,12 @@ class DatabaseManagerTest : public QObject
     Q_OBJECT
 
 private slots:
-    void init();
+    void initTestCase();
     void testLoadDatabase();
 
 };
 
-void DatabaseManagerTest::init()
+void DatabaseManagerTest::initTestCase()
 {
     QSqlDatabase db = QSqlDatabase::addDatabase(DATABASEDRIVER);
     db.setDatabaseName(DATABASE);
@@ -53,7 +54,10 @@ void DatabaseManagerTest::testLoadDatabase()
 {
     QString filename = "file:" DATABASE;
     membermanager::DatabaseManager databaseManager(this);
+    QSignalSpy spy(&databaseManager, SIGNAL(databaseReady()));
     databaseManager.onLoadSqlFile(filename);
+
+    QCOMPARE(spy.count(), 1);
 }
 
 }

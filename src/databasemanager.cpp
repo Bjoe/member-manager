@@ -44,6 +44,8 @@ void DatabaseManager::onLoadSqlFile(QString filename)
     QDjango::registerModel<membermanager::entity::Contribution>();
     QDjango::registerModel<membermanager::entity::Balance>();
     QDjango::registerModel<membermanager::entity::CashAccount>();
+
+    emit databaseReady();
 }
 
 } // namespace membermanager

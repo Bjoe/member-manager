@@ -12,6 +12,8 @@ class DatabaseManager : public QObject
 
 public:
     DatabaseManager(QObject *parent = 0);
+signals:
+    void databaseReady();
 
 public slots:
     void onLoadSqlFile(QString filename);
