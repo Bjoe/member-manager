@@ -13,11 +13,11 @@
 #include "entity/balance.h"
 #include "entity/cashaccount.h"
 
-#include "managerengine.h"
+#include "databasemanager.h"
 
 namespace test {
 
-class ManagerEngineTest : public QObject
+class DatabaseManagerTest : public QObject
 {
     Q_OBJECT
 
@@ -27,7 +27,7 @@ private slots:
 
 };
 
-void ManagerEngineTest::init()
+void DatabaseManagerTest::init()
 {
     QSqlDatabase db = QSqlDatabase::addDatabase(DATABASEDRIVER);
     db.setDatabaseName(DATABASE);
@@ -49,14 +49,14 @@ void ManagerEngineTest::init()
     db.close();
 }
 
-void ManagerEngineTest::testLoadDatabase()
+void DatabaseManagerTest::testLoadDatabase()
 {
     QString filename = "file:" DATABASE;
-    membermanager::ManagerEngine managerEngine(this);
-    managerEngine.onLoadSqlFile(filename);
+    membermanager::DatabaseManager databaseManager(this);
+    databaseManager.onLoadSqlFile(filename);
 }
 
 }
 
-QTEST_MAIN(test::ManagerEngineTest)
-#include "moc_managerenginetest.cpp"
+QTEST_MAIN(test::DatabaseManagerTest)
+#include "moc_databasemanagertest.cpp"

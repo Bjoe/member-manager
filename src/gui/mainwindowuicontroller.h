@@ -4,7 +4,7 @@
 #include <QtQml/QQmlApplicationEngine>
 #include <QtQuick/QQuickView>
 
-#include "managerengine.h"
+#include "databasemanager.h"
 
 namespace membermanager {
 namespace gui {
@@ -23,7 +23,7 @@ private:
 
     QQmlApplicationEngine m_engine;
     QQuickWindow *m_window;
-    membermanager::ManagerEngine *m_managerEngine;
+    membermanager::DatabaseManager *m_databaseManager;
 };
 
 } // namespace gui

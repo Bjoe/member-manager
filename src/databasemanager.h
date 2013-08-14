@@ -6,12 +6,12 @@
 
 namespace membermanager {
 
-class ManagerEngine : public QObject
+class DatabaseManager : public QObject
 {
     Q_OBJECT
 
 public:
-    ManagerEngine(QObject *parent = 0);
+    DatabaseManager(QObject *parent = 0);
 
 public slots:
     void onLoadSqlFile(QString filename);

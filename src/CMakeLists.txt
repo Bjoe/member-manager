@@ -47,7 +47,7 @@ set(QT_SRCS
     accounting/pay.cpp
 
     member.cpp
-    managerengine.cpp
+    databasemanager.cpp
     )
 
 set(RESOURCES ../resources.qrc)

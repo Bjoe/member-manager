@@ -1,4 +1,4 @@
-#include "managerengine.h"
+#include "databasemanager.h"
 
 #include <QtCore/QUrl>
 #include <QtSql/QSqlDatabase>
@@ -16,11 +16,11 @@
 
 namespace membermanager {
 
-ManagerEngine::ManagerEngine(QObject *parent) : QObject(parent)
+DatabaseManager::DatabaseManager(QObject *parent) : QObject(parent)
 {
 }
 
-void ManagerEngine::onLoadSqlFile(QString filename)
+void DatabaseManager::onLoadSqlFile(QString filename)
 {
     QUrl url(filename);
     QString database = url.path();

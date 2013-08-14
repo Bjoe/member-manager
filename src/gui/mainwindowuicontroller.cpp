@@ -9,13 +9,13 @@ namespace membermanager {
 namespace gui {
 
 MainWindowUiController::MainWindowUiController(const QUrl &qmlUrl)
-    : m_engine(qmlUrl), m_window(nullptr), m_managerEngine(new membermanager::ManagerEngine())
+    : m_engine(qmlUrl), m_window(nullptr), m_databaseManager(new membermanager::DatabaseManager())
 {
 }
 
 MainWindowUiController::~MainWindowUiController()
 {
-    delete m_managerEngine;
+    delete m_databaseManager;
     if(m_window)
         delete m_window;
 }
@@ -39,7 +39,7 @@ void MainWindowUiController::show()
 
 void MainWindowUiController::init()
 {
-    m_managerEngine->connect(m_window, SIGNAL(qmlOpenSqlFile(QString)), SLOT(onLoadSqlFile(QString)));
+    m_databaseManager->connect(m_window, SIGNAL(qmlOpenSqlFile(QString)), SLOT(onLoadSqlFile(QString)));
 }
 
 } // namespace gui
