@@ -1,15 +1,17 @@
 #include "mainwindowuicontroller.h"
 
-#include <QtCore/QObject>
-#include <QtCore/QList>
-#include <QtCore/QString>
-#include <QtCore/QUrl>
+#include <QObject>
+#include <QList>
+#include <QString>
+#include <QUrl>
 
 namespace membermanager {
 namespace gui {
 
 MainWindowUiController::MainWindowUiController(const QUrl &qmlUrl)
-    : m_engine(qmlUrl), m_window(nullptr), m_databaseManager(new membermanager::DatabaseManager())
+    : m_engine(qmlUrl),
+      m_window(nullptr),
+      m_databaseManager(new membermanager::DatabaseManager())
 {
 }
 

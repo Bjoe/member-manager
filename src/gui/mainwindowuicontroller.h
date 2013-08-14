@@ -1,8 +1,8 @@
 #ifndef MEMBERMANAGER_GUI_MAINWINDOWUICONTROLLER_H
 #define MEMBERMANAGER_GUI_MAINWINDOWUICONTROLLER_H
 
-#include <QtQml/QQmlApplicationEngine>
-#include <QtQuick/QQuickView>
+#include <QQmlApplicationEngine>
+#include <QQuickView>
 
 #include "databasemanager.h"
 

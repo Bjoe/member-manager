@@ -1,7 +1,6 @@
 
-#include <QtCore/QObject>
-#include <QtCore/QString>
-#include <QtCore/QUrl>
+#include <QString>
+#include <QUrl>
 #include <QtWidgets/QApplication>
 
 #include "config.h"

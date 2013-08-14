@@ -1,9 +1,9 @@
 #include "databasemanager.h"
 
-#include <QtCore/QUrl>
-#include <QtSql/QSqlDatabase>
-#include <QtSql/QSqlError>
-#include <QtWidgets/QMessageBox>
+#include <QUrl>
+#include <QSqlDatabase>
+#include <QSqlError>
+#include <QMessageBox>
 
 #include "QDjango.h"
 

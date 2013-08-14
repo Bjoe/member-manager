@@ -1,8 +1,8 @@
 #ifndef MEMBERMANAGER_MANAGERENGINE_H
 #define MEMBERMANAGER_MANAGERENGINE_H
 
-#include <QtCore/QObject>
-#include <QtCore/QString>
+#include <QObject>
+#include <QString>
 
 namespace membermanager {
 
