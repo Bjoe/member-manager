@@ -12,3 +12,7 @@ qt_add_test(settingsdialog settingsdialogtest.cpp)
 qt_test(mainwindow mainwindowtest.cpp)
 qt_test(accountingentryimporterview accountingentryimporterviewtest.cpp)
 qt_test(balancedialog balancedialogtest.cpp)
+
+qt_test(memberuicontroller memberuicontrollertest.cpp)
+qt_test(memberhandler memberhandlertest.cpp)
+qt_test(proxytablemodel proxytablemodeltest.cpp)

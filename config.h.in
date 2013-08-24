@@ -12,3 +12,4 @@
 #define ORGANIZATION_DOMAIN "chaosdorf.de"
 
 #define MAIN_QML "qrc:/assets/qml/main.qml"
+#define MEMBERVIEW_QML "qrc:/assets/qml/MemberView.qml"

@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>assets/qml/main.qml</file>
+        <file>assets/qml/MemberView.qml</file>
     </qresource>
 </RCC>

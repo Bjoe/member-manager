@@ -41,6 +41,9 @@ set(test_additional_lib
  ${QT_TEST_UTIL_LIBRARIES}
  ${QT_GUI_TEST_UTIL_LIBRARIES}
  ${QT_DATABASE_TEST_UTIL_LIBRARIES}
+ Qt5::Widgets
+ Qt5::Qml
+ Qt5::Quick
 )
 
 set(test_additional

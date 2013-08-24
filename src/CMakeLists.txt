@@ -14,12 +14,18 @@ set(QT_UI
     )
 
 set(QT_SRCS
+
+    dao/membertablemodel.cpp
+
     entity/member.cpp
     entity/contribution.cpp
     entity/balance.cpp
     entity/cashaccount.cpp
 
     gui/mainwindowuicontroller.cpp
+    gui/memberuicontroller.cpp
+    gui/memberhandler.cpp
+    gui/proxytablemodel.cpp
 
     gui/mainwindow.cpp
     gui/memberdetailview.cpp
@@ -63,7 +69,7 @@ configure_file (
 qt5_wrap_ui(UI_OUTFILES ${QT_UI})
 
 add_library(memberManagerLib STATIC ${QT_SRCS} ${UI_OUTFILES})
-target_link_libraries(memberManagerLib Qt5::Widgets Qt5::Sql)
+target_link_libraries(memberManagerLib Qt5::Widgets Qt5::Sql Qt5::Qml)
 
 qt5_add_resources(QRC ${RESOURCES})
 add_executable(memberManager main.cpp ${QRC})

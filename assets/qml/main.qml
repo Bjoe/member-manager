@@ -2,6 +2,7 @@ import QtQuick 2.1
 import QtQuick.Controls 1.0
 import QtQuick.Window 2.0
 import QtQuick.Dialogs 1.0
+import QtQuick.Layouts 1.0
 
 ApplicationWindow {
     id: mainWindow
@@ -11,6 +12,7 @@ ApplicationWindow {
 
     signal qmlSettingsTriggered()
     signal qmlOpenSqlFile(string filename)
+    signal databaseReady()
 
     FileDialog {
         id: fileDialog
@@ -64,5 +66,20 @@ ApplicationWindow {
                 onTriggered: Qt.quit()
             }
         }
+    }
+
+    ColumnLayout {
+        id: layout
+        objectName: "layout"
+        anchors.fill: mainWindow
+        anchors.margins: 11
+
+        MemberView {
+            id: memberView
+        }
+    }
+
+    function onDatabaseReady() {
+        console.debug("Database load.")
     }
 }
