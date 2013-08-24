@@ -14,7 +14,6 @@ MainWindowUiController::MainWindowUiController()
     : m_engine(),
       m_window(nullptr),
       m_databaseManager(new membermanager::DatabaseManager()),
-      m_memberUiController(new MemberUiController()),
       m_memberHandler(new MemberHandler())
 {
 }
@@ -22,7 +21,7 @@ MainWindowUiController::MainWindowUiController()
 MainWindowUiController::~MainWindowUiController()
 {
     delete m_databaseManager;
-    delete m_memberUiController;
+    delete m_memberHandler;
     if(m_window)
         delete m_window;
 }
@@ -58,7 +57,6 @@ void MainWindowUiController::initContext(QQmlContext *context)
 void MainWindowUiController::init()
 {
     m_databaseManager->connect(m_window, SIGNAL(qmlOpenSqlFile(QString)), SLOT(onLoadSqlFile(QString)));
-    m_memberUiController->connect(m_databaseManager, SIGNAL(databaseReady()), SLOT(onDatabaseReady()));
     m_memberHandler->connect(m_databaseManager, SIGNAL(databaseReady()), SLOT(onDatabaseReady()));
     m_window->connect(m_databaseManager, SIGNAL(databaseReady()), SLOT(onDatabaseReady()));
 }

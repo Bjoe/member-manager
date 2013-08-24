@@ -23,7 +23,6 @@ set(QT_SRCS
     entity/cashaccount.cpp
 
     gui/mainwindowuicontroller.cpp
-    gui/memberuicontroller.cpp
     gui/memberhandler.cpp
     gui/proxytablemodel.cpp
 

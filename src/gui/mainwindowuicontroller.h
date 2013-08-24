@@ -8,7 +8,6 @@
 #include <QUrl>
 
 #include "databasemanager.h"
-#include "gui/memberuicontroller.h"
 #include "gui/memberhandler.h"
 
 namespace membermanager {
@@ -30,7 +29,6 @@ private:
     QQmlApplicationEngine m_engine;
     QQuickWindow *m_window;
     membermanager::DatabaseManager *m_databaseManager;
-    MemberUiController *m_memberUiController;
     MemberHandler *m_memberHandler;
 };
 
