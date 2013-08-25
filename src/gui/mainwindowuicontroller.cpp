@@ -65,6 +65,7 @@ void MainWindowUiController::init()
     m_databaseManager->connect(m_window, SIGNAL(qmlOpenSqlFile(QString)), SLOT(onLoadSqlFile(QString)));
     m_memberHandler->connect(m_databaseManager, SIGNAL(databaseReady()), SLOT(onDatabaseReady()));
     m_window->connect(m_databaseManager, SIGNAL(databaseReady()), SLOT(onDatabaseReady()));
+    m_window->connect(m_memberHandler->getProxyModel(), SIGNAL(modelReloaded()), SLOT(onModelReloaded()));
 }
 
 } // namespace gui

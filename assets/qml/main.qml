@@ -80,11 +80,14 @@ ApplicationWindow {
         }
     }
 
-    function onDatabaseReady() {
-        console.debug("Database load.")
-
+    function onModelReloaded() {
+        console.debug("Model reloaded")
         layout.children[0].destroy()
         var component = Qt.createComponent("MemberView.qml")
         component.createObject(layout, { "anchors.fill": layout})
+    }
+
+    function onDatabaseReady() {
+        console.debug("Database load.")
     }
 }

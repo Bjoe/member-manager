@@ -16,6 +16,7 @@ void ProxyTableModel::reload(QSqlTableModel *sqlTableModel)
 {
     delete m_sqlTableModel;
     m_sqlTableModel = sqlTableModel;
+    m_sqlTableModel->select();
 
     m_roles.clear();
     int colCount = m_sqlTableModel->columnCount();
@@ -23,6 +24,7 @@ void ProxyTableModel::reload(QSqlTableModel *sqlTableModel)
         QVariant role = m_sqlTableModel->headerData(i, Qt::Horizontal);
         m_roles[Qt::UserRole + 1 + i] = role.toByteArray();
     }
+    emit modelReloaded();
 }
 
 QHash<int, QByteArray> ProxyTableModel::roleNames() const

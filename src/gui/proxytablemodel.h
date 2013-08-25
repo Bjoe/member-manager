@@ -35,7 +35,8 @@ public:
     QHash<int,QByteArray> roleNames() const;
 
 signals:
-    
+    void modelReloaded();
+
 public slots:
 
 private:

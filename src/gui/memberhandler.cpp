@@ -23,7 +23,6 @@ void MemberHandler::onDatabaseReady()
 {
     QSqlTableModel *model = dao::MemberTableModel::createModel();
     m_proxyTableModel->reload(model);
-    m_proxyTableModel->select();
 
     qDebug() << QString("Database ready. Selected row count: %1").arg(m_proxyTableModel->rowCount());
 }

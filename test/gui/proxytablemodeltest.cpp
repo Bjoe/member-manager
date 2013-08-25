@@ -1,5 +1,6 @@
 
 #include <QtTest/QtTest>
+#include <QSignalSpy>
 
 #include <QObject>
 #include <QString>
@@ -73,10 +74,13 @@ void ProxyTableModelTest::testProxy()
     QCOMPARE(model->rowCount(), 1);
 
     membermanager::gui::ProxyTableModel proxyTable;
+    QSignalSpy spy(&proxyTable, SIGNAL(modelReloaded()));
+
     QCOMPARE(proxyTable.rowCount(), 0);
 
     proxyTable.reload(model);
-    proxyTable.select();
+
+    QCOMPARE(spy.count(), 1);
     QCOMPARE(proxyTable.rowCount(), 1);
 
     QHash<int, QByteArray> roles = proxyTable.roleNames();
