@@ -71,15 +71,20 @@ ApplicationWindow {
     ColumnLayout {
         id: layout
         objectName: "layout"
-        anchors.fill: mainWindow
+        anchors.fill: parent
         anchors.margins: 11
 
         MemberView {
-            id: memberView
+            anchors.fill: layout
+            enabled: false
         }
     }
 
     function onDatabaseReady() {
         console.debug("Database load.")
+
+        layout.children[0].destroy()
+        var component = Qt.createComponent("MemberView.qml")
+        component.createObject(layout, { "anchors.fill": layout})
     }
 }

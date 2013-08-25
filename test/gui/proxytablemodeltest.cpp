@@ -3,6 +3,9 @@
 
 #include <QObject>
 #include <QString>
+#include <QByteArray>
+#include <QHash>
+#include <QModelIndex>
 #include <QSqlTableModel>
 
 #include "QDjango.h"
@@ -25,7 +28,7 @@ class ProxyTableModelTest : public QObject
 
 private slots:
     void initTestCase();
-    void testHandler();
+    void testProxy();
 };
 
 void ProxyTableModelTest::initTestCase()
@@ -62,7 +65,7 @@ void ProxyTableModelTest::initTestCase()
     db.close();
 }
 
-void ProxyTableModelTest::testHandler()
+void ProxyTableModelTest::testProxy()
 {
     QSqlTableModel *model = new QSqlTableModel();
     model->setTable("member");
@@ -76,6 +79,16 @@ void ProxyTableModelTest::testHandler()
     proxyTable.select();
     QCOMPARE(proxyTable.rowCount(), 1);
 
+    QHash<int, QByteArray> roles = proxyTable.roleNames();
+
+    QCOMPARE(roles.size(), 17);
+
+    QCOMPARE(roles.value(Qt::UserRole + 1).data(), "memberId");
+    QCOMPARE(roles.value(Qt::UserRole + 2).data(), "name");
+
+    QModelIndex index = proxyTable.index(0, 0);
+    QVariant value = proxyTable.data(index, Qt::UserRole + 3);
+    QCOMPARE(value, QVariant("James T."));
 }
 
 }

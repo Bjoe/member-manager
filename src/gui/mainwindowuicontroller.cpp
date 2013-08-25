@@ -7,6 +7,10 @@
 #include <QDateTime>
 #include <QStringList>
 
+#include <QDebug>
+
+#include <QSqlTableModel>
+
 namespace membermanager {
 namespace gui {
 
@@ -16,6 +20,8 @@ MainWindowUiController::MainWindowUiController()
       m_databaseManager(new membermanager::DatabaseManager()),
       m_memberHandler(new MemberHandler())
 {
+    //m_memberHandler->connect(m_databaseManager, SIGNAL(databaseReady()), SLOT(onDatabaseReady()));
+    //m_databaseManager->onLoadSqlFile("file:dorfverw.dat");
 }
 
 MainWindowUiController::~MainWindowUiController()
