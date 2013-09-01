@@ -59,8 +59,6 @@ void ProxyTableModelTest::initTestCase()
     member->setStreet("universe");
     member->setCity("NCC");
     member->setZipCode("1701");
-    member->setCollection(false);
-    member->setDeleted(false);
     member->save();
 
     db.close();

@@ -55,8 +55,8 @@ void MemberTableModelTest::initTestCase()
     member->setStreet("universe");
     member->setCity("NCC");
     member->setZipCode("1701");
-    member->setCollection(false);
-    member->setDeleted(false);
+    member->setCollectionState(membermanager::entity::Member::CollectionState::notKnown);
+    member->setState(membermanager::entity::Member::State::inactive);
     member->save();
 
     db.close();

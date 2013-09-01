@@ -35,13 +35,19 @@ class Member : public QDjangoModel
     Q_PROPERTY(QString street READ street WRITE setStreet)
     Q_PROPERTY(QString city READ city WRITE setCity)
     Q_PROPERTY(QString zipCode READ zipCode WRITE setZipCode)
-    Q_PROPERTY(bool collection READ isCollection WRITE setCollection)
+    Q_PROPERTY(QString collectionState READ collectionState WRITE setCollectionState)
     Q_PROPERTY(QString accountNumber READ accountNumber WRITE setAccountNumber)
     Q_PROPERTY(QString bankName READ bankName WRITE setBankName)
     Q_PROPERTY(QString bankCode READ bankCode WRITE setBankCode)
-    Q_PROPERTY(bool deleted READ isDeleted WRITE setDeleted)
+    Q_PROPERTY(QString state READ state WRITE setState)
+
+    Q_ENUMS(membermanager::entity::Member::State)
+    Q_ENUMS(membermanager::entity::Member::CollectionState)
 
 public:
+
+    enum class State : char { active='A', inactive='I', deleted='D' };
+    enum class CollectionState : char { known='K', pause='P', notKnown='N' };
 
     int memberId() const;
     void setMemberId(int id);
@@ -79,8 +85,9 @@ public:
     QString zipCode() const;
     void setZipCode(const QString &code);
 
-    bool isCollection() const;
-    void setCollection(bool collection);
+    QString collectionState() const;
+    void setCollectionState(QString state);
+    void setCollectionState(CollectionState state);
 
     QString accountNumber() const;
     void setAccountNumber(const QString &number);
@@ -91,8 +98,9 @@ public:
     QString bankCode() const;
     void setBankCode(const QString &code);
 
-    bool isDeleted() const;
-    void setDeleted(bool deleted);
+    QString state() const;
+    void setState(QString state);
+    void setState(State state);
 
 private:
     QString m_name;
@@ -110,11 +118,14 @@ private:
     QString m_bankName;
     QString m_bankCode;
     int m_memberId;
-    bool m_deleted;
-    bool m_collection;
+    QString m_state;
+    QString m_collectionState;
 };
 
 } // namespace entity
 } // namespace membermanager
+
+Q_DECLARE_METATYPE(membermanager::entity::Member::State)
+Q_DECLARE_METATYPE(membermanager::entity::Member::CollectionState)
 
 #endif // MEMBERMANAGER_ENTITY_MEMBER_H

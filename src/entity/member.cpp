@@ -1,5 +1,7 @@
 #include "member.h"
 
+#include <QChar>
+
 namespace membermanager {
 namespace entity {
 
@@ -123,14 +125,19 @@ void Member::setZipCode(const QString &code)
     m_zipCode = code;
 }
 
-bool Member::isCollection() const
+QString Member::collectionState() const
 {
-    return m_collection;
+    return m_collectionState;
 }
 
-void Member::setCollection(bool collection)
+void Member::setCollectionState(QString state)
 {
-    m_collection = collection;
+    m_collectionState = state;
+}
+
+void Member::setCollectionState(Member::CollectionState state)
+{
+    m_collectionState = QChar(static_cast<char>(state));
 }
 
 QString Member::accountNumber() const
@@ -163,14 +170,19 @@ void Member::setBankCode(const QString &code)
     m_bankCode = code;
 }
 
-bool Member::isDeleted() const
+QString Member::state() const
 {
-    return m_deleted;
+    return m_state;
 }
 
-void Member::setDeleted(bool deleted)
+void Member::setState(QString state)
 {
-    m_deleted = deleted;
+    m_state = state;
+}
+
+void Member::setState(Member::State state)
+{
+    m_state = QChar(static_cast<char>(state));
 }
 
 } // namespace entity
