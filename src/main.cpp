@@ -3,8 +3,11 @@
 #include <stdlib.h>
 
 #include <QString>
-#include <QUrl>
+#include <QByteArray>
 #include <QtWidgets/QApplication>
+
+#include <QMessageLogContext>
+#include <QtMessageHandler>
 
 #include "config.h"
 #include "gui/mainwindowuicontroller.h"
@@ -37,7 +40,7 @@ int main(int argc, char **argv)
     app.setOrganizationDomain(ORGANIZATION_DOMAIN);
 
     membermanager::gui::MainWindowUiController *uiController =
-            membermanager::gui::MainWindowUiController::createInstance(QUrl(MAIN_QML));
+            membermanager::gui::MainWindowUiController::createInstance(MAIN_QML);
 
     uiController->show();
     return app.exec();

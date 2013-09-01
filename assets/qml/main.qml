@@ -3,16 +3,16 @@ import QtQuick.Controls 1.0
 import QtQuick.Window 2.0
 import QtQuick.Dialogs 1.0
 import QtQuick.Layouts 1.0
+import membermanager 1.0
 
 ApplicationWindow {
     id: mainWindow
     title: qsTr("Member Mmanager")
-    width: 640
-    height: 480
+    width: 800
+    height: 600
 
     signal qmlSettingsTriggered()
     signal qmlOpenSqlFile(string filename)
-    signal databaseReady()
 
     FileDialog {
         id: fileDialog
@@ -68,26 +68,55 @@ ApplicationWindow {
         }
     }
 
-    ColumnLayout {
-        id: layout
-        objectName: "layout"
+    RowLayout {
+        id: mainLayout
         anchors.fill: parent
-        anchors.margins: 11
+        anchors.margins: 8
 
-        MemberView {
-            anchors.fill: layout
-            enabled: false
+        Item {
+            id: placeholder
+            width: 400
+            Layout.fillHeight: true
+                MemberView {
+                    anchors.fill: parent
+                    //anchors.margins: 8
+                    //enabled: false
+            }
+        }
+
+        MemberDetail {
+            id: detailView
+
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            //anchors.fill: parent
+            //anchors.margins: 8
+
         }
     }
 
-    function onModelReloaded() {
-        console.debug("Model reloaded")
-        layout.children[0].destroy()
-        var component = Qt.createComponent("MemberView.qml")
-        component.createObject(layout, { "anchors.fill": layout})
+    MemberHandler {
+        id: memberHandler
+
+        onMemberChanged: {
+            console.debug("Member changed")
+            var member = memberHandler.member
+            console.debug("Member name: " + member.name)
+            detailView.name = member.name
+        }
+
+        onProxyModelChanged: {
+            console.debug("Model reloaded")
+            placeholder.children[0].destroy()
+            var component = Qt.createComponent("MemberView.qml")
+            var memberView = component.createObject(placeholder, { "anchors.fill": placeholder})
+            memberView.memberList = memberHandler.proxyModel
+            memberView.memberSelected.connect(memberHandler.onMemberSelected)
+        }
     }
 
     function onDatabaseReady() {
         console.debug("Database load.")
+        memberHandler.onDatabaseReady();
     }
 }

@@ -1,15 +1,18 @@
 #include "mainwindowuicontroller.h"
 
 #include <QObject>
+#include <QUrl>
 #include <QList>
 #include <QString>
 
-#include <QDateTime>
-#include <QStringList>
-
 #include <QDebug>
 
-#include <QSqlTableModel>
+#include <QtQml/QQmlContext>
+#include "qqml.h"
+
+#include "entity/member.h"
+#include "gui/memberhandler.h"
+#include "gui/proxytablemodel.h"
 
 namespace membermanager {
 namespace gui {
@@ -17,35 +20,29 @@ namespace gui {
 MainWindowUiController::MainWindowUiController()
     : m_engine(),
       m_window(nullptr),
-      m_databaseManager(new membermanager::DatabaseManager()),
-      m_memberHandler(new MemberHandler())
+      m_databaseManager(new membermanager::DatabaseManager())
 {
-    //m_memberHandler->connect(m_databaseManager, SIGNAL(databaseReady()), SLOT(onDatabaseReady()));
     //m_databaseManager->onLoadSqlFile("file:dorfverw.dat");
+
+    qmlRegisterType<membermanager::gui::MemberHandler>("membermanager", 1, 0, "MemberHandler");
+    qmlRegisterType<membermanager::entity::Member>("membermanager", 1, 0, "Member");
+    qmlRegisterType<membermanager::gui::ProxyTableModel>("membermanager", 1, 0, "MemberTable");
 }
 
 MainWindowUiController::~MainWindowUiController()
 {
     delete m_databaseManager;
-    delete m_memberHandler;
     if(m_window)
         delete m_window;
 }
 
-MainWindowUiController *MainWindowUiController::createInstance(const QUrl &qmlUrl)
+MainWindowUiController *MainWindowUiController::createInstance(const QString &qmlUrl)
 {
     MainWindowUiController *instance = new MainWindowUiController();
 
-    instance->initContext(instance->m_engine.rootContext());
-
-    instance->m_engine.load(qmlUrl);
-
-    QList<QObject *> list = instance->m_engine.rootObjects();
-    QObject *topLevel = list.value(0);
-    instance->m_window = qobject_cast<QQuickWindow *>(topLevel);
-
+    instance->initContext();
+    instance->m_engine.load(QUrl(qmlUrl));
     instance->init();
-
     return instance;
 }
 
@@ -54,18 +51,19 @@ void MainWindowUiController::show()
     m_window->show();
 }
 
-void MainWindowUiController::initContext(QQmlContext *context)
+void MainWindowUiController::initContext()
 {
-    context->setContextProperty("memberTable", m_memberHandler->getProxyModel());
-    context->setContextProperty("currentDateTime", QDateTime::currentDateTime());
+    QQmlContext *context = m_engine.rootContext();
 }
 
 void MainWindowUiController::init()
 {
+    QList<QObject *> list = m_engine.rootObjects();
+    QObject *topLevel = list.value(0);
+    m_window = qobject_cast<QQuickWindow *>(topLevel);
+
     m_databaseManager->connect(m_window, SIGNAL(qmlOpenSqlFile(QString)), SLOT(onLoadSqlFile(QString)));
-    m_memberHandler->connect(m_databaseManager, SIGNAL(databaseReady()), SLOT(onDatabaseReady()));
     m_window->connect(m_databaseManager, SIGNAL(databaseReady()), SLOT(onDatabaseReady()));
-    m_window->connect(m_memberHandler->getProxyModel(), SIGNAL(modelReloaded()), SLOT(onModelReloaded()));
 }
 
 } // namespace gui

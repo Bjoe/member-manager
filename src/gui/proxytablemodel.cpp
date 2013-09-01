@@ -12,6 +12,11 @@ ProxyTableModel::ProxyTableModel(QObject *parent) :
 {
 }
 
+QSqlTableModel *ProxyTableModel::getModel() const
+{
+    return m_sqlTableModel;
+}
+
 void ProxyTableModel::reload(QSqlTableModel *sqlTableModel)
 {
     delete m_sqlTableModel;

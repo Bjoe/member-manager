@@ -2,13 +2,9 @@
 #define MEMBERMANAGER_GUI_MAINWINDOWUICONTROLLER_H
 
 #include <QtQml/QQmlApplicationEngine>
-#include <QtQml/QQmlContext>
 #include <QtQuick/QQuickWindow>
 
-#include <QUrl>
-
 #include "databasemanager.h"
-#include "gui/memberhandler.h"
 
 namespace membermanager {
 namespace gui {
@@ -18,18 +14,17 @@ class MainWindowUiController
 public:
     ~MainWindowUiController();
 
-    static MainWindowUiController *createInstance(const QUrl &qmlUrl);
+    static MainWindowUiController *createInstance(const QString &qmlUrl);
     void show();
 
 private:
-    void initContext(QQmlContext *context);
+    void initContext();
     void init();
     MainWindowUiController();
 
     QQmlApplicationEngine m_engine;
     QQuickWindow *m_window;
     membermanager::DatabaseManager *m_databaseManager;
-    MemberHandler *m_memberHandler;
 };
 
 } // namespace gui

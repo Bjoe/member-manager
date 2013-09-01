@@ -27,6 +27,7 @@ class ProxyTableModel : public QAbstractListModel
 public:
     explicit ProxyTableModel(QObject *parent = 0);
 
+    QSqlTableModel *getModel() const;
     void reload(QSqlTableModel *sqlTableModel);
     bool select();
 

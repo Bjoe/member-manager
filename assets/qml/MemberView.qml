@@ -4,10 +4,12 @@ import QtQuick.Controls 1.0
 Item {
     id: memberViewMain
 
+    signal memberSelected(int row)
+    property alias memberList: memberViewList.model
+
     TableView {
         id: memberViewList
         anchors.fill: memberViewMain
-        anchors.margins: 11
 
         TableViewColumn{
             role: "memberId"
@@ -31,6 +33,9 @@ Item {
             width: 200
         }
 
-        model: memberTable
+        onActivated: {
+            console.debug("Activate row: "+ row)
+            memberSelected(row)
+        }
     }
 }

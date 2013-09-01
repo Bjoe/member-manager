@@ -1,8 +1,10 @@
 
 #include <QtTest/QtTest>
+#include <QSignalSpy>
 
 #include <QObject>
 #include <QString>
+#include <QVariant>
 #include <QSqlTableModel>
 
 #include "QDjango.h"
@@ -27,6 +29,7 @@ class MemberHandlerTest : public QObject
 private slots:
     void initTestCase();
     void testHandler();
+    void testMemberSelected();
 };
 
 void MemberHandlerTest::initTestCase()
@@ -67,13 +70,30 @@ void MemberHandlerTest::testHandler()
 {
     membermanager::gui::MemberHandler *handler = new membermanager::gui::MemberHandler(this);
 
-    membermanager::gui::ProxyTableModel *model = handler->getProxyModel();
+    membermanager::gui::ProxyTableModel *model = handler->proxyModel();
 
     QCOMPARE(model->rowCount(), 0);
 
     handler->onDatabaseReady();
 
     QCOMPARE(model->rowCount(), 1);
+}
+
+void MemberHandlerTest::testMemberSelected()
+{
+    membermanager::gui::MemberHandler *handler = new membermanager::gui::MemberHandler(this);
+    QSignalSpy spy(handler, SIGNAL(memberChanged()));
+    handler->onDatabaseReady();
+
+    handler->onMemberSelected(0);
+    QCOMPARE(spy.count(), 1);
+    membermanager::entity::Member *member = handler->member();
+    QCOMPARE(member->name(), QString("Kirk"));
+
+    QVariant memberVariant = handler->property("member");
+    member = memberVariant.value<membermanager::entity::Member *>();
+    QVariant nameVariant = member->property("name");
+    QCOMPARE(nameVariant, QVariant("Kirk"));
 }
 
 }
