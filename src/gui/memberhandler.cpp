@@ -16,24 +16,40 @@ namespace gui {
 
 MemberHandler::MemberHandler(QObject *parent)
     : QObject(parent),
+      m_memberState(entity::Member::State::active),
       m_member(new entity::Member()),
       m_proxyTableModel(new ProxyTableModel())
 {
 }
 
-ProxyTableModel *MemberHandler::proxyModel()
+ProxyTableModel *MemberHandler::proxyModel() const
 {
     return m_proxyTableModel;
 }
 
-entity::Member *MemberHandler::member()
+entity::Member *MemberHandler::member() const
 {
     return m_member;
 }
 
+entity::Member::State MemberHandler::memberState() const
+{
+    return m_memberState;
+}
+
+void MemberHandler::selectMemberState(entity::Member::State state)
+{
+    m_memberState = state;
+
+    QSqlTableModel *model = m_proxyTableModel->getModel();
+    dao::MemberTableModel::selectState(model, m_memberState);
+
+    emit memberStateChanged();
+}
+
 void MemberHandler::onDatabaseReady()
 {
-    QSqlTableModel *model = dao::MemberTableModel::createModel();
+    QSqlTableModel *model = dao::MemberTableModel::createModel(m_memberState);
     m_proxyTableModel->reload(model);
 
     qDebug() << QString("Database ready. Selected row count: %1").arg(m_proxyTableModel->rowCount());
@@ -43,15 +59,9 @@ void MemberHandler::onDatabaseReady()
 void MemberHandler::onMemberSelected(int row)
 {
     QSqlTableModel *model = m_proxyTableModel->getModel();
-    QSqlRecord recordLine = model->record(row);
-    QVariant variant = recordLine.value("memberId");
-    QString memberId = variant.toString();
+    m_member = dao::MemberTableModel::findMemberByRow(model, row);
 
-    QDjangoQuerySet<entity::Member> members;
-    QDjangoQuerySet<entity::Member> result = members.filter(QDjangoWhere("memberId", QDjangoWhere::Equals, memberId));
-
-    qDebug() << QString("Selected member id: %1 and found: %2").arg(memberId).arg(result.size());
-    result.at(0, m_member);
+    qDebug() << QString("Selected member id: %1").arg(m_member->memberId());
 
     emit memberChanged();
 }

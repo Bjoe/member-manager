@@ -26,6 +26,8 @@ class MemberTableModelTest : public QObject
 private slots:
     void initTestCase();
     void testCreateTableModel();
+    void testFindMemberByRow();
+    void testSelectState();
 };
 
 void MemberTableModelTest::initTestCase()
@@ -56,16 +58,55 @@ void MemberTableModelTest::initTestCase()
     member->setCity("NCC");
     member->setZipCode("1701");
     member->setCollectionState(membermanager::entity::Member::CollectionState::notKnown);
-    member->setState(membermanager::entity::Member::State::inactive);
+    member->setState(membermanager::entity::Member::State::deleted);
     member->save();
+    delete member;
+
+    member = new membermanager::entity::Member();
+    member->setName("McCoy");
+    member->setFirstname("Dr. Leonard");
+    member->setNickname("Pille");
+    member->setEmail("arzt@startrek.com");
+    member->setEntryDate(QDate(2013,9,1));
+    member->setStreet("universe");
+    member->setCity("NCC");
+    member->setZipCode("1701");
+    member->setCollectionState(membermanager::entity::Member::CollectionState::notKnown);
+    member->setState(membermanager::entity::Member::State::active);
+    member->save();
+    delete member;
 
     db.close();
 }
 
 void MemberTableModelTest::testCreateTableModel()
 {
-    QSqlTableModel *model = membermanager::dao::MemberTableModel::createModel();
+    QSqlTableModel *model = membermanager::dao::MemberTableModel::createModel(membermanager::entity::Member::State::active);
     QCOMPARE(model->rowCount(), 1);
+}
+
+void MemberTableModelTest::testFindMemberByRow()
+{
+    QSqlTableModel *model = membermanager::dao::MemberTableModel::createModel(membermanager::entity::Member::State::active);
+    membermanager::entity::Member *member =
+            membermanager::dao::MemberTableModel::findMemberByRow(model, 0);
+
+    QCOMPARE(member->name(), QString("McCoy"));
+}
+
+void MemberTableModelTest::testSelectState()
+{
+    QSqlTableModel *model = membermanager::dao::MemberTableModel::createModel(membermanager::entity::Member::State::active);
+    membermanager::entity::Member *member =
+            membermanager::dao::MemberTableModel::findMemberByRow(model, 0);
+
+    QCOMPARE(member->name(), QString("McCoy"));
+
+    membermanager::dao::MemberTableModel::selectState(model, membermanager::entity::Member::State::deleted);
+
+    delete member;
+    member = membermanager::dao::MemberTableModel::findMemberByRow(model, 0);
+    QCOMPARE(member->name(), QString("Kirk"));
 }
 
 }

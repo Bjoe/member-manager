@@ -3,6 +3,7 @@
 #include <QSignalSpy>
 
 #include <QObject>
+#include <QChar>
 #include <QString>
 #include <QVariant>
 #include <QSqlTableModel>
@@ -30,6 +31,7 @@ private slots:
     void initTestCase();
     void testHandler();
     void testMemberSelected();
+    void testMemberDeletedSelected();
 };
 
 void MemberHandlerTest::initTestCase()
@@ -59,9 +61,24 @@ void MemberHandlerTest::initTestCase()
     member->setStreet("universe");
     member->setCity("NCC");
     member->setZipCode("1701");
-    member->setCollection(false);
-    member->setDeleted(false);
+    member->setCollectionState(membermanager::entity::Member::CollectionState::notKnown);
+    member->setState(membermanager::entity::Member::State::deleted);
     member->save();
+    delete member;
+
+    member = new membermanager::entity::Member();
+    member->setName("McCoy");
+    member->setFirstname("Dr. Leonard");
+    member->setNickname("Pille");
+    member->setEmail("arzt@startrek.com");
+    member->setEntryDate(QDate(2013,9,1));
+    member->setStreet("universe");
+    member->setCity("NCC");
+    member->setZipCode("1701");
+    member->setCollectionState(membermanager::entity::Member::CollectionState::notKnown);
+    member->setState(membermanager::entity::Member::State::active);
+    member->save();
+    delete member;
 
     db.close();
 }
@@ -84,6 +101,27 @@ void MemberHandlerTest::testMemberSelected()
     membermanager::gui::MemberHandler *handler = new membermanager::gui::MemberHandler(this);
     QSignalSpy spy(handler, SIGNAL(memberChanged()));
     handler->onDatabaseReady();
+
+    handler->onMemberSelected(0);
+    QCOMPARE(spy.count(), 1);
+    membermanager::entity::Member *member = handler->member();
+    QCOMPARE(member->name(), QString("McCoy"));
+
+    QVariant memberVariant = handler->property("member");
+    member = memberVariant.value<membermanager::entity::Member *>();
+    QVariant nameVariant = member->property("name");
+    QCOMPARE(nameVariant, QVariant("McCoy"));
+}
+
+void MemberHandlerTest::testMemberDeletedSelected()
+{
+    membermanager::gui::MemberHandler *handler = new membermanager::gui::MemberHandler(this);
+    QSignalSpy spy(handler, SIGNAL(memberChanged()));
+    QSignalSpy spyState(handler, SIGNAL(memberStateChanged()));
+    handler->onDatabaseReady();
+
+    handler->selectMemberState(membermanager::entity::Member::State::deleted);
+    QCOMPARE(spyState.count(), 1);
 
     handler->onMemberSelected(0);
     QCOMPARE(spy.count(), 1);

@@ -14,24 +14,30 @@ class MemberHandler : public QObject
 {
     Q_OBJECT
 
+    Q_PROPERTY(membermanager::entity::Member::State memberState READ memberState WRITE selectMemberState NOTIFY memberStateChanged)
     Q_PROPERTY(membermanager::entity::Member *member READ member NOTIFY memberChanged)
     Q_PROPERTY(membermanager::gui::ProxyTableModel *proxyModel READ proxyModel NOTIFY proxyModelChanged)
 
 public:
     MemberHandler(QObject *parent = 0);
 
-    ProxyTableModel *proxyModel();
-    entity::Member *member();
+    ProxyTableModel *proxyModel() const;
+    entity::Member *member() const;
+
+    entity::Member::State memberState() const;
+    void selectMemberState(entity::Member::State state);
 
 signals:
     void memberChanged();
     void proxyModelChanged();
+    void memberStateChanged();
 
 public slots:
     void onDatabaseReady();
     void onMemberSelected(int row);
 
 private:
+    entity::Member::State m_memberState;
     entity::Member *m_member;
     ProxyTableModel *m_proxyTableModel;
 };
