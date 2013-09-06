@@ -47,6 +47,24 @@ void MemberHandler::selectMemberState(entity::Member::State state)
     emit memberStateChanged();
 }
 
+bool MemberHandler::isInactive() const
+{
+    if(m_memberState == entity::Member::State::inactive) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+void MemberHandler::setAndSelectInactiveMember(bool deleted)
+{
+    entity::Member::State memberState = entity::Member::State::active;
+    if(deleted) {
+        memberState = entity::Member::State::inactive;
+    }
+    selectMemberState(memberState);
+}
+
 void MemberHandler::onDatabaseReady()
 {
     QSqlTableModel *model = dao::MemberTableModel::createModel(m_memberState);

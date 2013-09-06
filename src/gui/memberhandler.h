@@ -14,6 +14,7 @@ class MemberHandler : public QObject
 {
     Q_OBJECT
 
+    Q_PROPERTY(bool isInactive READ isInactive WRITE setAndSelectInactiveMember NOTIFY memberStateChanged)
     Q_PROPERTY(membermanager::entity::Member::State memberState READ memberState WRITE selectMemberState NOTIFY memberStateChanged)
     Q_PROPERTY(membermanager::entity::Member *member READ member NOTIFY memberChanged)
     Q_PROPERTY(membermanager::gui::ProxyTableModel *proxyModel READ proxyModel NOTIFY proxyModelChanged)
@@ -26,6 +27,9 @@ public:
 
     entity::Member::State memberState() const;
     void selectMemberState(entity::Member::State state);
+
+    bool isInactive() const;
+    void setAndSelectInactiveMember(bool deleted);
 
 signals:
     void memberChanged();

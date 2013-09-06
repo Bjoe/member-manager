@@ -13,6 +13,7 @@ ApplicationWindow {
 
     signal qmlSettingsTriggered()
     signal qmlOpenSqlFile(string filename)
+    signal databaseReady()
 
     FileDialog {
         id: fileDialog
@@ -68,55 +69,142 @@ ApplicationWindow {
         }
     }
 
-    RowLayout {
-        id: mainLayout
+    TabView {
         anchors.fill: parent
-        anchors.margins: 8
 
-        Item {
-            id: placeholder
-            width: 400
-            Layout.fillHeight: true
-                MemberView {
-                    anchors.fill: parent
+        Tab {
+            id: members
+            title: "Members"
+
+            onStatusChanged: {
+                if (members.status == Loader.Ready) {
+                    console.log('Members Tab Loaded')
+                }
+            }
+
+            RowLayout {
+                id: mainLayout
+                anchors.fill: parent
+                anchors.margins: 8
+
+                Item {
+                    id: placeholder
+                    width: 400
+                    Layout.fillHeight: true
+                    MemberView {
+                        anchors.fill: parent
+                        //anchors.margins: 8
+                        //enabled: false
+                    }
+                }
+
+                MemberDetail {
+                    id: detailView
+
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true
+                    //anchors.fill: parent
                     //anchors.margins: 8
-                    //enabled: false
+
+                }
+
+                MemberHandler {
+                    id: memberHandler
+
+                    onMemberChanged: {
+                        console.debug("Member changed")
+                        var member = memberHandler.member
+                        console.debug("Member state: " + memberHandler.memberState)
+                        console.debug("Member name: " + member.name)
+                        detailView.name = member.name
+                    }
+
+                    onProxyModelChanged: {
+                        console.debug("Model reloaded")
+                        placeholder.children[0].destroy()
+                        var component = Qt.createComponent("MemberView.qml")
+                        var memberView = component.createObject(placeholder, { "anchors.fill": placeholder})
+                        memberView.memberList = memberHandler.proxyModel
+                        memberView.memberSelected.connect(memberHandler.onMemberSelected)
+                    }
+                }
+
+                Connections {
+                    target: mainWindow
+                    onDatabaseReady: memberHandler.onDatabaseReady()
+                }
             }
         }
 
-        MemberDetail {
-            id: detailView
+        Tab {
+            title: "Inactive Members"
+            id: inactiveMembers
 
-            Layout.fillHeight: true
-            Layout.fillWidth: true
-            //anchors.fill: parent
-            //anchors.margins: 8
+            onStatusChanged: {
+                if (members.status == Loader.Ready) {
+                    console.log('Inactive Members Tab Loaded')
+                }
+            }
 
-        }
-    }
+            RowLayout {
+                id: inactiveMembersLayout
+                anchors.fill: parent
+                anchors.margins: 8
 
-    MemberHandler {
-        id: memberHandler
+                Item {
+                    id: inactiveMembersPlaceholder
+                    width: 400
+                    Layout.fillHeight: true
+                    MemberView {
+                        anchors.fill: parent
+                        //anchors.margins: 8
+                        //enabled: false
+                    }
+                }
 
-        onMemberChanged: {
-            console.debug("Member changed")
-            var member = memberHandler.member
-            console.debug("Member name: " + member.name)
-            detailView.name = member.name
-        }
+                MemberDetail {
+                    id: inactiveMembersView
 
-        onProxyModelChanged: {
-            console.debug("Model reloaded")
-            placeholder.children[0].destroy()
-            var component = Qt.createComponent("MemberView.qml")
-            var memberView = component.createObject(placeholder, { "anchors.fill": placeholder})
-            memberView.memberList = memberHandler.proxyModel
-            memberView.memberSelected.connect(memberHandler.onMemberSelected)
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true
+                    //anchors.fill: parent
+                    //anchors.margins: 8
+
+                }
+
+                MemberHandler {
+                    id: inactiveMemberHandler
+                    // memberState: Member.inactive <--- doesent work :-(
+                    isInactive: true
+
+                    onMemberChanged: {
+                        console.debug("Member changed")
+                        var member = inactiveMemberHandler.member
+                        console.debug("Member state: " + inactiveMemberHandler.memberState)
+                        console.debug("Member name: " + member.name)
+                        inactiveMembersView.name = member.name
+                    }
+
+                    onProxyModelChanged: {
+                        console.debug("Model reloaded")
+                        inactiveMembersPlaceholder.children[0].destroy()
+                        var component = Qt.createComponent("MemberView.qml")
+                        var memberView = component.createObject(inactiveMembersPlaceholder, { "anchors.fill": inactiveMembersPlaceholder})
+                        memberView.memberList = inactiveMemberHandler.proxyModel
+                        memberView.memberSelected.connect(inactiveMemberHandler.onMemberSelected)
+                    }
+                }
+
+                Connections {
+                    target: mainWindow
+                    onDatabaseReady: inactiveMemberHandler.onDatabaseReady()
+                }
+            }
         }
     }
 
     function onDatabaseReady() {
         console.debug("Database load.")
-        memberHandler.onDatabaseReady();
+        mainWindow.databaseReady();
     }
 }
