@@ -12,6 +12,15 @@ set (MemberManager_VERSION_PATCH 0)
 
 add_definitions(-std=c++11)
 
+# QML debuggen
+add_definitions(-DQT_QML_DEBUG)
+# and set environment
+# QML_COMPILER_DUMP=1
+# QML_DISABLE_OPTIMIZER=1
+# argument:
+# $ membermanager -qmljsdebugger=port:3768,block
+
+
 # Instruct CMake to run moc automatically when needed.
 set(CMAKE_AUTOMOC ON)
 
