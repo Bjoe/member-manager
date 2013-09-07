@@ -3,5 +3,6 @@
         <file>assets/qml/main.qml</file>
         <file>assets/qml/MemberDetail.qml</file>
         <file>assets/qml/MemberList.qml</file>
+        <file>assets/qml/MemberTab.qml</file>
     </qresource>
 </RCC>

@@ -3,7 +3,6 @@ import QtQuick.Controls 1.0
 import QtQuick.Window 2.0
 import QtQuick.Dialogs 1.0
 import QtQuick.Layouts 1.0
-import membermanager 1.0
 
 ApplicationWindow {
     id: mainWindow
@@ -82,48 +81,20 @@ ApplicationWindow {
                 }
             }
 
-            RowLayout {
-                id: mainLayout
-                anchors.fill: parent
-                anchors.margins: 8
+            Item{
+                MemberTab {
+                    anchors.fill: parent
+                    anchors.margins: 8
 
-                MemberList {
-                    id: activeMemberList
-                    width: 400
-                    Layout.fillHeight: true
-
-                    memberList: activeMemberHandler.proxyModel
+                    id: activeMember
+                    isInactive: false
                 }
-
-                MemberDetail {
-                    id: activeMemberDetailView
-
-                    Layout.fillHeight: true
-                    Layout.fillWidth: true
-                }
-
-                MemberHandler {
-                    id: activeMemberHandler
-
-                    onMemberChanged: {
-                        console.debug("Member changed")
-                        var member = activeMemberHandler.member
-                        console.debug("Member state: " + activeMemberHandler.memberState)
-                        console.debug("Member name: " + member.name)
-                        activeMemberDetailView.name = member.name
-                    }
-                }
-
                 Connections {
                     target: mainWindow
-                    onDatabaseReady: activeMemberHandler.onDatabaseReady()
-                }
-
-                Connections {
-                    target: activeMemberList
-                    onMemberSelected: activeMemberHandler.onMemberSelected(row)
+                    onDatabaseReady: activeMember.onDatabaseReady()
                 }
             }
+
         }
 
         Tab {
@@ -136,49 +107,17 @@ ApplicationWindow {
                 }
             }
 
-            RowLayout {
-                id: inactiveMembersLayout
-                anchors.fill: parent
-                anchors.margins: 8
+            Item {
+                MemberTab {
+                    anchors.fill: parent
+                    anchors.margins: 8
 
-                MemberList {
-                    id: inacitveMemberList
-                    width: 400
-                    Layout.fillHeight: true
-
-                    memberList: inactiveMemberHandler.proxyModel
-                }
-
-
-                MemberDetail {
-                    id: inactiveMembersView
-
-                    width: 400
-                    Layout.fillHeight: true
-                }
-
-                MemberHandler {
-                    id: inactiveMemberHandler
-                    // memberState: Member.inactive <--- doesent work :-( Why? FIXME
+                    id: inActiveMember
                     isInactive: true
-
-                    onMemberChanged: {
-                        console.debug("Member changed")
-                        var member = inactiveMemberHandler.member
-                        console.debug("Member state: " + inactiveMemberHandler.memberState)
-                        console.debug("Member name: " + member.name)
-                        inactiveMembersView.name = member.name
-                    }
                 }
-
                 Connections {
                     target: mainWindow
-                    onDatabaseReady: inactiveMemberHandler.onDatabaseReady()
-                }
-
-                Connections {
-                    target: inacitveMemberList
-                    onMemberSelected: inactiveMemberHandler.onMemberSelected(row)
+                    onDatabaseReady: inActiveMember.onDatabaseReady()
                 }
             }
         }
