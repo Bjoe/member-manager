@@ -9,27 +9,25 @@ ProxyTableModel::ProxyTableModel(QObject *parent) :
     QAbstractListModel(parent),
     m_roles(),
     m_sqlTableModel(new QSqlTableModel())
-{
-}
+{}
 
-QSqlTableModel *ProxyTableModel::getModel() const
+ProxyTableModel::ProxyTableModel(QSqlTableModel *model, QObject *parent) :
+    QAbstractListModel(parent),
+    m_roles(),
+    m_sqlTableModel(model)
 {
-    return m_sqlTableModel;
-}
-
-void ProxyTableModel::reload(QSqlTableModel *sqlTableModel)
-{
-    delete m_sqlTableModel;
-    m_sqlTableModel = sqlTableModel;
     m_sqlTableModel->select();
 
-    m_roles.clear();
     int colCount = m_sqlTableModel->columnCount();
     for(int i = 0; i < colCount; ++i) {
         QVariant role = m_sqlTableModel->headerData(i, Qt::Horizontal);
         m_roles[Qt::UserRole + 1 + i] = role.toByteArray();
     }
-    emit modelReloaded();
+}
+
+QSqlTableModel *ProxyTableModel::getModel() const
+{
+    return m_sqlTableModel;
 }
 
 QHash<int, QByteArray> ProxyTableModel::roleNames() const

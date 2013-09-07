@@ -78,7 +78,7 @@ ApplicationWindow {
 
             onStatusChanged: {
                 if (members.status == Loader.Ready) {
-                    console.log('Members Tab Loaded')
+                    console.debug('Members Tab Loaded')
                 }
             }
 
@@ -87,51 +87,41 @@ ApplicationWindow {
                 anchors.fill: parent
                 anchors.margins: 8
 
-                Item {
-                    id: placeholder
+                MemberList {
+                    id: activeMemberList
                     width: 400
                     Layout.fillHeight: true
-                    MemberView {
-                        anchors.fill: parent
-                        //anchors.margins: 8
-                        //enabled: false
-                    }
+
+                    memberList: activeMemberHandler.proxyModel
                 }
 
                 MemberDetail {
-                    id: detailView
+                    id: activeMemberDetailView
 
                     Layout.fillHeight: true
                     Layout.fillWidth: true
-                    //anchors.fill: parent
-                    //anchors.margins: 8
-
                 }
 
                 MemberHandler {
-                    id: memberHandler
+                    id: activeMemberHandler
 
                     onMemberChanged: {
                         console.debug("Member changed")
-                        var member = memberHandler.member
-                        console.debug("Member state: " + memberHandler.memberState)
+                        var member = activeMemberHandler.member
+                        console.debug("Member state: " + activeMemberHandler.memberState)
                         console.debug("Member name: " + member.name)
-                        detailView.name = member.name
-                    }
-
-                    onProxyModelChanged: {
-                        console.debug("Model reloaded")
-                        placeholder.children[0].destroy()
-                        var component = Qt.createComponent("MemberView.qml")
-                        var memberView = component.createObject(placeholder, { "anchors.fill": placeholder})
-                        memberView.memberList = memberHandler.proxyModel
-                        memberView.memberSelected.connect(memberHandler.onMemberSelected)
+                        activeMemberDetailView.name = member.name
                     }
                 }
 
                 Connections {
                     target: mainWindow
-                    onDatabaseReady: memberHandler.onDatabaseReady()
+                    onDatabaseReady: activeMemberHandler.onDatabaseReady()
+                }
+
+                Connections {
+                    target: activeMemberList
+                    onMemberSelected: activeMemberHandler.onMemberSelected(row)
                 }
             }
         }
@@ -142,7 +132,7 @@ ApplicationWindow {
 
             onStatusChanged: {
                 if (members.status == Loader.Ready) {
-                    console.log('Inactive Members Tab Loaded')
+                    console.debug('Inactive Members Tab Loaded')
                 }
             }
 
@@ -151,30 +141,25 @@ ApplicationWindow {
                 anchors.fill: parent
                 anchors.margins: 8
 
-                Item {
-                    id: inactiveMembersPlaceholder
+                MemberList {
+                    id: inacitveMemberList
                     width: 400
                     Layout.fillHeight: true
-                    MemberView {
-                        anchors.fill: parent
-                        //anchors.margins: 8
-                        //enabled: false
-                    }
+
+                    memberList: inactiveMemberHandler.proxyModel
                 }
+
 
                 MemberDetail {
                     id: inactiveMembersView
 
+                    width: 400
                     Layout.fillHeight: true
-                    Layout.fillWidth: true
-                    //anchors.fill: parent
-                    //anchors.margins: 8
-
                 }
 
                 MemberHandler {
                     id: inactiveMemberHandler
-                    // memberState: Member.inactive <--- doesent work :-(
+                    // memberState: Member.inactive <--- doesent work :-( Why? FIXME
                     isInactive: true
 
                     onMemberChanged: {
@@ -184,20 +169,16 @@ ApplicationWindow {
                         console.debug("Member name: " + member.name)
                         inactiveMembersView.name = member.name
                     }
-
-                    onProxyModelChanged: {
-                        console.debug("Model reloaded")
-                        inactiveMembersPlaceholder.children[0].destroy()
-                        var component = Qt.createComponent("MemberView.qml")
-                        var memberView = component.createObject(inactiveMembersPlaceholder, { "anchors.fill": inactiveMembersPlaceholder})
-                        memberView.memberList = inactiveMemberHandler.proxyModel
-                        memberView.memberSelected.connect(inactiveMemberHandler.onMemberSelected)
-                    }
                 }
 
                 Connections {
                     target: mainWindow
                     onDatabaseReady: inactiveMemberHandler.onDatabaseReady()
+                }
+
+                Connections {
+                    target: inacitveMemberList
+                    onMemberSelected: inactiveMemberHandler.onMemberSelected(row)
                 }
             }
         }

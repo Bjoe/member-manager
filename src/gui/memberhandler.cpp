@@ -18,8 +18,9 @@ MemberHandler::MemberHandler(QObject *parent)
     : QObject(parent),
       m_memberState(entity::Member::State::active),
       m_member(new entity::Member()),
-      m_proxyTableModel(new ProxyTableModel())
+      m_proxyTableModel(nullptr)
 {
+    createProxyTableModel();
 }
 
 ProxyTableModel *MemberHandler::proxyModel() const
@@ -67,10 +68,8 @@ void MemberHandler::setAndSelectInactiveMember(bool deleted)
 
 void MemberHandler::onDatabaseReady()
 {
-    QSqlTableModel *model = dao::MemberTableModel::createModel(m_memberState);
-    m_proxyTableModel->reload(model);
-
-    qDebug() << QString("Database ready. Selected row count: %1").arg(m_proxyTableModel->rowCount());
+    delete m_proxyTableModel; // TODO Refactor to autoptr
+    createProxyTableModel();
     emit proxyModelChanged();
 }
 
@@ -84,7 +83,12 @@ void MemberHandler::onMemberSelected(int row)
     emit memberChanged();
 }
 
-
+void MemberHandler::createProxyTableModel()
+{
+    QSqlTableModel *model = dao::MemberTableModel::createModel(m_memberState);
+    m_proxyTableModel = new ProxyTableModel(model, this);
+    qDebug() << QString("Database ready. Selected row count: %1").arg(m_proxyTableModel->rowCount());
+}
 
 } // namespace gui
 } // namespace membermanager

@@ -68,18 +68,8 @@ void ProxyTableModelTest::testProxy()
 {
     QSqlTableModel *model = new QSqlTableModel();
     model->setTable("member");
-    model->select();
-    QCOMPARE(model->rowCount(), 1);
 
-    membermanager::gui::ProxyTableModel proxyTable;
-    QSignalSpy spy(&proxyTable, SIGNAL(modelReloaded()));
-
-    QCOMPARE(proxyTable.rowCount(), 0);
-
-    proxyTable.reload(model);
-
-    QCOMPARE(spy.count(), 1);
-    QCOMPARE(proxyTable.rowCount(), 1);
+    membermanager::gui::ProxyTableModel proxyTable(model, this);
 
     QHash<int, QByteArray> roles = proxyTable.roleNames();
 

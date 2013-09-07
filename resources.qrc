@@ -1,7 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>assets/qml/main.qml</file>
-        <file>assets/qml/MemberView.qml</file>
         <file>assets/qml/MemberDetail.qml</file>
+        <file>assets/qml/MemberList.qml</file>
     </qresource>
 </RCC>

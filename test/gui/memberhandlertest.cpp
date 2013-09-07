@@ -29,7 +29,7 @@ class MemberHandlerTest : public QObject
 
 private slots:
     void initTestCase();
-    void testHandler();
+    void testProxyModelChanged();
     void testMemberSelected();
     void testMemberDeletedSelected();
 };
@@ -83,24 +83,25 @@ void MemberHandlerTest::initTestCase()
     db.close();
 }
 
-void MemberHandlerTest::testHandler()
+void MemberHandlerTest::testProxyModelChanged()
 {
     membermanager::gui::MemberHandler *handler = new membermanager::gui::MemberHandler(this);
+    QSignalSpy spy(handler, SIGNAL(proxyModelChanged()));
 
     membermanager::gui::ProxyTableModel *model = handler->proxyModel();
-
-    QCOMPARE(model->rowCount(), 0);
+    QCOMPARE(model->rowCount(), 1);
+    QCOMPARE(spy.count(), 0);
 
     handler->onDatabaseReady();
-
+    model = handler->proxyModel();
     QCOMPARE(model->rowCount(), 1);
+    QCOMPARE(spy.count(), 1);
 }
 
 void MemberHandlerTest::testMemberSelected()
 {
     membermanager::gui::MemberHandler *handler = new membermanager::gui::MemberHandler(this);
     QSignalSpy spy(handler, SIGNAL(memberChanged()));
-    handler->onDatabaseReady();
 
     handler->onMemberSelected(0);
     QCOMPARE(spy.count(), 1);
@@ -118,7 +119,6 @@ void MemberHandlerTest::testMemberDeletedSelected()
     membermanager::gui::MemberHandler *handler = new membermanager::gui::MemberHandler(this);
     QSignalSpy spy(handler, SIGNAL(memberChanged()));
     QSignalSpy spyState(handler, SIGNAL(memberStateChanged()));
-    handler->onDatabaseReady();
 
     handler->selectMemberState(membermanager::entity::Member::State::deleted);
     QCOMPARE(spyState.count(), 1);

@@ -44,6 +44,8 @@ private:
     entity::Member::State m_memberState;
     entity::Member *m_member;
     ProxyTableModel *m_proxyTableModel;
+
+    void createProxyTableModel();
 };
 
 } // namespace gui

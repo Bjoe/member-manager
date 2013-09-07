@@ -25,20 +25,15 @@ class ProxyTableModel : public QAbstractListModel
 {
     Q_OBJECT
 public:
-    explicit ProxyTableModel(QObject *parent = 0);
+    ProxyTableModel(QObject *parent = 0);
+    explicit ProxyTableModel(QSqlTableModel *model, QObject *parent = 0);
 
     QSqlTableModel *getModel() const;
-    void reload(QSqlTableModel *sqlTableModel);
     bool select();
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
     QHash<int,QByteArray> roleNames() const;
-
-signals:
-    void modelReloaded();
-
-public slots:
 
 private:
     QHash<int, QByteArray> m_roles;
