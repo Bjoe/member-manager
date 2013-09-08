@@ -7,3 +7,4 @@ qt_test(cashaccountdao cashaccountdaotest.cpp)
 
 qt_test(membertablemodel membertablemodeltest.cpp)
 qt_test(bankaccounttablemodel bankaccounttablemodeltest.cpp)
+qt_test(contributiontablemodel contributiontablemodeltest.cpp)
