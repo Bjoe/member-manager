@@ -34,7 +34,7 @@ Item {
             var member = handler.member
             console.debug("Member state: " + handler.memberState)
             console.debug("Member name: " + member.name)
-            view.name = member.name
+            view.member = member
         }
     }
 
