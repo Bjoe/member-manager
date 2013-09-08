@@ -29,7 +29,9 @@ class MemberHandlerTest : public QObject
 
 private slots:
     void initTestCase();
-    void testProxyModelChanged();
+    void testMemberProxyModelChanged();
+    void testContribuitonProxyModelChanged();
+    void testBalanceProxyModelChanged();
     void testMemberSelected();
     void testMemberDeletedSelected();
 };
@@ -99,17 +101,47 @@ void MemberHandlerTest::initTestCase()
     delete member;
 }
 
-void MemberHandlerTest::testProxyModelChanged()
+void MemberHandlerTest::testMemberProxyModelChanged()
 {
     membermanager::gui::MemberHandler *handler = new membermanager::gui::MemberHandler(this);
-    QSignalSpy spy(handler, SIGNAL(proxyModelChanged()));
+    QSignalSpy spy(handler, SIGNAL(memberProxyModelChanged()));
 
-    membermanager::gui::ProxyTableModel *model = handler->proxyModel();
+    membermanager::gui::ProxyTableModel *model = handler->memberProxyModel();
     QCOMPARE(model->rowCount(), 1);
     QCOMPARE(spy.count(), 0);
 
     handler->onDatabaseReady();
-    model = handler->proxyModel();
+    model = handler->memberProxyModel();
+    QCOMPARE(model->rowCount(), 1);
+    QCOMPARE(spy.count(), 1);
+}
+
+void MemberHandlerTest::testContribuitonProxyModelChanged()
+{
+    membermanager::gui::MemberHandler *handler = new membermanager::gui::MemberHandler(this);
+    QSignalSpy spy(handler, SIGNAL(contributionProxyModelChanged()));
+
+    membermanager::gui::ProxyTableModel *model = handler->contributionProxyModel();
+    QCOMPARE(model->rowCount(), 1);
+    QCOMPARE(spy.count(), 0);
+
+    handler->onDatabaseReady();
+    model = handler->contributionProxyModel();
+    QCOMPARE(model->rowCount(), 1);
+    QCOMPARE(spy.count(), 1);
+}
+
+void MemberHandlerTest::testBalanceProxyModelChanged()
+{
+    membermanager::gui::MemberHandler *handler = new membermanager::gui::MemberHandler(this);
+    QSignalSpy spy(handler, SIGNAL(balanceProxyModelChanged()));
+
+    membermanager::gui::ProxyTableModel *model = handler->balanceProxyModel();
+    QCOMPARE(model->rowCount(), 1);
+    QCOMPARE(spy.count(), 0);
+
+    handler->onDatabaseReady();
+    model = handler->balanceProxyModel();
     QCOMPARE(model->rowCount(), 1);
     QCOMPARE(spy.count(), 1);
 }

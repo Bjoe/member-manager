@@ -21,12 +21,16 @@ class MemberHandler : public QObject
     Q_PROPERTY(membermanager::entity::Member *member READ member NOTIFY memberChanged)
     Q_PROPERTY(membermanager::entity::BankAccount *bankAccount READ bankAccount NOTIFY memberChanged)
     Q_PROPERTY(membermanager::entity::Contribution *contribution READ contribution NOTIFY memberChanged)
-    Q_PROPERTY(membermanager::gui::ProxyTableModel *proxyModel READ proxyModel NOTIFY proxyModelChanged)
+    Q_PROPERTY(membermanager::gui::ProxyTableModel *memberProxyModel READ memberProxyModel NOTIFY memberProxyModelChanged)
+    Q_PROPERTY(membermanager::gui::ProxyTableModel *contributionProxyModel READ contributionProxyModel NOTIFY contribuitonProxyModelChanged)
+    Q_PROPERTY(membermanager::gui::ProxyTableModel *balanceProxyModel READ balanceProxyModel NOTIFY balanceProxyModelChanged)
 
 public:
     MemberHandler(QObject *parent = 0);
 
-    ProxyTableModel *proxyModel() const;
+    ProxyTableModel *memberProxyModel() const;
+    ProxyTableModel *contributionProxyModel() const;
+    ProxyTableModel *balanceProxyModel() const;
     entity::Member *member() const;
     entity::BankAccount *bankAccount() const;
     entity::Contribution *contribution() const;
@@ -39,7 +43,9 @@ public:
 
 signals:
     void memberChanged();
-    void proxyModelChanged();
+    void memberProxyModelChanged();
+    void contribuitonProxyModelChanged();
+    void balanceProxyModelChanged();
     void memberStateChanged();
     void bankAccountChanged();
     void contributionChanged();
@@ -54,9 +60,11 @@ private:
     entity::BankAccount *m_bankaccount;
     entity::Contribution *m_contribution;
 
-    ProxyTableModel *m_proxyTableModel;
+    ProxyTableModel *m_memberProxyTableModel;
+    ProxyTableModel *m_contributionProxyTableModel;
+    ProxyTableModel *m_balanceProxyTableModel;
 
-    void createProxyTableModel();
+    void createMemberProxyTableModel();
 };
 
 } // namespace gui

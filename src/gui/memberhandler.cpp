@@ -12,6 +12,7 @@
 #include "dao/membertablemodel.h"
 #include "dao/bankaccounttablemodel.h"
 #include "dao/contributiontablemodel.h"
+#include "dao/balancetablemodel.h"
 
 namespace membermanager {
 namespace gui {
@@ -22,14 +23,24 @@ MemberHandler::MemberHandler(QObject *parent)
       m_member(new entity::Member()),
       m_bankaccount(new entity::BankAccount()),
       m_contribution(new entity::Contribution()),
-      m_proxyTableModel(nullptr)
+      m_memberProxyTableModel(nullptr)
 {
-    createProxyTableModel();
+    createMemberProxyTableModel();
 }
 
-ProxyTableModel *MemberHandler::proxyModel() const
+ProxyTableModel *MemberHandler::memberProxyModel() const
 {
-    return m_proxyTableModel;
+    return m_memberProxyTableModel;
+}
+
+ProxyTableModel *MemberHandler::contributionProxyModel() const
+{
+    return m_contributionProxyTableModel;
+}
+
+ProxyTableModel *MemberHandler::balanceProxyModel() const
+{
+    return m_balanceProxyTableModel;
 }
 
 entity::Member *MemberHandler::member() const
@@ -56,7 +67,7 @@ void MemberHandler::selectMemberState(entity::Member::State state)
 {
     m_memberState = state;
 
-    QSqlTableModel *model = m_proxyTableModel->getModel();
+    QSqlTableModel *model = m_memberProxyTableModel->getModel();
     dao::MemberTableModel::selectState(model, m_memberState);
 
     emit memberStateChanged();
@@ -82,9 +93,9 @@ void MemberHandler::setAndSelectInactiveMember(bool deleted)
 
 void MemberHandler::onDatabaseReady()
 {
-    delete m_proxyTableModel; // TODO Refactor to autoptr
-    createProxyTableModel();
-    emit proxyModelChanged();
+    delete m_memberProxyTableModel; // TODO Refactor to autoptr
+    createMemberProxyTableModel();
+    emit memberProxyModelChanged();
 }
 
 void MemberHandler::onMemberSelected(int row)
@@ -93,22 +104,31 @@ void MemberHandler::onMemberSelected(int row)
     delete m_bankaccount;
     delete m_contribution;
 
-    QSqlTableModel *model = m_proxyTableModel->getModel();
-    QVariant memberId = dao::MemberTableModel::giveMemberIdByRow(model, row);
+    delete m_contributionProxyTableModel;
+    delete m_balanceProxyTableModel;
+
+    QSqlTableModel *memberModel = m_memberProxyTableModel->getModel();
+    QVariant memberId = dao::MemberTableModel::giveMemberIdByRow(memberModel, row);
     m_member = dao::MemberTableModel::findByMemberId(memberId);
     m_bankaccount = dao::BankAccountTableModel::findByMemberId(memberId);
     m_contribution = dao::ContributionTableModel::findByMemberId(memberId);
+
+    QSqlTableModel *contributionModel = dao::ContributionTableModel::createModel(memberId);
+    m_contributionProxyTableModel = new ProxyTableModel(contributionModel, this);
+
+    QSqlTableModel *balanceModel = dao::BalanceTableModel::createModel(memberId);
+    m_balanceProxyTableModel = new ProxyTableModel(balanceModel, this);
 
     qDebug() << QString("Selected member id: %1").arg(memberId.toString());
 
     emit memberChanged();
 }
 
-void MemberHandler::createProxyTableModel()
+void MemberHandler::createMemberProxyTableModel()
 {
     QSqlTableModel *model = dao::MemberTableModel::createModel(m_memberState);
-    m_proxyTableModel = new ProxyTableModel(model, this);
-    qDebug() << QString("Database ready. Selected row count: %1").arg(m_proxyTableModel->rowCount());
+    m_memberProxyTableModel = new ProxyTableModel(model, this);
+    qDebug() << QString("Database ready. Selected row count: %1").arg(m_memberProxyTableModel->rowCount());
 }
 
 } // namespace gui
