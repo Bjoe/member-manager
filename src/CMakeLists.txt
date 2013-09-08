@@ -1,6 +1,5 @@
 
 set(QT_UI
-    gui/memberdetailview.ui
     gui/connectiondialog.ui
     gui/balancedialog.ui
     gui/contributiondialog.ui
@@ -25,7 +24,6 @@ set(QT_SRCS
     gui/memberhandler.cpp
     gui/proxytablemodel.cpp
 
-    gui/memberdetailview.cpp
     gui/connectiondialog.cpp
     gui/balancedialog.cpp
     gui/contributiondialog.cpp

@@ -2,7 +2,6 @@
 qt_add_test(contributiondialog contributiondialogtest.cpp)
 qt_add_test(contributionreceiptdialog contributionreceiptdialogtest.cpp)
 qt_add_test(connectiondialog connectiondialogtest.cpp)
-qt_add_test(memberdetailview memberdetailviewtest.cpp)
 qt_add_test(memberdebtview memberdebtviewtest.cpp)
 qt_add_test(summaryview summaryviewtest.cpp)
 qt_add_test(paymentview paymentviewtest.cpp)
