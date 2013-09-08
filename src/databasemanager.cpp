@@ -13,6 +13,7 @@
 #include "entity/contribution.h"
 #include "entity/balance.h"
 #include "entity/cashaccount.h"
+#include "entity/bankaccount.h"
 
 namespace membermanager {
 
@@ -44,6 +45,7 @@ void DatabaseManager::onLoadSqlFile(QString filename)
     QDjango::registerModel<membermanager::entity::Contribution>();
     QDjango::registerModel<membermanager::entity::Balance>();
     QDjango::registerModel<membermanager::entity::CashAccount>();
+    QDjango::registerModel<membermanager::entity::BankAccount>();
 
     emit databaseReady();
 }

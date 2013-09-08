@@ -140,36 +140,6 @@ void Member::setCollectionState(Member::CollectionState state)
     m_collectionState = QChar(static_cast<char>(state));
 }
 
-QString Member::accountNumber() const
-{
-    return m_accountNumber;
-}
-
-void Member::setAccountNumber(const QString &number)
-{
-    m_accountNumber = number;
-}
-
-QString Member::bankName() const
-{
-    return m_bankName;
-}
-
-void Member::setBankName(const QString &name)
-{
-    m_bankName = name;
-}
-
-QString Member::bankCode() const
-{
-    return m_bankCode;
-}
-
-void Member::setBankCode(const QString &code)
-{
-    m_bankCode = code;
-}
-
 QString Member::state() const
 {
     return m_state;

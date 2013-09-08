@@ -13,6 +13,7 @@
 #include "entity/contribution.h"
 #include "entity/balance.h"
 #include "entity/cashaccount.h"
+#include "entity/bankaccount.h"
 
 #include "databasemanager.h"
 
@@ -43,6 +44,7 @@ void DatabaseManagerTest::initTestCase()
     QDjango::registerModel<membermanager::entity::Contribution>();
     QDjango::registerModel<membermanager::entity::Balance>();
     QDjango::registerModel<membermanager::entity::CashAccount>();
+    QDjango::registerModel<membermanager::entity::BankAccount>();
 
     QDjango::dropTables();
     QDjango::createTables();

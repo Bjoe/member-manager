@@ -19,9 +19,6 @@ class Member : public QDjangoModel
     Q_CLASSINFO("cancellationDate", "null=true")
     Q_CLASSINFO("info", "null=true")
     Q_CLASSINFO("reference", "null=true")
-    Q_CLASSINFO("accountNumber", "null=true")
-    Q_CLASSINFO("bankName", "null=true")
-    Q_CLASSINFO("bankCode", "null=true")
 
     Q_PROPERTY(int memberId READ memberId WRITE setMemberId)
     Q_PROPERTY(QString name READ name WRITE setName)
@@ -36,9 +33,6 @@ class Member : public QDjangoModel
     Q_PROPERTY(QString city READ city WRITE setCity)
     Q_PROPERTY(QString zipCode READ zipCode WRITE setZipCode)
     Q_PROPERTY(QString collectionState READ collectionState WRITE setCollectionState)
-    Q_PROPERTY(QString accountNumber READ accountNumber WRITE setAccountNumber)
-    Q_PROPERTY(QString bankName READ bankName WRITE setBankName)
-    Q_PROPERTY(QString bankCode READ bankCode WRITE setBankCode)
     Q_PROPERTY(QString state READ state WRITE setState)
 
     Q_ENUMS(membermanager::entity::Member::State)
@@ -89,15 +83,6 @@ public:
     void setCollectionState(QString state);
     void setCollectionState(CollectionState state);
 
-    QString accountNumber() const;
-    void setAccountNumber(const QString &number);
-
-    QString bankName() const;
-    void setBankName(const QString &name);
-
-    QString bankCode() const;
-    void setBankCode(const QString &code);
-
     QString state() const;
     void setState(QString state);
     void setState(State state);
@@ -114,9 +99,6 @@ private:
     QString m_street;
     QString m_city;
     QString m_zipCode;
-    QString m_accountNumber;
-    QString m_bankName;
-    QString m_bankCode;
     int m_memberId;
     QString m_state;
     QString m_collectionState;
