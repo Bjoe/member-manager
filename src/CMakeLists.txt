@@ -1,6 +1,5 @@
 
 set(QT_UI
-    gui/mainwindow.ui
     gui/memberdetailview.ui
     gui/connectiondialog.ui
     gui/balancedialog.ui
@@ -26,7 +25,6 @@ set(QT_SRCS
     gui/memberhandler.cpp
     gui/proxytablemodel.cpp
 
-    gui/mainwindow.cpp
     gui/memberdetailview.cpp
     gui/connectiondialog.cpp
     gui/balancedialog.cpp

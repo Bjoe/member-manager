@@ -9,7 +9,6 @@ qt_add_test(paymentview paymentviewtest.cpp)
 qt_add_test(memberlistdelegate memberlistdelegatetest.cpp)
 qt_add_test(settingsdialog settingsdialogtest.cpp)
 
-qt_test(mainwindow mainwindowtest.cpp)
 qt_test(accountingentryimporterview accountingentryimporterviewtest.cpp)
 qt_test(balancedialog balancedialogtest.cpp)
 
