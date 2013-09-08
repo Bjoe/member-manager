@@ -22,8 +22,7 @@ QSqlTableModel *MemberTableModel::createModel(entity::Member::State state)
 entity::Member *MemberTableModel::findMemberByRow(QSqlTableModel *model, int row)
 {
     QSqlRecord recordLine = model->record(row);
-    QVariant variant = recordLine.value("memberId");
-    QString memberId = variant.toString();
+    QVariant memberId = recordLine.value("memberId");
 
     QDjangoQuerySet<entity::Member> members;
     QDjangoQuerySet<entity::Member> result = members.filter(QDjangoWhere("memberId", QDjangoWhere::Equals, memberId));
