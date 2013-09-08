@@ -14,6 +14,7 @@ set(QT_UI
 set(QT_SRCS
 
     dao/membertablemodel.cpp
+    dao/bankaccounttablemodel.cpp
 
     entity/member.cpp
     entity/contribution.cpp
