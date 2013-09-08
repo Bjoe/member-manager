@@ -7,6 +7,17 @@
 namespace membermanager {
 namespace dao {
 
+QSqlTableModel *ContributionTableModel::createModel(QVariant memberId)
+{
+    QString whereClause = QString("%1 = %2").arg("memberId").arg(memberId.toString());
+    QSqlTableModel *model = new QSqlTableModel();
+    model->setTable("Contribution");
+    model->setFilter(whereClause);
+    model->select();
+
+    return model;
+}
+
 entity::Contribution *ContributionTableModel::findByMemberId(QVariant id)
 {
     QDjangoQuerySet<entity::Contribution> querySet;

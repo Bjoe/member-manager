@@ -4,6 +4,7 @@
 #include <QString>
 #include <QDate>
 #include <QVariant>
+#include <QSqlTableModel>
 
 #include "QDjango.h"
 
@@ -22,6 +23,7 @@ class ContributionTableModelTest : public QObject
 
 private slots:
     void initTestCase();
+    void testCreateModel();
     void testFindByMemberId();
 };
 
@@ -49,6 +51,12 @@ void ContributionTableModelTest::initTestCase()
     contribution->setValidFrom(QDate::currentDate());
     contribution->save();
     delete contribution;
+}
+
+void ContributionTableModelTest::testCreateModel()
+{
+    QSqlTableModel *model = membermanager::dao::ContributionTableModel::createModel(1);
+    QCOMPARE(model->rowCount(), 1);
 }
 
 void ContributionTableModelTest::testFindByMemberId()
