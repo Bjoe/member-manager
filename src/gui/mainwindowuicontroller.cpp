@@ -11,6 +11,11 @@
 #include "qqml.h"
 
 #include "entity/member.h"
+#include "entity/balance.h"
+#include "entity/bankaccount.h"
+#include "entity/cashaccount.h"
+#include "entity/contribution.h"
+
 #include "gui/memberhandler.h"
 #include "gui/proxytablemodel.h"
 
@@ -25,8 +30,12 @@ MainWindowUiController::MainWindowUiController()
     //m_databaseManager->onLoadSqlFile("file:dorfverw.dat");
 
     qmlRegisterType<membermanager::gui::MemberHandler>("membermanager", 1, 0, "MemberHandler");
-    qmlRegisterType<membermanager::entity::Member>("membermanager", 1, 0, "Member");
     qmlRegisterType<membermanager::gui::ProxyTableModel>("membermanager", 1, 0, "MemberTable");
+    qmlRegisterType<membermanager::entity::Member>("membermanager", 1, 0, "Member");
+    qmlRegisterType<membermanager::entity::BankAccount>("membermanager", 1, 0, "BankAccount");
+    qmlRegisterType<membermanager::entity::Balance>("membermanager", 1, 0, "Balance");
+    qmlRegisterType<membermanager::entity::CashAccount>("membermanager", 1, 0, "CashAccount");
+    qmlRegisterType<membermanager::entity::Contribution>("membermanager", 1, 0, "Contribution");
 }
 
 MainWindowUiController::~MainWindowUiController()
