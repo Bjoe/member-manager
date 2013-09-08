@@ -1,6 +1,8 @@
 #ifndef MEMBERMANAGER_ENTITY_BANKACCOUNT_H
 #define MEMBERMANAGER_ENTITY_BANKACCOUNT_H
 
+#include <QObject>
+#include <QString>
 #include "QDjangoModel.h"
 
 namespace membermanager {
@@ -11,7 +13,7 @@ class BankAccount : public QDjangoModel
     Q_OBJECT
 
     Q_CLASSINFO("__meta__", "db_table=BankAccount")
-    Q_CLASSINFO("bankaccountId", "primay_key=true db_index=true unique=true auto_increment=true")
+    Q_CLASSINFO("bankAccountId", "primary_key=true db_index=true unique=true auto_increment=true")
 
     Q_PROPERTY(int bankAccountId READ bankAccountId WRITE setBankAccountId)
     Q_PROPERTY(int memberId READ memberId WRITE setMemberId)
