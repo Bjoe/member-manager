@@ -1,8 +1,6 @@
 #include "membertablemodel.h"
 
-#include <QVariant>
 #include <QSqlRecord>
-#include <QSqlTableModel>
 
 #include <QDjango.h>
 #include <QDjangoQuerySet.h>
@@ -19,13 +17,16 @@ QSqlTableModel *MemberTableModel::createModel(entity::Member::State state)
     return model;
 }
 
-entity::Member *MemberTableModel::findMemberByRow(QSqlTableModel *model, int row)
+QVariant MemberTableModel::giveMemberIdByRow(QSqlTableModel *model, int row)
 {
     QSqlRecord recordLine = model->record(row);
-    QVariant memberId = recordLine.value("memberId");
+    return recordLine.value("memberId");
+}
 
+entity::Member *MemberTableModel::findByMemberId(QVariant id)
+{
     QDjangoQuerySet<entity::Member> members;
-    QDjangoQuerySet<entity::Member> result = members.filter(QDjangoWhere("memberId", QDjangoWhere::Equals, memberId));
+    QDjangoQuerySet<entity::Member> result = members.filter(QDjangoWhere("memberId", QDjangoWhere::Equals, id));
 
     entity::Member *member = new entity::Member();
     result.at(0, member);

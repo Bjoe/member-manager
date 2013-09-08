@@ -23,6 +23,7 @@ class MemberTableModelTest : public QObject
 private slots:
     void initTestCase();
     void testCreateTableModel();
+    void testGiveMemberIdFromRow();
     void testFindMemberByRow();
     void testSelectState();
 };
@@ -44,6 +45,7 @@ void MemberTableModelTest::initTestCase()
     QDjango::createTables();
 
     membermanager::entity::Member *member = new membermanager::entity::Member();
+    member->setMemberId(1);
     member->setName("Kirk");
     member->setFirstname("James T.");
     member->setEmail("enterprise@startrek.com");
@@ -57,6 +59,7 @@ void MemberTableModelTest::initTestCase()
     delete member;
 
     member = new membermanager::entity::Member();
+    member->setMemberId(2);
     member->setName("McCoy");
     member->setFirstname("Dr. Leonard");
     member->setNickname("Pille");
@@ -77,28 +80,34 @@ void MemberTableModelTest::testCreateTableModel()
     QCOMPARE(model->rowCount(), 1);
 }
 
-void MemberTableModelTest::testFindMemberByRow()
+void MemberTableModelTest::testGiveMemberIdFromRow()
 {
     QSqlTableModel *model = membermanager::dao::MemberTableModel::createModel(membermanager::entity::Member::State::active);
-    membermanager::entity::Member *member =
-            membermanager::dao::MemberTableModel::findMemberByRow(model, 0);
+    QVariant memberId =
+            membermanager::dao::MemberTableModel::giveMemberIdByRow(model, 0);
+    QCOMPARE(memberId.toString(), QString("2"));
+}
 
-    QCOMPARE(member->name(), QString("McCoy"));
+void MemberTableModelTest::testFindMemberByRow()
+{
+    membermanager::entity::Member *member =
+            membermanager::dao::MemberTableModel::findByMemberId(1);
+
+    QCOMPARE(member->name(), QString("Kirk"));
 }
 
 void MemberTableModelTest::testSelectState()
 {
     QSqlTableModel *model = membermanager::dao::MemberTableModel::createModel(membermanager::entity::Member::State::active);
-    membermanager::entity::Member *member =
-            membermanager::dao::MemberTableModel::findMemberByRow(model, 0);
+    QVariant memberId =
+            membermanager::dao::MemberTableModel::giveMemberIdByRow(model, 0);
 
-    QCOMPARE(member->name(), QString("McCoy"));
+    QCOMPARE(memberId.toString(), QString("2"));
 
     membermanager::dao::MemberTableModel::selectState(model, membermanager::entity::Member::State::deleted);
 
-    delete member;
-    member = membermanager::dao::MemberTableModel::findMemberByRow(model, 0);
-    QCOMPARE(member->name(), QString("Kirk"));
+    memberId = membermanager::dao::MemberTableModel::giveMemberIdByRow(model, 0);
+    QCOMPARE(memberId.toString(), QString("1"));
 }
 
 }

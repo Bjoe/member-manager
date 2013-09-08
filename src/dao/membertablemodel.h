@@ -1,6 +1,7 @@
 #ifndef MEMBERMANAGER_DAO_MEMBERTABLEMODELFACTORY_H
 #define MEMBERMANAGER_DAO_MEMBERTABLEMODELFACTORY_H
 
+#include <QVariant>
 #include <QSqlTableModel>
 
 #include "entity/member.h"
@@ -12,7 +13,8 @@ class MemberTableModel
 {
 public:
     static QSqlTableModel *createModel(entity::Member::State state);
-    static entity::Member *findMemberByRow(QSqlTableModel *model, int row);
+    static QVariant giveMemberIdByRow(QSqlTableModel *model, int row);
+    static entity::Member *findByMemberId(QVariant id);
     static void selectState(QSqlTableModel *model, entity::Member::State state);
 };
 
