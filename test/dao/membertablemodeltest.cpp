@@ -10,9 +10,6 @@
 #include "testconfig.h"
 
 #include "entity/member.h"
-#include "entity/contribution.h"
-#include "entity/balance.h"
-#include "entity/cashaccount.h"
 
 #include "dao/membertablemodel.h"
 
@@ -42,9 +39,6 @@ void MemberTableModelTest::initTestCase()
     }
     QDjango::setDatabase(db);
     QDjango::registerModel<membermanager::entity::Member>();
-    QDjango::registerModel<membermanager::entity::Contribution>();
-    QDjango::registerModel<membermanager::entity::Balance>();
-    QDjango::registerModel<membermanager::entity::CashAccount>();
 
     QDjango::dropTables();
     QDjango::createTables();
@@ -75,8 +69,6 @@ void MemberTableModelTest::initTestCase()
     member->setState(membermanager::entity::Member::State::active);
     member->save();
     delete member;
-
-    db.close();
 }
 
 void MemberTableModelTest::testCreateTableModel()
