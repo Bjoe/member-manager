@@ -14,9 +14,6 @@
 #include "testconfig.h"
 
 #include "entity/member.h"
-#include "entity/contribution.h"
-#include "entity/balance.h"
-#include "entity/cashaccount.h"
 
 #include "gui/proxytablemodel.h"
 
@@ -44,9 +41,6 @@ void ProxyTableModelTest::initTestCase()
     }
     QDjango::setDatabase(db);
     QDjango::registerModel<membermanager::entity::Member>();
-    QDjango::registerModel<membermanager::entity::Contribution>();
-    QDjango::registerModel<membermanager::entity::Balance>();
-    QDjango::registerModel<membermanager::entity::CashAccount>();
 
     QDjango::dropTables();
     QDjango::createTables();
@@ -60,8 +54,6 @@ void ProxyTableModelTest::initTestCase()
     member->setCity("NCC");
     member->setZipCode("1701");
     member->save();
-
-    db.close();
 }
 
 void ProxyTableModelTest::testProxy()
@@ -73,7 +65,7 @@ void ProxyTableModelTest::testProxy()
 
     QHash<int, QByteArray> roles = proxyTable.roleNames();
 
-    QCOMPARE(roles.size(), 17);
+    QCOMPARE(roles.size(), 14);
 
     QCOMPARE(roles.value(Qt::UserRole + 1).data(), "memberId");
     QCOMPARE(roles.value(Qt::UserRole + 2).data(), "name");
