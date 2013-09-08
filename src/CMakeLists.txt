@@ -16,6 +16,7 @@ set(QT_SRCS
     dao/membertablemodel.cpp
     dao/bankaccounttablemodel.cpp
     dao/contributiontablemodel.cpp
+    dao/balancetablemodel.cpp
 
     entity/member.cpp
     entity/contribution.cpp
