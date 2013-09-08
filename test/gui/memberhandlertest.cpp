@@ -5,6 +5,7 @@
 #include <QObject>
 #include <QChar>
 #include <QString>
+#include <QDate>
 #include <QVariant>
 #include <QSqlTableModel>
 
@@ -14,8 +15,7 @@
 
 #include "entity/member.h"
 #include "entity/contribution.h"
-#include "entity/balance.h"
-#include "entity/cashaccount.h"
+#include "entity/bankaccount.h"
 
 #include "gui/memberhandler.h"
 #include "gui/proxytablemodel.h"
@@ -47,13 +47,13 @@ void MemberHandlerTest::initTestCase()
     QDjango::setDatabase(db);
     QDjango::registerModel<membermanager::entity::Member>();
     QDjango::registerModel<membermanager::entity::Contribution>();
-    QDjango::registerModel<membermanager::entity::Balance>();
-    QDjango::registerModel<membermanager::entity::CashAccount>();
+    QDjango::registerModel<membermanager::entity::BankAccount>();
 
     QDjango::dropTables();
     QDjango::createTables();
 
     membermanager::entity::Member *member = new membermanager::entity::Member();
+    member->setMemberId(1);
     member->setName("Kirk");
     member->setFirstname("James T.");
     member->setEmail("enterprise@startrek.com");
@@ -61,12 +61,30 @@ void MemberHandlerTest::initTestCase()
     member->setStreet("universe");
     member->setCity("NCC");
     member->setZipCode("1701");
-    member->setCollectionState(membermanager::entity::Member::CollectionState::notKnown);
+    member->setCollectionState(membermanager::entity::Member::CollectionState::known);
     member->setState(membermanager::entity::Member::State::deleted);
     member->save();
     delete member;
 
+    membermanager::entity::BankAccount *bankAccount = new membermanager::entity::BankAccount();
+    bankAccount->setMemberId(2);
+    bankAccount->setAccountNumber("123456");
+    bankAccount->setName("Sparstrumpf");
+    bankAccount->setCode("7654321");
+    bankAccount->save();
+    delete bankAccount;
+
+    membermanager::entity::Contribution *contribution = new membermanager::entity::Contribution();
+    contribution->setMemberId(2);
+    contribution->setFee(15.0);
+    contribution->setAdditionalFee(0);
+    contribution->setDonation(0);
+    contribution->setValidFrom(QDate::currentDate());
+    contribution->save();
+    delete contribution;
+
     member = new membermanager::entity::Member();
+    member->setMemberId(2);
     member->setName("McCoy");
     member->setFirstname("Dr. Leonard");
     member->setNickname("Pille");
@@ -79,8 +97,6 @@ void MemberHandlerTest::initTestCase()
     member->setState(membermanager::entity::Member::State::active);
     member->save();
     delete member;
-
-    db.close();
 }
 
 void MemberHandlerTest::testProxyModelChanged()
@@ -112,6 +128,13 @@ void MemberHandlerTest::testMemberSelected()
     member = memberVariant.value<membermanager::entity::Member *>();
     QVariant nameVariant = member->property("name");
     QCOMPARE(nameVariant, QVariant("McCoy"));
+
+    membermanager::entity::BankAccount *bankAccount = handler->bankAccount();
+    QCOMPARE(bankAccount->name(), QString("Sparstrumpf"));
+
+    membermanager::entity::Contribution *contribution = handler->contribution();
+    double fee = 15.0;
+    QCOMPARE(contribution->fee(), fee);
 }
 
 void MemberHandlerTest::testMemberDeletedSelected()

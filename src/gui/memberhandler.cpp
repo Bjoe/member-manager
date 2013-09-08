@@ -10,6 +10,8 @@
 #include <QDjangoWhere.h>
 
 #include "dao/membertablemodel.h"
+#include "dao/bankaccounttablemodel.h"
+#include "dao/contributiontablemodel.h"
 
 namespace membermanager {
 namespace gui {
@@ -18,6 +20,8 @@ MemberHandler::MemberHandler(QObject *parent)
     : QObject(parent),
       m_memberState(entity::Member::State::active),
       m_member(new entity::Member()),
+      m_bankaccount(new entity::BankAccount()),
+      m_contribution(new entity::Contribution()),
       m_proxyTableModel(nullptr)
 {
     createProxyTableModel();
@@ -31,6 +35,16 @@ ProxyTableModel *MemberHandler::proxyModel() const
 entity::Member *MemberHandler::member() const
 {
     return m_member;
+}
+
+entity::BankAccount *MemberHandler::bankAccount() const
+{
+    return m_bankaccount;
+}
+
+entity::Contribution *MemberHandler::contribution() const
+{
+    return m_contribution;
 }
 
 entity::Member::State MemberHandler::memberState() const
@@ -75,10 +89,17 @@ void MemberHandler::onDatabaseReady()
 
 void MemberHandler::onMemberSelected(int row)
 {
-    QSqlTableModel *model = m_proxyTableModel->getModel();
-    m_member = dao::MemberTableModel::findMemberByRow(model, row);
+    delete m_member;
+    delete m_bankaccount;
+    delete m_contribution;
 
-    qDebug() << QString("Selected member id: %1").arg(m_member->memberId());
+    QSqlTableModel *model = m_proxyTableModel->getModel();
+    QVariant memberId = dao::MemberTableModel::giveMemberIdByRow(model, row);
+    m_member = dao::MemberTableModel::findByMemberId(memberId);
+    m_bankaccount = dao::BankAccountTableModel::findByMemberId(memberId);
+    m_contribution = dao::ContributionTableModel::findByMemberId(memberId);
+
+    qDebug() << QString("Selected member id: %1").arg(memberId.toString());
 
     emit memberChanged();
 }
