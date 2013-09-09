@@ -22,8 +22,8 @@ class MemberHandler : public QObject
     Q_PROPERTY(membermanager::entity::BankAccount *bankAccount READ bankAccount NOTIFY memberChanged)
     Q_PROPERTY(membermanager::entity::Contribution *contribution READ contribution NOTIFY memberChanged)
     Q_PROPERTY(membermanager::gui::ProxyTableModel *memberProxyModel READ memberProxyModel NOTIFY memberProxyModelChanged)
-    Q_PROPERTY(membermanager::gui::ProxyTableModel *contributionProxyModel READ contributionProxyModel NOTIFY contribuitonProxyModelChanged)
-    Q_PROPERTY(membermanager::gui::ProxyTableModel *balanceProxyModel READ balanceProxyModel NOTIFY balanceProxyModelChanged)
+    Q_PROPERTY(membermanager::gui::ProxyTableModel *contributionProxyModel READ contributionProxyModel NOTIFY memberChanged)
+    Q_PROPERTY(membermanager::gui::ProxyTableModel *balanceProxyModel READ balanceProxyModel NOTIFY memberChanged)
 
 public:
     MemberHandler(QObject *parent = 0);
@@ -44,11 +44,7 @@ public:
 signals:
     void memberChanged();
     void memberProxyModelChanged();
-    void contribuitonProxyModelChanged();
-    void balanceProxyModelChanged();
     void memberStateChanged();
-    void bankAccountChanged();
-    void contributionChanged();
 
 public slots:
     void onDatabaseReady();

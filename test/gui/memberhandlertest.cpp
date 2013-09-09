@@ -16,6 +16,7 @@
 #include "entity/member.h"
 #include "entity/contribution.h"
 #include "entity/bankaccount.h"
+#include "entity/balance.h"
 
 #include "gui/memberhandler.h"
 #include "gui/proxytablemodel.h"
@@ -50,6 +51,7 @@ void MemberHandlerTest::initTestCase()
     QDjango::registerModel<membermanager::entity::Member>();
     QDjango::registerModel<membermanager::entity::Contribution>();
     QDjango::registerModel<membermanager::entity::BankAccount>();
+    QDjango::registerModel<membermanager::entity::Balance>();
 
     QDjango::dropTables();
     QDjango::createTables();
@@ -85,6 +87,15 @@ void MemberHandlerTest::initTestCase()
     contribution->save();
     delete contribution;
 
+    membermanager::entity::Balance *balance = new membermanager::entity::Balance();
+    balance->setMemberId(2);
+    balance->setValue(155.0);
+    balance->setValuta(QDate::currentDate());
+    balance->setPurpose("foo bar");
+    balance->setAccount(23);
+    balance->save();
+    delete balance;
+
     member = new membermanager::entity::Member();
     member->setMemberId(2);
     member->setName("McCoy");
@@ -119,14 +130,10 @@ void MemberHandlerTest::testMemberProxyModelChanged()
 void MemberHandlerTest::testContribuitonProxyModelChanged()
 {
     membermanager::gui::MemberHandler *handler = new membermanager::gui::MemberHandler(this);
-    QSignalSpy spy(handler, SIGNAL(contributionProxyModelChanged()));
+    QSignalSpy spy(handler, SIGNAL(memberChanged()));
 
+    handler->onMemberSelected(0);
     membermanager::gui::ProxyTableModel *model = handler->contributionProxyModel();
-    QCOMPARE(model->rowCount(), 1);
-    QCOMPARE(spy.count(), 0);
-
-    handler->onDatabaseReady();
-    model = handler->contributionProxyModel();
     QCOMPARE(model->rowCount(), 1);
     QCOMPARE(spy.count(), 1);
 }
@@ -134,14 +141,10 @@ void MemberHandlerTest::testContribuitonProxyModelChanged()
 void MemberHandlerTest::testBalanceProxyModelChanged()
 {
     membermanager::gui::MemberHandler *handler = new membermanager::gui::MemberHandler(this);
-    QSignalSpy spy(handler, SIGNAL(balanceProxyModelChanged()));
+    QSignalSpy spy(handler, SIGNAL(memberChanged()));
 
+    handler->onMemberSelected(0);
     membermanager::gui::ProxyTableModel *model = handler->balanceProxyModel();
-    QCOMPARE(model->rowCount(), 1);
-    QCOMPARE(spy.count(), 0);
-
-    handler->onDatabaseReady();
-    model = handler->balanceProxyModel();
     QCOMPARE(model->rowCount(), 1);
     QCOMPARE(spy.count(), 1);
 }
