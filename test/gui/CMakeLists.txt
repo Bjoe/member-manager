@@ -1,5 +1,3 @@
-
-qt_add_test(contributiondialog contributiondialogtest.cpp)
 qt_add_test(contributionreceiptdialog contributionreceiptdialogtest.cpp)
 qt_add_test(connectiondialog connectiondialogtest.cpp)
 qt_add_test(memberdebtview memberdebtviewtest.cpp)
@@ -9,7 +7,6 @@ qt_add_test(memberlistdelegate memberlistdelegatetest.cpp)
 qt_add_test(settingsdialog settingsdialogtest.cpp)
 
 qt_test(accountingentryimporterview accountingentryimporterviewtest.cpp)
-qt_test(balancedialog balancedialogtest.cpp)
 
 qt_test(memberhandler memberhandlertest.cpp)
 qt_test(proxytablemodel proxytablemodeltest.cpp)

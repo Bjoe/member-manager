@@ -1,8 +1,6 @@
 
 set(QT_UI
     gui/connectiondialog.ui
-    gui/balancedialog.ui
-    gui/contributiondialog.ui
     gui/contributionreceiptdialog.ui
     gui/summaryview.ui
     gui/memberdebtview.ui
@@ -29,8 +27,6 @@ set(QT_SRCS
     gui/proxytablemodel.cpp
 
     gui/connectiondialog.cpp
-    gui/balancedialog.cpp
-    gui/contributiondialog.cpp
     gui/contributionreceiptdialog.cpp
     gui/summaryview.cpp
     gui/memberdebtview.cpp
