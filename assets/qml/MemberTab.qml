@@ -15,27 +15,24 @@ Item {
             width: 400
             Layout.fillHeight: true
 
-            memberList: handler.proxyModel
+            memberList: handler.memberProxyModel
         }
 
         MemberDetail {
-            id: view
-
             Layout.fillHeight: true
             Layout.fillWidth: true
+            id: view
+
+            member: handler.member
+            bankAccount: handler.bankAccount
+            contribution: handler.contribution
+            balanceListModel: handler.balanceProxyModel
+            contributionListModel: handler.contributionProxyModel
         }
     }
 
     MemberHandler {
         id: handler
-
-        onMemberChanged: {
-            console.debug("Member changed")
-            var member = handler.member
-            console.debug("Member state: " + handler.memberState)
-            console.debug("Member name: " + member.name)
-            view.member = member
-        }
     }
 
     Connections {

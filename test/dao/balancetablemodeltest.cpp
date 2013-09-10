@@ -4,6 +4,7 @@
 #include <QString>
 #include <QDate>
 #include <QVariant>
+#include <QList>
 #include <QSqlTableModel>
 
 #include "QDjango.h"
@@ -24,6 +25,7 @@ class BalanceTableModelTest : public QObject
 private slots:
     void initTestCase();
     void testCreateModel();
+    void testFindContributionByMemberIdAndYear();
 };
 
 void BalanceTableModelTest::initTestCase()
@@ -45,7 +47,34 @@ void BalanceTableModelTest::initTestCase()
     membermanager::entity::Balance *balance = new membermanager::entity::Balance();
     balance->setMemberId(1);
     balance->setValue(155.0);
-    balance->setValuta(QDate::currentDate());
+    balance->setValuta(QDate(2006,10,15));
+    balance->setPurpose("foo bar");
+    balance->setAccount(12);
+    balance->save();
+    delete balance;
+
+    balance = new membermanager::entity::Balance();
+    balance->setMemberId(1);
+    balance->setValue(155.0);
+    balance->setValuta(QDate(2006,10,15));
+    balance->setPurpose("foo bar");
+    balance->setAccount(11);
+    balance->save();
+    delete balance;
+
+    balance = new membermanager::entity::Balance();
+    balance->setMemberId(1);
+    balance->setValue(155.0);
+    balance->setValuta(QDate(2006,10,15));
+    balance->setPurpose("foo bar");
+    balance->setAccount(23);
+    balance->save();
+    delete balance;
+
+    balance = new membermanager::entity::Balance();
+    balance->setMemberId(2);
+    balance->setValue(155.0);
+    balance->setValuta(QDate(2006,10,15));
     balance->setPurpose("foo bar");
     balance->setAccount(23);
     balance->save();
@@ -55,8 +84,16 @@ void BalanceTableModelTest::initTestCase()
 void BalanceTableModelTest::testCreateModel()
 {
     QSqlTableModel *model = membermanager::dao::BalanceTableModel::createModel(1);
-    QCOMPARE(model->rowCount(), 1);
+    QCOMPARE(model->rowCount(), 3);
 }
+
+void BalanceTableModelTest::testFindContributionByMemberIdAndYear()
+{
+    QList<membermanager::entity::Balance *> list = membermanager::dao::BalanceTableModel::findContributionByMemberIdAndYear(1, 2006);
+    QCOMPARE(list.size(), 2);
+}
+
+
 
 }
 }

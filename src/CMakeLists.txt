@@ -1,7 +1,6 @@
 
 set(QT_UI
     gui/connectiondialog.ui
-    gui/contributionreceiptdialog.ui
     gui/summaryview.ui
     gui/memberdebtview.ui
     gui/paymentview.ui
@@ -23,11 +22,11 @@ set(QT_SRCS
     entity/bankaccount.cpp
 
     gui/mainwindowuicontroller.cpp
+    gui/contributionreceipthandler.cpp
     gui/memberhandler.cpp
     gui/proxytablemodel.cpp
 
     gui/connectiondialog.cpp
-    gui/contributionreceiptdialog.cpp
     gui/summaryview.cpp
     gui/memberdebtview.cpp
     gui/paymentview.cpp

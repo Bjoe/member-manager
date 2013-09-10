@@ -17,6 +17,7 @@
 #include "entity/contribution.h"
 
 #include "gui/memberhandler.h"
+#include "gui/contributionreceipthandler.h"
 #include "gui/proxytablemodel.h"
 
 namespace membermanager {
@@ -30,7 +31,8 @@ MainWindowUiController::MainWindowUiController()
     //m_databaseManager->onLoadSqlFile("file:dorfverw.dat");
 
     qmlRegisterType<membermanager::gui::MemberHandler>("membermanager", 1, 0, "MemberHandler");
-    qmlRegisterType<membermanager::gui::ProxyTableModel>("membermanager", 1, 0, "MemberTable");
+    qmlRegisterType<membermanager::gui::ContributionReceiptHandler>("membermanager", 1, 0, "ContributionReceiptHandler");
+    qmlRegisterType<membermanager::gui::ProxyTableModel>("membermanager", 1, 0, "ProxyTableModel");
     qmlRegisterType<membermanager::entity::Member>("membermanager", 1, 0, "Member");
     qmlRegisterType<membermanager::entity::BankAccount>("membermanager", 1, 0, "BankAccount");
     qmlRegisterType<membermanager::entity::Balance>("membermanager", 1, 0, "Balance");

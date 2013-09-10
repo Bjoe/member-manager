@@ -4,5 +4,7 @@
         <file>assets/qml/MemberDetail.qml</file>
         <file>assets/qml/MemberList.qml</file>
         <file>assets/qml/MemberTab.qml</file>
+        <file>assets/qml/ContributionList.qml</file>
+        <file>assets/qml/BalanceList.qml</file>
     </qresource>
 </RCC>
