@@ -1,8 +1,8 @@
 #ifndef MEMBERMANAGER_ENTITY_CASHACCOUNT_H
 #define MEMBERMANAGER_ENTITY_CASHACCOUNT_H
 
-#include <QtCore/QString>
-#include <QtCore/QDateTime>
+#include <QString>
+#include <QDate>
 
 #include "QDjangoModel.h"
 
@@ -22,8 +22,8 @@ class CashAccount : public QDjangoModel
     Q_PROPERTY(int cashAccountId READ cashAccountId WRITE setCashAccountId)
     Q_PROPERTY(bool deleted READ isDeleted WRITE setDeleted)
     Q_PROPERTY(QString primanota READ primanota WRITE setPrimanota)
-    Q_PROPERTY(QDateTime valuta READ valuta WRITE setValuta)
-    Q_PROPERTY(QDateTime date READ date WRITE setDate)
+    Q_PROPERTY(QDate valuta READ valuta WRITE setValuta)
+    Q_PROPERTY(QDate date READ date WRITE setDate)
     Q_PROPERTY(double value READ value WRITE setValue)
     Q_PROPERTY(int transactionCode READ transactionCode WRITE setTransactionCode)
     Q_PROPERTY(QString transactionText READ transactionText WRITE setTransactionText)
@@ -45,11 +45,11 @@ public:
     QString primanota() const;
     void setPrimanota(const QString &primanota);
 
-    QDateTime valuta() const;
-    void setValuta(const QDateTime &valuta);
+    QDate valuta() const;
+    void setValuta(const QDate &valuta);
 
-    QDateTime date() const;
-    void setDate(const QDateTime &date);
+    QDate date() const;
+    void setDate(const QDate &date);
 
     double value() const;
     void setValue(double value);
@@ -85,8 +85,8 @@ private:
     QString m_remoteBankCode;
     QString m_remoteAccountNumber;
     QString m_purpose;
-    QDateTime m_valuta;
-    QDateTime m_date;
+    QDate m_valuta;
+    QDate m_date;
     double m_value;
     int m_transactionCode;
     int m_memberId;

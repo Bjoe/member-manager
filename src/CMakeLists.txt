@@ -25,6 +25,7 @@ set(QT_SRCS
     accounting/memberdonationsum.cpp
     accounting/memberfeesum.cpp
     accounting/memberadditionalsum.cpp
+    accounting/cashimporter.cpp
 
     gui/mainwindowuicontroller.cpp
     gui/contributionreceipthandler.cpp

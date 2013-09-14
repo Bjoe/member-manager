@@ -33,22 +33,22 @@ void CashAccount::setPrimanota(const QString &primanota)
     m_primanota = primanota;
 }
 
-QDateTime CashAccount::valuta() const
+QDate CashAccount::valuta() const
 {
     return m_valuta;
 }
 
-void CashAccount::setValuta(const QDateTime &valuta)
+void CashAccount::setValuta(const QDate &valuta)
 {
     m_valuta = valuta;
 }
 
-QDateTime CashAccount::date() const
+QDate CashAccount::date() const
 {
     return m_date;
 }
 
-void CashAccount::setDate(const QDateTime &date)
+void CashAccount::setDate(const QDate &date)
 {
     m_date = date;
 }
