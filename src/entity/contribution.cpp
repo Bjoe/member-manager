@@ -43,6 +43,16 @@ void Contribution::setAdditionalFee(double fee)
     m_additionalFee = fee;
 }
 
+double Contribution::additionalDonation() const
+{
+    return m_additionalDonation;
+}
+
+void Contribution::setAdditionalDonation(double donation)
+{
+    m_additionalDonation = donation;
+}
+
 double Contribution::donation() const
 {
     return m_donation;
