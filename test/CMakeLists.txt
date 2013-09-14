@@ -29,6 +29,7 @@ include_directories(
   "${CMAKE_CURRENT_BINARY_DIR}/accounting"
   "${CMAKE_CURRENT_BINARY_DIR}/dao"
   "${CMAKE_CURRENT_BINARY_DIR}/gui"
+  "${CMAKE_CURRENT_BINARY_DIR}/sumoperator"
   "${QT_TEST_UTIL_INCLUDE_DIRS}"
 )
 

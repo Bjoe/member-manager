@@ -21,10 +21,16 @@ set(QT_SRCS
     entity/cashaccount.cpp
     entity/bankaccount.cpp
 
+    accounting/arithmetic.cpp
+    accounting/memberdonationsum.cpp
+    accounting/memberfeesum.cpp
+    accounting/memberadditionalsum.cpp
+
     gui/mainwindowuicontroller.cpp
     gui/contributionreceipthandler.cpp
     gui/memberhandler.cpp
     gui/proxytablemodel.cpp
+    gui/summaryhandler.cpp
 
     gui/connectiondialog.cpp
     gui/summaryview.cpp
