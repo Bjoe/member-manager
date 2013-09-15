@@ -63,7 +63,7 @@ void SummaryHandlerTest::initTestCase()
 
 void SummaryHandlerTest::testCalculate()
 {
-
+    QSKIP("Test fehlt noch");
 }
 
 }
