@@ -14,6 +14,7 @@ set(QT_SRCS
     dao/bankaccounttablemodel.cpp
     dao/contributiontablemodel.cpp
     dao/balancetablemodel.cpp
+    dao/cashaccounttablemodel.cpp
 
     entity/member.cpp
     entity/contribution.cpp
@@ -32,6 +33,7 @@ set(QT_SRCS
     gui/memberhandler.cpp
     gui/proxytablemodel.cpp
     gui/summaryhandler.cpp
+    gui/cashimporthandler.cpp
 
     gui/connectiondialog.cpp
     gui/summaryview.cpp
