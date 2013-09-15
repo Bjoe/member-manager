@@ -1,10 +1,6 @@
 
 set(QT_UI
     gui/connectiondialog.ui
-    gui/summaryview.ui
-    gui/memberdebtview.ui
-    gui/paymentview.ui
-    gui/accountingentryimporterview.ui
     gui/settingsdialog.ui
     )
 
@@ -27,6 +23,7 @@ set(QT_SRCS
     accounting/memberfeesum.cpp
     accounting/memberadditionalsum.cpp
     accounting/cashimporter.cpp
+    accounting/memberdebt.cpp
 
     gui/mainwindowuicontroller.cpp
     gui/contributionreceipthandler.cpp
@@ -35,28 +32,11 @@ set(QT_SRCS
     gui/summaryhandler.cpp
     gui/cashimporthandler.cpp
     gui/balancepersisthandler.cpp
+    gui/feedebthandler.cpp
 
     gui/connectiondialog.cpp
-    gui/summaryview.cpp
-    gui/memberdebtview.cpp
-    gui/paymentview.cpp
-    gui/accountingentryimporterview.cpp
     gui/settingsdialog.cpp
-    gui/memberlistdelegate.cpp
 
-    dao/cashaccountdao.cpp
-    dao/databasestructure.cpp
-    dao/memberdao.cpp
-    dao/balancedao.cpp
-    dao/contributiondao.cpp
-
-    accounting/balancepersister.cpp
-    accounting/balanceentry.cpp
-    accounting/statemententry.cpp
-    accounting/contributionentry.cpp
-    accounting/pay.cpp
-
-    member.cpp
     databasemanager.cpp
     )
 
