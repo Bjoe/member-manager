@@ -34,6 +34,7 @@ set(QT_SRCS
     gui/proxytablemodel.cpp
     gui/summaryhandler.cpp
     gui/cashimporthandler.cpp
+    gui/balancepersisthandler.cpp
 
     gui/connectiondialog.cpp
     gui/summaryview.cpp
