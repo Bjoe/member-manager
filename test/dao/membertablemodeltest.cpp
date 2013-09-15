@@ -2,6 +2,7 @@
 #include <QtTest/QtTest>
 #include <QObject>
 #include <QString>
+#include <QList>
 
 #include <QSqlTableModel>
 
@@ -26,6 +27,7 @@ private slots:
     void testGiveMemberIdFromRow();
     void testFindMemberByRow();
     void testSelectState();
+    void testFindByState();
 };
 
 void MemberTableModelTest::initTestCase()
@@ -108,6 +110,12 @@ void MemberTableModelTest::testSelectState()
 
     memberId = membermanager::dao::MemberTableModel::giveMemberIdByRow(model, 0);
     QCOMPARE(memberId.toString(), QString("1"));
+}
+
+void MemberTableModelTest::testFindByState()
+{
+    QList<membermanager::entity::Member *> members = membermanager::dao::MemberTableModel::findByState(membermanager::entity::Member::State::active);
+    QCOMPARE(members.size(), 1);
 }
 
 }

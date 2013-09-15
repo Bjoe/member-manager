@@ -40,6 +40,21 @@ void MemberTableModel::selectState(QSqlTableModel *model, entity::Member::State 
     model->select();
 }
 
+QList<entity::Member *> MemberTableModel::findByState(entity::Member::State state)
+{
+    QVariant value(QChar(static_cast<char>(state)));
+    QDjangoQuerySet<entity::Member> memberSet;
+    QDjangoQuerySet<entity::Member> result = memberSet.filter(QDjangoWhere("state", QDjangoWhere::Equals, value));
+
+    QList<entity::Member *> list;
+    for(int i = 0; result.size() > i; ++i) {
+        entity::Member *member = new entity::Member();
+        result.at(i, member);
+        list.append(member);
+    }
+    return list;
+}
+
 
 } // namespace dao
 } // namespace membermanager
