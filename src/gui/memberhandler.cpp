@@ -23,7 +23,7 @@ MemberHandler::MemberHandler(QObject *parent)
       m_member(new entity::Member()),
       m_bankaccount(new entity::BankAccount()),
       m_contribution(new entity::Contribution()),
-      m_memberProxyTableModel(new ProxyTableModel()),
+      m_memberProxyTableModel(nullptr),
       m_contributionProxyTableModel(new ProxyTableModel()),
       m_balanceProxyTableModel(new ProxyTableModel())
 {
