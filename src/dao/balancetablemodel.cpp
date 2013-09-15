@@ -35,9 +35,29 @@ QList<entity::Balance *> BalanceTableModel::findContributionByMemberIdAndYear(QV
         result.at(i, balance);
         if(balance->valuta().year() == year) // TODO In SQL
             list.append(balance);
+        else
+            delete balance;
     }
 
     return list;
+}
+
+double BalanceTableModel::calculateFeeSumByMemberId(QVariant memberId)
+{
+    QDjangoQuerySet<entity::Balance> balanceSet;
+    QDjangoQuerySet<entity::Balance> result = balanceSet.filter(QDjangoWhere("memberId", QDjangoWhere::Equals, memberId) &&
+                                                                (QDjangoWhere("account", QDjangoWhere::Equals, "11") ||
+                                                                 QDjangoWhere("account", QDjangoWhere::Equals, "-11") ||
+                                                                 QDjangoWhere("account", QDjangoWhere::Equals, "4") ||
+                                                                 QDjangoWhere("account", QDjangoWhere::Equals, "-4") ||
+                                                                 QDjangoWhere("account", QDjangoWhere::Equals, "3") ||
+                                                                 QDjangoWhere("account", QDjangoWhere::Equals, "-3")));
+
+    double sum = 0.0;
+    for(const entity::Balance &balance : result) {
+        sum += balance.value();
+    }
+    return sum;
 }
 
 } // namespace dao
