@@ -25,7 +25,6 @@ public:
     entity::Member::State memberState() const;
     void setMemberState(entity::Member::State state);
 
-    void clearList();
 signals:
     void debtModelChanged();
     void memberStateChanged();
@@ -38,6 +37,7 @@ private:
     entity::Member::State m_memberState;
     QList<QObject *> m_debtModel;
 
+    void clearList();
 };
 
 } // namespace gui
