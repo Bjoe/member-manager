@@ -200,6 +200,22 @@ TabView {
                         text: contribution.additionalFee
                     }
 
+                    Text {text: qsTr("CCC Spenden Anteil") }
+                    TextField {
+                        Layout.fillWidth: true
+
+                        id: additionalDonationField
+                        text: contribution.additionalDonation
+                    }
+
+                    Text {text: qsTr("Schulden Beitrag") }
+                    TextField {
+                        Layout.fillWidth: true
+
+                        id: amortizationField
+                        text: contribution.amortization
+                    }
+
                     Text {text: qsTr("Info:") }
                     TextField {
                         Layout.fillWidth: true
@@ -284,22 +300,19 @@ TabView {
 
             Text { text: qsTr("Contributon List") }
             ContributionList {
-                id: contributionView
                 Layout.fillWidth: true
+
+                id: contributionView
                 contributionList: contributionListModel
             }
 
             Text { text: qsTr("Balance List") }
             BalanceList {
-                id: balanceView
                 Layout.fillWidth: true
-                balanceList: balanceListModel
-            }
-
-            Item {
-                // Only for Spacing. Is there a better way?
                 Layout.fillHeight: true
-                Layout.fillWidth: true
+
+                id: balanceView
+                balanceList: balanceListModel
             }
         }
     }

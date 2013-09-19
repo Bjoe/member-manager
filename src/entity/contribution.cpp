@@ -82,6 +82,16 @@ void Contribution::setValidFrom(const QDate &date)
 {
     m_validFrom = date;
 }
+double Contribution::amortization() const
+{
+    return m_amortization;
+}
+
+void Contribution::setAmortization(double amortization)
+{
+    m_amortization = amortization;
+}
+
 
 } // namespace entity
 } // namespace membermanager

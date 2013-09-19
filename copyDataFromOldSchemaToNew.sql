@@ -155,6 +155,8 @@ insert into chaosdorf.contribution (
 memberId,
 fee,
 additionalFee,
+additionalDonation,
+amortization,
 donation,
 validFrom,
 info
@@ -163,6 +165,8 @@ select
 b.dorfmitglied_pkey,
 b.beitrag,
 b.schulden,
+0,
+0,
 b.spende,
 b.gueltigab,
 b.info

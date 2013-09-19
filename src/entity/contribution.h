@@ -23,6 +23,7 @@ class Contribution : public QDjangoModel
     Q_PROPERTY(double additionalFee READ additionalFee WRITE setAdditionalFee)
     Q_PROPERTY(double additionalDonation READ additionalDonation WRITE setAdditionalDonation)
     Q_PROPERTY(double donation READ donation WRITE setDonation)
+    Q_PROPERTY(double amortization READ amortization WRITE setAmortization)
     Q_PROPERTY(QDate validFrom READ validFrom WRITE setValidFrom)
     Q_PROPERTY(QString info READ info WRITE setInfo)
 
@@ -46,6 +47,9 @@ public:
     double donation() const;
     void setDonation(double donation);
 
+    double amortization() const;
+    void setAmortization(double amortization);
+
     QString info() const;
     void setInfo(const QString &text);
 
@@ -59,6 +63,7 @@ private:
     double m_additionalFee;
     double m_additionalDonation;
     double m_donation;
+    double m_amortization;
     int m_contributionId;
     int m_memberId;
 };
