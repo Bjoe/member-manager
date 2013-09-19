@@ -6,5 +6,7 @@
         <file>assets/qml/MemberTab.qml</file>
         <file>assets/qml/ContributionList.qml</file>
         <file>assets/qml/BalanceList.qml</file>
+        <file>assets/qml/CashTab.qml</file>
+        <file>assets/qml/MembersFeeDebt.qml</file>
     </qresource>
 </RCC>

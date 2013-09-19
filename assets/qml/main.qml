@@ -121,6 +121,42 @@ ApplicationWindow {
                 }
             }
         }
+
+        Tab {
+            title: "Offene Beiträge"
+            id: feeDebtTab
+
+            Item {
+                MembersFeeDebt {
+                    anchors.fill: parent
+                    anchors.margins: 8
+
+                    id: feeDebt
+                }
+                Connections {
+                    target: mainWindow
+                    onDatabaseReady: feeDebt.onDatabaseReady()
+                }
+            }
+        }
+
+        Tab {
+            title: "Kasse"
+            id: cashTab
+
+            Item {
+                CashTab {
+                    anchors.fill: parent
+                    anchors.margins: 8
+
+                    id: cash
+                }
+                Connections {
+                    target: mainWindow
+                    onDatabaseready: cash.onDatabaseReady()
+                }
+            }
+        }
     }
 
     function onDatabaseReady() {

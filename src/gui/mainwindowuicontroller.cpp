@@ -17,6 +17,9 @@
 #include "entity/contribution.h"
 
 #include "gui/memberhandler.h"
+#include "gui/feedebthandler.h"
+#include "gui/cashimporthandler.h"
+#include "gui/balancepersisthandler.h"
 #include "gui/contributionreceipthandler.h"
 #include "gui/proxytablemodel.h"
 
@@ -32,6 +35,9 @@ MainWindowUiController::MainWindowUiController()
 
     qmlRegisterType<membermanager::gui::MemberHandler>("membermanager", 1, 0, "MemberHandler");
     qmlRegisterType<membermanager::gui::ContributionReceiptHandler>("membermanager", 1, 0, "ContributionReceiptHandler");
+    qmlRegisterType<membermanager::gui::CashImportHandler>("membermanager", 1, 0, "CashImportHandler");
+    qmlRegisterType<membermanager::gui::BalancePersistHandler>("membermanager", 1, 0, "BalancePersisterHandler");
+    qmlRegisterType<membermanager::gui::FeeDebtHandler>("membermanager", 1, 0, "FeeDebtHandler");
     qmlRegisterType<membermanager::gui::ProxyTableModel>("membermanager", 1, 0, "ProxyTableModel");
     qmlRegisterType<membermanager::entity::Member>("membermanager", 1, 0, "Member");
     qmlRegisterType<membermanager::entity::BankAccount>("membermanager", 1, 0, "BankAccount");
