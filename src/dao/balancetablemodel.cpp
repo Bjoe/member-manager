@@ -21,14 +21,14 @@ QSqlTableModel *BalanceTableModel::createModel(QVariant memberId)
     return model;
 }
 
-QList<entity::Balance *> BalanceTableModel::findContributionByMemberIdAndYear(QVariant memberId, QVariant year)
+QList<QObject *> BalanceTableModel::findContributionByMemberIdAndYear(QVariant memberId, QVariant year)
 {
     QDjangoQuerySet<entity::Balance> querySet;
     QDjangoQuerySet<entity::Balance> result = querySet.filter(QDjangoWhere("memberId", QDjangoWhere::Equals, memberId) &&
                                                               (QDjangoWhere("account", QDjangoWhere::Equals, "11") ||
                                                                QDjangoWhere("account", QDjangoWhere::Equals, "12")));
 
-    QList<entity::Balance *> list;
+    QList<QObject *> list;
 
     for(int i = 0; i < result.size(); ++i) {
         entity::Balance *balance = new entity::Balance();

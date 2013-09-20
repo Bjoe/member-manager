@@ -145,10 +145,10 @@ void BalanceTableModelTest::testCreateModel()
 
 void BalanceTableModelTest::testFindContributionByMemberIdAndYear()
 {
-    QList<membermanager::entity::Balance *> list = membermanager::dao::BalanceTableModel::findContributionByMemberIdAndYear(1, 2006);
+    QList<QObject *> list = membermanager::dao::BalanceTableModel::findContributionByMemberIdAndYear(1, 2006);
     QCOMPARE(list.size(), 2);
 
-    for(membermanager::entity::Balance *balance : list) {
+    for(QObject *balance : list) {
         delete balance;
     }
 }

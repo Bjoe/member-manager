@@ -320,20 +320,57 @@ TabView {
     Tab {
         title: qsTr("Spenden Quittung")
 
-        ColumnLayout {
-            anchors.fill: parent
-            spacing: 4
+        Item {
+            ColumnLayout {
+                anchors.fill: parent
+                spacing: 4
 
-            Text { text: qsTr("Quittung") }
-            TextField {
-                Layout.fillHeight: true
-                Layout.fillWidth: true
+                RowLayout {
+                    Text { text: qsTr("Quittung") }
 
-                id: receiptenField
+                    ComboBox { // TODO is there any Calendar Controls in QML?
+                        id: year
+                        model: [ 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013 ]
+                    }
 
+                    Button {
+                        id: receiptButton
+                        text: qsTr("Generate")
 
+                        onClicked: {
+                            receipt.createReceipt(member.memberId, year.currentText);
+                        }
+                    }
+                }
+                TableView {
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true
+
+                    TableViewColumn {
+                        role: "account"
+                        title: qsTr("Buchung")
+                    }
+                    TableViewColumn {
+                        role: "valuta"
+                        title: qsTr("Datum")
+                    }
+                    TableViewColumn {
+                        role: "value"
+                        title: qsTr("Betrag")
+                    }
+                    TableViewColumn {
+                        role: "purpose"
+                        title: qsTr("Bezeichnung")
+                    }
+
+                    model: receipt.balanceList
+                }
             }
 
+            ContributionReceiptHandler {
+                id: receipt
+
+            }
         }
     }
 

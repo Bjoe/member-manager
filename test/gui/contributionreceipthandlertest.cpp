@@ -4,6 +4,7 @@
 
 #include <QObject>
 #include <QString>
+#include <QDate>
 #include <QByteArray>
 #include <QHash>
 #include <QModelIndex>
@@ -13,7 +14,7 @@
 
 #include "testconfig.h"
 
-#include "entity/contribution.h"
+#include "entity/balance.h"
 
 #include "gui/contributionreceipthandler.h"
 
@@ -26,7 +27,7 @@ class ContributionReceiptHandlerTest : public QObject
 
 private slots:
     void initTestCase();
-    void testShowReceipt();
+    void testCreateReceipt();
 };
 
 void ContributionReceiptHandlerTest::initTestCase()
@@ -40,21 +41,31 @@ void ContributionReceiptHandlerTest::initTestCase()
         }
     }
     QDjango::setDatabase(db);
-    QDjango::registerModel<membermanager::entity::Contribution>();
+    QDjango::registerModel<membermanager::entity::Balance>();
 
     QDjango::dropTables();
     QDjango::createTables();
 
-    membermanager::entity::Contribution *contribution = new membermanager::entity::Contribution();
-    contribution->save();
-    delete contribution;
+    membermanager::entity::Balance *balance = new membermanager::entity::Balance();
+    balance->setMemberId(1);
+    balance->setValue(155.0);
+    balance->setValuta(QDate(2006,10,15));
+    balance->setPurpose("foo bar");
+    balance->setAccount(12);
+    balance->save();
+    delete balance;
 }
 
-void ContributionReceiptHandlerTest::testShowReceipt()
+void ContributionReceiptHandlerTest::testCreateReceipt()
 {
     membermanager::gui::ContributionReceiptHandler handler;
-    QString content = handler.showReceipt(1,2006);
-    QSKIP("Add a test for content");
+    QSignalSpy spy(&handler, SIGNAL(balanceListChanged()));
+
+    handler.createReceipt(1,2006);
+
+    QList<QObject *> balanceList = handler.balanceList();
+    QCOMPARE(balanceList.size(), 1);
+    QCOMPARE(spy.count(), 1);
 }
 
 }

@@ -14,7 +14,7 @@ class BalanceTableModel
 {
 public:
     static QSqlTableModel *createModel(QVariant memberId);
-    static QList<entity::Balance *> findContributionByMemberIdAndYear(QVariant memberId, QVariant year);
+    static QList<QObject *> findContributionByMemberIdAndYear(QVariant memberId, QVariant year);
     static double calculateFeeSumByMemberId(QVariant memberId);
 };
 
