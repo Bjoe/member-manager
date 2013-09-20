@@ -6,6 +6,7 @@
 #include <QVariant>
 #include <QList>
 #include <QSqlTableModel>
+#include <QSqlRecord>
 
 #include "QDjango.h"
 
@@ -48,7 +49,7 @@ void BalanceTableModelTest::initTestCase()
     membermanager::entity::Balance *balance = new membermanager::entity::Balance();
     balance->setMemberId(1);
     balance->setValue(155.0);
-    balance->setValuta(QDate(2006,10,15));
+    balance->setValuta(QDate(2006,12,5));
     balance->setPurpose("foo bar");
     balance->setAccount(12);
     balance->save();
@@ -85,7 +86,7 @@ void BalanceTableModelTest::initTestCase()
     balance->setMemberId(1);
     balance->setValue(15.0);
     balance->setAccount(11);
-    balance->setValuta(QDate(2006,12,5));
+    balance->setValuta(QDate(2006,10,15));
     balance->setPurpose("foo bar");
     balance->save();
     delete balance;
@@ -140,6 +141,8 @@ void BalanceTableModelTest::testCreateModel()
 {
     QSqlTableModel *model = membermanager::dao::BalanceTableModel::createModel(2);
     QCOMPARE(model->rowCount(), 2);
+    QSqlRecord record = model->record(0);
+    QCOMPARE(record.value("valuta").toString(), QString("2013-10-15"));
     delete model;
 }
 
@@ -147,6 +150,8 @@ void BalanceTableModelTest::testFindContributionByMemberIdAndYear()
 {
     QList<QObject *> list = membermanager::dao::BalanceTableModel::findContributionByMemberIdAndYear(1, 2006);
     QCOMPARE(list.size(), 2);
+    membermanager::entity::Balance* balance = qobject_cast<membermanager::entity::Balance*>(list.at(0));
+    QCOMPARE(balance->valuta().toString(), QString("So. Okt. 15 2006"));
 
     for(QObject *balance : list) {
         delete balance;

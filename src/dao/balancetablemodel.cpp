@@ -16,6 +16,7 @@ QSqlTableModel *BalanceTableModel::createModel(QVariant memberId)
     QSqlTableModel *model = new QSqlTableModel();
     model->setTable("Balance");
     model->setFilter(whereClause);
+    model->setSort(3, Qt::DescendingOrder);
     model->select();
 
     return model;
@@ -23,13 +24,13 @@ QSqlTableModel *BalanceTableModel::createModel(QVariant memberId)
 
 QList<QObject *> BalanceTableModel::findContributionByMemberIdAndYear(QVariant memberId, QVariant year)
 {
-    QDjangoQuerySet<entity::Balance> querySet;
-    QDjangoQuerySet<entity::Balance> result = querySet.filter(QDjangoWhere("memberId", QDjangoWhere::Equals, memberId) &&
-                                                              (QDjangoWhere("account", QDjangoWhere::Equals, "11") ||
-                                                               QDjangoWhere("account", QDjangoWhere::Equals, "12")));
+    QDjangoQuerySet<entity::Balance> result = QDjangoQuerySet<entity::Balance>()
+            .filter(QDjangoWhere("memberId", QDjangoWhere::Equals, memberId) &&
+                    (QDjangoWhere("account", QDjangoWhere::Equals, "11") ||
+                     QDjangoWhere("account", QDjangoWhere::Equals, "12")))
+            .orderBy(QStringList() << "valuta");
 
     QList<QObject *> list;
-
     for(int i = 0; i < result.size(); ++i) {
         entity::Balance *balance = new entity::Balance();
         result.at(i, balance);
@@ -38,20 +39,19 @@ QList<QObject *> BalanceTableModel::findContributionByMemberIdAndYear(QVariant m
         else
             delete balance;
     }
-
     return list;
 }
 
 double BalanceTableModel::calculateFeeSumByMemberId(QVariant memberId)
 {
-    QDjangoQuerySet<entity::Balance> balanceSet;
-    QDjangoQuerySet<entity::Balance> result = balanceSet.filter(QDjangoWhere("memberId", QDjangoWhere::Equals, memberId) &&
-                                                                (QDjangoWhere("account", QDjangoWhere::Equals, "11") ||
-                                                                 QDjangoWhere("account", QDjangoWhere::Equals, "-11") ||
-                                                                 QDjangoWhere("account", QDjangoWhere::Equals, "4") ||
-                                                                 QDjangoWhere("account", QDjangoWhere::Equals, "-4") ||
-                                                                 QDjangoWhere("account", QDjangoWhere::Equals, "3") ||
-                                                                 QDjangoWhere("account", QDjangoWhere::Equals, "-3")));
+    QDjangoQuerySet<entity::Balance> result = QDjangoQuerySet<entity::Balance>()
+            .filter(QDjangoWhere("memberId", QDjangoWhere::Equals, memberId) &&
+                    (QDjangoWhere("account", QDjangoWhere::Equals, "11") ||
+                     QDjangoWhere("account", QDjangoWhere::Equals, "-11") ||
+                     QDjangoWhere("account", QDjangoWhere::Equals, "4") ||
+                     QDjangoWhere("account", QDjangoWhere::Equals, "-4") ||
+                     QDjangoWhere("account", QDjangoWhere::Equals, "3") ||
+                     QDjangoWhere("account", QDjangoWhere::Equals, "-3")));
 
     double sum = 0.0;
     for(const entity::Balance &balance : result) {
