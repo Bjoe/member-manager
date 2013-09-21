@@ -113,7 +113,7 @@ void MemberHandler::onMemberSelected(int row)
     QVariant memberId = dao::MemberTableModel::giveMemberIdByRow(memberModel, row);
     m_member = dao::MemberTableModel::findByMemberId(memberId);
     m_bankaccount = dao::BankAccountTableModel::findByMemberId(memberId);
-    m_contribution = dao::ContributionTableModel::findByMemberId(memberId);
+    m_contribution = dao::ContributionTableModel::findLastEntryByMemberId(memberId);
 
     QSqlTableModel *contributionModel = dao::ContributionTableModel::createModel(memberId);
     m_contributionProxyTableModel = new ProxyTableModel(contributionModel, this);

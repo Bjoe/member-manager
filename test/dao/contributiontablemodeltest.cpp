@@ -5,6 +5,7 @@
 #include <QDate>
 #include <QVariant>
 #include <QSqlTableModel>
+#include <QSqlRecord>
 
 #include "QDjango.h"
 
@@ -24,7 +25,8 @@ class ContributionTableModelTest : public QObject
 private slots:
     void initTestCase();
     void testCreateModel();
-    void testFindByMemberId();
+    void testFindLastEntryByMemberId();
+    void testFindByMemberIdAndPointInTime();
 };
 
 void ContributionTableModelTest::initTestCase()
@@ -45,25 +47,53 @@ void ContributionTableModelTest::initTestCase()
 
     membermanager::entity::Contribution *contribution = new membermanager::entity::Contribution();
     contribution->setMemberId(1);
-    contribution->setFee(15.0);
+    contribution->setFee(1.0);
     contribution->setAdditionalFee(0);
     contribution->setDonation(0);
-    contribution->setValidFrom(QDate::currentDate());
+    contribution->setValidFrom(QDate(2013, 1, 1));
+    contribution->save();
+    delete contribution;
+
+    contribution = new membermanager::entity::Contribution();
+    contribution->setMemberId(1);
+    contribution->setFee(2.0);
+    contribution->setAdditionalFee(0);
+    contribution->setDonation(0);
+    contribution->setValidFrom(QDate(2013, 9, 1));
+    contribution->save();
+    delete contribution;
+
+    contribution = new membermanager::entity::Contribution();
+    contribution->setMemberId(1);
+    contribution->setFee(3.0);
+    contribution->setAdditionalFee(0);
+    contribution->setDonation(0);
+    contribution->setValidFrom(QDate(2013, 5, 1));
     contribution->save();
     delete contribution;
 }
 
 void ContributionTableModelTest::testCreateModel()
 {
-    QSqlTableModel *model = membermanager::dao::ContributionTableModel::createModel(1);
-    QCOMPARE(model->rowCount(), 1);
+    QSqlTableModel* model = membermanager::dao::ContributionTableModel::createModel(1);
+    QCOMPARE(model->rowCount(), 3);
+    QSqlRecord record = model->record(0);
+    QCOMPARE(record.value(7).toString(), QString("2013-09-01"));
+    delete model;
 }
 
-void ContributionTableModelTest::testFindByMemberId()
+void ContributionTableModelTest::testFindLastEntryByMemberId()
 {
-    membermanager::entity::Contribution *contribution = membermanager::dao::ContributionTableModel::findByMemberId(1);
-    double fee = 15.0;
-    QCOMPARE(contribution->fee(), fee);
+    membermanager::entity::Contribution* contribution = membermanager::dao::ContributionTableModel::findLastEntryByMemberId(1);
+    QCOMPARE(contribution->fee(), 2.0);
+    delete contribution;
+}
+
+void ContributionTableModelTest::testFindByMemberIdAndPointInTime()
+{
+    membermanager::entity::Contribution* contribution = membermanager::dao::ContributionTableModel::findByMemberIdWithPointInTime(1, QDate(2013, 8, 1));
+    QCOMPARE(contribution->fee(), 3.0);
+    delete contribution;
 }
 
 }
