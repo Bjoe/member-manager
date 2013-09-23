@@ -24,6 +24,8 @@ set(QT_SRCS
     accounting/memberadditionalsum.cpp
     accounting/cashimporter.cpp
     accounting/memberdebt.cpp
+    accounting/accounttransaction.cpp
+    accounting/memberaccountingdata.cpp
 
     gui/mainwindowuicontroller.cpp
     gui/contributionreceipthandler.cpp
