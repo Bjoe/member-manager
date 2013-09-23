@@ -9,12 +9,8 @@ namespace dao {
 
 entity::BankAccount *BankAccountTableModel::findByMemberId(QVariant id)
 {
-    QDjangoQuerySet<entity::BankAccount> querySet;
-    QDjangoQuerySet<entity::BankAccount> result = querySet.filter(QDjangoWhere("memberId", QDjangoWhere::Equals, id));
-
-    entity::BankAccount *bankAccount = new entity::BankAccount();
-    result.at(0, bankAccount);
-    return bankAccount;
+    return QDjangoQuerySet<entity::BankAccount>().
+            get(QDjangoWhere("memberId", QDjangoWhere::Equals, id));
 }
 
 
