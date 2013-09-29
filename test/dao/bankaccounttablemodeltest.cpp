@@ -22,6 +22,7 @@ class BankAccountTableModelTest : public QObject
 private slots:
     void initTestCase();
     void testFindByMemberId();
+    void testFindNothing();
 };
 
 void BankAccountTableModelTest::initTestCase()
@@ -53,6 +54,12 @@ void BankAccountTableModelTest::testFindByMemberId()
 {
     membermanager::entity::BankAccount *bankAccount = membermanager::dao::BankAccountTableModel::findByMemberId(1);
     QCOMPARE(bankAccount->accountNumber(), QString("123456"));
+}
+
+void BankAccountTableModelTest::testFindNothing()
+{
+    membermanager::entity::BankAccount *bankAccount = membermanager::dao::BankAccountTableModel::findByMemberId(2);
+    QCOMPARE(bankAccount->accountNumber(), QString(""));
 }
 
 
