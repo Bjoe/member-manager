@@ -23,12 +23,8 @@ entity::CashAccount *CashAccountTableModel::findBySelectedRow(QSqlTableModel *mo
     QSqlRecord record = model->record(row);
     QVariant id = record.value("cashAccountId");
 
-    QDjangoQuerySet<entity::CashAccount> cashAccounts;
-    QDjangoQuerySet<entity::CashAccount> result = cashAccounts.filter(QDjangoWhere("cashAccountId", QDjangoWhere::Equals, id));
-
-    entity::CashAccount *cashAccount = new entity::CashAccount();
-    result.at(0, cashAccount);
-    return cashAccount;
+    return QDjangoQuerySet<entity::CashAccount>()
+            .get(QDjangoWhere("cashAccountId", QDjangoWhere::Equals, id));
 }
 
 } // namespace dao
