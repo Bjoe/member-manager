@@ -19,9 +19,9 @@ class AccountTransaction
 public:
     AccountTransaction(const QString &accountNumber, const QString &bankCode, const QString &bankName, QTextStream& srteam);
 
-    qiabanking::dtaus::Transaction createDtausTransaction(const MemberAccountingData &memberData, QString &purpose);
-    void collectionAccounting(const MemberAccountingData &memberData, QString &purpose);
-    void accounting(const MemberAccountingData &memberData, QString &purpose);
+    qiabanking::dtaus::Transaction createDtausTransaction(const MemberAccountingData &memberData, const QString &purpose);
+    void collectionAccounting(const MemberAccountingData &memberData, const QString &purpose);
+    void accounting(const MemberAccountingData &memberData, const QString &purpose);
 
 private:
     QString m_accountNumber;

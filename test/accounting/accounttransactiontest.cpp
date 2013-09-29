@@ -101,7 +101,6 @@ void AccountTransactionTest::testCreateTranaction()
     QString purpose("Buchen");
     qiabanking::dtaus::Transaction transaction = accountTransaction.createDtausTransaction(memberAccounting, purpose);
 
-    QCOMPARE(purpose, QString("Buchen Beitrag 15 EUR Spende 10 EUR CCC 5 EUR Rate 8 EUR"));
     QCOMPARE(data, QString("21.09.2013;Lastschrift Einzug 011;011 Mitgliedsbeitrag Kirk, James T.;15\n"
                            "21.09.2013;Lastschrift Einzug 012;012 Spende Kirk, James T.;10\n"
                            "21.09.2013;Lastschrift Einzug 004;004 Durchlaufender Posten / CCC Beitrag Kirk, James T.;2\n"
@@ -117,6 +116,11 @@ void AccountTransactionTest::testCreateTranaction()
     unsigned int i = 1;
     QCOMPARE(GWEN_StringList_Count(stringList), i);
     QCOMPARE(GWEN_StringList_StringAt(stringList, 0), "Kirk, James T.");
+
+    const GWEN_STRINGLIST *purposeList = AB_Transaction_GetPurpose(abTransaction);
+    QCOMPARE(GWEN_StringList_Count(purposeList), i);
+    QCOMPARE(GWEN_StringList_StringAt(purposeList, 0), "Buchen Beitrag 15EUR Spende 10EUR CCC 5EUR Rate 8EUR");
+
     QCOMPARE(AB_Transaction_GetRemoteBankCode(abTransaction), "80070099");
     QCOMPARE(AB_Transaction_GetRemoteAccountNumber(abTransaction), "22334455");
 

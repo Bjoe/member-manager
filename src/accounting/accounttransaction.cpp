@@ -17,7 +17,7 @@ AccountTransaction::AccountTransaction(const QString &accountNumber, const QStri
 {
 }
 
-qiabanking::dtaus::Transaction AccountTransaction::createDtausTransaction(const MemberAccountingData &memberData, QString &purpose)
+qiabanking::dtaus::Transaction AccountTransaction::createDtausTransaction(const MemberAccountingData &memberData, const QString &purpose)
 {
     QVariant memberId = memberData.memberId();
     QString name = memberData.name();
@@ -35,14 +35,15 @@ qiabanking::dtaus::Transaction AccountTransaction::createDtausTransaction(const 
 
     QString remoteName = QString("%1, %2").arg(name).arg(firstname);
 
-    purpose.append(QString(" Beitrag %L1 EUR")
-                   .arg(fee));
+    QString info = QString("%1 Beitrag %L2EUR")
+            .arg(purpose)
+            .arg(fee);
     m_stream << QString("%1;Lastschrift Einzug 011;011 Mitgliedsbeitrag %2;%3\n")
                 .arg(date.toString("dd.MM.yyyy"))
                 .arg(remoteName)
                 .arg(fee);
     if(donation > 0) {
-        purpose.append(QString(" Spende %L1 EUR")
+        info.append(QString(" Spende %L1EUR")
                        .arg(donation));
         m_stream << QString("%1;Lastschrift Einzug 012;012 Spende %2;%3\n")
                     .arg(date.toString("dd.MM.yyyy"))
@@ -50,7 +51,7 @@ qiabanking::dtaus::Transaction AccountTransaction::createDtausTransaction(const 
                     .arg(donation);
     }
     if(additionalDonation + additionalFee > 0) {
-        purpose.append(QString(" CCC %L1 EUR")
+        info.append(QString(" CCC %L1EUR")
                        .arg(additionalDonation + additionalFee));
         m_stream << QString("%1;Lastschrift Einzug 004;004 Durchlaufender Posten / CCC Beitrag %2;%3\n")
                     .arg(date.toString("dd.MM.yyyy"))
@@ -62,7 +63,7 @@ qiabanking::dtaus::Transaction AccountTransaction::createDtausTransaction(const 
                     .arg(additionalDonation);
     }
     if(amortization > 0) {
-        purpose.append(QString(" Rate %L1 EUR")
+        info.append(QString(" Rate %L1EUR")
                        .arg(amortization));
         m_stream << QString("%1;Lastschrift Einzug 011;011 Mitgliedsbeitrag Rate %2;%3\n")
                     .arg(date.toString("dd.MM.yyyy"))
@@ -79,13 +80,13 @@ qiabanking::dtaus::Transaction AccountTransaction::createDtausTransaction(const 
             .withRemoteBankCode(bankCode)
             .withValue(value)
             .withTextKey(5)
-            .withPurpose(purpose)
+            .withPurpose(info)
             .build();
 
     return transaction;
 }
 
-void AccountTransaction::collectionAccounting(const MemberAccountingData &memberData, QString &purpose)
+void AccountTransaction::collectionAccounting(const MemberAccountingData &memberData, const QString &purpose)
 {
     QVariant memberId = memberData.memberId();
     double fee = memberData.fee();
@@ -142,7 +143,7 @@ void AccountTransaction::collectionAccounting(const MemberAccountingData &member
     }
 }
 
-void AccountTransaction::accounting(const MemberAccountingData &memberData, QString &purpose)
+void AccountTransaction::accounting(const MemberAccountingData &memberData, const QString &purpose)
 {
     QVariant memberId = memberData.memberId();
     double fee = memberData.fee();
