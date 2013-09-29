@@ -35,6 +35,7 @@ set(QT_SRCS
     gui/cashimporthandler.cpp
     gui/balancepersisthandler.cpp
     gui/feedebthandler.cpp
+    gui/accountinghandler.cpp
 
     gui/connectiondialog.cpp
     gui/settingsdialog.cpp
