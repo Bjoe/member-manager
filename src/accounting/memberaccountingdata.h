@@ -27,6 +27,8 @@ public:
     double additionalDonation() const;
     double amortization() const;
 
+    bool canCharge() const;
+
 private:
     QDate m_date;
     QVariant m_memberId;
@@ -34,6 +36,7 @@ private:
     QString m_firstname;
     QString m_bankAccountNumber;
     QString m_bankCode;
+    QString m_collectionState;
     double m_fee;
     double m_donation;
     double m_additionalFee;

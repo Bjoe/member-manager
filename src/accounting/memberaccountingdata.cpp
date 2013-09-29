@@ -15,6 +15,7 @@ MemberAccountingData::MemberAccountingData(const entity::Member* member, const Q
     m_memberId = QVariant(member->memberId());
     m_name = member->name();
     m_firstname = member->firstname();
+    m_collectionState = member->collectionState();
 
     entity::BankAccount *bankaccount = dao::BankAccountTableModel::findByMemberId(m_memberId);
     m_bankAccountNumber = bankaccount->accountNumber();
@@ -81,6 +82,14 @@ double MemberAccountingData::additionalDonation() const
 double MemberAccountingData::amortization() const
 {
     return m_amortization;
+}
+
+bool MemberAccountingData::canCharge() const
+{
+    return ! m_collectionState.isEmpty() &&
+            m_collectionState.at(0) == static_cast<char>(entity::Member::CollectionState::known) &&
+           ! m_bankAccountNumber.isEmpty() &&
+            ! m_bankCode.isEmpty();
 }
 
 } // namespace accounting
