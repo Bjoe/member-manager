@@ -17,11 +17,11 @@ namespace accounting {
 class AccountTransaction
 {
 public:
-    AccountTransaction(const QString &accountNumber, const QString &bankCode, const QString &bankName, QTextStream& srteam);
+    AccountTransaction(const QString& accountNumber, const QString& bankCode, const QString& bankName, QTextStream& srteam);
 
-    qiabanking::dtaus::Transaction createDtausTransaction(const MemberAccountingData &memberData, const QString &purpose);
-    void collectionAccounting(const MemberAccountingData &memberData, const QString &purpose);
-    void accounting(const MemberAccountingData &memberData, const QString &purpose);
+    qiabanking::dtaus::Transaction createDtausTransaction(const MemberAccountingData* memberData);
+    void collectionAccounting(const MemberAccountingData* memberData);
+    void accounting(const MemberAccountingData* memberData);
 
 private:
     QString m_accountNumber;

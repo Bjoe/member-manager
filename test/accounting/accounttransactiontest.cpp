@@ -56,39 +56,29 @@ void AccountTransactionTest::initTestCase()
         }
     }
     QDjango::setDatabase(db);
-    QDjango::registerModel<membermanager::entity::Contribution>();
-    QDjango::registerModel<membermanager::entity::BankAccount>();
     QDjango::registerModel<membermanager::entity::Balance>();
 
     QDjango::dropTables();
     QDjango::createTables();
-
-    membermanager::entity::BankAccount *bankAccount = new membermanager::entity::BankAccount();
-    bankAccount->setMemberId(1);
-    bankAccount->setAccountNumber("22334455");
-    bankAccount->setCode("80070099");
-    bankAccount->setName("Strumpfspar");
-    bankAccount->save();
-    delete bankAccount;
-
-    membermanager::entity::Contribution *contribution = new membermanager::entity::Contribution();
-    contribution->setMemberId(1);
-    contribution->setFee(15.0);
-    contribution->setDonation(10.0);
-    contribution->setAdditionalDonation(3.0);
-    contribution->setAdditionalFee(2.0);
-    contribution->setAmortization(8.0);
-    contribution->setValidFrom(QDate(2013, 8, 1));
-    contribution->save();
-    delete contribution;
 }
 
 void AccountTransactionTest::testCreateTranaction()
 {
-    membermanager::entity::Member member;
-    member.setMemberId(1);
-    member.setName("Kirk");
-    member.setFirstname("James T.");
+    membermanager::accounting::MemberAccountingData accountingData;
+    accountingData.setMemberId("1");
+    accountingData.setFirstname("James T.");
+    accountingData.setName("Kirk");
+    accountingData.setFee(15.0);
+    accountingData.setDonation(10.0);
+    accountingData.setAdditionalDonation(3.0);
+    accountingData.setAdditionalFee(2.0);
+    accountingData.setAmortization(8.0);
+    accountingData.setCollectionState(static_cast<char>(membermanager::entity::Member::CollectionState::known));
+    accountingData.setBankAccountNumber("22334455");
+    accountingData.setBankCode("80070099");
+    accountingData.setAccountingInfo("foo");
+    accountingData.setPurpose("Buchen");
+    accountingData.setValuta(QDate(2013, 9, 21));
 
     QString data;
     QTextStream stream;
@@ -96,10 +86,7 @@ void AccountTransactionTest::testCreateTranaction()
 
     membermanager::accounting::AccountTransaction accountTransaction("123456789", "76543210", "Sparstrumpf", stream);
 
-    membermanager::accounting::MemberAccountingData memberAccounting(&member, QDate(2013, 9, 21));
-
-    QString purpose("Buchen");
-    qiabanking::dtaus::Transaction transaction = accountTransaction.createDtausTransaction(memberAccounting, purpose);
+    qiabanking::dtaus::Transaction transaction = accountTransaction.createDtausTransaction(&accountingData);
 
     QCOMPARE(data, QString("21.09.2013;Lastschrift Einzug 011;011 Mitgliedsbeitrag Kirk, James T.;15\n"
                            "21.09.2013;Lastschrift Einzug 012;012 Spende Kirk, James T.;10\n"
@@ -130,23 +117,32 @@ void AccountTransactionTest::testCreateTranaction()
 
 void AccountTransactionTest::testBooked()
 {
-    membermanager::entity::Member member;
-    member.setMemberId(1);
+    membermanager::accounting::MemberAccountingData accountingData;
+    accountingData.setMemberId("1");
+    accountingData.setFirstname("James T.");
+    accountingData.setName("Kirk");
+    accountingData.setFee(15.0);
+    accountingData.setDonation(10.0);
+    accountingData.setAdditionalDonation(3.0);
+    accountingData.setAdditionalFee(2.0);
+    accountingData.setAmortization(8.0);
+    accountingData.setCollectionState(static_cast<char>(membermanager::entity::Member::CollectionState::known));
+    accountingData.setBankAccountNumber("22334455");
+    accountingData.setBankCode("80070099");
+    accountingData.setAccountingInfo("foo");
+    accountingData.setPurpose("Buchen");
+    accountingData.setValuta(QDate(2013, 9, 21));
 
     QTextStream stream;
     membermanager::accounting::AccountTransaction accountTransaction("123456789", "76543210", "Sparstrumpf", stream);
 
-    membermanager::accounting::MemberAccountingData memberAccounting(&member, QDate(2013, 9, 21));
-
-    QString purpose("Buchen");
-
-    accountTransaction.accounting(memberAccounting, purpose);
+    accountTransaction.accounting(&accountingData);
 
     QDjangoQuerySet<membermanager::entity::Balance> result;
 
     QCOMPARE(result.size(), 5);
 
-    accountTransaction.collectionAccounting(memberAccounting, purpose);
+    accountTransaction.collectionAccounting(&accountingData);
 
     result = QDjangoQuerySet<membermanager::entity::Balance>();
     QCOMPARE(result.size(), 10);

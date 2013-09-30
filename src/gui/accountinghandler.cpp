@@ -20,26 +20,35 @@ AccountingHandler::AccountingHandler(QObject *parent) :
 {
 }
 
-void AccountingHandler::setMemberList(const QList<QObject *> &memberList)
+void AccountingHandler::setAccountingDataList(const QList<QObject *> &list)
 {
-    m_memberList = memberList;
-    emit memberListChanged();
+    m_memberAccountingDataList = list;
+    emit accountingDataListChanged();
 }
 
-QList<QObject *> AccountingHandler::memberList() const
+QList<QObject *> AccountingHandler::accountingDataList() const
 {
-    return m_memberList;
+    return m_memberAccountingDataList;
 }
 
-void AccountingHandler::setAccountingInfo(const QString &accountingInfo)
-{
-    m_accountingInfo = accountingInfo;
-}
+/*
+ *    m_memberId = QVariant(member->memberId());
+    m_name = member->name();
+    m_firstname = member->firstname();
+    m_collectionState = member->collectionState();
 
-void AccountingHandler::setPurposeInfo(const QString &purposeInfo)
-{
-    m_purposeInfo = purposeInfo;
-}
+    entity::BankAccount *bankaccount = dao::BankAccountTableModel::findByMemberId(m_memberId);
+    m_bankAccountNumber = bankaccount->accountNumber();
+    m_bankCode = bankaccount->code();
+
+    entity::Contribution *contribution = dao::ContributionTableModel::findByMemberIdWithPointInTime(m_memberId, date);
+    m_fee = contribution->fee();
+    m_donation = contribution->donation();
+    m_additionalFee = contribution->additionalFee();
+    m_additionalDonation = contribution->additionalDonation();
+    m_amortization = contribution->amortization();
+
+ */
 
 void AccountingHandler::book(const QString &filename)
 {
@@ -60,16 +69,15 @@ void AccountingHandler::book(const QString &filename)
 
     qiabanking::dtaus::Exporter exporter(bankAccountNumber, bankName,bankCode, "EUR");
 
-    for(QObject* object : m_memberList) {
-        entity::Member* member = qobject_cast<entity::Member *>(object);
-        accounting::MemberAccountingData data(member);
+    for(QObject* object : m_memberAccountingDataList) {
+        accounting::MemberAccountingData* data = qobject_cast<accounting::MemberAccountingData *>(object);
 
-        transaction.accounting(data, m_accountingInfo);
+        transaction.accounting(data);
 
-        if(data.canCharge()) {
-            qiabanking::dtaus::Transaction dtausTransaction = transaction.createDtausTransaction(data, m_accountingInfo);
+        if(data->canCharge()) {
+            qiabanking::dtaus::Transaction dtausTransaction = transaction.createDtausTransaction(data);
             exporter.addTransaction(dtausTransaction);
-            transaction.collectionAccounting(data, m_accountingInfo);
+            transaction.collectionAccounting(data);
         }
     }
 

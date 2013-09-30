@@ -12,30 +12,23 @@ class AccountingHandler : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(QList<QObject *> memberList READ memberList WRITE setMemberList NOTIFY memberListChanged)
-    Q_PROPERTY(QString accountingInfo WRITE setAccountingInfo)
-    Q_PROPERTY(QString purposeInfo WRITE setPurposeInfo)
+    Q_PROPERTY(QList<QObject *> accountingDataList READ accountingDataList WRITE setAccountingDataList NOTIFY accountingDataListChanged)
 
 public:
     explicit AccountingHandler(QObject *parent = 0);
 
-    void setMemberList(const QList<QObject *>& memberList);
-    QList<QObject *> memberList() const;
-
-    void setAccountingInfo(const QString& accountingInfo);
-    void setPurposeInfo(const QString& purposeInfo);
+    void setAccountingDataList(const QList<QObject *>& list);
+    QList<QObject *> accountingDataList() const;
 
     Q_INVOKABLE void book(const QString& filename);
 
 signals:
-    void memberListChanged();
+    void accountingDataListChanged();
 
 public slots:
 
 private:
-    QList<QObject *> m_memberList {};
-    QString m_accountingInfo {};
-    QString m_purposeInfo {};
+    QList<QObject *> m_memberAccountingDataList {};
 };
 
 } // namespace gui

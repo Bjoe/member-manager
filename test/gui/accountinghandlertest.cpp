@@ -13,6 +13,7 @@
 #include <QVariantMap>
 #include <QFile>
 #include <QTextStream>
+#include <QRegExp>
 
 #include <QSettings>
 
@@ -26,6 +27,8 @@
 #include "entity/contribution.h"
 #include "entity/balance.h"
 
+#include "accounting/memberaccountingdata.h"
+
 #include "gui/accountinghandler.h"
 
 namespace test {
@@ -37,6 +40,7 @@ class AccountingHandlerTest : public QObject
 
 private slots:
     void initTestCase();
+    void testGetAccountingData();
     void testBook();
 };
 
@@ -52,6 +56,7 @@ void AccountingHandlerTest::initTestCase()
     }
     QDjango::setDatabase(db);
 
+    QDjango::registerModel<membermanager::entity::Member>();
     QDjango::registerModel<membermanager::entity::Contribution>();
     QDjango::registerModel<membermanager::entity::BankAccount>();
     QDjango::registerModel<membermanager::entity::Balance>();
@@ -59,6 +64,12 @@ void AccountingHandlerTest::initTestCase()
     QDjango::dropTables();
     QDjango::createTables();
 
+    membermanager::entity::Member* member = new membermanager::entity::Member();
+    member->setMemberId(1);
+    member->setName("Kirk");
+    member->setFirstname("James T.");
+    member->setCollectionState(membermanager::entity::Member::CollectionState::known);
+    member->save();
 
     membermanager::entity::BankAccount *bankAccount = new membermanager::entity::BankAccount();
     bankAccount->setMemberId(1);
@@ -78,6 +89,12 @@ void AccountingHandlerTest::initTestCase()
     contribution->setValidFrom(QDate(2013, 8, 1));
     contribution->save();
     delete contribution;
+
+}
+
+void AccountingHandlerTest::testGetAccountingData()
+{
+    QFAIL("TODO  ......");
 }
 
 void AccountingHandlerTest::testBook()
@@ -87,21 +104,29 @@ void AccountingHandlerTest::testBook()
     settings.setValue("bank/code", QString("39912399"));
     settings.setValue("bank/account", QString("123456"));
 
-    membermanager::entity::Member member;
-    member.setMemberId(1);
-    member.setName("Kirk");
-    member.setFirstname("James T.");
-    member.setCollectionState(membermanager::entity::Member::CollectionState::known);
+    membermanager::accounting::MemberAccountingData accountingData;
+    accountingData.setAccountingInfo("foo");
+    accountingData.setPurpose("bar");
+    accountingData.setAdditionalDonation(3.0);
+    accountingData.setAdditionalFee(2.0);
+    accountingData.setAmortization(8.0);
+    accountingData.setBankAccountNumber("22334455");
+    accountingData.setBankCode("80070099");
+    accountingData.setCollectionState(static_cast<char>(membermanager::entity::Member::CollectionState::known));
+    accountingData.setDonation(10.0);
+    accountingData.setFee(15.0);
+    accountingData.setFirstname("James T.");
+    accountingData.setMemberId("1");
+    accountingData.setName("Kirk");
+    accountingData.setValuta(QDate(2013, 9, 29));
 
-    QList<QObject *> memberList;
-    memberList.append(&member);
+    QList<QObject *> accountingList;
+    accountingList.append(&accountingData);
 
 
     membermanager::gui::AccountingHandler handler;
 
-    handler.setAccountingInfo("foo");
-    handler.setPurposeInfo("bar");
-    handler.setMemberList(memberList);
+    handler.setAccountingDataList(accountingList);
 
     handler.book("testfile");
 
@@ -118,14 +143,10 @@ void AccountingHandlerTest::testBook()
 
     QTextStream stream2(&file2);
 
-    QCOMPARE(stream2.readLine(), QString("0128ALK3991239900000000FOOBAR                     "
-                                         "290913    00001234560000000000                                               "
-                                         "10216C39912399800700990022334455000000000000005000 0000000000039912399000012345600000003800"
-                                         "   KIRK, JAMES T.                     FOOBAR                     "
-                                         "FOO BEITRAG 15EUR SPENDE 101  0102EUR CCC 5EUR RATE 8EUR"
-                                         "                                             0128E     "
-                                         "0000001000000000000000000000022334455000000000800700990000000003800"
-                                         "                                                   "));
+    QString line = stream2.readLine();
+
+    QRegExp regExp(".*BAR BEITRAG 15EUR SPENDE 101  0102EUR CCC 5EUR RATE 8EUR.*");
+    QVERIFY(regExp.exactMatch(line));
 
     file2.close();
 

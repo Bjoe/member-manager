@@ -12,38 +12,38 @@
 namespace membermanager {
 namespace accounting {
 
-AccountTransaction::AccountTransaction(const QString &accountNumber, const QString &bankCode, const QString &bankName, QTextStream &stream)
+AccountTransaction::AccountTransaction(const QString& accountNumber, const QString& bankCode, const QString& bankName, QTextStream& stream)
     : m_accountNumber(accountNumber), m_bankCode(bankCode), m_bankName(bankName), m_stream(stream)
 {
 }
 
-qiabanking::dtaus::Transaction AccountTransaction::createDtausTransaction(const MemberAccountingData &memberData, const QString &purpose)
+qiabanking::dtaus::Transaction AccountTransaction::createDtausTransaction(const MemberAccountingData* memberData)
 {
-    QVariant memberId = memberData.memberId();
-    QString name = memberData.name();
-    QString firstname = memberData.firstname();
-    QString accountNumber = memberData.bankAccountNumber();
-    QString bankCode = memberData.bankCode();
-    double fee = memberData.fee();
-    double donation = memberData.donation();
-    double additionalFee = memberData.additionalFee();
-    double additionalDonation = memberData.additionalDonation();
-    double amortization = memberData.amortization();
-    QDate date = memberData.date();
+    QVariant memberId = memberData->memberId();
+    QString name = memberData->name();
+    QString firstname = memberData->firstname();
+    QString accountNumber = memberData->bankAccountNumber();
+    QString bankCode = memberData->bankCode();
+    double fee = memberData->fee();
+    double donation = memberData->donation();
+    double additionalFee = memberData->additionalFee();
+    double additionalDonation = memberData->additionalDonation();
+    double amortization = memberData->amortization();
+    QDate date = memberData->valuta();
+    QString purpose = memberData->purpose();
 
     double value = fee + donation + additionalFee + additionalDonation + amortization;
 
     QString remoteName = QString("%1, %2").arg(name).arg(firstname);
 
-    QString info = QString("%1 Beitrag %L2EUR")
-            .arg(purpose)
-            .arg(fee);
+    purpose.append(QString(" Beitrag %L2EUR")
+            .arg(fee));
     m_stream << QString("%1;Lastschrift Einzug 011;011 Mitgliedsbeitrag %2;%3\n")
                 .arg(date.toString("dd.MM.yyyy"))
                 .arg(remoteName)
                 .arg(fee);
     if(donation > 0) {
-        info.append(QString(" Spende %L1EUR")
+        purpose.append(QString(" Spende %L1EUR")
                        .arg(donation));
         m_stream << QString("%1;Lastschrift Einzug 012;012 Spende %2;%3\n")
                     .arg(date.toString("dd.MM.yyyy"))
@@ -51,7 +51,7 @@ qiabanking::dtaus::Transaction AccountTransaction::createDtausTransaction(const 
                     .arg(donation);
     }
     if(additionalDonation + additionalFee > 0) {
-        info.append(QString(" CCC %L1EUR")
+        purpose.append(QString(" CCC %L1EUR")
                        .arg(additionalDonation + additionalFee));
         m_stream << QString("%1;Lastschrift Einzug 004;004 Durchlaufender Posten / CCC Beitrag %2;%3\n")
                     .arg(date.toString("dd.MM.yyyy"))
@@ -63,7 +63,7 @@ qiabanking::dtaus::Transaction AccountTransaction::createDtausTransaction(const 
                     .arg(additionalDonation);
     }
     if(amortization > 0) {
-        info.append(QString(" Rate %L1EUR")
+        purpose.append(QString(" Rate %L1EUR")
                        .arg(amortization));
         m_stream << QString("%1;Lastschrift Einzug 011;011 Mitgliedsbeitrag Rate %2;%3\n")
                     .arg(date.toString("dd.MM.yyyy"))
@@ -80,21 +80,22 @@ qiabanking::dtaus::Transaction AccountTransaction::createDtausTransaction(const 
             .withRemoteBankCode(bankCode)
             .withValue(value)
             .withTextKey(5)
-            .withPurpose(info)
+            .withPurpose(purpose)
             .build();
 
     return transaction;
 }
 
-void AccountTransaction::collectionAccounting(const MemberAccountingData &memberData, const QString &purpose)
+void AccountTransaction::collectionAccounting(const MemberAccountingData* memberData)
 {
-    QVariant memberId = memberData.memberId();
-    double fee = memberData.fee();
-    double donation = memberData.donation();
-    double additionalFee = memberData.additionalFee();
-    double additionalDonation = memberData.additionalDonation();
-    double amortization = memberData.amortization();
-    QDate date = memberData.date();
+    QVariant memberId = memberData->memberId();
+    double fee = memberData->fee();
+    double donation = memberData->donation();
+    double additionalFee = memberData->additionalFee();
+    double additionalDonation = memberData->additionalDonation();
+    double amortization = memberData->amortization();
+    QDate date = memberData->valuta();
+    QString purpose = memberData->accountingInfo();
 
     createAndSaveBalance(
                 memberId,
@@ -143,15 +144,16 @@ void AccountTransaction::collectionAccounting(const MemberAccountingData &member
     }
 }
 
-void AccountTransaction::accounting(const MemberAccountingData &memberData, const QString &purpose)
+void AccountTransaction::accounting(const MemberAccountingData* memberData)
 {
-    QVariant memberId = memberData.memberId();
-    double fee = memberData.fee();
-    double donation = memberData.donation();
-    double additionalFee = memberData.additionalFee();
-    double additionalDonation = memberData.additionalDonation();
-    double amortization = memberData.amortization();
-    QDate date = memberData.date();
+    QVariant memberId = memberData->memberId();
+    double fee = memberData->fee();
+    double donation = memberData->donation();
+    double additionalFee = memberData->additionalFee();
+    double additionalDonation = memberData->additionalDonation();
+    double amortization = memberData->amortization();
+    QDate date = memberData->valuta();
+    QString purpose = memberData->accountingInfo();
 
     createAndSaveBalance(
                 memberId,
