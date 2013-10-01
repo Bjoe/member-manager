@@ -18,6 +18,7 @@
 
 #include "gui/memberhandler.h"
 #include "gui/feedebthandler.h"
+#include "gui/accountinghandler.h"
 #include "gui/cashimporthandler.h"
 #include "gui/balancepersisthandler.h"
 #include "gui/contributionreceipthandler.h"
@@ -35,6 +36,7 @@ MainWindowUiController::MainWindowUiController()
 
     qmlRegisterType<membermanager::gui::MemberHandler>("membermanager", 1, 0, "MemberHandler");
     qmlRegisterType<membermanager::gui::ContributionReceiptHandler>("membermanager", 1, 0, "ContributionReceiptHandler");
+    qmlRegisterType<membermanager::gui::AccountingHandler>("membermanager", 1, 0, "AccountingHandler");
     qmlRegisterType<membermanager::gui::CashImportHandler>("membermanager", 1, 0, "CashImportHandler");
     qmlRegisterType<membermanager::gui::BalancePersistHandler>("membermanager", 1, 0, "BalancePersisterHandler");
     qmlRegisterType<membermanager::gui::FeeDebtHandler>("membermanager", 1, 0, "FeeDebtHandler");

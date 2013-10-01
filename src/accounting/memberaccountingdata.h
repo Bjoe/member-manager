@@ -28,6 +28,7 @@ class MemberAccountingData : public QObject
     Q_PROPERTY(QString accountingInfo READ accountingInfo WRITE setAccountingInfo NOTIFY accountingInfoChanged)
 
 public:
+    MemberAccountingData(QObject* parent = nullptr);
 
     QDate valuta() const;
     void setValuta(const QDate& date);

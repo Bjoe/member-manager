@@ -5,6 +5,10 @@
 namespace membermanager {
 namespace accounting {
 
+MemberAccountingData::MemberAccountingData(QObject *parent) : QObject(parent)
+{
+}
+
 QDate MemberAccountingData::valuta() const
 {
     return m_valuta;

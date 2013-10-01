@@ -364,12 +364,29 @@ TabView {
                     }
 
                     model: receipt.balanceList
+
+                    MouseArea {
+                        anchors.fill: parent
+
+                        acceptedButtons: Qt.RightButton
+
+                        onClicked: mymenu.popup()
+                    }
                 }
             }
 
             ContributionReceiptHandler {
                 id: receipt
 
+            }
+
+            Menu {
+                id: mymenu
+                title: "Test"
+
+                MenuItem {
+                    text: "Test Item"
+                }
             }
         }
     }

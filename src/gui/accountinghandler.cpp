@@ -8,6 +8,12 @@
 #include "dtaus/transaction.h"
 
 #include "entity/member.h"
+#include "entity/bankaccount.h"
+#include "entity/contribution.h"
+
+#include "dao/membertablemodel.h"
+#include "dao/bankaccounttablemodel.h"
+#include "dao/contributiontablemodel.h"
 
 #include "accounting/memberaccountingdata.h"
 #include "accounting/accounttransaction.h"
@@ -16,8 +22,46 @@ namespace membermanager {
 namespace gui {
 
 AccountingHandler::AccountingHandler(QObject *parent) :
-    QObject(parent)
+    QObject(parent), m_valuta(QDate::currentDate())
 {
+}
+
+AccountingHandler::~AccountingHandler()
+{
+    clearList();
+}
+
+void AccountingHandler::setValuta(const QDate &date)
+{
+    m_valuta = date;
+    emit valutaChanged();
+}
+
+QDate AccountingHandler::valuta() const
+{
+    return m_valuta;
+}
+
+void AccountingHandler::setPurpose(const QString &text)
+{
+    m_purpose = text;
+    emit purposeChanged();
+}
+
+QString AccountingHandler::purpose() const
+{
+    return m_purpose;
+}
+
+void AccountingHandler::setAccountingInfo(const QString &text)
+{
+    m_accountingInfo = text;
+    emit accountingInfoChanged();
+}
+
+QString AccountingHandler::accountingInfo() const
+{
+    return m_accountingInfo;
 }
 
 void AccountingHandler::setAccountingDataList(const QList<QObject *> &list)
@@ -30,25 +74,6 @@ QList<QObject *> AccountingHandler::accountingDataList() const
 {
     return m_memberAccountingDataList;
 }
-
-/*
- *    m_memberId = QVariant(member->memberId());
-    m_name = member->name();
-    m_firstname = member->firstname();
-    m_collectionState = member->collectionState();
-
-    entity::BankAccount *bankaccount = dao::BankAccountTableModel::findByMemberId(m_memberId);
-    m_bankAccountNumber = bankaccount->accountNumber();
-    m_bankCode = bankaccount->code();
-
-    entity::Contribution *contribution = dao::ContributionTableModel::findByMemberIdWithPointInTime(m_memberId, date);
-    m_fee = contribution->fee();
-    m_donation = contribution->donation();
-    m_additionalFee = contribution->additionalFee();
-    m_additionalDonation = contribution->additionalDonation();
-    m_amortization = contribution->amortization();
-
- */
 
 void AccountingHandler::book(const QString &filename)
 {
@@ -83,6 +108,53 @@ void AccountingHandler::book(const QString &filename)
 
     QString dtausFilename = QString("%1.txt").arg(filename);
     exporter.createDtausFile(dtausFilename);
+}
+
+void AccountingHandler::onRefresh()
+{
+    clearList();
+
+    QList<entity::Member *> memberList = dao::MemberTableModel::findByState(entity::Member::State::active);
+    for(const entity::Member* member : memberList) {
+        QString memberId = QString::number(member->memberId());
+        accounting::MemberAccountingData* data = new accounting::MemberAccountingData(this);
+        data->setValuta(m_valuta);
+        data->setAccountingInfo(m_accountingInfo);
+        data->setPurpose(m_purpose);
+        data->setMemberId(memberId);
+        data->setName(member->name());
+        data->setFirstname(member->firstname());
+        QString collectionState = member->collectionState();
+        if(! collectionState.isEmpty())
+            data->setCollectionState(collectionState.at(0));
+
+        entity::BankAccount *bankaccount = dao::BankAccountTableModel::findByMemberId(memberId);
+        data->setBankAccountNumber(bankaccount->accountNumber());
+        data->setBankCode(bankaccount->code());
+
+        entity::Contribution *contribution = dao::ContributionTableModel::findByMemberIdWithPointInTime(memberId, m_valuta);
+        data->setFee(contribution->fee());
+        data->setDonation(contribution->donation());
+        data->setAdditionalFee(contribution->additionalFee());
+        data->setAdditionalDonation(contribution->additionalDonation());
+        data->setAmortization(contribution->amortization());
+
+        m_memberAccountingDataList.append(data);
+
+        delete bankaccount;
+        delete contribution;
+        delete member;
+    }
+
+    emit accountingDataListChanged();
+}
+
+void AccountingHandler::clearList()
+{
+    for(const QObject* object : m_memberAccountingDataList) {
+        delete object;
+    }
+    m_memberAccountingDataList.clear();
 }
 
 } // namespace gui

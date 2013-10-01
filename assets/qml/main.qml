@@ -141,6 +141,24 @@ ApplicationWindow {
         }
 
         Tab {
+            title: "Beitrags Buchung"
+            id: conrtibutionTab
+
+            Item {
+                ContributionTab {
+                    anchors.fill: parent
+                    anchors.margins: 8
+
+                    id: contribution
+                }
+                Connections {
+                    target: mainWindow
+                    onDatabaseReady: contribution.onDatabaseReady()
+                }
+            }
+        }
+
+        Tab {
             title: "Kasse"
             id: cashTab
 

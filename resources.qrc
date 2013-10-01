@@ -8,5 +8,6 @@
         <file>assets/qml/BalanceList.qml</file>
         <file>assets/qml/CashTab.qml</file>
         <file>assets/qml/MembersFeeDebt.qml</file>
+        <file>assets/qml/ContributionTab.qml</file>
     </qresource>
 </RCC>

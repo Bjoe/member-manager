@@ -68,8 +68,15 @@ void AccountingHandlerTest::initTestCase()
     member->setMemberId(1);
     member->setName("Kirk");
     member->setFirstname("James T.");
+    member->setEmail("enterprise@startrek.com");
+    member->setEntryDate(QDate(2013,8,10));
+    member->setStreet("universe");
+    member->setCity("NCC");
+    member->setZipCode("1701");
     member->setCollectionState(membermanager::entity::Member::CollectionState::known);
+    member->setState(membermanager::entity::Member::State::active);
     member->save();
+    delete member;
 
     membermanager::entity::BankAccount *bankAccount = new membermanager::entity::BankAccount();
     bankAccount->setMemberId(1);
@@ -94,7 +101,27 @@ void AccountingHandlerTest::initTestCase()
 
 void AccountingHandlerTest::testGetAccountingData()
 {
-    QFAIL("TODO  ......");
+    membermanager::gui::AccountingHandler* handler = new membermanager::gui::AccountingHandler();
+    QSignalSpy spy(handler, SIGNAL(accountingDataListChanged()));
+
+    QCOMPARE(spy.count(), 0);
+    QList<QObject *> list = handler->accountingDataList();
+    QCOMPARE(list.size(), 0);
+
+    handler->onRefresh();
+
+    QCOMPARE(spy.count(), 1);
+    list = handler->accountingDataList();
+    QCOMPARE(list.size(), 1);
+
+
+    handler->onRefresh();
+
+    QCOMPARE(spy.count(), 2);
+    list = handler->accountingDataList();
+    QCOMPARE(list.size(), 1);
+
+    delete handler;
 }
 
 void AccountingHandlerTest::testBook()
@@ -104,24 +131,24 @@ void AccountingHandlerTest::testBook()
     settings.setValue("bank/code", QString("39912399"));
     settings.setValue("bank/account", QString("123456"));
 
-    membermanager::accounting::MemberAccountingData accountingData;
-    accountingData.setAccountingInfo("foo");
-    accountingData.setPurpose("bar");
-    accountingData.setAdditionalDonation(3.0);
-    accountingData.setAdditionalFee(2.0);
-    accountingData.setAmortization(8.0);
-    accountingData.setBankAccountNumber("22334455");
-    accountingData.setBankCode("80070099");
-    accountingData.setCollectionState(static_cast<char>(membermanager::entity::Member::CollectionState::known));
-    accountingData.setDonation(10.0);
-    accountingData.setFee(15.0);
-    accountingData.setFirstname("James T.");
-    accountingData.setMemberId("1");
-    accountingData.setName("Kirk");
-    accountingData.setValuta(QDate(2013, 9, 29));
+    membermanager::accounting::MemberAccountingData* accountingData = new membermanager::accounting::MemberAccountingData();
+    accountingData->setAccountingInfo("foo");
+    accountingData->setPurpose("bar");
+    accountingData->setAdditionalDonation(3.0);
+    accountingData->setAdditionalFee(2.0);
+    accountingData->setAmortization(8.0);
+    accountingData->setBankAccountNumber("22334455");
+    accountingData->setBankCode("80070099");
+    accountingData->setCollectionState(static_cast<char>(membermanager::entity::Member::CollectionState::known));
+    accountingData->setDonation(10.0);
+    accountingData->setFee(15.0);
+    accountingData->setFirstname("James T.");
+    accountingData->setMemberId("1");
+    accountingData->setName("Kirk");
+    accountingData->setValuta(QDate(2013, 9, 29));
 
     QList<QObject *> accountingList;
-    accountingList.append(&accountingData);
+    accountingList.append(accountingData);
 
 
     membermanager::gui::AccountingHandler handler;
