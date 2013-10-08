@@ -9,5 +9,6 @@
         <file>assets/qml/CashTab.qml</file>
         <file>assets/qml/MembersFeeDebt.qml</file>
         <file>assets/qml/ContributionTab.qml</file>
+        <file>assets/qml/ContributionReceipt.qml</file>
     </qresource>
 </RCC>
