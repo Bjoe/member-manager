@@ -58,7 +58,7 @@ Item {
         id: handler
     }
 
-    function onDatabaseReady() {
-        handler.onDatabaseReady()
+    function onRefresh() {
+        handler.onRefresh()
     }
 }

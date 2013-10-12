@@ -4,9 +4,14 @@ import QtQuick.Controls 1.0
 import membermanager 1.0
 
 Item {
+    id:root
+    anchors.fill: parent
+    anchors.margins: 8
 
     ColumnLayout {
+        id: mainLayout
         anchors.fill: parent
+        spacing: 4
 
         RowLayout {
             TableView {
@@ -30,7 +35,7 @@ Item {
 
                 onActivated: {
                     console.debug("Activate row: " + row)
-                    handler.onCashSelected(row)
+                    handler.onSelectedRow(row)
                 }
             }
         }
@@ -39,83 +44,90 @@ Item {
             Layout.fillWidth: true
             title: qsTr("Buchen")
 
-            GridLayout {
+            RowLayout {
+                id: rowLayout
                 anchors.fill: parent
-                columns: 4
 
-                Text { text: qsTr("Valuta") }
-                TextField {
-                    readOnly: true
-                    text: handler.cashAccount.valuta
+                MemberList {
+                    Layout.fillHeight: true
+
+                    id: list
                 }
 
-                Text { text: qsTr("Betrag") }
-                TextField {
+                GridLayout {
                     Layout.fillWidth: true
-                    readOnly: true
-                    text: handler.cashAccount.value
-                }
+                    Layout.fillHeight: true
+                    columns: 5
 
-                Text { text: qsTr("Bezeichnung") }
-                TextField {
-                    Layout.columnSpan: 3
-                    Layout.fillWidth: true
-                    readOnly: true
-                    text: handler.cashAccount.purpose
-                }
-
-                Text { text: qsTr("Mitglied") }
-                ComboBox {
-                    textRole: "name"
-                    model: memberHandler.memberProxyModel
-                    onCurrentIndexChanged: {
-                        console.debug( currentText + " selected")
-                        memberHandler.onMemberSelected(currentIndex)
+                    Text { text: qsTr("Valuta") }
+                    TextField {
+                        readOnly: true
+                        text: handler.cashAccount.valuta
                     }
-                }
-                CheckBox {
-                    text: qsTr("Gelöscht")
-                    Layout.columnSpan: 2
-                }
 
-                Text { text: qsTr("Beitrag") }
-                Text { text: qsTr("Spende") }
-                Text { text: qsTr("CCC Beitrag") }
-                Text { text: qsTr("Gebühr") }
-
-                TextField {
-                    id: fee
-                    text: "0"
-                }
-                TextField {
-                    id: donation
-                    text: "0"
-                }
-                TextField {
-                    id: additional
-                    text: "0"
-                }
-                TextField {
-                    Layout.fillWidth: true
-                    id: tax
-                    text: "0"
-                }
-
-
-                Button {
-                    Layout.columnSpan: 4
-                    text: qsTr("Buchen")
-
-                    onClicked: {
-                        persister.cashAccount = handler.cashAccount
-                        persister.memberId = memberId
-                        persister.fee = fee.text
-                        persister.donation = donation.text
-                        persister.additional = additional.text
-                        persister.tax = tax.text
-
-                        persister.onBooked()
+                    Text { text: qsTr("Betrag") }
+                    TextField {
+                        readOnly: true
+                        text: handler.cashAccount.value
                     }
+
+                    Text {
+                        Layout.fillWidth: true
+                        text: qsTr("Bezeichnung")
+                    }
+
+                    Text { text: qsTr("Beitrag") }
+                    Text { text: qsTr("Spende") }
+                    Text { text: qsTr("CCC Beitrag") }
+                    Text { text: qsTr("Gebühr") }
+
+                    TextField {
+                        Layout.rowSpan: 4
+                        Layout.fillWidth: true
+                        Layout.fillHeight: true
+
+                        readOnly: true
+                        text: handler.cashAccount.purpose
+                    }
+
+                    TextField {
+                        id: fee
+                        text: "0"
+                    }
+                    TextField {
+                        id: donation
+                        text: "0"
+                    }
+                    TextField {
+                        id: additional
+                        text: "0"
+                    }
+                    TextField {
+                        id: tax
+                        text: "0"
+                    }
+
+                    Item {
+                        Layout.columnSpan: 4
+                        Layout.fillHeight: true
+                    }
+
+                    Button {
+                        Layout.columnSpan: 4
+                        text: qsTr("Buchen")
+
+                        onClicked: {
+                            persister.cashAccount = handler.cashAccount
+                            persister.memberId = memberId
+                            persister.fee = fee.text
+                            persister.donation = donation.text
+                            persister.additional = additional.text
+                            persister.tax = tax.text
+
+                            persister.onBooked()
+                        }
+                    }
+
                 }
             }
         }
@@ -140,7 +152,13 @@ Item {
         }
     }
 
-    function onDatabaseReady() {
-        handler.onDatabaseReady()
+    Connections {
+        target: list
+        onSelectedMemberId: memberHandler.onSelectedMemberId(id)
+    }
+
+    function onRefresh() {
+        list.onRefresh()
+        handler.onRefresh()
     }
 }

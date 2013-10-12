@@ -74,7 +74,7 @@ void CashImportHandlerTest::testCashProxyModelChanged()
     QCOMPARE(proxyModel->rowCount(), 1);
     QCOMPARE(spy.count(), 0);
 
-    importHandler->onDatabaseReady();
+    importHandler->onRefresh();
 
     proxyModel = importHandler->cashProxyModel();
     QCOMPARE(proxyModel->rowCount(), 1);
@@ -86,7 +86,7 @@ void CashImportHandlerTest::testCashSelected()
     membermanager::gui::CashImportHandler *handler = new membermanager::gui::CashImportHandler(this);
     QSignalSpy spy(handler, SIGNAL(cashAccountChanged()));
 
-    handler->onCashSelected(0);
+    handler->onSelectedRow(0);
 
     QCOMPARE(spy.count(), 1);
 

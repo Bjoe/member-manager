@@ -63,7 +63,7 @@ void FeeDebtHandler::clearList()
     }
 }
 
-void FeeDebtHandler::onDatabaseReady()
+void FeeDebtHandler::onRefresh()
 {
     clearList();
     emit debtModelChanged();

@@ -65,13 +65,13 @@ void ProxyTableModelTest::testProxy()
 
     QHash<int, QByteArray> roles = proxyTable.roleNames();
 
-    QCOMPARE(roles.size(), 14);
+    QCOMPARE(roles.size(), 15);
 
-    QCOMPARE(roles.value(Qt::UserRole + 1).data(), "memberId");
-    QCOMPARE(roles.value(Qt::UserRole + 2).data(), "name");
+    QCOMPARE(roles.value(Qt::UserRole + 2).data(), "memberId");
+    QCOMPARE(roles.value(Qt::UserRole + 3).data(), "name");
 
     QModelIndex index = proxyTable.index(0, 0);
-    QVariant value = proxyTable.data(index, Qt::UserRole + 3);
+    QVariant value = proxyTable.data(index, Qt::UserRole + 4);
     QCOMPARE(value, QVariant("James T."));
 }
 

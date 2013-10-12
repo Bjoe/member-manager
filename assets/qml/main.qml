@@ -12,7 +12,7 @@ ApplicationWindow {
 
     signal qmlSettingsTriggered()
     signal qmlOpenSqlFile(string filename)
-    signal databaseReady()
+    signal refresh()
 
     FileDialog {
         id: fileDialog
@@ -91,7 +91,7 @@ ApplicationWindow {
                 }
                 Connections {
                     target: mainWindow
-                    onDatabaseReady: activeMember.onDatabaseReady()
+                    onRefresh: activeMember.onRefresh()
                 }
             }
 
@@ -117,7 +117,7 @@ ApplicationWindow {
                 }
                 Connections {
                     target: mainWindow
-                    onDatabaseReady: inActiveMember.onDatabaseReady()
+                    onRefresh: inActiveMember.onRefresh()
                 }
             }
         }
@@ -135,7 +135,7 @@ ApplicationWindow {
                 }
                 Connections {
                     target: mainWindow
-                    onDatabaseReady: feeDebt.onDatabaseReady()
+                    onRefresh: feeDebt.onRefersh()
                 }
             }
         }
@@ -153,7 +153,7 @@ ApplicationWindow {
                 }
                 Connections {
                     target: mainWindow
-                    onDatabaseReady: contribution.onDatabaseReady()
+                    onRefresh: contribution.onRefresh()
                 }
             }
         }
@@ -171,7 +171,7 @@ ApplicationWindow {
                 }
                 Connections {
                     target: mainWindow
-                    onDatabaseready: cash.onDatabaseReady()
+                    onRefresh: cash.onRefresh()
                 }
             }
         }
@@ -179,6 +179,6 @@ ApplicationWindow {
 
     function onDatabaseReady() {
         console.debug("Database load.")
-        mainWindow.databaseReady();
+        mainWindow.refresh();
     }
 }

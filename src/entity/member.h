@@ -14,7 +14,7 @@ class Member : public QDjangoModel
     Q_OBJECT
 
     Q_CLASSINFO("__meta__", "db_table=Member")
-    Q_CLASSINFO("memberId", "primary_key=true db_index=true unique=true auto_increment=true")
+    Q_CLASSINFO("memberId", "db_index=true unique=true")
     Q_CLASSINFO("nickname", "null=true")
     Q_CLASSINFO("cancellationDate", "null=true")
     Q_CLASSINFO("info", "null=true")

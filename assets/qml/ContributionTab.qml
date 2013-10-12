@@ -114,8 +114,4 @@ Item {
         handler.purpose = purpose.text
         handler.onRefresh()
     }
-
-    function onDatabaseReady() {
-        handler.onRefresh()
-    }
 }

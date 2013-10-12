@@ -27,8 +27,8 @@ signals:
     void cashAccountChanged();
 
 public slots:
-    void onDatabaseReady();
-    void onCashSelected(int row);
+    void onRefresh();
+    void onSelectedRow(int row);
 
 private:
     ProxyTableModel *m_cashProxyModel;

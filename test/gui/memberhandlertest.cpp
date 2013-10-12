@@ -30,11 +30,10 @@ class MemberHandlerTest : public QObject
 
 private slots:
     void initTestCase();
-    void testMemberProxyModelChanged();
     void testContribuitonProxyModelChanged();
     void testBalanceProxyModelChanged();
     void testMemberSelected();
-    void testMemberDeletedSelected();
+    void testNewMember();
 };
 
 void MemberHandlerTest::initTestCase()
@@ -112,27 +111,12 @@ void MemberHandlerTest::initTestCase()
     delete member;
 }
 
-void MemberHandlerTest::testMemberProxyModelChanged()
-{
-    membermanager::gui::MemberHandler *handler = new membermanager::gui::MemberHandler(this);
-    QSignalSpy spy(handler, SIGNAL(memberProxyModelChanged()));
-
-    membermanager::gui::ProxyTableModel *model = handler->memberProxyModel();
-    QCOMPARE(model->rowCount(), 1);
-    QCOMPARE(spy.count(), 0);
-
-    handler->onDatabaseReady();
-    model = handler->memberProxyModel();
-    QCOMPARE(model->rowCount(), 1);
-    QCOMPARE(spy.count(), 1);
-}
-
 void MemberHandlerTest::testContribuitonProxyModelChanged()
 {
     membermanager::gui::MemberHandler *handler = new membermanager::gui::MemberHandler(this);
     QSignalSpy spy(handler, SIGNAL(memberChanged()));
 
-    handler->onMemberSelected(0);
+    handler->onSelectedMemberId(2);
     membermanager::gui::ProxyTableModel *model = handler->contributionProxyModel();
     QCOMPARE(model->rowCount(), 1);
     QCOMPARE(spy.count(), 1);
@@ -143,7 +127,7 @@ void MemberHandlerTest::testBalanceProxyModelChanged()
     membermanager::gui::MemberHandler *handler = new membermanager::gui::MemberHandler(this);
     QSignalSpy spy(handler, SIGNAL(memberChanged()));
 
-    handler->onMemberSelected(0);
+    handler->onSelectedMemberId(2);
     membermanager::gui::ProxyTableModel *model = handler->balanceProxyModel();
     QCOMPARE(model->rowCount(), 1);
     QCOMPARE(spy.count(), 1);
@@ -154,7 +138,7 @@ void MemberHandlerTest::testMemberSelected()
     membermanager::gui::MemberHandler *handler = new membermanager::gui::MemberHandler(this);
     QSignalSpy spy(handler, SIGNAL(memberChanged()));
 
-    handler->onMemberSelected(0);
+    handler->onSelectedMemberId(2);
     QCOMPARE(spy.count(), 1);
     membermanager::entity::Member *member = handler->member();
     QCOMPARE(member->name(), QString("McCoy"));
@@ -172,24 +156,16 @@ void MemberHandlerTest::testMemberSelected()
     QCOMPARE(contribution->fee(), fee);
 }
 
-void MemberHandlerTest::testMemberDeletedSelected()
+void MemberHandlerTest::testNewMember()
 {
     membermanager::gui::MemberHandler *handler = new membermanager::gui::MemberHandler(this);
     QSignalSpy spy(handler, SIGNAL(memberChanged()));
-    QSignalSpy spyState(handler, SIGNAL(memberStateChanged()));
 
-    handler->selectMemberState(membermanager::entity::Member::State::deleted);
-    QCOMPARE(spyState.count(), 1);
+    handler->onNewMember();
 
-    handler->onMemberSelected(0);
     QCOMPARE(spy.count(), 1);
     membermanager::entity::Member *member = handler->member();
-    QCOMPARE(member->name(), QString("Kirk"));
-
-    QVariant memberVariant = handler->property("member");
-    member = memberVariant.value<membermanager::entity::Member *>();
-    QVariant nameVariant = member->property("name");
-    QCOMPARE(nameVariant, QVariant("Kirk"));
+    QCOMPARE(member->name(), QString(""));
 }
 
 }

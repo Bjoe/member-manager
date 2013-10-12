@@ -31,7 +31,7 @@ signals:
 
 public slots:
     void onCalculate();
-    void onDatabaseReady();
+    void onRefresh();
 
 private:
     entity::Member::State m_memberState;

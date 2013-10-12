@@ -1,11 +1,15 @@
 import QtQuick 2.1
 import QtQuick.Controls 1.0
+import membermanager 1.0
 
 TableView {
     id: memberViewList
 
-    signal memberSelected(int row)
-    property alias memberList: memberViewList.model
+    property alias isInactive: handler.isInactive
+
+    signal selectedMemberId(var id)
+
+    model: handler.memberProxyModel
 
     TableViewColumn{
         role: "memberId"
@@ -31,6 +35,18 @@ TableView {
 
     onActivated: {
         console.debug("Activate row: "+ row)
-        memberSelected(row)
+        handler.onSelectedRow(row);
+    }
+
+    MemberListHandler {
+        id: handler
+
+        onSelectMemberId: {
+            memberViewList.selectedMemberId(id);
+        }
+    }
+
+    function onRefresh() {
+        handler.onRefresh();
     }
 }

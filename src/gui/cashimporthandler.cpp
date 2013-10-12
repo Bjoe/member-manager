@@ -25,14 +25,14 @@ entity::CashAccount *CashImportHandler::cashAccount() const
     return m_cashAccount;
 }
 
-void CashImportHandler::onDatabaseReady()
+void CashImportHandler::onRefresh()
 {
     delete m_cashProxyModel;
     createCashProxyTableModel();
     emit cashProxyModelChanged();
 }
 
-void CashImportHandler::onCashSelected(int row)
+void CashImportHandler::onSelectedRow(int row)
 {
     delete m_cashAccount;
     QSqlTableModel *model = m_cashProxyModel->getModel();

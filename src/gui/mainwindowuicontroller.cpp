@@ -16,6 +16,7 @@
 #include "entity/cashaccount.h"
 #include "entity/contribution.h"
 
+#include "gui/memberlisthandler.h"
 #include "gui/memberhandler.h"
 #include "gui/feedebthandler.h"
 #include "gui/accountinghandler.h"
@@ -34,6 +35,7 @@ MainWindowUiController::MainWindowUiController()
 {
     //m_databaseManager->onLoadSqlFile("file:dorfverw.dat");
 
+    qmlRegisterType<membermanager::gui::MemberListHandler>("membermanager", 1, 0, "MemberListHandler");
     qmlRegisterType<membermanager::gui::MemberHandler>("membermanager", 1, 0, "MemberHandler");
     qmlRegisterType<membermanager::gui::ContributionReceiptHandler>("membermanager", 1, 0, "ContributionReceiptHandler");
     qmlRegisterType<membermanager::gui::AccountingHandler>("membermanager", 1, 0, "AccountingHandler");

@@ -31,6 +31,7 @@ set(QT_SRCS
     gui/mainwindowuicontroller.cpp
     gui/contributionreceipthandler.cpp
     gui/memberhandler.cpp
+    gui/memberlisthandler.cpp
     gui/proxytablemodel.cpp
     gui/summaryhandler.cpp
     gui/cashimporthandler.cpp
