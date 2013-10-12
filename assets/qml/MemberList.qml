@@ -47,6 +47,7 @@ TableView {
     }
 
     function onRefresh() {
+        console.debug("refresh list")
         handler.onRefresh();
     }
 }

@@ -10,5 +10,6 @@
         <file>assets/qml/MembersFeeDebt.qml</file>
         <file>assets/qml/ContributionTab.qml</file>
         <file>assets/qml/ContributionReceipt.qml</file>
+        <file>assets/qml/ContributionReceiptTab.qml</file>
     </qresource>
 </RCC>

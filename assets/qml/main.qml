@@ -123,6 +123,22 @@ ApplicationWindow {
         }
 
         Tab {
+            title: qsTr("Spenden Quittung")
+
+            Item {
+                ContributionReceiptTab {
+                    anchors.fill: parent
+
+                    id: contributionReceipt
+                }
+                Connections {
+                    target: mainWindow
+                    onRefresh: contributionReceipt.onRefresh()
+                }
+            }
+        }
+
+        Tab {
             title: "Offene Beiträge"
             id: feeDebtTab
 
@@ -135,7 +151,7 @@ ApplicationWindow {
                 }
                 Connections {
                     target: mainWindow
-                    onRefresh: feeDebt.onRefersh()
+                    onRefresh: feeDebt.onRefresh()
                 }
             }
         }

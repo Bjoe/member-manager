@@ -378,14 +378,6 @@ ColumnLayout {
         }
 
         Tab {
-            title: qsTr("Spenden Quittung")
-
-            ContributionReceipt {
-                memberId: member.memberId
-            }
-        }
-
-        Tab {
             title: qsTr("Info")
 
             ColumnLayout {
