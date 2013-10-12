@@ -8,12 +8,6 @@ ColumnLayout {
 
     id: memberDetail
 
-    //property Member member
-    //property Contribution contribution
-    //property BankAccount bankAccount
-    //property ProxyTableModel balanceListModel
-    //property ProxyTableModel contributionListModel
-
     property alias member: handler.member
     property alias contribution: handler.contribution
     property alias bankAccount: handler.bankAccount
@@ -177,24 +171,6 @@ ColumnLayout {
                     Layout.fillWidth: true
                 }
 
-                function onClear() {
-                    console.debug("clear");
-
-                    memberIdField.text = "";
-                    nameField.text = "";
-                    firstNameField.text = "";
-                    nicknameField.text = "";
-                    streetField.text = "";
-                    cityField.text = "";
-                    zipcodeField.text = "";
-                    referenceField.text = "";
-                    emailField.text = "";
-                    entryDateField.text = "";
-                    cancelationDateField.text = "";
-                    // TODO stateField.checked = false;
-
-                }
-
                 function onRead() {
                     console.debug("Read");
                     member.memberId = memberIdField.text
@@ -216,10 +192,6 @@ ColumnLayout {
                     onRead: dataTab.onRead()
                 }
 
-                Connections {
-                    target: memberDetail
-                    onClear: dataTab.onClear()
-                }
             }
         }
 
@@ -353,21 +325,6 @@ ColumnLayout {
                     Layout.fillWidth: true
                 }
 
-                function onClear() {
-                    console.debug("Clear");
-
-                    feeField.text = "0";
-                    donationField.text = "0";
-                    additionalFeeField.text = "0";
-                    additionalDonationField.text = "0";
-                    amortizationField.text = "0";
-                    validFromField.text = "";
-                    contributionStateField.checked = "N";
-                    bankNameField.text = "";
-                    accountNrField.text = "";
-                    bankCodeField.text = "";
-                }
-
                 function onRead() {
                     console.debug("Read");
                     contribution.memberId = member.memberId
@@ -390,11 +347,6 @@ ColumnLayout {
                 Connections {
                     target: memberDetail
                     onRead: contributionTab.onRead()
-                }
-
-                Connections {
-                    target: memberDetail
-                    onClear: contributionTab.onClear()
                 }
             }
         }
@@ -451,11 +403,6 @@ ColumnLayout {
                     text: member.info
                 }
 
-                function onClear() {
-                    console.debug("clear")
-                    infoField.text = "";
-                }
-
                 function onRead() {
                     console.debug("Read");
                     member.info = infoField.text
@@ -464,11 +411,6 @@ ColumnLayout {
                 Connections {
                     target: memberDetail
                     onRead: infoTab.onRead()
-                }
-
-                Connections {
-                    target: memberDetail
-                    onClear: infoTab.onClear()
                 }
             }
         }
@@ -481,7 +423,6 @@ ColumnLayout {
             onClicked: {
                 console.debug("new member")
                 memberDetail.newMember();
-                //memberDetail.clear();
             }
         }
         Button {
