@@ -3,6 +3,8 @@ import QtQuick.Controls 1.0
 import membermanager 1.0
 
 TableView {
+    anchors.margins: 8
+
     id: memberViewList
 
     property alias isInactive: handler.isInactive

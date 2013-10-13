@@ -1,16 +1,21 @@
 import QtQuick 2.1
+import QtQuick.Controls 1.0
 import QtQuick.Layouts 1.0
 import membermanager 1.0
 
 Item {
+    anchors.fill: parent
+    anchors.margins: 8
 
-    RowLayout {
+    id:root
+
+    SplitView {
         anchors.fill: parent
 
         MemberList {
-            id: list
-            width: 400
             Layout.fillHeight: true
+
+            id: list
 
             onSelectedMemberId: {
                 contributionReceipt.memberId = id;

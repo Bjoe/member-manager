@@ -6,9 +6,12 @@ import membermanager 1.0
 
 Item {
 
+    id:root
+
     property int memberId
 
     ColumnLayout {
+        anchors.margins: 8
         anchors.fill: parent
         spacing: 4
 

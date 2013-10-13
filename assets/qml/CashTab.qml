@@ -4,16 +4,21 @@ import QtQuick.Controls 1.0
 import membermanager 1.0
 
 Item {
-    id:root
     anchors.fill: parent
     anchors.margins: 8
 
-    ColumnLayout {
-        id: mainLayout
+    id:root
+
+    SplitView {
+        orientation: Qt.Vertical
         anchors.fill: parent
-        spacing: 4
+
+
+        id: mainLayout
 
         RowLayout {
+            spacing: 4
+
             TableView {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
@@ -44,9 +49,10 @@ Item {
             Layout.fillWidth: true
             title: qsTr("Buchen")
 
-            RowLayout {
-                id: rowLayout
+            SplitView {
                 anchors.fill: parent
+
+                id: rowLayout
 
                 MemberList {
                     Layout.fillHeight: true
@@ -55,6 +61,8 @@ Item {
                 }
 
                 GridLayout {
+                    anchors.left: list.right
+                    anchors.margins: 8
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                     columns: 5

@@ -5,11 +5,18 @@ import QtQuick.Dialogs 1.0
 import membermanager 1.0
 
 Item {
+    anchors.fill: parent
+    anchors.margins: 8
+
+    id:root
+
     ColumnLayout {
         anchors.fill: parent
+        spacing: 4
 
         RowLayout {
             Layout.fillWidth: true
+            spacing: 4
 
             Button {
                 text: qsTr("Aktualisieren")

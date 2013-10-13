@@ -4,11 +4,28 @@ import QtQuick.Controls 1.0
 import membermanager 1.0
 
 Item {
+    anchors.fill: parent
+    anchors.margins: 8
 
-    GridLayout {
+    id:root
+
+    ColumnLayout {
         anchors.fill: parent
+        spacing: 4
 
-        columns: 2
+        RowLayout {
+            Layout.fillWidth: true
+            spacing: 4
+
+            Button {
+                text: "Calculate"
+                onClicked: handler.onCalculate()
+            }
+            CheckBox {
+                id: memberState
+                text: qsTr("Gelöscht")
+            }
+        }
 
         TableView {
             Layout.fillHeight: true
@@ -38,18 +55,6 @@ Item {
             TableViewColumn {
                 role: "debit"
                 title: qsTr("Beiträge")
-            }
-        }
-
-        ColumnLayout {
-            Layout.fillHeight: true
-            CheckBox {
-                id: memberState
-                text: qsTr("Gelöscht")
-            }
-            Button {
-                text: "Calculate"
-                onClicked: handler.onCalculate()
             }
         }
     }

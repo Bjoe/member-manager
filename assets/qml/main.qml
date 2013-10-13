@@ -7,8 +7,8 @@ import QtQuick.Layouts 1.0
 ApplicationWindow {
     id: mainWindow
     title: qsTr("Member Mmanager")
-    width: 800
-    height: 600
+    width: 1024
+    height: 748
 
     signal qmlSettingsTriggered()
     signal qmlOpenSqlFile(string filename)
@@ -70,6 +70,7 @@ ApplicationWindow {
 
     TabView {
         anchors.fill: parent
+        anchors.margins: 2
 
         Tab {
             id: members
@@ -84,7 +85,6 @@ ApplicationWindow {
             Item{
                 MemberTab {
                     anchors.fill: parent
-                    anchors.margins: 8
 
                     id: activeMember
                     isInactive: false
@@ -110,7 +110,6 @@ ApplicationWindow {
             Item {
                 MemberTab {
                     anchors.fill: parent
-                    anchors.margins: 8
 
                     id: inActiveMember
                     isInactive: true
@@ -145,7 +144,6 @@ ApplicationWindow {
             Item {
                 MembersFeeDebt {
                     anchors.fill: parent
-                    anchors.margins: 8
 
                     id: feeDebt
                 }
@@ -163,7 +161,6 @@ ApplicationWindow {
             Item {
                 ContributionTab {
                     anchors.fill: parent
-                    anchors.margins: 8
 
                     id: contribution
                 }
@@ -181,7 +178,6 @@ ApplicationWindow {
             Item {
                 CashTab {
                     anchors.fill: parent
-                    anchors.margins: 8
 
                     id: cash
                 }
