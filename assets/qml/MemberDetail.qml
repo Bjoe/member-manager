@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.1
 import QtQuick.Controls 1.0
 import QtQuick.Layouts 1.0
 import membermanager 1.0
@@ -10,17 +10,19 @@ Item {
     property alias balanceListModel: handler.balanceProxyModel
     property alias contributionListModel: handler.contributionProxyModel
 
+    property bool valid;
+
     signal read()
     signal newMember()
     signal saveMember()
     signal clear()
 
+    id: memberDetail
+
     ColumnLayout {
         anchors.fill: parent
         anchors.margins: 8
         spacing: 4
-
-        id: memberDetail
 
         TabView {
             Layout.fillWidth: true
@@ -144,19 +146,19 @@ Item {
                             }
 
                             Text {text: qsTr("Eintritts Datum:") }
-                            TextField {
+                            DateField {
                                 Layout.fillWidth: true
 
                                 id: entryDateField
-                                text: member.entryDate
+                                value: member.entryDate
                             }
 
                             Text {text: qsTr("Austritts Datum:") }
-                            TextField {
+                            DateField {
                                 Layout.fillWidth: true
 
                                 id: cancelationDateField
-                                text: member.cancellationDate
+                                value: member.cancellationDate
                             }
 
                             Text {text: qsTr("Gelöscht/Deaktiviert") }
@@ -182,6 +184,7 @@ Item {
 
                     function onRead() {
                         console.debug("Read");
+
                         member.memberId = memberIdField.text
                         member.name = nameField.text;
                         member.firstname = firstNameField.text
@@ -191,7 +194,17 @@ Item {
                         member.zipCode = zipcodeField.text
                         member.reference = referenceField.text
                         member.email = emailField.text
-                        member.entryDate = entryDateField.text
+
+                        if(entryDateField.parseValue()) {
+                            member.entryDate = entryDateField.value;
+                        } else {
+                            memberDetail.valid = false;
+                        }
+
+                        if(cancelationDateField.parseValue()) {
+                            member.cancellationDate = cancelationDateField.value
+                        }
+
                         // TODO member.cancellationDate = cancelationDateField.text
                         member.state = "A" // TODO stateField.checked
                     }
@@ -229,6 +242,10 @@ Item {
 
                                 id: feeField
                                 text: contribution.fee
+                                validator: DoubleValidator {
+                                    decimals: 2
+                                    locale: Qt.locale("de_DE")
+                                }
                             }
 
                             Text {text: qsTr("Spende:") }
@@ -272,11 +289,11 @@ Item {
                             }
 
                             Text {text: qsTr("Gültig ab:") }
-                            TextField {
+                            DateField {
                                 Layout.fillWidth: true
 
                                 id: validFromField
-                                text: contribution.validFrom
+                                value: contribution.validFrom
                             }
                         }
                     }
@@ -339,6 +356,7 @@ Item {
 
                     function onRead() {
                         console.debug("Read");
+
                         contribution.memberId = member.memberId
                         contribution.fee = feeField.text
                         contribution.donation = donationField.text
@@ -346,7 +364,12 @@ Item {
                         contribution.additionalDonation = additionalDonationField.text
                         contribution.amortization = amortizationField.text
                         contribution.info = contributionInfoField.text
-                        contribution.validFrom = validFromField.text
+
+                        if(validFromField.parseValue()) {
+                            contribution.validFrom = validFromField.value
+                        } else {
+                            memberDetail.valid = false;
+                        }
 
                         member.collectionState = "K"; //contributionStateField.checked
 
@@ -436,12 +459,17 @@ Item {
 
                 onClicked: {
                     console.debug("signal read")
+                    memberDetail.valid = true;
                     memberDetail.read();
-                    console.debug("save");
-                    member.save();
-                    bankAccount.save();
-                    contribution.save();
-                    memberDetail.saveMember();
+                    if(memberDetail.valid) {
+                        console.debug("save");
+                        member.save();
+                        bankAccount.save();
+                        contribution.save();
+                        memberDetail.saveMember();
+                    } else {
+                        console.debug("error");
+                    }
                 }
             }
         }

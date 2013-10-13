@@ -70,7 +70,7 @@ Item {
                     Text { text: qsTr("Valuta") }
                     TextField {
                         readOnly: true
-                        text: handler.cashAccount.valuta
+                        text: handler.cashAccount.valuta.toLocaleDateString(Qt.locale("de_DE"), "dd.MM.yyyy")
                     }
 
                     Text { text: qsTr("Betrag") }

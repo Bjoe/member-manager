@@ -11,5 +11,6 @@
         <file>assets/qml/ContributionTab.qml</file>
         <file>assets/qml/ContributionReceipt.qml</file>
         <file>assets/qml/ContributionReceiptTab.qml</file>
+        <file>assets/qml/DateField.qml</file>
     </qresource>
 </RCC>
