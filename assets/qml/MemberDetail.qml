@@ -398,7 +398,7 @@ Item {
                     anchors.margins: 8
 
                     Text { text: qsTr("Info") }
-                    TextField {
+                    TextArea {
                         Layout.fillHeight: true
                         Layout.fillWidth: true
 
@@ -445,13 +445,13 @@ Item {
                 }
             }
         }
+    }
 
-        MemberHandler {
-            id: handler
-        }
+    MemberHandler {
+        id: handler
+    }
 
-        function selectedMemberId(id) {
-            handler.onSelectedMemberId(id);
-        }
+    function selectedMemberId(id) {
+        handler.onSelectedMemberId(id);
     }
 }

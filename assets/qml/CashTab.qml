@@ -89,7 +89,7 @@ Item {
                     Text { text: qsTr("CCC Beitrag") }
                     Text { text: qsTr("Gebühr") }
 
-                    TextField {
+                    TextArea {
                         Layout.rowSpan: 4
                         Layout.fillWidth: true
                         Layout.fillHeight: true
