@@ -10,7 +10,7 @@
 namespace membermanager {
 namespace dao {
 
-QSqlTableModel *BalanceTableModel::createModel(QVariant memberId)
+QSqlTableModel *BalanceTableModel::createModel(const QVariant &memberId)
 {
     QString whereClause = QString("%1 = %2").arg("memberId").arg(memberId.toString());
 
@@ -34,7 +34,7 @@ entity::Balance *BalanceTableModel::giveBalanceByRow(const QSqlTableModel *model
     return QDjangoQuerySet<entity::Balance>().get(QDjangoWhere("balanceId", QDjangoWhere::Equals, id));
 }
 
-QList<QObject *> BalanceTableModel::findContributionByMemberIdAndYear(QVariant memberId, QVariant year)
+QList<QObject *> BalanceTableModel::findContributionByMemberIdAndYear(const QVariant &memberId, const QVariant &year)
 {
     QDjangoQuerySet<entity::Balance> result = QDjangoQuerySet<entity::Balance>()
             .filter(QDjangoWhere("memberId", QDjangoWhere::Equals, memberId) &&
@@ -54,7 +54,7 @@ QList<QObject *> BalanceTableModel::findContributionByMemberIdAndYear(QVariant m
     return list;
 }
 
-double BalanceTableModel::calculateFeeSumByMemberId(QVariant memberId)
+double BalanceTableModel::calculateFeeSumByMemberId(const QVariant& memberId)
 {
     QDjangoQuerySet<entity::Balance> result = QDjangoQuerySet<entity::Balance>()
             .filter(QDjangoWhere("memberId", QDjangoWhere::Equals, memberId) &&

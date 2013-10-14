@@ -14,10 +14,10 @@ namespace dao {
 class BalanceTableModel
 {
 public:
-    static QSqlTableModel *createModel(QVariant memberId);
+    static QSqlTableModel* createModel(const QVariant& memberId);
     static entity::Balance* giveBalanceByRow(const QSqlTableModel* model, int row);
-    static QList<QObject *> findContributionByMemberIdAndYear(QVariant memberId, QVariant year);
-    static double calculateFeeSumByMemberId(QVariant memberId);
+    static QList<QObject* > findContributionByMemberIdAndYear(const QVariant& memberId, const QVariant& year);
+    static double calculateFeeSumByMemberId(const QVariant& memberId);
 };
 
 } // namespace dao
