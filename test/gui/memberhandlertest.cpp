@@ -8,6 +8,8 @@
 #include <QDate>
 #include <QVariant>
 #include <QSqlTableModel>
+#include <QClipboard>
+#include <QApplication>
 
 #include "QDjango.h"
 
@@ -35,6 +37,8 @@ private slots:
     void testMemberSelected();
     void testNewMember();
     void testNewContribution();
+    void testCopyOneBalanceToClipboard();
+    void testCopyAllBalanceToClipboard();
 };
 
 void MemberHandlerTest::initTestCase()
@@ -180,6 +184,30 @@ void MemberHandlerTest::testNewContribution()
     membermanager::entity::Contribution* contribution = handler->contribution();
     QCOMPARE(contribution->fee(), 0.0);
 
+}
+
+void MemberHandlerTest::testCopyOneBalanceToClipboard()
+{
+    membermanager::gui::MemberHandler *handler = new membermanager::gui::MemberHandler(this);
+    handler->onSelectedMemberId(2);
+
+    handler->copyBalanceToClipboard(0);
+
+    QClipboard *clipboard = QApplication::clipboard();
+    QCOMPARE(clipboard->text(), QString("Valuta\tBetrag\tText\n"
+                                        "15.10.2013\t155,00 EUR\tfoo bar\n"));
+}
+
+void MemberHandlerTest::testCopyAllBalanceToClipboard()
+{
+    membermanager::gui::MemberHandler *handler = new membermanager::gui::MemberHandler(this);
+    handler->onSelectedMemberId(2);
+
+    handler->copyAllBalanceToClipboard();
+
+    QClipboard *clipboard = QApplication::clipboard();
+    QCOMPARE(clipboard->text(), QString("Valuta\tBetrag\tText\n"
+                                        "15.10.2013\t155,00 EUR\tfoo bar\n"));
 }
 
 }

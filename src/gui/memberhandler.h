@@ -2,6 +2,7 @@
 #define MEMBERMANAGER_GUI_MEMBERHANDLER_H
 
 #include <QObject>
+#include <QSqlTableModel>
 
 #include "gui/proxytablemodel.h"
 #include "entity/member.h"
@@ -30,6 +31,9 @@ public:
     entity::BankAccount *bankAccount() const;
     entity::Contribution *contribution() const;
 
+    Q_INVOKABLE void copyBalanceToClipboard(int row);
+    Q_INVOKABLE void copyAllBalanceToClipboard();
+
 signals:
     void memberChanged();
 
@@ -45,6 +49,8 @@ private:
 
     ProxyTableModel *m_contributionProxyTableModel;
     ProxyTableModel *m_balanceProxyTableModel;
+
+    QString createText(const QSqlTableModel* model, int row);
 };
 
 } // namespace gui

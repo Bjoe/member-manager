@@ -3,7 +3,8 @@
 #include <QDebug>
 #include <QVariant>
 #include <QSqlRecord>
-#include <QSqlTableModel>
+#include <QClipboard>
+#include <QApplication>
 
 #include <QDjango.h>
 #include <QDjangoQuerySet.h>
@@ -49,6 +50,38 @@ entity::BankAccount *MemberHandler::bankAccount() const
 entity::Contribution *MemberHandler::contribution() const
 {
     return m_contribution;
+}
+
+void MemberHandler::copyBalanceToClipboard(int row)
+{
+    const QSqlTableModel* model = m_balanceProxyTableModel->getModel();
+    QString text("Valuta\tBetrag\tText\n");
+    text.append(createText(model, row));
+
+    QClipboard* clipboard = QApplication::clipboard();
+    clipboard->setText(text);
+}
+
+void MemberHandler::copyAllBalanceToClipboard()
+{
+    const QSqlTableModel* model = m_balanceProxyTableModel->getModel();
+    QString text("Valuta\tBetrag\tText\n");
+
+    for(int row = 0; model->rowCount() > row; ++row) {
+        text.append(createText(model, row));
+    }
+
+    QClipboard* clipboard = QApplication::clipboard();
+    clipboard->setText(text);
+}
+
+QString MemberHandler::createText(const QSqlTableModel* model, int row)
+{
+    entity::Balance* balance = dao::BalanceTableModel::giveBalanceByRow(model, row);
+    return QString("%1\t%L2 EUR\t%3\n")
+                .arg(balance->valuta().toString("dd.MM.yyyy"))
+                .arg(balance->value(), 4, 'f', 2)
+                .arg(balance->purpose());
 }
 
 void MemberHandler::onSelectedMemberId(QVariant id)

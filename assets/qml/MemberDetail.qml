@@ -439,6 +439,22 @@ Item {
 
                         id: balanceView
                         balanceList: balanceListModel
+
+                        onRightClicked: mymenu.popup();
+
+                        Menu {
+                            id: mymenu
+                            title: "Context Menu"
+
+                            MenuItem {
+                                text: qsTr("Copy selection")
+                                onTriggered: handler.copyBalanceToClipboard(balanceView.currentRow)
+                            }
+                            MenuItem {
+                                text: qsTr("Copy All")
+                                onTriggered: handler.copyAllBalanceToClipboard()
+                            }
+                        }
                     }
                 }
             }

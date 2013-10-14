@@ -4,6 +4,8 @@ import QtQuick.Controls 1.0
 TableView {
     id: balanceViewList
 
+    signal rightClicked()
+
     property alias balanceList: balanceViewList.model
 
     TableViewColumn{
@@ -34,5 +36,11 @@ TableView {
         role: "info"
         title: qsTr("Info")
         width: 100
+    }
+
+    MouseArea {
+        anchors.fill: parent
+        acceptedButtons: Qt.RightButton
+        onClicked: balanceViewList.rightClicked()
     }
 }
