@@ -29,6 +29,7 @@ class FeeDebtHandlerTest : public QObject
 private slots:
     void initTestCase();
     void testCalculate();
+    void testCalculateSignals();
 };
 
 void FeeDebtHandlerTest::initTestCase()
@@ -83,6 +84,30 @@ void FeeDebtHandlerTest::testCalculate()
 
     QList<QObject *> debtModel = handler->debtModel();
     QCOMPARE(debtModel.size(), 1);
+}
+
+void FeeDebtHandlerTest::testCalculateSignals()
+{
+    membermanager::gui::FeeDebtHandler *handler = new membermanager::gui::FeeDebtHandler(this);
+    QSignalSpy progressSignal(handler, SIGNAL(progress(double)));
+    QSignalSpy messageSignal(handler, SIGNAL(statusMessage(QString)));
+
+    handler->onCalculate();
+
+    QCOMPARE(messageSignal.count(), 2);
+    QCOMPARE(progressSignal.count(), 2);
+
+    QList<QVariant> messageArgument1 = messageSignal.takeFirst();
+    QCOMPARE(messageArgument1.at(0).toString(), QString("Calculate in progress ... please wait"));
+
+    QList<QVariant> messageArgument2 = messageSignal.takeLast();
+    QCOMPARE(messageArgument2.at(0).toString(), QString("Calculate done"));
+
+    QList<QVariant> progressArgument1 = progressSignal.takeFirst();
+    QCOMPARE(progressArgument1.at(0).toDouble(), 0.0);
+
+    QList<QVariant> progressArgument2 = progressSignal.takeLast();
+    QCOMPARE(progressArgument2.at(0).toDouble(), 1.0);
 }
 
 }

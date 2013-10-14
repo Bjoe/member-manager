@@ -77,11 +77,17 @@ QList<QObject *> AccountingHandler::accountingDataList() const
 
 void AccountingHandler::book(const QString &filename)
 {
+    emit progress(0);
+    emit statusMessage("Booking in progess ... please wait");
+
     QString csvFilename = QString("%1.csv").arg(filename);
     QFile csvFile(csvFilename);
 
-    if(! csvFile.open(QIODevice::WriteOnly | QIODevice::Text))
+    if(! csvFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        QString error = csvFile.errorString();
+        emit statusMessage(QString("Cant save %1:%2").arg(csvFilename).arg(error));
         return;
+    }
 
     QTextStream stream(&csvFile);
 
@@ -94,6 +100,7 @@ void AccountingHandler::book(const QString &filename)
 
     qiabanking::dtaus::Exporter exporter(bankAccountNumber, bankName,bankCode, "EUR");
 
+    double progressValue = 1/m_memberAccountingDataList.size();
     for(QObject* object : m_memberAccountingDataList) {
         accounting::MemberAccountingData* data = qobject_cast<accounting::MemberAccountingData *>(object);
 
@@ -104,10 +111,13 @@ void AccountingHandler::book(const QString &filename)
             exporter.addTransaction(dtausTransaction);
             transaction.collectionAccounting(data);
         }
+        emit progress(progressValue);
     }
 
     QString dtausFilename = QString("%1.txt").arg(filename);
     exporter.createDtausFile(dtausFilename);
+
+    emit statusMessage("Booking done");
 }
 
 void AccountingHandler::onRefresh()

@@ -37,9 +37,14 @@ void FeeDebtHandler::setMemberState(entity::Member::State state)
 
 void FeeDebtHandler::onCalculate()
 {
+    emit progress(0);
+    emit statusMessage("Calculate in progress ... please wait");
+
     clearList();
     QList<entity::Member *> members = dao::MemberTableModel::findByState(m_memberState);
-    for(entity::Member *member : members) {
+
+    double progressValue = 1/ members.size();
+    for(const entity::Member *member : members) {
         double sum = dao::BalanceTableModel::calculateFeeSumByMemberId(member->memberId());
         if(sum < 0) {
             accounting::MemberDebt *memberDebt = new accounting::MemberDebt(this);
@@ -52,15 +57,20 @@ void FeeDebtHandler::onCalculate()
 
             m_debtModel.append(memberDebt);
         }
+        delete member;
+        emit progress(progressValue);
     }
+
     emit debtModelChanged();
+    emit statusMessage("Calculate done");
 }
 
 void FeeDebtHandler::clearList()
 {
-    for(QObject *object : m_debtModel) {
+    for(const QObject *object : m_debtModel) {
         delete object;
     }
+    m_debtModel.clear();
 }
 
 void FeeDebtHandler::onRefresh()

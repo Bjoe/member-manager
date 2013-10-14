@@ -10,6 +10,8 @@ Item {
     property alias isInactive: list.isInactive
     //property alias memberState: handler.memberState -- Member.inactive <--- doesent work :-( Why? FIXME
 
+    signal databaseChanged()
+
     id:root
 
     SplitView {
@@ -34,6 +36,11 @@ Item {
     Connections {
         target: list
         onSelectedMemberId: view.selectedMemberId(id)
+    }
+
+    Connections {
+        target: view
+        onDatabaseChanged: root.databaseChanged()
     }
 
     function onRefresh() {

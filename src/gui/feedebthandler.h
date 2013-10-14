@@ -28,6 +28,8 @@ public:
 signals:
     void debtModelChanged();
     void memberStateChanged();
+    void statusMessage(QString message);
+    void progress(double value);
 
 public slots:
     void onCalculate();

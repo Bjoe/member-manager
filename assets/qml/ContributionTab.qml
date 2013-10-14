@@ -10,6 +10,9 @@ Item {
 
     id:root
 
+    signal statusMessage(string msg);
+    signal progress(double value);
+
     ColumnLayout {
         anchors.fill: parent
         spacing: 4
@@ -114,6 +117,9 @@ Item {
 
     AccountingHandler {
         id: handler
+
+        onStatusMessage: root.statusMessage(message);
+        onProgress: root.progress(value);
     }
 
     function onRefresh() {

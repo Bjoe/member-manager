@@ -41,6 +41,8 @@ signals:
     void valutaChanged();
     void purposeChanged();
     void accountingInfoChanged();
+    void statusMessage(QString message);
+    void progress(double value);
 
 public slots:
     void onRefresh();

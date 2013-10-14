@@ -17,7 +17,10 @@ ApplicationWindow {
     FileDialog {
         id: fileDialog
         title: qsTr("SQLite File öffnen")
-        onAccepted: mainWindow.qmlOpenSqlFile(fileDialog.fileUrl)
+        onAccepted: {
+            statusBar.progress(0.1);
+            mainWindow.qmlOpenSqlFile(fileDialog.fileUrl);
+        }
     }
 
     Action {
@@ -68,6 +71,31 @@ ApplicationWindow {
         }
     }
 
+    statusBar: StatusBar {
+            id: statusBar
+
+            RowLayout {
+                ProgressBar {
+                    id: statusBarProgress
+                }
+                Label {
+                    id: statusBarMessage
+                }
+            }
+
+            function message(msg) {
+                statusBarMessage.text = msg;
+            }
+
+            function progress(value) {
+                if(value === 0) {
+                    statusBarProgress.value = value;
+                } else {
+                    statusBarProgress.value += value;
+                }
+            }
+        }
+
     TabView {
         anchors.fill: parent
         anchors.margins: 2
@@ -75,12 +103,6 @@ ApplicationWindow {
         Tab {
             id: members
             title: "Members"
-
-            onStatusChanged: {
-                if (members.status == Loader.Ready) {
-                    console.debug('Members Tab Loaded')
-                }
-            }
 
             Item{
                 MemberTab {
@@ -93,6 +115,10 @@ ApplicationWindow {
                     target: mainWindow
                     onRefresh: activeMember.onRefresh()
                 }
+                Connections {
+                    target: activeMember
+                    onDatabaseChanged: mainWindow.refresh()
+                }
             }
 
         }
@@ -100,12 +126,6 @@ ApplicationWindow {
         Tab {
             title: "Inactive Members"
             id: inactiveMembers
-
-            onStatusChanged: {
-                if (members.status == Loader.Ready) {
-                    console.debug('Inactive Members Tab Loaded')
-                }
-            }
 
             Item {
                 MemberTab {
@@ -117,6 +137,10 @@ ApplicationWindow {
                 Connections {
                     target: mainWindow
                     onRefresh: inActiveMember.onRefresh()
+                }
+                Connections {
+                    target: inActiveMember
+                    onDatabaseChanged: mainWindow.refresh()
                 }
             }
         }
@@ -146,6 +170,9 @@ ApplicationWindow {
                     anchors.fill: parent
 
                     id: feeDebt
+
+                    onStatusMessage: statusBar.message(msg);
+                    onProgress: statusBar.progress(value);
                 }
                 Connections {
                     target: mainWindow
@@ -163,6 +190,9 @@ ApplicationWindow {
                     anchors.fill: parent
 
                     id: contribution
+
+                    onStatusMessage: statusBar.message(msg);
+                    onProgress: statusBar.progress(value);
                 }
                 Connections {
                     target: mainWindow
@@ -190,7 +220,8 @@ ApplicationWindow {
     }
 
     function onDatabaseReady() {
-        console.debug("Database load.")
         mainWindow.refresh();
+        statusBar.message("Databese loaded");
+        statusBar.progress(1);
     }
 }

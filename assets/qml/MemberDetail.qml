@@ -11,11 +11,10 @@ Item {
     property alias contributionListModel: handler.contributionProxyModel
 
     property bool valid;
+    property bool readOnly;
 
     signal read()
-    signal newMember()
-    signal saveMember()
-    signal clear()
+    signal databaseChanged()
 
     id: memberDetail
 
@@ -55,6 +54,8 @@ Item {
 
                                 id: memberIdField
                                 text: member.memberId
+                                readOnly: memberDetail.readOnly
+                                placeholderText: "Nr"
                             }
 
                             Text {text: qsTr("Name:") }
@@ -63,6 +64,7 @@ Item {
 
                                 id: nameField
                                 text: member.name
+                                placeholderText: "Mitglied Nachname"
                             }
 
                             Text {text: qsTr("Vorname:") }
@@ -71,6 +73,7 @@ Item {
 
                                 id: firstNameField
                                 text: member.firstname
+                                placeholderText: "Mitglied Vorname"
                             }
 
                             Text {text: qsTr("Nickname:") }
@@ -79,6 +82,7 @@ Item {
 
                                 id: nicknameField
                                 text: member.nickname
+                                placeholderText: "Mitglied nickname"
                             }
                         }
                     }
@@ -99,6 +103,7 @@ Item {
 
                                 id: streetField
                                 text: member.street
+                                placeholderText: "Straße"
                             }
 
                             Text {text: qsTr("Stadt:") }
@@ -107,6 +112,7 @@ Item {
 
                                 id: cityField
                                 text: member.city
+                                placeholderText: "Stadt"
                             }
 
                             Text {text: qsTr("Postleitzahl:") }
@@ -115,6 +121,8 @@ Item {
 
                                 id: zipcodeField
                                 text: member.zipCode
+                                placeholderText: "Postleitzahl in (99999)"
+                                inputMask: "99999"
                             }
                         }
                     }
@@ -135,6 +143,10 @@ Item {
 
                                 id: referenceField
                                 text: member.reference
+                                placeholderText: "CCC Mitgliedsnummer"
+                                validator: IntValidator {
+                                    bottom: 0;
+                                }
                             }
 
                             Text {text: qsTr("Email:") }
@@ -143,6 +155,7 @@ Item {
 
                                 id: emailField
                                 text: member.email
+                                placeholderText: "Email Adresse"
                             }
 
                             Text {text: qsTr("Eintritts Datum:") }
@@ -151,6 +164,7 @@ Item {
 
                                 id: entryDateField
                                 value: member.entryDate
+                                placeholderText: "Eintritts Datum in (tt.mm.jjjj)"
                             }
 
                             Text {text: qsTr("Austritts Datum:") }
@@ -159,6 +173,7 @@ Item {
 
                                 id: cancelationDateField
                                 value: member.cancellationDate
+                                placeholderText: "Austritts Datum in (tt.mm.jjjj)"
                             }
 
                             Text {text: qsTr("Gelöscht/Deaktiviert") }
@@ -183,26 +198,30 @@ Item {
                     }
 
                     function onRead() {
-                        console.debug("Read");
+                        console.debug("Read data valid =", memberDetail.valid);
 
-                        member.memberId = memberIdField.text
+                        member.memberId = memberIdField.text;
                         member.name = nameField.text;
-                        member.firstname = firstNameField.text
-                        member.nickname = nicknameField.text
-                        member.street = streetField.text
-                        member.city = cityField.text
-                        member.zipCode = zipcodeField.text
-                        member.reference = referenceField.text
-                        member.email = emailField.text
+                        member.firstname = firstNameField.text;
+                        member.nickname = nicknameField.text;
+                        member.street = streetField.text;
+                        member.city = cityField.text;
+                        member.zipCode = zipcodeField.text;
+                        member.reference = referenceField.text;
+                        member.email = emailField.text;
 
-                        if(entryDateField.parseValue()) {
-                            member.entryDate = entryDateField.value;
-                        } else {
+                        var entryDate = entryDateField.readDate();
+                        console.debug("Entry Date", entryDate);
+                        if(entryDate === undefined) {
                             memberDetail.valid = false;
+                        } else {
+                            member.entryDate = entryDate;
                         }
 
-                        if(cancelationDateField.parseValue()) {
-                            member.cancellationDate = cancelationDateField.value
+                        var cancelationDate = cancelationDateField.readDate();
+                        console.debug("Cancelation Date", cancelationDate);
+                        if(cancelationDate !== undefined) {
+                            member.cancellationDate = cancelationDate;
                         }
 
                         // TODO member.cancellationDate = cancelationDateField.text
@@ -237,47 +256,43 @@ Item {
                             columns: 2
 
                             Text {text: qsTr("Beitrag:") }
-                            TextField {
+                            AmountField {
                                 Layout.fillWidth: true
 
                                 id: feeField
-                                text: contribution.fee
-                                validator: DoubleValidator {
-                                    decimals: 2
-                                    locale: Qt.locale("de_DE")
-                                }
+                                value: contribution.fee
                             }
 
                             Text {text: qsTr("Spende:") }
-                            TextField {
+                            AmountField {
                                 Layout.fillWidth: true
 
                                 id: donationField
-                                text: contribution.donation
+                                value: contribution.donation
                             }
 
                             Text {text: qsTr("CCC Beitrag:") }
-                            TextField {
+                            AmountField {
                                 Layout.fillWidth: true
 
                                 id: additionalFeeField
-                                text: contribution.additionalFee
+                                value: contribution.additionalFee
                             }
 
                             Text {text: qsTr("CCC Spenden Anteil") }
-                            TextField {
+                            AmountField {
                                 Layout.fillWidth: true
 
                                 id: additionalDonationField
-                                text: contribution.additionalDonation
+                                value: contribution.additionalDonation
                             }
 
                             Text {text: qsTr("Schulden Beitrag") }
-                            TextField {
+                            AmountField {
                                 Layout.fillWidth: true
 
                                 id: amortizationField
-                                text: contribution.amortization
+                                value: contribution.amortization
                             }
 
                             Text {text: qsTr("Info:") }
@@ -286,6 +301,7 @@ Item {
 
                                 id: contributionInfoField
                                 text: contribution.info
+                                placeholderText: "Info text"
                             }
 
                             Text {text: qsTr("Gültig ab:") }
@@ -294,6 +310,12 @@ Item {
 
                                 id: validFromField
                                 value: contribution.validFrom
+                                placeholderText: "Gültig ab in (tt.mm.yyyy)"
+                            }
+
+                            Button {
+                                text: qsTr("Neuer Beitrag")
+                                onClicked: handler.onNewContribution()
                             }
                         }
                     }
@@ -327,6 +349,7 @@ Item {
 
                                 id: bankNameField
                                 text: bankAccount.name
+                                placeholderText: "Name der Bank"
                             }
 
                             Text {text: qsTr("Konto Nr.:") }
@@ -335,6 +358,10 @@ Item {
 
                                 id: accountNrField
                                 text: bankAccount.accountNumber
+                                placeholderText: "Kontonummer"
+                                validator: IntValidator {
+                                    bottom: 0;
+                                }
                             }
 
                             Text {text: qsTr("BLZ:") }
@@ -343,6 +370,8 @@ Item {
 
                                 id: bankCodeField
                                 text: bankAccount.code
+                                placeholderText: "Bankleitzahl"
+                                inputMask: "99999999"
                             }
                         }
                     }
@@ -355,20 +384,22 @@ Item {
                     }
 
                     function onRead() {
-                        console.debug("Read");
+                        console.debug("Read contribution valid =", memberDetail.valid);
 
-                        contribution.memberId = member.memberId
-                        contribution.fee = feeField.text
-                        contribution.donation = donationField.text
-                        contribution.additionalFee = additionalFeeField.text
-                        contribution.additionalDonation = additionalDonationField.text
-                        contribution.amortization = amortizationField.text
-                        contribution.info = contributionInfoField.text
+                        contribution.memberId = member.memberId;
+                        contribution.fee = feeField.readValue();
+                        contribution.donation = donationField.readValue();
+                        contribution.additionalFee = additionalFeeField.readValue();
+                        contribution.additionalDonation = additionalDonationField.readValue();
+                        contribution.amortization = amortizationField.readValue();
+                        contribution.info = contributionInfoField.text;
 
-                        if(validFromField.parseValue()) {
-                            contribution.validFrom = validFromField.value
-                        } else {
+                        var validFrom = validFromField.readDate();
+                        console.debug("Valid From", validFrom);
+                        if(validFrom === undefined) {
                             memberDetail.valid = false;
+                        } else {
+                            contribution.validFrom = validFrom;
                         }
 
                         member.collectionState = "K"; //contributionStateField.checked
@@ -428,6 +459,7 @@ Item {
                         id: infoField
 
                         text: member.info
+
                     }
 
                     function onRead() {
@@ -450,7 +482,8 @@ Item {
 
                 onClicked: {
                     console.debug("new member")
-                    memberDetail.newMember();
+                    handler.onNewMember();
+                    memberDetail.readOnly = false;
                 }
             }
             Button {
@@ -466,7 +499,8 @@ Item {
                         member.save();
                         bankAccount.save();
                         contribution.save();
-                        memberDetail.saveMember();
+                        memberDetail.readOnly = true;
+                        memberDetail.databaseChanged();
                     } else {
                         console.debug("error");
                     }
@@ -480,6 +514,7 @@ Item {
     }
 
     function selectedMemberId(id) {
+        memberDetail.readOnly = true;
         handler.onSelectedMemberId(id);
     }
 }

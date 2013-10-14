@@ -42,6 +42,7 @@ private slots:
     void initTestCase();
     void testGetAccountingData();
     void testBook();
+    void testBookSignals();
 };
 
 void AccountingHandlerTest::initTestCase()
@@ -183,6 +184,52 @@ void AccountingHandlerTest::testBook()
     QVariantMap property = propertyMaps.at(0);
     QCOMPARE(property["value"], QVariant(-15.0));
     QCOMPARE(property["purpose"], QVariant("Mitgliedsbeitrag foo"));
+}
+
+void AccountingHandlerTest::testBookSignals()
+{
+    membermanager::accounting::MemberAccountingData* accountingData = new membermanager::accounting::MemberAccountingData();
+    accountingData->setAccountingInfo("foo");
+    accountingData->setPurpose("bar");
+    accountingData->setAdditionalDonation(3.0);
+    accountingData->setAdditionalFee(2.0);
+    accountingData->setAmortization(8.0);
+    accountingData->setBankAccountNumber("22334455");
+    accountingData->setBankCode("80070099");
+    accountingData->setCollectionState(static_cast<char>(membermanager::entity::Member::CollectionState::known));
+    accountingData->setDonation(10.0);
+    accountingData->setFee(15.0);
+    accountingData->setFirstname("James T.");
+    accountingData->setMemberId("1");
+    accountingData->setName("Kirk");
+    accountingData->setValuta(QDate(2013, 9, 29));
+
+    QList<QObject *> accountingList;
+    accountingList.append(accountingData);
+
+
+    membermanager::gui::AccountingHandler handler;
+    QSignalSpy progressSignal(&handler, SIGNAL(progress(double)));
+    QSignalSpy messageSignal(&handler, SIGNAL(statusMessage(QString)));
+
+    handler.setAccountingDataList(accountingList);
+
+    handler.book("testfile");
+
+    QCOMPARE(messageSignal.count(), 2);
+    QCOMPARE(progressSignal.count(), 2);
+
+    QList<QVariant> messageArgument1 = messageSignal.takeFirst();
+    QCOMPARE(messageArgument1.at(0).toString(), QString("Booking in progess ... please wait"));
+
+    QList<QVariant> messageArgument2 = messageSignal.takeLast();
+    QCOMPARE(messageArgument2.at(0).toString(), QString("Booking Done"));
+
+    QList<QVariant> progressArgument1 = progressSignal.takeFirst();
+    QCOMPARE(progressArgument1.at(0).toDouble(), 0.0);
+
+    QList<QVariant> progressArgument2 = progressSignal.takeLast();
+    QCOMPARE(progressArgument2.at(0).toDouble(), 1.0);
 }
 
 }
