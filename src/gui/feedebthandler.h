@@ -25,6 +25,9 @@ public:
     entity::Member::State memberState() const;
     void setMemberState(entity::Member::State state);
 
+    Q_INVOKABLE void copyToClipboard(int row);
+    Q_INVOKABLE void copyAllToClipboard();
+
 signals:
     void debtModelChanged();
     void memberStateChanged();

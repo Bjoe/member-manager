@@ -34,7 +34,10 @@ Item {
             Layout.fillHeight: true
             Layout.fillWidth: true
 
+            id: feeDebtTable
+
             model: handler.debtModel
+
             TableViewColumn {
                 role: "memberId"
                 title: qsTr("Mitglieds Nr")
@@ -59,6 +62,14 @@ Item {
                 role: "debit"
                 title: qsTr("Beiträge")
             }
+
+            MouseArea {
+                anchors.fill: parent
+
+                acceptedButtons: Qt.RightButton
+
+                onClicked: mymenu.popup()
+            }
         }
     }
 
@@ -67,6 +78,20 @@ Item {
 
         onStatusMessage: root.statusMessage(message);
         onProgress: root.progress(value);
+    }
+
+    Menu {
+        id: mymenu
+        title: "Context Menu"
+
+        MenuItem {
+            text: qsTr("Copy Email text")
+            onTriggered: handler.copyToClipboard(feeDebtTable.currentRow)
+        }
+        MenuItem {
+            text: qsTr("Copy All")
+            onTriggered: handler.copyAllToClipboard()
+        }
     }
 
     function onRefresh() {

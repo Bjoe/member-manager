@@ -8,6 +8,9 @@
 #include <QSqlError>
 #include <QSqlDatabase>
 
+#include <QClipboard>
+#include <QApplication>
+
 #include "QDjango.h"
 
 #include "testconfig.h"
@@ -30,6 +33,8 @@ private slots:
     void initTestCase();
     void testCalculate();
     void testCalculateSignals();
+    void testCopyClipboard();
+    void testCopyAllToClipboard();
 };
 
 void FeeDebtHandlerTest::initTestCase()
@@ -108,6 +113,49 @@ void FeeDebtHandlerTest::testCalculateSignals()
 
     QList<QVariant> progressArgument2 = progressSignal.takeLast();
     QCOMPARE(progressArgument2.at(0).toDouble(), 1.0);
+}
+
+void FeeDebtHandlerTest::testCopyClipboard()
+{
+    membermanager::gui::FeeDebtHandler *handler = new membermanager::gui::FeeDebtHandler(this);
+    handler->onCalculate();
+
+    handler->copyToClipboard(0);
+
+    QClipboard *clipboard = QApplication::clipboard();
+    QCOMPARE(clipboard->text(), QString("To: enterprise@startrek.com\n"
+                                        "Subject: Chaosdorf Mitgliedsbeitrag Kontostand\n"
+                                        "\n"
+                                        "Hallo James T.,\n"
+                                        "\n"
+                                        "leider weist dein Mitgliedskontostand ein Sollwert von -15,00 EUR auf.\n"
+                                        "Bitte zahle uns den ausstehenden Beitrag von 15,00 EUR auf\n"
+                                        "folgendes Vereins Konto ein:\n"
+                                        "Name: Chaosdorf e.V.\n"
+                                        "Konto Nr.: 21057476\n"
+                                        "BLZ: 300 501 10\n"
+                                        "Bank: Stadtsparkasse Duesseldorf\n"
+                                        "\n"
+                                        "Als Referenz bitte folgendes Eintragen:\n"
+                                        "1 James T. Kirk ausstehenden Mitgliedsbeitraege\n"
+                                        "\n"
+                                        "Sollte es Probleme oder Fragen geben, dann wende dich bitte\n"
+                                        "schnellstmoeglich an den Chaosdorf Vorstand\n"
+                                        "Chaosdorf Vorstand <vorstand@chaosdorf.de>\n"
+                                        "\n"
+                                        "Diese Email wurde automatisch generiert und verschickt\n"));
+}
+
+void FeeDebtHandlerTest::testCopyAllToClipboard()
+{
+    membermanager::gui::FeeDebtHandler *handler = new membermanager::gui::FeeDebtHandler(this);
+    handler->onCalculate();
+
+    handler->copyAllToClipboard();
+
+    QClipboard *clipboard = QApplication::clipboard();
+    QCOMPARE(clipboard->text(), QString("Rueckstand\tName\tVorname\tEmail\n"
+                                        "-15,00 EUR\tKirk\tJames T.\tenterprise@startrek.com\n"));
 }
 
 }
