@@ -223,7 +223,7 @@ void AccountingHandlerTest::testBookSignals()
     QCOMPARE(messageArgument1.at(0).toString(), QString("Booking in progess ... please wait"));
 
     QList<QVariant> messageArgument2 = messageSignal.takeLast();
-    QCOMPARE(messageArgument2.at(0).toString(), QString("Booking Done"));
+    QCOMPARE(messageArgument2.at(0).toString(), QString("Booking done"));
 
     QList<QVariant> progressArgument1 = progressSignal.takeFirst();
     QCOMPARE(progressArgument1.at(0).toDouble(), 0.0);
