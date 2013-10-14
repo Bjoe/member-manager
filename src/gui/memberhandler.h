@@ -36,6 +36,7 @@ signals:
 public slots:
     void onSelectedMemberId(QVariant id);
     void onNewMember();
+    void onNewContribution();
 
 private:
     entity::Member *m_member;

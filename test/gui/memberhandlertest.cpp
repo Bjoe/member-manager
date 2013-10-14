@@ -34,6 +34,7 @@ private slots:
     void testBalanceProxyModelChanged();
     void testMemberSelected();
     void testNewMember();
+    void testNewContribution();
 };
 
 void MemberHandlerTest::initTestCase()
@@ -166,6 +167,19 @@ void MemberHandlerTest::testNewMember()
     QCOMPARE(spy.count(), 1);
     membermanager::entity::Member *member = handler->member();
     QCOMPARE(member->name(), QString(""));
+}
+
+void MemberHandlerTest::testNewContribution()
+{
+    membermanager::gui::MemberHandler *handler = new membermanager::gui::MemberHandler(this);
+    QSignalSpy spy(handler, SIGNAL(memberChanged()));
+
+    handler->onNewContribution();
+
+    QCOMPARE(spy.count(), 1);
+    membermanager::entity::Contribution* contribution = handler->contribution();
+    QCOMPARE(contribution->fee(), 0.0);
+
 }
 
 }

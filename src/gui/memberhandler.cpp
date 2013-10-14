@@ -94,5 +94,14 @@ void MemberHandler::onNewMember()
     emit memberChanged();
 }
 
+void MemberHandler::onNewContribution()
+{
+    delete m_contribution;
+    delete m_contributionProxyTableModel;
+    m_contribution = new entity::Contribution();
+    m_contributionProxyTableModel = new ProxyTableModel(this);
+    emit memberChanged();
+}
+
 } // namespace gui
 } // namespace membermanager
