@@ -60,6 +60,7 @@ void ProxyTableModelTest::testProxy()
 {
     QSqlTableModel *model = new QSqlTableModel();
     model->setTable("member");
+    model->select();
 
     membermanager::gui::ProxyTableModel proxyTable(model, this);
 

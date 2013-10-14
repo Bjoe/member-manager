@@ -19,6 +19,9 @@ QSqlTableModel *BalanceTableModel::createModel(QVariant memberId)
     model->setSort(3, Qt::DescendingOrder);
     model->select();
 
+    while(model->canFetchMore())
+        model->fetchMore();
+
     return model;
 }
 

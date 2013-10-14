@@ -15,6 +15,10 @@ QSqlTableModel *CashAccountTableModel::createModel()
     QSqlTableModel *model = new QSqlTableModel();
     model->setTable("CashAccount");
     model->select();
+
+    while(model->canFetchMore())
+        model->fetchMore();
+
     return model;
 }
 

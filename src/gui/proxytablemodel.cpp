@@ -16,8 +16,6 @@ ProxyTableModel::ProxyTableModel(QSqlTableModel *model, QObject *parent) :
     m_roles(),
     m_sqlTableModel(model)
 {
-    m_sqlTableModel->select();
-
     int colCount = m_sqlTableModel->columnCount();
     for(int i = 0; i < colCount; ++i) {
         QVariant role = m_sqlTableModel->headerData(i, Qt::Horizontal);

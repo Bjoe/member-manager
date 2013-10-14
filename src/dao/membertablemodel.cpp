@@ -34,6 +34,9 @@ void MemberTableModel::selectState(QSqlTableModel *model, entity::Member::State 
     QString whereClause = QString("%1 = '%2'").arg("state").arg(QChar(static_cast<char>(state)));
     model->setFilter(whereClause);
     model->select();
+
+    while(model->canFetchMore())
+        model->fetchMore();
 }
 
 QList<entity::Member *> MemberTableModel::findByState(entity::Member::State state)

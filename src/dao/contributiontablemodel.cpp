@@ -18,6 +18,9 @@ QSqlTableModel* ContributionTableModel::createModel(QVariant memberId)
     model->setSort(7, Qt::DescendingOrder);
     model->select();
 
+    while(model->canFetchMore())
+        model->fetchMore();
+
     return model;
 }
 
