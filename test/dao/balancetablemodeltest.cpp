@@ -28,6 +28,7 @@ private slots:
     void testCreateModel();
     void testFindContributionByMemberIdAndYear();
     void testCalculateSum();
+    void testGiveBalanceByRow();
 };
 
 void BalanceTableModelTest::initTestCase()
@@ -162,6 +163,15 @@ void BalanceTableModelTest::testCalculateSum()
 {
     double sum = membermanager::dao::BalanceTableModel::calculateFeeSumByMemberId(1);
     QCOMPARE(sum, -16.0);
+}
+
+void BalanceTableModelTest::testGiveBalanceByRow()
+{
+    QSqlTableModel *model = membermanager::dao::BalanceTableModel::createModel(2);
+    membermanager::entity::Balance* balance = membermanager::dao::BalanceTableModel::giveBalanceByRow(model, 0);
+    QCOMPARE(balance->valuta().toString(), QString("Di. Okt. 15 2013"));
+    delete balance;
+    delete model;
 }
 
 

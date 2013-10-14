@@ -1,6 +1,7 @@
 #include "balancetablemodel.h"
 
 #include <QString>
+#include <QSqlRecord>
 
 #include "QDjango.h"
 #include "QDjangoQuerySet.h"
@@ -23,6 +24,14 @@ QSqlTableModel *BalanceTableModel::createModel(QVariant memberId)
         model->fetchMore();
 
     return model;
+}
+
+entity::Balance *BalanceTableModel::giveBalanceByRow(const QSqlTableModel *model, int row)
+{
+    QSqlRecord recordLine = model->record(row);
+    QVariant id = recordLine.value("balanceId");
+
+    return QDjangoQuerySet<entity::Balance>().get(QDjangoWhere("balanceId", QDjangoWhere::Equals, id));
 }
 
 QList<QObject *> BalanceTableModel::findContributionByMemberIdAndYear(QVariant memberId, QVariant year)
