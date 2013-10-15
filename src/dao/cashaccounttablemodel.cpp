@@ -10,19 +10,25 @@
 namespace membermanager {
 namespace dao {
 
-QSqlTableModel *CashAccountTableModel::createModel()
+QSqlTableModel* CashAccountTableModel::createModel(int year)
 {
-    QSqlTableModel *model = new QSqlTableModel();
+    QSqlTableModel* model = new QSqlTableModel();
     model->setTable("CashAccount");
+    selectYear(model, year);
+    return model;
+}
+
+void CashAccountTableModel::selectYear(QSqlTableModel *model, int year)
+{
+    QString whereClause = QString("valuta BETWEEN '%1-01-01' AND '%1-12-31'").arg(year);
+    model->setFilter(whereClause);
     model->select();
 
     while(model->canFetchMore())
         model->fetchMore();
-
-    return model;
 }
 
-entity::CashAccount *CashAccountTableModel::findBySelectedRow(QSqlTableModel *model, int row)
+entity::CashAccount* CashAccountTableModel::findBySelectedRow(const QSqlTableModel* model, int row)
 {
     QSqlRecord record = model->record(row);
     QVariant id = record.value("cashAccountId");

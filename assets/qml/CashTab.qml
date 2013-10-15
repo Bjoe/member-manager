@@ -16,8 +16,39 @@ Item {
 
         id: mainLayout
 
-        RowLayout {
+        ColumnLayout {
             spacing: 4
+
+            RowLayout {
+                Text { text: qsTr("Jahr") }
+                ComboBox { // TODO is there any Calendar Controls in QML?
+                    id: year
+                    model: ListModel {
+                        id: yearList
+                        Component.onCompleted: {
+                            var year = 2013; // TODO Date().toLocaleString("dd.MM.yyyy");
+                            console.debug("Jahr", year)
+                            for (var i = 0 ; i < 13 ; ++i) {
+                                append({"year": year - i})
+                            }
+                        }
+                    }
+                    onCurrentIndexChanged: {
+                        var element = yearList.get(currentIndex);
+                        console.debug("Selected year", element.year);
+                        handler.selectYear(element.year);
+                    }
+                }
+
+                Button {
+                    id: importButton
+                    text: qsTr("Import")
+
+                    onClicked: {
+
+                    }
+                }
+            }
 
             TableView {
                 Layout.fillWidth: true
@@ -27,13 +58,35 @@ Item {
                     role: "valuta"
                     title: qsTr("Valuta")
                 }
+
                 TableViewColumn {
                     role: "value"
                     title: qsTr("Betrag")
                 }
+
+                TableViewColumn {
+                    role: "transactionText"
+                    title: qsTr("Transaktion Typ")
+                }
+
+                TableViewColumn {
+                    role: "remoteName"
+                    title: qsTr("Name")
+                }
+
                 TableViewColumn {
                     role: "purpose"
                     title: qsTr("Bezeichnung")
+                }
+
+                TableViewColumn {
+                    role: "booked"
+                    title: qsTr("Gebucht")
+                }
+
+                TableViewColumn {
+                    role: "memberId"
+                    title: qsTr("Mitglieder Nr")
                 }
 
                 model: handler.cashProxyModel

@@ -22,6 +22,8 @@ public:
     ProxyTableModel *cashProxyModel() const;
     entity::CashAccount *cashAccount() const;
 
+    Q_INVOKABLE void selectYear(int year);
+
 signals:
     void cashProxyModelChanged();
     void cashAccountChanged();
@@ -34,7 +36,8 @@ private:
     ProxyTableModel *m_cashProxyModel;
     entity::CashAccount *m_cashAccount;
 
-    void createCashProxyTableModel();
+    void createCashProxyTableModel(int year);
+    int currentYear();
 };
 
 } // namespace gui
