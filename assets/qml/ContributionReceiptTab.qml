@@ -22,6 +22,7 @@ Item {
 
             onSelectedMemberId: {
                 contributionReceipt.memberId = id;
+                contributionReceipt.onChanged();
             }
         }
 

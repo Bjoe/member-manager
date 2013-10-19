@@ -24,6 +24,7 @@ Item {
             ComboBox { // TODO is there any Calendar Controls in QML?
                 id: year
                 model: ListModel {
+                    id: yearList
                     Component.onCompleted: {
                         var year = 2013; // TODO Date().toLocaleString("dd.MM.yyyy");
                         console.debug("Jahr", year)
@@ -32,19 +33,12 @@ Item {
                         }
                     }
                 }
+
+                onCurrentIndexChanged: root.onChanged();
             }
 
             Button {
-                id: receiptButton
-                text: qsTr("Create")
-
-                onClicked: {
-                    receipt.createReceipt(memberId, year.currentText);
-                }
-            }
-
-            Button {
-                id: createButton
+                id: saveButton
                 text: qsTr("Save")
 
                 onClicked: {
@@ -103,6 +97,12 @@ Item {
         onProgress: root.progress(value);
     }
 
+    function onChanged() {
+        var index = year.currentIndex;
+        var yearText = yearList.get(index).year;
+        receipt.createReceipt(memberId, yearText);
+    }
+
     Menu {
         id: mymenu
         title: "Context Menu"
@@ -121,5 +121,4 @@ Item {
         title: qsTr("Read tex file")
         onAccepted: receipt.saveReceipt(memberId, fileDialog.folder, fileDialog.fileUrl, year.currentText)
     }
-
 }
