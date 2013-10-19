@@ -29,6 +29,7 @@ private slots:
     void testCashProxyModelChanged();
     void testSelectYear();
     void testCashSelected();
+    void testImport();
 };
 
 void CashImportHandlerTest::initTestCase()
@@ -122,6 +123,15 @@ void CashImportHandlerTest::testCashSelected()
 
     membermanager::entity::CashAccount* cashAccount = handler->cashAccount();
     QCOMPARE(cashAccount->remoteBankCode(), QString("7654321"));
+}
+
+void CashImportHandlerTest::testImport()
+{
+    membermanager::gui::CashImportHandler* handler = new membermanager::gui::CashImportHandler(this);
+
+    handler->onImport("");
+
+    QSKIP("TODO test");
 }
 
 

@@ -1,6 +1,7 @@
 import QtQuick 2.1
 import QtQuick.Layouts 1.0
 import QtQuick.Controls 1.0
+import QtQuick.Dialogs 1.0
 import membermanager 1.0
 
 Item {
@@ -42,11 +43,9 @@ Item {
 
                 Button {
                     id: importButton
-                    text: qsTr("Import")
+                    text: qsTr("Import SWIFT")
 
-                    onClicked: {
-
-                    }
+                    onClicked: fileDialog.open();
                 }
             }
 
@@ -192,6 +191,12 @@ Item {
                 }
             }
         }
+    }
+
+    FileDialog {
+        id: fileDialog
+        title: qsTr("Read SWIFT file")
+        onAccepted: handler.onImport(fileDialog.fileUrl);
     }
 
     CashImportHandler {

@@ -2,8 +2,12 @@
 
 #include <QDate>
 #include <QSqlTableModel>
+#include <QSettings>
 
 #include <QDebug>
+
+#include "swift/importer.h"
+#include "swift/transaction.h"
 
 #include "dao/cashaccounttablemodel.h"
 
@@ -44,6 +48,35 @@ void CashImportHandler::onSelectedRow(int row)
     QSqlTableModel* model = m_cashProxyModel->getModel();
     m_cashAccount = dao::CashAccountTableModel::findBySelectedRow(model, row);
     emit cashAccountChanged();
+}
+
+void CashImportHandler::onImport(const QString &filename)
+{
+    QSettings settings;
+    QString bankCode = settings.value("bank/code").toString();
+    QString accountNumber = settings.value("bank/account").toString();
+
+    qiabanking::swift::Importer importer(bankCode, accountNumber);
+    QList<qiabanking::swift::Transaction *> transactionList = importer.importMt940Swift(filename);
+
+    for(const qiabanking::swift::Transaction* transaction : transactionList) {
+        entity::CashAccount* cashAccount = new entity::CashAccount();
+
+        cashAccount->setRemoteName(transaction->getRemoteName());
+        cashAccount->setRemoteBankCode(transaction->getRemoteBankCode());
+        cashAccount->setRemoteAccountNumber(transaction->getRemoteAccountNumber());
+        cashAccount->setValue(transaction->getValue());
+        cashAccount->setValuta(transaction->getValutaDate());
+        cashAccount->setDate(transaction->getDate());
+        cashAccount->setPurpose(transaction->getPurpose());
+        cashAccount->setTransactionText(transaction->getTransactionText());
+        cashAccount->setTransactionCode(transaction->getTransactionCode());
+        cashAccount->setPrimanota(transaction->getPrimanota());
+
+        cashAccount->save();
+        delete cashAccount;
+        delete transaction;
+    }
 }
 
 void CashImportHandler::createCashProxyTableModel(int year)
