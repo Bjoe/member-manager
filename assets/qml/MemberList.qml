@@ -51,5 +51,6 @@ TableView {
     function onRefresh() {
         console.debug("refresh list")
         handler.onRefresh();
+        memberViewList.currentRow = -1;
     }
 }

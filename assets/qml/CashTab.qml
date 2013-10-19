@@ -56,6 +56,8 @@ Item {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
 
+                id: cashTable
+
                 TableViewColumn {
                     role: "valuta"
                     title: qsTr("Valuta")
@@ -232,5 +234,6 @@ Item {
     function onRefresh() {
         list.onRefresh()
         handler.onRefresh()
+        cashTable.currentRow = -1;
     }
 }

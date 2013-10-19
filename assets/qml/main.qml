@@ -100,8 +100,12 @@ ApplicationWindow {
         anchors.fill: parent
         anchors.margins: 2
 
+        id: tabView
+
+        enabled: false
+
         Tab {
-            id: members
+            id: membersTab
             title: "Members"
 
             Item{
@@ -116,6 +120,10 @@ ApplicationWindow {
                     onRefresh: activeMember.onRefresh()
                 }
                 Connections {
+                    target: membersTab
+                    onLoaded: activeMember.onRefresh()
+                }
+                Connections {
                     target: activeMember
                     onDatabaseChanged: mainWindow.refresh()
                 }
@@ -125,7 +133,7 @@ ApplicationWindow {
 
         Tab {
             title: "Inactive Members"
-            id: inactiveMembers
+            id: inActiveMembersTab
 
             Item {
                 MemberTab {
@@ -139,6 +147,10 @@ ApplicationWindow {
                     onRefresh: inActiveMember.onRefresh()
                 }
                 Connections {
+                    target: inActiveMembersTab
+                    onLoaded: inActiveMember.onRefresh()
+                }
+                Connections {
                     target: inActiveMember
                     onDatabaseChanged: mainWindow.refresh()
                 }
@@ -147,6 +159,7 @@ ApplicationWindow {
 
         Tab {
             title: qsTr("Spenden Quittung")
+            id: contributonReceiptTab
 
             Item {
                 ContributionReceiptTab {
@@ -160,6 +173,10 @@ ApplicationWindow {
                 Connections {
                     target: mainWindow
                     onRefresh: contributionReceipt.onRefresh()
+                }
+                Connections {
+                    target: contributonReceiptTab
+                    onLoaded: contributionReceipt.onRefresh()
                 }
             }
         }
@@ -181,6 +198,10 @@ ApplicationWindow {
                     target: mainWindow
                     onRefresh: feeDebt.onRefresh()
                 }
+                Connections {
+                    target: feeDebtTab
+                    onLoaded: feeDebt.onRefresh()
+                }
             }
         }
 
@@ -200,6 +221,10 @@ ApplicationWindow {
                 Connections {
                     target: mainWindow
                     onRefresh: contribution.onRefresh()
+                }
+                Connections {
+                    target: conrtibutionTab
+                    onLoaded: contribution.onRefresh()
                 }
             }
         }
@@ -221,6 +246,10 @@ ApplicationWindow {
                     target: mainWindow
                     onRefresh: cash.onRefresh()
                 }
+                Connections {
+                    target: cashTab
+                    onLoaded: cash.onRefresh()
+                }
             }
         }
     }
@@ -229,5 +258,6 @@ ApplicationWindow {
         mainWindow.refresh();
         statusBar.message("Databese loaded");
         statusBar.progress(1);
+        tabView.enabled = true;
     }
 }
