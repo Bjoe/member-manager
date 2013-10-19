@@ -10,6 +10,9 @@ Item {
 
     property int memberId
 
+    signal statusMessage(string msg);
+    signal progress(double value);
+
     ColumnLayout {
         anchors.margins: 8
         anchors.fill: parent
@@ -96,6 +99,8 @@ Item {
     ContributionReceiptHandler {
         id: receipt
 
+        onStatusMessage: root.statusMessage(message);
+        onProgress: root.progress(value);
     }
 
     Menu {

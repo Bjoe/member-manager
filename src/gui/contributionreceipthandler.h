@@ -33,6 +33,8 @@ public:
 signals:
     void balanceListChanged();
     void sumChanged();
+    void progress(double value);
+    void statusMessage(QString message);
 
 private:
     double m_sum {};

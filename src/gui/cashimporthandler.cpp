@@ -52,6 +52,8 @@ void CashImportHandler::onSelectedRow(int row)
 
 void CashImportHandler::onImport(const QString &filename)
 {
+    emit progress(0);
+
     QSettings settings;
     QString bankCode = settings.value("bank/code").toString();
     QString accountNumber = settings.value("bank/account").toString();
@@ -77,6 +79,9 @@ void CashImportHandler::onImport(const QString &filename)
         delete cashAccount;
         delete transaction;
     }
+
+    emit statusMessage(QString("Imported SWIFT file: %1").arg(filename));
+    emit progress(1);
 }
 
 void CashImportHandler::createCashProxyTableModel(int year)

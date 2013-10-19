@@ -36,6 +36,7 @@ private slots:
     void testRemoveRow();
     void testSum();
     void testSaveReceipt();
+    void testSignalsOnSave();
 };
 
 void ContributionReceiptHandlerTest::initTestCase()
@@ -144,6 +145,16 @@ void ContributionReceiptHandlerTest::testSaveReceipt()
 
     QFileInfo fileInfo("./Spendenquittung-2006-Kirk-James T..tex");
     QVERIFY(fileInfo.exists());
+}
+
+void ContributionReceiptHandlerTest::testSignalsOnSave()
+{
+    membermanager::gui::ContributionReceiptHandler handler;
+    QSignalSpy spy(&handler, SIGNAL(statusMessage(QString)));
+
+    handler.saveReceipt(1, "notExist", "notExist", 2006);
+
+    QCOMPARE(spy.count(), 1);
 }
 
 }

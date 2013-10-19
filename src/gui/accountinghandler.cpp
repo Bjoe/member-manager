@@ -118,6 +118,7 @@ void AccountingHandler::book(const QString &filename)
     exporter.createDtausFile(dtausFilename);
 
     emit statusMessage("Booking done");
+    emit progress(1);
 }
 
 void AccountingHandler::onRefresh()

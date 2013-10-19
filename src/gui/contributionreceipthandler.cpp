@@ -46,14 +46,17 @@ void ContributionReceiptHandler::removeRow(int row)
 
 void ContributionReceiptHandler::saveReceipt(int id, const QString& urlPath, const QString& urlFilename, int year)
 {
+    emit progress(0);
+
     QUrl url(urlFilename);
     QString filePath = url.path();
     qDebug() << "tex Filename" << filePath;
     QFile texFile(filePath);
 
     if(! texFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qDebug() << texFile.errorString();
-        return; /// TODO error message
+        QString error = texFile.errorString();
+        emit statusMessage(QString("Cant open LaTEX File %1: %2").arg(filePath).arg(error));
+        return;
     }
 
     QTextStream readStream(&texFile);
@@ -72,8 +75,9 @@ void ContributionReceiptHandler::saveReceipt(int id, const QString& urlPath, con
     QFile outFile(outFilename);
 
     if(! outFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        qDebug() << outFile.errorString();
-        return; /// TODO error message;
+        QString error = outFile.errorString();
+        emit statusMessage(QString("Cant save LaTEX File %1: %2").arg(outFilename).arg(error));
+        return;
     }
 
     QTextStream writeStream(&outFile);
@@ -86,6 +90,8 @@ void ContributionReceiptHandler::saveReceipt(int id, const QString& urlPath, con
     writeStream.flush();
     outFile.close();
     texFile.close();
+    emit statusMessage(QString("File Save: %1").arg(outFilename));
+    emit progress(1);
 }
 
 void ContributionReceiptHandler::clearList()

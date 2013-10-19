@@ -153,6 +153,9 @@ ApplicationWindow {
                     anchors.fill: parent
 
                     id: contributionReceipt
+
+                    onStatusMessage: statusBar.message(msg);
+                    onProgress: statusBar.progress(value);
                 }
                 Connections {
                     target: mainWindow
@@ -210,6 +213,9 @@ ApplicationWindow {
                     anchors.fill: parent
 
                     id: cash
+
+                    onStatusMessage: statusBar.message(msg);
+                    onProgress: statusBar.progress(value);
                 }
                 Connections {
                     target: mainWindow

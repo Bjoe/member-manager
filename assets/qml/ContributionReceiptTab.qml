@@ -7,6 +7,9 @@ Item {
     anchors.fill: parent
     anchors.margins: 8
 
+    signal statusMessage(string msg);
+    signal progress(double value);
+
     id:root
 
     SplitView {
@@ -27,6 +30,9 @@ Item {
             Layout.fillWidth: true
 
             id: contributionReceipt
+
+            onStatusMessage: root.statusMessage(msg);
+            onProgress: root.progress(value);
         }
     }
 

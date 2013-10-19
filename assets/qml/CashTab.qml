@@ -10,6 +10,9 @@ Item {
 
     id:root
 
+    signal statusMessage(string msg);
+    signal progress(double value);
+
     SplitView {
         orientation: Qt.Vertical
         anchors.fill: parent
@@ -201,6 +204,9 @@ Item {
 
     CashImportHandler {
         id: handler
+
+        onStatusMessage: root.statusMessage(message);
+        onProgress: root.progress(value);
     }
 
     BalancePersisterHandler {
