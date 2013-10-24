@@ -3,6 +3,7 @@
 #include <QDate>
 #include <QSqlTableModel>
 #include <QSettings>
+#include <QUrl>
 
 #include <QDebug>
 
@@ -50,10 +51,12 @@ void CashImportHandler::onSelectedRow(int row)
     emit cashAccountChanged();
 }
 
-void CashImportHandler::onImport(const QString &filename)
+void CashImportHandler::onImport(const QString &urlFilename)
 {
     emit progress(0);
 
+    QUrl url(urlFilename);
+    QString filename = url.path();
     QSettings settings;
     QString bankCode = settings.value("bank/code").toString();
     QString accountNumber = settings.value("bank/account").toString();
@@ -80,7 +83,7 @@ void CashImportHandler::onImport(const QString &filename)
         delete transaction;
     }
 
-    emit statusMessage(QString("Imported SWIFT file: %1").arg(filename));
+    emit statusMessage(QString("Imported SWIFT file: %1").arg(urlFilename));
     emit progress(1);
 }
 

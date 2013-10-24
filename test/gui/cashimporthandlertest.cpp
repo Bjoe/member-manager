@@ -131,7 +131,7 @@ void CashImportHandlerTest::testImport()
 
     handler->onImport("");
 
-    QSKIP("TODO test");
+    QSKIP("TODO add test after refactor qaqbanking");
 }
 
 
