@@ -4,6 +4,8 @@
 #include <QTextStream>
 #include <QUrl>
 #include <QFile>
+#include <QApplication>
+#include <QCursor>
 
 #include "dtaus/exporter.h"
 #include "dtaus/transaction.h"
@@ -78,6 +80,7 @@ QList<QObject *> AccountingHandler::accountingDataList() const
 
 void AccountingHandler::book(const QString &urlFilename)
 {
+    QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
     emit progress(0);
     emit statusMessage("Booking in progess ... please wait");
 
@@ -89,6 +92,7 @@ void AccountingHandler::book(const QString &urlFilename)
     if(! csvFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
         QString error = csvFile.errorString();
         emit statusMessage(QString("Cant save %1:%2").arg(csvFilename).arg(error));
+        QApplication::restoreOverrideCursor();
         return;
     }
 
@@ -122,6 +126,7 @@ void AccountingHandler::book(const QString &urlFilename)
 
     emit statusMessage("Booking done");
     emit progress(1);
+    QApplication::restoreOverrideCursor();
 }
 
 void AccountingHandler::onRefresh()
