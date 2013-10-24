@@ -2,6 +2,7 @@
 
 #include <QSettings>
 #include <QTextStream>
+#include <QUrl>
 #include <QFile>
 
 #include "dtaus/exporter.h"
@@ -75,11 +76,13 @@ QList<QObject *> AccountingHandler::accountingDataList() const
     return m_memberAccountingDataList;
 }
 
-void AccountingHandler::book(const QString &filename)
+void AccountingHandler::book(const QString &urlFilename)
 {
     emit progress(0);
     emit statusMessage("Booking in progess ... please wait");
 
+    QUrl url(urlFilename);
+    QString filename = url.path();
     QString csvFilename = QString("%1.csv").arg(filename);
     QFile csvFile(csvFilename);
 

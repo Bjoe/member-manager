@@ -156,7 +156,7 @@ void AccountingHandlerTest::testBook()
 
     handler.setAccountingDataList(accountingList);
 
-    handler.book("testfile");
+    handler.book("file:testfile");
 
     QFile file("testfile.csv");
     QVERIFY(file.open(QIODevice::ReadOnly | QIODevice::Text));
@@ -214,10 +214,10 @@ void AccountingHandlerTest::testBookSignals()
 
     handler.setAccountingDataList(accountingList);
 
-    handler.book("testfile");
+    handler.book("file:testfile");
 
     QCOMPARE(messageSignal.count(), 2);
-    QCOMPARE(progressSignal.count(), 2);
+    QCOMPARE(progressSignal.count(), 3);
 
     QList<QVariant> messageArgument1 = messageSignal.takeFirst();
     QCOMPARE(messageArgument1.at(0).toString(), QString("Booking in progess ... please wait"));

@@ -34,7 +34,7 @@ public:
     void setAccountingDataList(const QList<QObject *>& list);
     QList<QObject *> accountingDataList() const;
 
-    Q_INVOKABLE void book(const QString& filename);
+    Q_INVOKABLE void book(const QString& urlFilename);
 
 signals:
     void accountingDataListChanged();
