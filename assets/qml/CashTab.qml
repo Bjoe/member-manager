@@ -144,10 +144,10 @@ Item {
                     Text { text: qsTr("Beitrag") }
                     Text { text: qsTr("Spende") }
                     Text { text: qsTr("CCC Beitrag") }
-                    Text { text: qsTr("Gebühr") }
+                    Text { text: qsTr("CCC Spende") }
 
                     TextArea {
-                        Layout.rowSpan: 4
+                        Layout.rowSpan: 5
                         Layout.fillWidth: true
                         Layout.fillHeight: true
 
@@ -168,8 +168,18 @@ Item {
                         text: "0"
                     }
                     TextField {
+                        id: additionalDonation
+                        text: "0"
+                    }
+
+                    Text { text: qsTr("Gebühr") }
+                    TextField {
                         id: tax
                         text: "0"
+                    }
+                    Item {
+                        Layout.columnSpan: 3
+                        Layout.fillHeight: true
                     }
 
                     Item {
@@ -182,11 +192,12 @@ Item {
                         text: qsTr("Buchen")
 
                         onClicked: {
-                            persister.cashAccount = handler.cashAccount
-                            persister.memberId = memberId
+                            persister.cashAccount = handler.cashAccount //TODO Bug
+                            persister.memberId = memberHandler.member.memberId
                             persister.fee = fee.text
                             persister.donation = donation.text
                             persister.additional = additional.text
+                            // TODO persister.additionalDonation = additionalDonation.text
                             persister.tax = tax.text
 
                             persister.onBooked()
@@ -211,7 +222,7 @@ Item {
         onProgress: root.progress(value);
     }
 
-    BalancePersisterHandler {
+    BalancePersistHandler {
         id: persister
     }
 
@@ -221,8 +232,9 @@ Item {
         onMemberChanged: {
             fee.text = contribution.fee
             donation.text = contribution.donation
-            additional.text = contribution.additionalFee + contribution.additionalDonation
-            console.debug("Member Changed fee " + contribution.fee)
+            additional.text = contribution.additionalFee
+            additionalDonation.text = contribution.additionalDonation
+            console.debug("Changed to member id: " + memberHandler.member.memberId)
         }
     }
 

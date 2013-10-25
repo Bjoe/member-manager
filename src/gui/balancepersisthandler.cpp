@@ -1,12 +1,14 @@
 #include "balancepersisthandler.h"
 
+#include <QDebug>
+
 #include "entity/balance.h"
 
 namespace membermanager {
 namespace gui {
 
 BalancePersistHandler::BalancePersistHandler(QObject *parent) :
-    QObject(parent), m_cashAccount(nullptr), m_memberId("0"), m_fee("0"), m_donation("0"), m_tax("0")
+    QObject(parent), m_cashAccount(nullptr), m_memberId("0"), m_fee("0"), m_donation("0"), m_additional("0"), m_tax("0")
 {
 }
 
@@ -42,6 +44,9 @@ void BalancePersistHandler::setTax(QString tax)
 
 void BalancePersistHandler::onBooked()
 {
+    Q_ASSERT(m_cashAccount);
+
+    qDebug() << "Book on member id: " << m_memberId;
     int memberId = m_memberId.toInt();
 
     double fee = m_fee.toDouble();
@@ -63,6 +68,8 @@ void BalancePersistHandler::onBooked()
 
 void BalancePersistHandler::persistInBalance(int memberId, double value, int account)
 {
+    qDebug() << "Book for member id "<< memberId << " on account " << account << " value " << value;
+
     entity::Balance *balance = new entity::Balance();
     balance->setMemberId(memberId);
     balance->setCashAccountId(m_cashAccount->cashAccountId());

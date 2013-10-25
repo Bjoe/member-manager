@@ -40,7 +40,7 @@ MainWindowUiController::MainWindowUiController()
     qmlRegisterType<membermanager::gui::ContributionReceiptHandler>("membermanager", 1, 0, "ContributionReceiptHandler");
     qmlRegisterType<membermanager::gui::AccountingHandler>("membermanager", 1, 0, "AccountingHandler");
     qmlRegisterType<membermanager::gui::CashImportHandler>("membermanager", 1, 0, "CashImportHandler");
-    qmlRegisterType<membermanager::gui::BalancePersistHandler>("membermanager", 1, 0, "BalancePersisterHandler");
+    qmlRegisterType<membermanager::gui::BalancePersistHandler>("membermanager", 1, 0, "BalancePersistHandler");
     qmlRegisterType<membermanager::gui::FeeDebtHandler>("membermanager", 1, 0, "FeeDebtHandler");
     qmlRegisterType<membermanager::gui::ProxyTableModel>("membermanager", 1, 0, "ProxyTableModel");
     qmlRegisterType<membermanager::entity::Member>("membermanager", 1, 0, "Member");
