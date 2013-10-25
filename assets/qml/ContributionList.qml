@@ -25,6 +25,12 @@ TableView {
     }
 
     TableViewColumn{
+        role: "additionalDonation"
+        title: qsTr("CCC Spende")
+        width: 100
+    }
+
+    TableViewColumn{
         role: "validFrom"
         title: qsTr("Gültig ab")
         width: 100
