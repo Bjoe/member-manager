@@ -80,9 +80,19 @@ QList<QObject *> AccountingHandler::accountingDataList() const
 
 void AccountingHandler::book(const QString &urlFilename)
 {
-    QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
     emit progress(0);
-    emit statusMessage("Booking in progess ... please wait");
+    QSettings settings;
+    QString bankAccountNumber = settings.value("bank/account").toString();
+    QString bankName = settings.value("bank/name").toString();
+    QString bankCode = settings.value("bank/code").toString();
+
+    if(bankAccountNumber.isEmpty() || bankName.isEmpty() || bankCode.isEmpty()) {
+        emit statusMessage(QString("Wrong settings: Bank name -%1- account Nr: -%2- code: -%3-")
+                           .arg(bankName)
+                           .arg(bankAccountNumber)
+                           .arg(bankCode));
+        return;
+    }
 
     QUrl url(urlFilename);
     QString filename = url.path();
@@ -92,21 +102,17 @@ void AccountingHandler::book(const QString &urlFilename)
     if(! csvFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
         QString error = csvFile.errorString();
         emit statusMessage(QString("Cant save %1:%2").arg(csvFilename).arg(error));
-        QApplication::restoreOverrideCursor();
         return;
     }
 
     QTextStream stream(&csvFile);
 
-    QSettings settings;
-    QString bankAccountNumber = settings.value("bank/account").toString();
-    QString bankName = settings.value("bank/name").toString();
-    QString bankCode = settings.value("bank/code").toString();
-
     accounting::AccountTransaction transaction(bankAccountNumber, bankCode, bankName, stream);
 
     qiabanking::dtaus::Exporter exporter(bankAccountNumber, bankName,bankCode, "EUR");
 
+    QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
+    emit statusMessage("Booking in progess ... please wait");
     double progressValue = 1/m_memberAccountingDataList.size();
     for(QObject* object : m_memberAccountingDataList) {
         accounting::MemberAccountingData* data = qobject_cast<accounting::MemberAccountingData *>(object);

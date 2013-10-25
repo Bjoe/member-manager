@@ -115,7 +115,7 @@ void AccountTransaction::collectionAccounting(const MemberAccountingData* member
                     "Automatische Monats Lastschrift");
     }
 
-    if(additionalDonation > 0) {
+    if(additionalDonation + additionalFee > 0) {
         createAndSaveBalance(
                     memberId,
                     date,
@@ -173,7 +173,7 @@ void AccountTransaction::accounting(const MemberAccountingData* memberData)
                     "Automatische Monats Abbuchung");
     }
 
-    if(additionalDonation > 0) {
+    if(additionalDonation + additionalFee > 0) {
         createAndSaveBalance(
                     memberId,
                     date,
