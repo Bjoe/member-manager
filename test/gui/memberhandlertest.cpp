@@ -94,7 +94,7 @@ void MemberHandlerTest::initTestCase()
     membermanager::entity::Balance *balance = new membermanager::entity::Balance();
     balance->setMemberId(2);
     balance->setValue(155.0);
-    balance->setValuta(QDate::currentDate());
+    balance->setValuta(QDate(2013,10,15));
     balance->setPurpose("foo bar");
     balance->setAccount(23);
     balance->save();

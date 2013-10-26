@@ -192,7 +192,7 @@ Item {
                         text: qsTr("Buchen")
 
                         onClicked: {
-                            persister.cashAccount = handler.cashAccount //TODO Bug
+                            persister.cashAccount = handler.cashAccount
                             persister.memberId = memberHandler.member.memberId
                             persister.fee = fee.text
                             persister.donation = donation.text

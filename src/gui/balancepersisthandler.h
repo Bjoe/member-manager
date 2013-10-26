@@ -13,7 +13,7 @@ class BalancePersistHandler : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(entity::CashAccount *cashAccount WRITE setCashAccount)
+    Q_PROPERTY(membermanager::entity::CashAccount *cashAccount WRITE setCashAccount)
     Q_PROPERTY(QString memberId WRITE setMemberId)
     Q_PROPERTY(QString fee WRITE setFee)
     Q_PROPERTY(QString donation WRITE setDonation)

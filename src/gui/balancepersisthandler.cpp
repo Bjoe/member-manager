@@ -70,6 +70,10 @@ void BalancePersistHandler::persistInBalance(int memberId, double value, int acc
 {
     qDebug() << "Book for member id "<< memberId << " on account " << account << " value " << value;
 
+    if(value < 0) {
+        return;
+    }
+
     entity::Balance *balance = new entity::Balance();
     balance->setMemberId(memberId);
     balance->setCashAccountId(m_cashAccount->cashAccountId());
