@@ -197,7 +197,7 @@ Item {
                             persister.fee = fee.text
                             persister.donation = donation.text
                             persister.additional = additional.text
-                            // TODO persister.additionalDonation = additionalDonation.text
+                            persister.additionalDonation = additionalDonation.text
                             persister.tax = tax.text
 
                             persister.onBooked()

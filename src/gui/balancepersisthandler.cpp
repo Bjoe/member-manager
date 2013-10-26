@@ -8,7 +8,14 @@ namespace membermanager {
 namespace gui {
 
 BalancePersistHandler::BalancePersistHandler(QObject *parent) :
-    QObject(parent), m_cashAccount(nullptr), m_memberId("0"), m_fee("0"), m_donation("0"), m_additional("0"), m_tax("0")
+    QObject(parent),
+    m_cashAccount(nullptr),
+    m_memberId("0"),
+    m_fee("0"),
+    m_donation("0"),
+    m_additional("0"),
+    m_additionalDonation("0"),
+    m_tax("0")
 {
 }
 
@@ -37,6 +44,11 @@ void BalancePersistHandler::setAdditional(QString additional)
     m_additional = additional;
 }
 
+void BalancePersistHandler::setAdditionalDonation(QString additionalDonation)
+{
+    m_additionalDonation = additionalDonation;
+}
+
 void BalancePersistHandler::setTax(QString tax)
 {
     m_tax = tax;
@@ -58,8 +70,11 @@ void BalancePersistHandler::onBooked()
     double additional = m_additional.toDouble();
     persistInBalance(memberId, additional, 4);
 
+    double additionalDonation = m_additionalDonation.toDouble();
+    persistInBalance(memberId, additionalDonation, 3);
+
     double tax = m_tax.toDouble();
-    persistInBalance(memberId, tax, 3);
+    persistInBalance(memberId, tax, 2);
 
     m_cashAccount->setMemberId(memberId);
     m_cashAccount->setBooked(true);
@@ -70,7 +85,7 @@ void BalancePersistHandler::persistInBalance(int memberId, double value, int acc
 {
     qDebug() << "Book for member id "<< memberId << " on account " << account << " value " << value;
 
-    if(value < 0) {
+    if(value <= 0.0) {
         return;
     }
 

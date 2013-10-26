@@ -78,6 +78,7 @@ void BalancePersistHandlerTest::testPersist()
     handler->setFee("15");
     handler->setDonation("5");
     handler->setAdditional("10");
+    handler->setAdditionalDonation("8");
     handler->setTax("6");
 
     handler->onBooked();
@@ -92,7 +93,7 @@ void BalancePersistHandlerTest::testPersist()
 
     QDjangoQuerySet<membermanager::entity::Balance> balanceSet;
 
-    QCOMPARE(balanceSet.count(), 4);
+    QCOMPARE(balanceSet.count(), 5);
 
     membermanager::entity::Balance *balance = new membermanager::entity::Balance();
     balanceSet.at(0, balance);

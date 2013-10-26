@@ -18,6 +18,7 @@ class BalancePersistHandler : public QObject
     Q_PROPERTY(QString fee WRITE setFee)
     Q_PROPERTY(QString donation WRITE setDonation)
     Q_PROPERTY(QString additional WRITE setAdditional)
+    Q_PROPERTY(QString additionalDonation WRITE setAdditionalDonation)
     Q_PROPERTY(QString tax WRITE setTax)
 
 public:
@@ -28,6 +29,7 @@ public:
     void setFee(QString fee);
     void setDonation(QString donation);
     void setAdditional(QString additional);
+    void setAdditionalDonation(QString additionalDonation);
     void setTax(QString tax);
 
 signals:
@@ -41,6 +43,7 @@ private:
     QString m_fee;
     QString m_donation;
     QString m_additional;
+    QString m_additionalDonation;
     QString m_tax;
 
     void persistInBalance(int memberId, double value, int account);
