@@ -125,15 +125,15 @@ Item {
                     columns: 5
 
                     Text { text: qsTr("Valuta") }
-                    TextField {
+                    DateField {
                         readOnly: true
-                        text: handler.cashAccount.valuta.toLocaleDateString(Qt.locale("de_DE"), "dd.MM.yyyy")
+                        value: handler.cashAccount.valuta
                     }
 
                     Text { text: qsTr("Betrag") }
-                    TextField {
+                    AmountField {
                         readOnly: true
-                        text: handler.cashAccount.value
+                        value: handler.cashAccount.value
                     }
 
                     Text {
@@ -155,27 +155,27 @@ Item {
                         text: handler.cashAccount.purpose
                     }
 
-                    TextField {
+                    AmountField {
                         id: fee
-                        text: "0"
+                        value: 0
                     }
-                    TextField {
+                    AmountField {
                         id: donation
-                        text: "0"
+                        value: 0
                     }
-                    TextField {
+                    AmountField {
                         id: additional
-                        text: "0"
+                        value: 0
                     }
-                    TextField {
+                    AmountField {
                         id: additionalDonation
-                        text: "0"
+                        value: 0
                     }
 
                     Text { text: qsTr("Gebühr") }
-                    TextField {
+                    AmountField {
                         id: tax
-                        text: "0"
+                        value: 0
                     }
                     Item {
                         Layout.columnSpan: 3
@@ -194,11 +194,11 @@ Item {
                         onClicked: {
                             persister.cashAccount = handler.cashAccount
                             persister.memberId = memberHandler.member.memberId
-                            persister.fee = fee.text
-                            persister.donation = donation.text
-                            persister.additional = additional.text
-                            persister.additionalDonation = additionalDonation.text
-                            persister.tax = tax.text
+                            persister.fee = fee.readValue()
+                            persister.donation = donation.readValue()
+                            persister.additional = additional.readValue()
+                            persister.additionalDonation = additionalDonation.readValue()
+                            persister.tax = tax.readValue()
 
                             persister.onBooked()
                         }
@@ -230,10 +230,10 @@ Item {
         id: memberHandler
 
         onMemberChanged: {
-            fee.text = contribution.fee
-            donation.text = contribution.donation
-            additional.text = contribution.additionalFee
-            additionalDonation.text = contribution.additionalDonation
+            fee.value = contribution.fee
+            donation.value = contribution.donation
+            additional.value = contribution.additionalFee
+            additionalDonation.value = contribution.additionalDonation
             console.debug("Changed to member id: " + memberHandler.member.memberId)
         }
     }
