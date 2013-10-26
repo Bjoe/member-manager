@@ -79,6 +79,8 @@ void BalancePersistHandler::onBooked()
     m_cashAccount->setMemberId(memberId);
     m_cashAccount->setBooked(true);
     m_cashAccount->save();
+
+    emit memberChanged();
 }
 
 void BalancePersistHandler::persistInBalance(int memberId, double value, int account)

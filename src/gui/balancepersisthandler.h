@@ -33,6 +33,7 @@ public:
     void setTax(QString tax);
 
 signals:
+    void memberChanged();
 
 public slots:
     void onBooked();

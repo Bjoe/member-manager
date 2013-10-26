@@ -29,6 +29,7 @@ class BalancePersistHandlerTest : public QObject
 private slots:
     void initTestCase();
     void testPersist();
+    void testSignalAfterPersist();
 };
 
 void BalancePersistHandlerTest::initTestCase()
@@ -99,6 +100,25 @@ void BalancePersistHandlerTest::testPersist()
     balanceSet.at(0, balance);
 
     QCOMPARE(balance->account(), 11);
+
+    delete balance;
+    delete actualCashAccount;
+    delete cashAccount;
+}
+
+void BalancePersistHandlerTest::testSignalAfterPersist()
+{
+    membermanager::gui::BalancePersistHandler *handler = new membermanager::gui::BalancePersistHandler(this);
+    QSignalSpy spy(handler, SIGNAL(memberChanged()));
+
+    membermanager::entity::CashAccount *cashAccount = new membermanager::entity::CashAccount();
+    handler->setCashAccount(cashAccount);
+
+    handler->onBooked();
+
+    QCOMPARE(spy.count(), 1);
+
+    delete cashAccount;
 }
 
 }
