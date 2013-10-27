@@ -110,6 +110,8 @@ void BalancePersistHandlerTest::testSignalAfterPersist()
 {
     membermanager::gui::BalancePersistHandler *handler = new membermanager::gui::BalancePersistHandler(this);
     QSignalSpy spy(handler, SIGNAL(memberChanged()));
+    QSignalSpy progressSignal(handler, SIGNAL(progress(double)));
+    QSignalSpy messageSignal(handler, SIGNAL(statusMessage(QString)));
 
     membermanager::entity::CashAccount *cashAccount = new membermanager::entity::CashAccount();
     handler->setCashAccount(cashAccount);
@@ -117,6 +119,20 @@ void BalancePersistHandlerTest::testSignalAfterPersist()
     handler->onBooked();
 
     QCOMPARE(spy.count(), 1);
+    QCOMPARE(messageSignal.count(), 2);
+    QCOMPARE(progressSignal.count(), 2);
+
+    QList<QVariant> messageArgument1 = messageSignal.takeFirst();
+    QCOMPARE(messageArgument1.at(0).toString(), QString("Booking in progress ... please wait"));
+
+    QList<QVariant> messageArgument2 = messageSignal.takeLast();
+    QCOMPARE(messageArgument2.at(0).toString(), QString("Booking done."));
+
+    QList<QVariant> progressArgument1 = progressSignal.takeFirst();
+    QCOMPARE(progressArgument1.at(0).toDouble(), 0.0);
+
+    QList<QVariant> progressArgument2 = progressSignal.takeLast();
+    QCOMPARE(progressArgument2.at(0).toDouble(), 1.0);
 
     delete cashAccount;
 }

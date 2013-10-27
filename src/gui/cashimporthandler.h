@@ -27,6 +27,7 @@ public:
 signals:
     void cashProxyModelChanged();
     void cashAccountChanged();
+    void cashAccountModelChanged();
     void statusMessage(QString message);
     void progress(double value);
 

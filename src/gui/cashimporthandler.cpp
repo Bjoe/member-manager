@@ -54,6 +54,7 @@ void CashImportHandler::onSelectedRow(int row)
 void CashImportHandler::onImport(const QString &urlFilename)
 {
     emit progress(0);
+    emit statusMessage("Importing SWIFT .... please wait");
 
     QUrl url(urlFilename);
     QString filename = url.path();
@@ -85,6 +86,7 @@ void CashImportHandler::onImport(const QString &urlFilename)
 
     emit statusMessage(QString("Imported SWIFT file: %1").arg(urlFilename));
     emit progress(1);
+    emit cashAccountModelChanged();
 }
 
 void CashImportHandler::createCashProxyTableModel(int year)

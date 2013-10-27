@@ -12,6 +12,10 @@ Item {
 
     signal statusMessage(string msg);
     signal progress(double value);
+    signal databaseChanged();
+
+    property var selectedYear;
+    property bool activateBookButton;
 
     SplitView {
         orientation: Qt.Vertical
@@ -31,6 +35,7 @@ Item {
                         id: yearList
                         Component.onCompleted: {
                             var year = 2013; // TODO Date().toLocaleString("dd.MM.yyyy");
+                            root.selectedYear = year;
                             console.debug("Jahr", year)
                             for (var i = 0 ; i < 13 ; ++i) {
                                 append({"year": year - i})
@@ -40,7 +45,8 @@ Item {
                     onCurrentIndexChanged: {
                         var element = yearList.get(currentIndex);
                         console.debug("Selected year", element.year);
-                        handler.selectYear(element.year);
+                        root.selectedYear = element.year;
+                        handler.selectYear(root.selectedYear);
                     }
                 }
 
@@ -98,6 +104,7 @@ Item {
                 onActivated: {
                     console.debug("Activate row: " + row)
                     handler.onSelectedRow(row)
+                    root.activateBooking();
                 }
             }
         }
@@ -188,19 +195,44 @@ Item {
                     }
 
                     Button {
+                        id: bookButton
+
                         Layout.columnSpan: 4
                         text: qsTr("Buchen")
 
                         onClicked: {
-                            persister.cashAccount = handler.cashAccount
-                            persister.memberId = memberHandler.member.memberId
-                            persister.fee = fee.readValue()
-                            persister.donation = donation.readValue()
-                            persister.additional = additional.readValue()
-                            persister.additionalDonation = additionalDonation.readValue()
-                            persister.tax = tax.readValue()
+                            var sum = Number(0.0);
+                            sum += Number(fee.readValue());
+                            sum += Number(donation.readValue());
+                            sum += Number(additional.readValue());
+                            sum += Number(additionalDonation.readValue());
+                            sum += Number(tax.readValue());
 
-                            persister.onBooked()
+                            console.debug("Summe " + sum + " Betrag " + handler.cashAccount.value);
+                            if(sum === handler.cashAccount.value) {
+                                fee.textColor = "black";
+                                donation.textColor = "black";
+                                additional.textColor = "black";
+                                additionalDonation.textColor = "black";
+                                tax.textColor = "black";
+
+                                persister.cashAccount = handler.cashAccount;
+                                persister.memberId = memberHandler.member.memberId;
+                                persister.fee = fee.readValue();
+                                persister.donation = donation.readValue();
+                                persister.additional = additional.readValue();
+                                persister.additionalDonation = additionalDonation.readValue();
+                                persister.tax = tax.readValue();
+
+                                persister.onBooked();
+                                root.databaseChanged();
+                            } else {
+                                fee.textColor = "red";
+                                donation.textColor = "red";
+                                additional.textColor = "red";
+                                additionalDonation.textColor = "red";
+                                tax.textColor = "red";
+                            }
                         }
                     }
 
@@ -220,6 +252,7 @@ Item {
 
         onStatusMessage: root.statusMessage(message);
         onProgress: root.progress(value);
+        onCashAccountModelChanged: handler.selectYear(root.selectedYear);
     }
 
     BalancePersistHandler {
@@ -230,11 +263,19 @@ Item {
         id: memberHandler
 
         onMemberChanged: {
-            fee.value = contribution.fee
-            donation.value = contribution.donation
-            additional.value = contribution.additionalFee
-            additionalDonation.value = contribution.additionalDonation
-            console.debug("Changed to member id: " + memberHandler.member.memberId)
+            tax.value = 0;
+            fee.value = 0;
+            donation.value = 0;
+            additional.value = 0;
+            additionalDonation.value = 0;
+
+            fee.value = contribution.fee;
+            donation.value = contribution.donation;
+            additional.value = contribution.additionalFee;
+            additionalDonation.value = contribution.additionalDonation;
+
+            console.debug("Changed to member id: " + memberHandler.member.memberId);
+            root.activateBooking();
         }
     }
 
@@ -247,5 +288,12 @@ Item {
         list.onRefresh()
         handler.onRefresh()
         cashTable.currentRow = -1;
+        bookButton.enabled = false;
+        root.activateBookButton = false;
+    }
+
+    function activateBooking() {
+        bookButton.enabled = (true & root.activateBookButton);
+        root.activateBookButton = true;
     }
 }

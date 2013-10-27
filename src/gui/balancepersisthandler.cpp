@@ -57,6 +57,8 @@ void BalancePersistHandler::setTax(QString tax)
 void BalancePersistHandler::onBooked()
 {
     Q_ASSERT(m_cashAccount);
+    emit progress(0);
+    emit statusMessage("Booking in progress ... please wait");
 
     qDebug() << "Book on member id: " << m_memberId;
     int memberId = m_memberId.toInt();
@@ -80,6 +82,8 @@ void BalancePersistHandler::onBooked()
     m_cashAccount->setBooked(true);
     m_cashAccount->save();
 
+    emit progress(1);
+    emit statusMessage("Booking done.");
     emit memberChanged();
 }
 

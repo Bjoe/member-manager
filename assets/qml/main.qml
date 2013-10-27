@@ -250,6 +250,10 @@ ApplicationWindow {
                     target: cashTab
                     onLoaded: cash.onRefresh()
                 }
+                Connections {
+                    target: cash
+                    onDatabaseChanged: mainWindow.refresh()
+                }
             }
         }
     }

@@ -8,7 +8,6 @@ TextField {
 
     text: value.toLocaleString(Qt.locale("de_DE"));
     validator: DoubleValidator {
-        bottom: 0
         decimals: 2
         locale: "de_DE"
         notation: DoubleValidator.StandardNotation

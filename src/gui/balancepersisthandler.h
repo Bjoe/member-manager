@@ -34,6 +34,8 @@ public:
 
 signals:
     void memberChanged();
+    void statusMessage(QString message);
+    void progress(double value);
 
 public slots:
     void onBooked();
