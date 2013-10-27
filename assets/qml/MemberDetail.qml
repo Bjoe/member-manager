@@ -10,6 +10,8 @@ Item {
     property alias balanceListModel: handler.balanceProxyModel
     property alias contributionListModel: handler.contributionProxyModel
 
+    property var memberState;
+    property var contributionState;
     property bool valid;
     property bool readOnly;
 
@@ -181,12 +183,8 @@ Item {
                                 Layout.fillWidth: true
 
                                 id: stateField
-                                checked: {
-                                    if(member.state === Member.inactive)
-                                        return true
-                                    else
-                                        return false
-                                }
+
+                                checkedState: memberDetail.memberState
                             }
                         }
                     }
@@ -225,7 +223,11 @@ Item {
                         }
 
                         // TODO member.cancellationDate = cancelationDateField.text
-                        member.state = "A" // TODO stateField.checked
+                        if(stateField.checked) {
+                            member.state = 'I';
+                        } else {
+                            member.state = 'A';
+                        }
                     }
 
                     Connections {
@@ -335,12 +337,7 @@ Item {
                                 Layout.fillWidth: true
                                 id: contributionStateField
 
-                                checked: {
-                                    if(member.collectionState === Member.known)
-                                        return true
-                                    else
-                                        return false
-                                }
+                                checkedState: memberDetail.contributionState
                             }
 
                             Text {text: qsTr("Name:") }
@@ -402,7 +399,11 @@ Item {
                             contribution.validFrom = validFrom;
                         }
 
-                        member.collectionState = "K"; //contributionStateField.checked
+                        if(contributionStateField.checked) {
+                            member.collectionState = 'K';
+                        } else {
+                            member.collectionState = 'P';
+                        }
 
                         bankAccount.memberId = member.memberId
                         bankAccount.name = bankNameField.text
@@ -532,5 +533,17 @@ Item {
     function selectedMemberId(id) {
         memberDetail.readOnly = true;
         handler.onSelectedMemberId(id);
+
+        if(handler.member.collectionState === 'K') {
+            memberDetail.contributionState = Qt.Checked;
+        } else {
+            memberDetail.contributionState = Qt.Unchecked;
+        }
+
+        if(handler.member.state === 'I') {
+            memberDetail.memberState = Qt.Checked;
+        } else {
+            memberDetail.memberState = Qt.Unchecked;
+        }
     }
 }
