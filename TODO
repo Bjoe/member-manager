@@ -1,17 +1,9 @@
 /*! \mainpage TODO
  *
- * \todo In der Saldo Tabelle einen SaldoTyp hinzufügen. Anhand des Types können dann die unterschiedlichen Buchungen unterschieden werden. Zb. Rücklastschrift, Einzug, Bargeld eingang etc. Vielleicht konto umbenennen.
- * 
- * \todo Die Dialoge Contribution, ContributionReceipt, Balance aus MemberDetailView nach MainWindow Refactoren.
- * 
- * \todo Test Warnungen Fixen: connection 'qt_sql_default_connection' is still in use, all queries will cease to work.
- * \todo Einpaar Denglische Datenbankfelder und member attribute auf Englisch Refactoren.
- * \todo Einige unsinnige Datenbankfelder rauswerfen und Tabellen mergen. Wird erst nach der ersten lauffaehigen Version umgesetzt damit Parrallel mit der alten Perl Applikation weiter gearbeitet werden kann.
+ * \todo Member id als String
+ * \todo Fix member state und contribution state checkbox in MemberDetail
  * \todo Code Dokumentieren mit Doxygen.
- * 
  * \todo Welche Open Source License ?
- * \todo Fehlermelungen in Statusleiste Anzeigen.
- * \todo AqBanking einbinden und mit DTAUS einzuege erstellen und SWIFT Modul Umsaetze einlesen. 
- * 
+ * \todo Contribution tabelle refactoren. Eigene Tabelle für Buchhaltungskonten anlegen.
  * 
  */
