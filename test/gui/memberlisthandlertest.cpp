@@ -111,8 +111,10 @@ void MemberListHandlerTest::testMemberDeletedSelected()
     QSignalSpy spy(handler, SIGNAL(selectMemberId(QVariant)));
     QSignalSpy spyState(handler, SIGNAL(memberStateChanged()));
 
-    handler->selectMemberState(membermanager::entity::Member::State::deleted);
+    handler->setMemberState(membermanager::entity::Member::State::deleted);
     QCOMPARE(spyState.count(), 1);
+
+    handler->onRefresh("memberId", Qt::SortOrder::AscendingOrder);
 
     handler->onSelectedRow(0);
     QCOMPARE(spy.count(), 1);

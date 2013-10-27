@@ -22,11 +22,14 @@ Item {
 
             Button {
                 text: "Calculate"
-                onClicked: handler.onCalculate()
+                onClicked: {
+                    handler.isInactive = memberState.checked;
+                    handler.onCalculate();
+                }
             }
             CheckBox {
                 id: memberState
-                text: qsTr("Gelöscht")
+                text: qsTr("Inactive")
             }
         }
 

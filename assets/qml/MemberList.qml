@@ -8,8 +8,6 @@ Item {
 
     id: root
 
-    property alias isInactive: handler.isInactive
-
     signal selectedMemberId(var id)
 
     ColumnLayout {
@@ -54,9 +52,16 @@ Item {
             }
         }
 
-        Button { // TODO is there any TableView.changeSort.... SIGNAL in QML?
-            text: qsTr("Sort/Refresh")
-            onClicked: onRefresh();
+        RowLayout {
+            Button { // TODO is there any TableView.changeSort.... SIGNAL in QML?
+                text: qsTr("Sort/Refresh")
+                onClicked: onRefresh();
+            }
+
+            CheckBox {
+                id: memberState
+                text: qsTr("Inactive")
+            }
         }
     }
 
@@ -64,10 +69,13 @@ Item {
         id: handler
 
         onSelectMemberId: root.selectedMemberId(id);
+
+        // handler.memberState -- Member.inactive <--- doesent work :-( Why? FIXME
     }
 
     function onRefresh() {
         console.debug("refresh list")
+        handler.isInactive = memberState.checked;
         handler.onRefresh(memberViewList.getColumn(memberViewList.sortIndicatorColumn).role, memberViewList.sortIndicatorOrder);
         memberViewList.currentRow = -1;
     }

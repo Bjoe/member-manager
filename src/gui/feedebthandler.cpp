@@ -38,6 +38,24 @@ void FeeDebtHandler::setMemberState(entity::Member::State state)
     emit memberStateChanged();
 }
 
+bool FeeDebtHandler::isInactive() const
+{
+    if(m_memberState == entity::Member::State::inactive) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+void FeeDebtHandler::setBoolMemberState(bool isInactive)
+{
+    m_memberState = entity::Member::State::active;
+    if(isInactive) {
+        m_memberState = entity::Member::State::inactive;
+    }
+    emit memberStateChanged();
+}
+
 void FeeDebtHandler::copyToClipboard(int row)
 {
     const QObject* object = m_debtModel.at(row);

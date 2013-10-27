@@ -113,7 +113,6 @@ ApplicationWindow {
                     anchors.fill: parent
 
                     id: activeMember
-                    isInactive: false
                 }
                 Connections {
                     target: mainWindow
@@ -129,32 +128,6 @@ ApplicationWindow {
                 }
             }
 
-        }
-
-        Tab {
-            title: "Inactive Members"
-            id: inActiveMembersTab
-
-            Item {
-                MemberTab {
-                    anchors.fill: parent
-
-                    id: inActiveMember
-                    isInactive: true
-                }
-                Connections {
-                    target: mainWindow
-                    onRefresh: inActiveMember.onRefresh()
-                }
-                Connections {
-                    target: inActiveMembersTab
-                    onLoaded: inActiveMember.onRefresh()
-                }
-                Connections {
-                    target: inActiveMember
-                    onDatabaseChanged: mainWindow.refresh()
-                }
-            }
         }
 
         Tab {

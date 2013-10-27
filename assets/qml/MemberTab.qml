@@ -7,9 +7,6 @@ Item {
     anchors.fill: parent
     anchors.margins: 8
 
-    property alias isInactive: list.isInactive
-    //property alias memberState: handler.memberState -- Member.inactive <--- doesent work :-( Why? FIXME
-
     signal databaseChanged()
 
     id:root

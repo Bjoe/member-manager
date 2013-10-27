@@ -15,6 +15,7 @@ class FeeDebtHandler : public QObject
 
     Q_PROPERTY(QList<QObject *> debtModel READ debtModel WRITE setDebtModel NOTIFY debtModelChanged)
     Q_PROPERTY(membermanager::entity::Member::State memberState READ memberState WRITE setMemberState NOTIFY memberStateChanged)
+    Q_PROPERTY(bool isInactive READ isInactive WRITE setBoolMemberState NOTIFY memberStateChanged)
 
 public:
     explicit FeeDebtHandler(QObject *parent = 0);
@@ -24,6 +25,8 @@ public:
 
     entity::Member::State memberState() const;
     void setMemberState(entity::Member::State state);
+    bool isInactive() const;
+    void setBoolMemberState(bool isInactive);
 
     Q_INVOKABLE void copyToClipboard(int row);
     Q_INVOKABLE void copyAllToClipboard();

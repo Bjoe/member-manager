@@ -27,13 +27,9 @@ entity::Member::State MemberListHandler::memberState() const
     return m_memberState;
 }
 
-void MemberListHandler::selectMemberState(entity::Member::State state)
+void MemberListHandler::setMemberState(entity::Member::State state)
 {
     m_memberState = state;
-
-    QSqlTableModel *model = m_memberProxyTableModel->getModel();
-    dao::MemberTableModel::selectState(model, m_memberState);
-
     emit memberStateChanged();
 }
 
@@ -46,13 +42,13 @@ bool MemberListHandler::isInactive() const
     }
 }
 
-void MemberListHandler::setAndSelectInactiveMember(bool deleted)
+void MemberListHandler::setBoolMemberState(bool isInactive)
 {
-    entity::Member::State memberState = entity::Member::State::active;
-    if(deleted) {
-        memberState = entity::Member::State::inactive;
+    m_memberState = entity::Member::State::active;
+    if(isInactive) {
+        m_memberState = entity::Member::State::inactive;
     }
-    selectMemberState(memberState);
+    emit memberStateChanged();
 }
 
 void MemberListHandler::onRefresh(const QVariant &column, const Qt::SortOrder order)
