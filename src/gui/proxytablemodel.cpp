@@ -1,7 +1,5 @@
 #include "proxytablemodel.h"
 
-#include <QDebug>
-
 namespace membermanager {
 namespace gui {
 
@@ -30,7 +28,6 @@ QSqlTableModel *ProxyTableModel::getModel() const
 
 QHash<int, QByteArray> ProxyTableModel::roleNames() const
 {
-    qDebug() << QString("Get roles %1").arg(m_roles.size());
     return m_roles;
 }
 
@@ -42,13 +39,11 @@ bool ProxyTableModel::select()
 int ProxyTableModel::rowCount(const QModelIndex &parent) const
 {
     int count = m_sqlTableModel->rowCount(parent);
-    qDebug() << QString("Get rowCount %1").arg(count);
     return count;
 }
 
 QVariant ProxyTableModel::data(const QModelIndex &index, int role) const
 {
-    qDebug() << QString("Get data role: %1").arg(role);
     QVariant value = m_sqlTableModel->data(index, role);
     if(role >= Qt::UserRole) {
         int columnIndex = role - Qt::UserRole - 1;
