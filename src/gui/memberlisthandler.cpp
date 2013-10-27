@@ -55,10 +55,10 @@ void MemberListHandler::setAndSelectInactiveMember(bool deleted)
     selectMemberState(memberState);
 }
 
-void MemberListHandler::onRefresh()
+void MemberListHandler::onRefresh(const QVariant &column, const Qt::SortOrder order)
 {
     delete m_memberProxyTableModel; // TODO Refactor to autoptr
-    createMemberProxyTableModel();
+    createMemberProxyTableModel(column, order);
     emit memberProxyModelChanged();
 }
 
@@ -69,9 +69,9 @@ void MemberListHandler::onSelectedRow(int row)
     emit selectMemberId(memberId);
 }
 
-void MemberListHandler::createMemberProxyTableModel()
+void MemberListHandler::createMemberProxyTableModel(const QVariant &column, const Qt::SortOrder order)
 {
-    QSqlTableModel *model = dao::MemberTableModel::createModel(m_memberState);
+    QSqlTableModel *model = dao::MemberTableModel::createModel(m_memberState, column, order);
     m_memberProxyTableModel = new ProxyTableModel(model, this);
     qDebug() << QString("Database ready. Selected row count: %1").arg(m_memberProxyTableModel->rowCount());
 }

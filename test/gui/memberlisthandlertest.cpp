@@ -87,7 +87,7 @@ void MemberListHandlerTest::testMemberProxyModelChanged()
     QCOMPARE(model->rowCount(), 1);
     QCOMPARE(spy.count(), 0);
 
-    handler->onRefresh();
+    handler->onRefresh("memberId", Qt::SortOrder::AscendingOrder);
     model = handler->memberProxyModel();
     QCOMPARE(model->rowCount(), 1);
     QCOMPARE(spy.count(), 1);

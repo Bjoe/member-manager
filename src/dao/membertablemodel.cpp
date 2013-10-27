@@ -9,11 +9,11 @@
 namespace membermanager {
 namespace dao {
 
-QSqlTableModel *MemberTableModel::createModel(entity::Member::State state)
+QSqlTableModel *MemberTableModel::createModel(entity::Member::State state, const QVariant& column, const Qt::SortOrder& order)
 {
     QSqlTableModel *model = new QSqlTableModel();
     model->setTable("member");
-    selectState(model, state);
+    selectState(model, state, column, order);
     return model;
 }
 
@@ -29,10 +29,17 @@ entity::Member *MemberTableModel::findByMemberId(QVariant id)
             .get(QDjangoWhere("memberId", QDjangoWhere::Equals, id));
 }
 
-void MemberTableModel::selectState(QSqlTableModel *model, entity::Member::State state)
+void MemberTableModel::selectState(QSqlTableModel *model, entity::Member::State state, const QVariant& column, const Qt::SortOrder& order)
 {
     QString whereClause = QString("%1 = '%2'").arg("state").arg(QChar(static_cast<char>(state)));
-    model->setFilter(whereClause);
+    QString orderBy = QString("order by %1 ").arg(column.toString());
+    if(order == Qt::SortOrder::DescendingOrder) {
+        orderBy.append("desc");
+    } else {
+        orderBy.append("asc");
+    }
+
+    model->setFilter(QString("%1 %2").arg(whereClause).arg(orderBy));
     model->select();
 
     while(model->canFetchMore())

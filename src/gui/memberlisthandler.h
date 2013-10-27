@@ -2,6 +2,7 @@
 #define MEMBERMANAGER_GUI_MEMBERLISTHANDLER_H
 
 #include <QObject>
+#include <QVariant>
 
 #include "gui/proxytablemodel.h"
 #include "entity/member.h"
@@ -34,14 +35,14 @@ signals:
     void selectMemberId(QVariant id);
 
 public slots:
-    void onRefresh();
+    void onRefresh(const QVariant& column, const Qt::SortOrder order);
     void onSelectedRow(int row);
 
 private:
     entity::Member::State m_memberState;
     ProxyTableModel *m_memberProxyTableModel;
 
-    void createMemberProxyTableModel();
+    void createMemberProxyTableModel(const QVariant& column = "memberId", const Qt::SortOrder order = Qt::SortOrder::DescendingOrder);
 };
 
 } // namespace gui

@@ -78,13 +78,13 @@ void MemberTableModelTest::initTestCase()
 
 void MemberTableModelTest::testCreateTableModel()
 {
-    QSqlTableModel *model = membermanager::dao::MemberTableModel::createModel(membermanager::entity::Member::State::active);
+    QSqlTableModel *model = membermanager::dao::MemberTableModel::createModel(membermanager::entity::Member::State::active, "memberId", Qt::SortOrder::AscendingOrder);
     QCOMPARE(model->rowCount(), 1);
 }
 
 void MemberTableModelTest::testGiveMemberIdFromRow()
 {
-    QSqlTableModel *model = membermanager::dao::MemberTableModel::createModel(membermanager::entity::Member::State::active);
+    QSqlTableModel *model = membermanager::dao::MemberTableModel::createModel(membermanager::entity::Member::State::active, "memberId", Qt::SortOrder::AscendingOrder);
     QVariant memberId =
             membermanager::dao::MemberTableModel::giveMemberIdByRow(model, 0);
     QCOMPARE(memberId.toString(), QString("2"));
@@ -100,7 +100,7 @@ void MemberTableModelTest::testFindMemberByRow()
 
 void MemberTableModelTest::testSelectState()
 {
-    QSqlTableModel *model = membermanager::dao::MemberTableModel::createModel(membermanager::entity::Member::State::active);
+    QSqlTableModel *model = membermanager::dao::MemberTableModel::createModel(membermanager::entity::Member::State::active, "memberId", Qt::SortOrder::AscendingOrder);
     QVariant memberId =
             membermanager::dao::MemberTableModel::giveMemberIdByRow(model, 0);
 
