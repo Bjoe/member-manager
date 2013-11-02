@@ -50,7 +50,7 @@ void BalancePersistHandlerTest::initTestCase()
     QDjango::createTables();
 
     membermanager::entity::CashAccount *cashAccount = new membermanager::entity::CashAccount();
-    cashAccount->setBooked(false);
+    cashAccount->setState("imported");
     cashAccount->setDate(QDate::currentDate());
     cashAccount->setPrimanota("prima");
     cashAccount->setPurpose("Geld");

@@ -90,8 +90,8 @@ Item {
                 }
 
                 TableViewColumn {
-                    role: "booked"
-                    title: qsTr("Gebucht")
+                    role: "state"
+                    title: qsTr("Status")
                 }
 
                 TableViewColumn {

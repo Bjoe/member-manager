@@ -37,7 +37,7 @@ void CashImporter::import(QList<qiabanking::swift::Transaction *> transactions)
         cashaccount->setPurpose(transaction->getPurpose());
         cashaccount->setTransactionCode(transaction->getTransactionCode());
         cashaccount->setTransactionText(transaction->getTransactionText());
-        cashaccount->setBooked(false);
+        cashaccount->setState("imported");
         cashaccount->save();
         delete cashaccount;
     }

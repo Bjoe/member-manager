@@ -31,7 +31,7 @@ class CashAccount : public QDjangoModel
     Q_PROPERTY(QString remoteAccountNumber READ remoteAccountNumber WRITE setRemoteAccountNumber)
     Q_PROPERTY(QString purpose READ purpose WRITE setPurpose)
     Q_PROPERTY(QString memberId READ memberId WRITE setMemberId)
-    Q_PROPERTY(bool booked READ isBooked WRITE setBooked)
+    Q_PROPERTY(QString state READ state WRITE setState)
 
 public:
 
@@ -71,8 +71,8 @@ public:
     QString memberId() const;
     void setMemberId(QString id);
 
-    bool isBooked() const;
-    void setBooked(bool booked);
+    QString state() const;
+    void setState(QString state);
 
 private:
     QString m_primanota {};
@@ -82,12 +82,12 @@ private:
     QString m_remoteAccountNumber {};
     QString m_purpose {};
     QString m_memberId {};
+    QString m_state {};
     QDate m_valuta {};
     QDate m_date {};
     double m_value {};
     int m_transactionCode {};
     int m_cashAccountId {};
-    bool m_booked {};
 };
 
 } // namespace entity

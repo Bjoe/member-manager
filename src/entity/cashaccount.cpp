@@ -123,14 +123,14 @@ void CashAccount::setMemberId(QString id)
     m_memberId = id;
 }
 
-bool CashAccount::isBooked() const
+QString CashAccount::state() const
 {
-    return m_booked;
+    return m_state;
 }
 
-void CashAccount::setBooked(bool booked)
+void CashAccount::setState(QString state)
 {
-    m_booked = booked;
+    m_state = state;
 }
 
 } // namespace entity

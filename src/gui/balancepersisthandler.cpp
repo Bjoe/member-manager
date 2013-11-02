@@ -78,7 +78,7 @@ void BalancePersistHandler::onBooked()
     persistInBalance(m_memberId, tax, 2);
 
     m_cashAccount->setMemberId(m_memberId);
-    m_cashAccount->setBooked(true);
+    m_cashAccount->setState("booked");
     m_cashAccount->save();
 
     emit progress(1);

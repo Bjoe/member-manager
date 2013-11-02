@@ -212,7 +212,7 @@ from main.kontodaten k
 /* update NULL to - */
 update main.kasse set buschl = '-' where buschl is NULL
 
-/* insert into cashaccount */
+/* insert into cashaccount imported */
 insert into chaosdorf.cashaccount (
 cashAccountId,
 primanota,
@@ -226,7 +226,7 @@ remoteBankCode,
 remoteAccountNumber,
 purpose,
 memberId,
-booked
+state
 )
 select
 k.kasse_pkey,
@@ -241,5 +241,41 @@ k.fremdblz,
 k.fremdktnr,
 k.bezeichnung,
 k.dorfmitglied_pkey,
-k.erfasst
+'imported'
 from main.kasse k
+where
+k.erfasst = 'false'
+
+/* insert into cashaccount booked */
+insert into chaosdorf.cashaccount (
+cashAccountId,
+primanota,
+valuta,
+date,
+value,
+transactionCode,
+transactionText,
+remoteName,
+remoteBankCode,
+remoteAccountNumber,
+purpose,
+memberId,
+state
+)
+select
+k.kasse_pkey,
+k.einleseid,
+k.valutadatum,
+k.buchungsdatum,
+k.betrag,
+k.bankbuschl,
+k.buschl,
+k.fremdname,
+k.fremdblz,
+k.fremdktnr,
+k.bezeichnung,
+k.dorfmitglied_pkey,
+'booked'
+from main.kasse k
+where
+k.erfasst = 'true'

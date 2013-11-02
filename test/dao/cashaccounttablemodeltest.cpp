@@ -45,7 +45,7 @@ void CashAccountTableModelTest::initTestCase()
     QDjango::createTables();
 
     membermanager::entity::CashAccount *cashAccount = new membermanager::entity::CashAccount();
-    cashAccount->setBooked(false);
+    cashAccount->setState("imported");
     cashAccount->setDate(QDate(2010,1,1));
     cashAccount->setMemberId("1");
     cashAccount->setPrimanota("prima");
@@ -61,7 +61,7 @@ void CashAccountTableModelTest::initTestCase()
     delete cashAccount;
 
     cashAccount = new membermanager::entity::CashAccount();
-    cashAccount->setBooked(false);
+    cashAccount->setState("imported");
     cashAccount->setDate(QDate(2011,1,1));
     cashAccount->setMemberId("1");
     cashAccount->setPrimanota("prima");
@@ -77,7 +77,7 @@ void CashAccountTableModelTest::initTestCase()
     delete cashAccount;
 
     cashAccount = new membermanager::entity::CashAccount();
-    cashAccount->setBooked(false);
+    cashAccount->setState("imported");
     cashAccount->setDate(QDate(2011,1,1));
     cashAccount->setMemberId("1");
     cashAccount->setPrimanota("prima");
