@@ -13,12 +13,12 @@ void Balance::setBalanceId(int id)
     m_balanceId = id;
 }
 
-int Balance::memberId() const
+QString Balance::memberId() const
 {
     return m_memberId;
 }
 
-void Balance::setMemberId(int id)
+void Balance::setMemberId(QString id)
 {
     m_memberId = id;
 }

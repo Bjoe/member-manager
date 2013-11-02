@@ -13,12 +13,12 @@ void Contribution::setContributionId(int id)
     m_contributionId = id;
 }
 
-int Contribution::memberId() const
+QString Contribution::memberId() const
 {
     return m_memberId;
 }
 
-void Contribution::setMemberId(int id)
+void Contribution::setMemberId(QString id)
 {
     m_memberId = id;
 }

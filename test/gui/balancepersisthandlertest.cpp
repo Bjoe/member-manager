@@ -90,7 +90,7 @@ void BalancePersistHandlerTest::testPersist()
     membermanager::entity::CashAccount *actualCashAccount = new membermanager::entity::CashAccount();
     actualCashAccountSet.at(0, actualCashAccount);
 
-    QCOMPARE(actualCashAccount->memberId(), 1023);
+    QCOMPARE(actualCashAccount->memberId(), QString("1023"));
 
     QDjangoQuerySet<membermanager::entity::Balance> balanceSet;
 

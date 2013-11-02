@@ -31,7 +31,7 @@ class CashAccount : public QDjangoModel
     Q_PROPERTY(QString remoteBankCode READ remoteBankCode WRITE setRemoteBankCode)
     Q_PROPERTY(QString remoteAccountNumber READ remoteAccountNumber WRITE setRemoteAccountNumber)
     Q_PROPERTY(QString purpose READ purpose WRITE setPurpose)
-    Q_PROPERTY(int memberId READ memberId WRITE setMemberId)
+    Q_PROPERTY(QString memberId READ memberId WRITE setMemberId)
     Q_PROPERTY(bool booked READ isBooked WRITE setBooked)
 
 public:
@@ -72,27 +72,27 @@ public:
     QString purpose() const;
     void setPurpose(const QString &text);
 
-    int memberId() const;
-    void setMemberId(int id);
+    QString memberId() const;
+    void setMemberId(QString id);
 
     bool isBooked() const;
     void setBooked(bool booked);
 
 private:
-    QString m_primanota;
-    QString m_transactionText;
-    QString m_remoteName;
-    QString m_remoteBankCode;
-    QString m_remoteAccountNumber;
-    QString m_purpose;
-    QDate m_valuta;
-    QDate m_date;
-    double m_value;
-    int m_transactionCode;
-    int m_memberId;
-    int m_cashAccountId;
-    bool m_booked;
-    bool m_deleted;
+    QString m_primanota {};
+    QString m_transactionText {};
+    QString m_remoteName {};
+    QString m_remoteBankCode {};
+    QString m_remoteAccountNumber {};
+    QString m_purpose {};
+    QString m_memberId {};
+    QDate m_valuta {};
+    QDate m_date {};
+    double m_value {};
+    int m_transactionCode {};
+    int m_cashAccountId {};
+    bool m_booked {};
+    bool m_deleted {};
 };
 
 } // namespace entity

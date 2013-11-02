@@ -13,12 +13,12 @@ void BankAccount::setBankAccountId(int id)
     m_bankaccountId = id;
 }
 
-int BankAccount::memberId() const
+QString BankAccount::memberId() const
 {
     return m_memberId;
 }
 
-void BankAccount::setMemberId(int id)
+void BankAccount::setMemberId(QString id)
 {
     m_memberId = id;
 }

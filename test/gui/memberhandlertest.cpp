@@ -61,7 +61,7 @@ void MemberHandlerTest::initTestCase()
     QDjango::createTables();
 
     membermanager::entity::Member *member = new membermanager::entity::Member();
-    member->setMemberId(1);
+    member->setMemberId("1");
     member->setName("Kirk");
     member->setFirstname("James T.");
     member->setEmail("enterprise@startrek.com");
@@ -75,7 +75,7 @@ void MemberHandlerTest::initTestCase()
     delete member;
 
     membermanager::entity::BankAccount *bankAccount = new membermanager::entity::BankAccount();
-    bankAccount->setMemberId(2);
+    bankAccount->setMemberId("2");
     bankAccount->setAccountNumber("123456");
     bankAccount->setName("Sparstrumpf");
     bankAccount->setCode("7654321");
@@ -83,7 +83,7 @@ void MemberHandlerTest::initTestCase()
     delete bankAccount;
 
     membermanager::entity::Contribution *contribution = new membermanager::entity::Contribution();
-    contribution->setMemberId(2);
+    contribution->setMemberId("2");
     contribution->setFee(15.0);
     contribution->setAdditionalFee(0);
     contribution->setDonation(0);
@@ -92,7 +92,7 @@ void MemberHandlerTest::initTestCase()
     delete contribution;
 
     membermanager::entity::Balance *balance = new membermanager::entity::Balance();
-    balance->setMemberId(2);
+    balance->setMemberId("2");
     balance->setValue(155.0);
     balance->setValuta(QDate(2013,10,15));
     balance->setPurpose("foo bar");
@@ -101,7 +101,7 @@ void MemberHandlerTest::initTestCase()
     delete balance;
 
     member = new membermanager::entity::Member();
-    member->setMemberId(2);
+    member->setMemberId("2");
     member->setName("McCoy");
     member->setFirstname("Dr. Leonard");
     member->setNickname("Pille");

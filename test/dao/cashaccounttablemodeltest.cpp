@@ -48,7 +48,7 @@ void CashAccountTableModelTest::initTestCase()
     cashAccount->setBooked(false);
     cashAccount->setDeleted(false);
     cashAccount->setDate(QDate(2010,1,1));
-    cashAccount->setMemberId(1);
+    cashAccount->setMemberId("1");
     cashAccount->setPrimanota("prima");
     cashAccount->setPurpose("Geld");
     cashAccount->setRemoteAccountNumber("1234567");
@@ -65,7 +65,7 @@ void CashAccountTableModelTest::initTestCase()
     cashAccount->setBooked(false);
     cashAccount->setDeleted(false);
     cashAccount->setDate(QDate(2011,1,1));
-    cashAccount->setMemberId(1);
+    cashAccount->setMemberId("1");
     cashAccount->setPrimanota("prima");
     cashAccount->setPurpose("Geld");
     cashAccount->setRemoteAccountNumber("1234567");
@@ -82,7 +82,7 @@ void CashAccountTableModelTest::initTestCase()
     cashAccount->setBooked(false);
     cashAccount->setDeleted(false);
     cashAccount->setDate(QDate(2011,1,1));
-    cashAccount->setMemberId(1);
+    cashAccount->setMemberId("1");
     cashAccount->setPrimanota("prima");
     cashAccount->setPurpose("Geld");
     cashAccount->setRemoteAccountNumber("1234567");

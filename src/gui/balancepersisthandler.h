@@ -49,7 +49,7 @@ private:
     QString m_additionalDonation;
     QString m_tax;
 
-    void persistInBalance(int memberId, double value, int account);
+    void persistInBalance(QString memberId, double value, int account);
 };
 
 } // namespace gui

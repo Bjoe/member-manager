@@ -66,7 +66,7 @@ void AccountingHandlerTest::initTestCase()
     QDjango::createTables();
 
     membermanager::entity::Member* member = new membermanager::entity::Member();
-    member->setMemberId(1);
+    member->setMemberId("1");
     member->setName("Kirk");
     member->setFirstname("James T.");
     member->setEmail("enterprise@startrek.com");
@@ -80,7 +80,7 @@ void AccountingHandlerTest::initTestCase()
     delete member;
 
     membermanager::entity::BankAccount *bankAccount = new membermanager::entity::BankAccount();
-    bankAccount->setMemberId(1);
+    bankAccount->setMemberId("1");
     bankAccount->setAccountNumber("22334455");
     bankAccount->setCode("80070099");
     bankAccount->setName("Strumpfspar");
@@ -88,7 +88,7 @@ void AccountingHandlerTest::initTestCase()
     delete bankAccount;
 
     membermanager::entity::Contribution *contribution = new membermanager::entity::Contribution();
-    contribution->setMemberId(1);
+    contribution->setMemberId("1");
     contribution->setFee(15.0);
     contribution->setDonation(10.0);
     contribution->setAdditionalDonation(3.0);

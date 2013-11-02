@@ -20,7 +20,7 @@ class Member : public QDjangoModel
     Q_CLASSINFO("info", "null=true")
     Q_CLASSINFO("reference", "null=true")
 
-    Q_PROPERTY(int memberId READ memberId WRITE setMemberId)
+    Q_PROPERTY(QString memberId READ memberId WRITE setMemberId)
     Q_PROPERTY(QString name READ name WRITE setName)
     Q_PROPERTY(QString firstname READ firstname WRITE setFirstname)
     Q_PROPERTY(QString nickname READ nickname WRITE setNickname)
@@ -43,8 +43,8 @@ public:
     enum class State : char { active='A', inactive='I', deleted='D' };
     enum class CollectionState : char { known='K', pause='P', notKnown='N' };
 
-    int memberId() const;
-    void setMemberId(int id);
+    QString memberId() const;
+    void setMemberId(QString id);
 
     QString name() const;
     void setName(const QString &name);
@@ -88,20 +88,20 @@ public:
     void setState(State state);
 
 private:
-    QString m_name;
-    QString m_firstname;
-    QString m_nickname;
-    QString m_email;
-    QDate m_entryDate;
-    QDate m_cancellationDate;
-    QString m_info;
-    QString m_reference;
-    QString m_street;
-    QString m_city;
-    QString m_zipCode;
-    int m_memberId;
-    QString m_state;
-    QString m_collectionState;
+    QString m_memberId {};
+    QString m_name {};
+    QString m_firstname {};
+    QString m_nickname {};
+    QString m_email {};
+    QDate m_entryDate {};
+    QDate m_cancellationDate {};
+    QString m_info {};
+    QString m_reference {};
+    QString m_street {};
+    QString m_city {};
+    QString m_zipCode {};
+    QString m_state {};
+    QString m_collectionState {};
 };
 
 } // namespace entity

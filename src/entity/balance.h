@@ -19,7 +19,7 @@ class Balance : public QDjangoModel
     Q_CLASSINFO("info", "null=true")
 
     Q_PROPERTY(int balanceId READ balanceId WRITE setBalanceId)
-    Q_PROPERTY(int memberId READ memberId WRITE setMemberId)
+    Q_PROPERTY(QString memberId READ memberId WRITE setMemberId)
     Q_PROPERTY(double value READ value WRITE setValue)
     Q_PROPERTY(QDate valuta READ valuta WRITE setValuta)
     Q_PROPERTY(QString purpose READ purpose WRITE setPurpose)
@@ -32,8 +32,8 @@ public:
     int balanceId() const;
     void setBalanceId(int id);
 
-    int memberId() const;
-    void setMemberId(int id);
+    QString memberId() const;
+    void setMemberId(QString id);
 
     double value() const;
     void setValue(double value);
@@ -54,14 +54,14 @@ public:
     void setInfo(const QString &info);
 
 private:
-    QString m_info;
-    QString m_purpose;
-    QDate m_valuta;
-    double m_value;
-    int m_account;
-    int m_cashAccountId;
-    int m_memberId;
-    int m_balanceId;
+    QString m_memberId {};
+    QString m_info {};
+    QString m_purpose {};
+    QDate m_valuta {};
+    double m_value {};
+    int m_account {};
+    int m_cashAccountId {};
+    int m_balanceId {};
 };
 
 } // namespace entity

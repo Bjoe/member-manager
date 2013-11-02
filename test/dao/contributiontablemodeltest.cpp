@@ -46,7 +46,7 @@ void ContributionTableModelTest::initTestCase()
     QDjango::createTables();
 
     membermanager::entity::Contribution *contribution = new membermanager::entity::Contribution();
-    contribution->setMemberId(1);
+    contribution->setMemberId("1");
     contribution->setFee(1.0);
     contribution->setAdditionalFee(0);
     contribution->setDonation(0);
@@ -55,7 +55,7 @@ void ContributionTableModelTest::initTestCase()
     delete contribution;
 
     contribution = new membermanager::entity::Contribution();
-    contribution->setMemberId(1);
+    contribution->setMemberId("1");
     contribution->setFee(2.0);
     contribution->setAdditionalFee(0);
     contribution->setDonation(0);
@@ -64,7 +64,7 @@ void ContributionTableModelTest::initTestCase()
     delete contribution;
 
     contribution = new membermanager::entity::Contribution();
-    contribution->setMemberId(1);
+    contribution->setMemberId("1");
     contribution->setFee(3.0);
     contribution->setAdditionalFee(0);
     contribution->setDonation(0);

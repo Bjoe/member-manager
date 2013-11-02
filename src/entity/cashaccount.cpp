@@ -123,12 +123,12 @@ void CashAccount::setPurpose(const QString &text)
     m_purpose = text;
 }
 
-int CashAccount::memberId() const
+QString CashAccount::memberId() const
 {
     return m_memberId;
 }
 
-void CashAccount::setMemberId(int id)
+void CashAccount::setMemberId(QString id)
 {
     m_memberId = id;
 }

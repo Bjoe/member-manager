@@ -212,7 +212,7 @@ void AccountTransaction::createAndSaveBalance(
         const QString& info
         )
 {
-    int id = memberId.toInt();
+    QString id = memberId.toString();
     entity::Balance* balance = new entity::Balance();
     balance->setMemberId(id);
     balance->setValue(value);

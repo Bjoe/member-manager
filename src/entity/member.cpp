@@ -5,12 +5,12 @@
 namespace membermanager {
 namespace entity {
 
-int Member::memberId() const
+QString Member::memberId() const
 {
     return m_memberId;
 }
 
-void Member::setMemberId(int id)
+void Member::setMemberId(QString id)
 {
     m_memberId = id;
 }

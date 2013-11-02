@@ -49,7 +49,7 @@ void MemberListHandlerTest::initTestCase()
     QDjango::createTables();
 
     membermanager::entity::Member *member = new membermanager::entity::Member();
-    member->setMemberId(1);
+    member->setMemberId("1");
     member->setName("Kirk");
     member->setFirstname("James T.");
     member->setEmail("enterprise@startrek.com");
@@ -63,7 +63,7 @@ void MemberListHandlerTest::initTestCase()
     delete member;
 
     member = new membermanager::entity::Member();
-    member->setMemberId(2);
+    member->setMemberId("2");
     member->setName("McCoy");
     member->setFirstname("Dr. Leonard");
     member->setNickname("Pille");

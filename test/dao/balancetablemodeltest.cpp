@@ -48,7 +48,7 @@ void BalanceTableModelTest::initTestCase()
     QDjango::createTables();
 
     membermanager::entity::Balance *balance = new membermanager::entity::Balance();
-    balance->setMemberId(1);
+    balance->setMemberId("1");
     balance->setValue(155.0);
     balance->setValuta(QDate(2006,12,5));
     balance->setPurpose("foo bar");
@@ -57,7 +57,7 @@ void BalanceTableModelTest::initTestCase()
     delete balance;
 
     balance = new membermanager::entity::Balance();
-    balance->setMemberId(1);
+    balance->setMemberId("1");
     balance->setValue(-15.0);
     balance->setValuta(QDate(2006,6,14));
     balance->setPurpose("foo bar");
@@ -66,7 +66,7 @@ void BalanceTableModelTest::initTestCase()
     delete balance;
 
     balance = new membermanager::entity::Balance();
-    balance->setMemberId(1);
+    balance->setMemberId("1");
     balance->setValue(-15.0);
     balance->setValuta(QDate(2007,12,5));
     balance->setPurpose("foo bar");
@@ -75,7 +75,7 @@ void BalanceTableModelTest::initTestCase()
     delete balance;
 
     balance = new membermanager::entity::Balance();
-    balance->setMemberId(2);
+    balance->setMemberId("2");
     balance->setValue(155.0);
     balance->setValuta(QDate(2006,6,15));
     balance->setPurpose("foo bar");
@@ -84,7 +84,7 @@ void BalanceTableModelTest::initTestCase()
     delete balance;
 
     balance = new membermanager::entity::Balance();
-    balance->setMemberId(1);
+    balance->setMemberId("1");
     balance->setValue(15.0);
     balance->setAccount(11);
     balance->setValuta(QDate(2006,10,15));
@@ -93,7 +93,7 @@ void BalanceTableModelTest::initTestCase()
     delete balance;
 
     balance = new membermanager::entity::Balance();
-    balance->setMemberId(1);
+    balance->setMemberId("1");
     balance->setValue(-10.0);
     balance->setAccount(-12);
     balance->setValuta(QDate(2009,10,15));
@@ -102,7 +102,7 @@ void BalanceTableModelTest::initTestCase()
     delete balance;
 
     balance = new membermanager::entity::Balance();
-    balance->setMemberId(1);
+    balance->setMemberId("1");
     balance->setValue(-5.0);
     balance->setAccount(-4);
     balance->setValuta(QDate(2010,10,15));
@@ -111,7 +111,7 @@ void BalanceTableModelTest::initTestCase()
     delete balance;
 
     balance = new membermanager::entity::Balance();
-    balance->setMemberId(1);
+    balance->setMemberId("1");
     balance->setValue(-6.0);
     balance->setAccount(-3);
     balance->setValuta(QDate(2011,10,15));
@@ -120,7 +120,7 @@ void BalanceTableModelTest::initTestCase()
     delete balance;
 
     balance = new membermanager::entity::Balance();
-    balance->setMemberId(1);
+    balance->setMemberId("1");
     balance->setValue(10);
     balance->setAccount(11);
     balance->setValuta(QDate(2012,10,15));
@@ -129,7 +129,7 @@ void BalanceTableModelTest::initTestCase()
     delete balance;
 
     balance = new membermanager::entity::Balance();
-    balance->setMemberId(2);
+    balance->setMemberId("2");
     balance->setValue(600.0);
     balance->setAccount(11);
     balance->setValuta(QDate(2013,10,15));

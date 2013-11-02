@@ -138,7 +138,7 @@ void FeeDebtHandler::onCalculate()
         double sum = dao::BalanceTableModel::calculateFeeSumByMemberId(member->memberId());
         if(sum < 0) {
             accounting::MemberDebt *memberDebt = new accounting::MemberDebt(this);
-            QString memberId = QVariant(member->memberId()).toString();
+            QString memberId = member->memberId();
             memberDebt->setMemberId(memberId);
             memberDebt->setFirstname(member->firstname());
             memberDebt->setName(member->name());

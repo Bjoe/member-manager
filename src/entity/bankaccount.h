@@ -16,7 +16,7 @@ class BankAccount : public QDjangoModel
     Q_CLASSINFO("bankAccountId", "primary_key=true db_index=true unique=true auto_increment=true")
 
     Q_PROPERTY(int bankAccountId READ bankAccountId WRITE setBankAccountId)
-    Q_PROPERTY(int memberId READ memberId WRITE setMemberId)
+    Q_PROPERTY(QString memberId READ memberId WRITE setMemberId)
     Q_PROPERTY(QString name READ name WRITE setName)
     Q_PROPERTY(QString accountNumber READ accountNumber WRITE setAccountNumber)
     Q_PROPERTY(QString code READ code WRITE setCode)
@@ -26,8 +26,8 @@ public:
     int bankAccountId() const;
     void setBankAccountId(int id);
 
-    int memberId() const;
-    void setMemberId(int id);
+    QString memberId() const;
+    void setMemberId(QString id);
 
     QString name() const;
     void setName(QString name);
@@ -39,11 +39,11 @@ public:
     void setCode(QString code);
 
 private:
-    QString m_name;
-    QString m_accountNumber;
-    QString m_code;
-    int m_memberId;
-    int m_bankaccountId;
+    QString m_memberId {};
+    QString m_name {};
+    QString m_accountNumber {};
+    QString m_code {};
+    int m_bankaccountId {};
 };
 
 } // namespace entity

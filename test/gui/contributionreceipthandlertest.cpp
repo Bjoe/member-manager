@@ -57,7 +57,7 @@ void ContributionReceiptHandlerTest::initTestCase()
     QDjango::createTables();
 
     membermanager::entity::Member *member1 = new membermanager::entity::Member();
-    member1->setMemberId(1);
+    member1->setMemberId("1");
     member1->setName("Kirk");
     member1->setFirstname("James T.");
     member1->setEmail("enterprise@startrek.com");
@@ -71,7 +71,7 @@ void ContributionReceiptHandlerTest::initTestCase()
     delete member1;
 
     membermanager::entity::Balance *balance = new membermanager::entity::Balance();
-    balance->setMemberId(1);
+    balance->setMemberId("1");
     balance->setValue(110.0);
     balance->setValuta(QDate(2006,10,15));
     balance->setPurpose("foo bar");
@@ -80,7 +80,7 @@ void ContributionReceiptHandlerTest::initTestCase()
     delete balance;
 
     balance = new membermanager::entity::Balance();
-    balance->setMemberId(1);
+    balance->setMemberId("1");
     balance->setValue(10.0);
     balance->setValuta(QDate(2006,11,15));
     balance->setPurpose("bar foo");

@@ -42,7 +42,7 @@ void BankAccountTableModelTest::initTestCase()
     QDjango::createTables();
 
     membermanager::entity::BankAccount *bankAccount = new membermanager::entity::BankAccount();
-    bankAccount->setMemberId(1);
+    bankAccount->setMemberId("1");
     bankAccount->setName("Sparstrumpf");
     bankAccount->setAccountNumber("123456");
     bankAccount->setCode("7654321");
@@ -52,13 +52,13 @@ void BankAccountTableModelTest::initTestCase()
 
 void BankAccountTableModelTest::testFindByMemberId()
 {
-    membermanager::entity::BankAccount *bankAccount = membermanager::dao::BankAccountTableModel::findByMemberId(1);
+    membermanager::entity::BankAccount *bankAccount = membermanager::dao::BankAccountTableModel::findByMemberId("1");
     QCOMPARE(bankAccount->accountNumber(), QString("123456"));
 }
 
 void BankAccountTableModelTest::testFindNothing()
 {
-    membermanager::entity::BankAccount *bankAccount = membermanager::dao::BankAccountTableModel::findByMemberId(2);
+    membermanager::entity::BankAccount *bankAccount = membermanager::dao::BankAccountTableModel::findByMemberId("2");
     QCOMPARE(bankAccount->accountNumber(), QString(""));
 }
 

@@ -141,7 +141,7 @@ void AccountingHandler::onRefresh()
 
     QList<entity::Member *> memberList = dao::MemberTableModel::findByState(entity::Member::State::active);
     for(const entity::Member* member : memberList) {
-        QString memberId = QString::number(member->memberId());
+        QString memberId = member->memberId();
         accounting::MemberAccountingData* data = new accounting::MemberAccountingData(this);
         data->setValuta(m_valuta);
         data->setAccountingInfo(m_accountingInfo);

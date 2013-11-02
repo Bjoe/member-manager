@@ -55,7 +55,7 @@ void FeeDebtHandlerTest::initTestCase()
     QDjango::createTables();
 
     membermanager::entity::Balance *balance = new membermanager::entity::Balance();
-    balance->setMemberId(1);
+    balance->setMemberId("1");
     balance->setValue(-15.0);
     balance->setAccount(-11);
     balance->setPurpose("Beitrag");
@@ -64,7 +64,7 @@ void FeeDebtHandlerTest::initTestCase()
     delete balance;
 
     membermanager::entity::Member *member1 = new membermanager::entity::Member();
-    member1->setMemberId(1);
+    member1->setMemberId("1");
     member1->setName("Kirk");
     member1->setFirstname("James T.");
     member1->setEmail("enterprise@startrek.com");

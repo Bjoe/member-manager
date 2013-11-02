@@ -61,24 +61,23 @@ void BalancePersistHandler::onBooked()
     emit statusMessage("Booking in progress ... please wait");
 
     qDebug() << "Book on member id: " << m_memberId;
-    int memberId = m_memberId.toInt();
 
     double fee = m_fee.toDouble();
-    persistInBalance(memberId, fee, 11);
+    persistInBalance(m_memberId, fee, 11);
 
     double donation = m_donation.toDouble();
-    persistInBalance(memberId, donation, 12);
+    persistInBalance(m_memberId, donation, 12);
 
     double additional = m_additional.toDouble();
-    persistInBalance(memberId, additional, 4);
+    persistInBalance(m_memberId, additional, 4);
 
     double additionalDonation = m_additionalDonation.toDouble();
-    persistInBalance(memberId, additionalDonation, 3);
+    persistInBalance(m_memberId, additionalDonation, 3);
 
     double tax = m_tax.toDouble();
-    persistInBalance(memberId, tax, 2);
+    persistInBalance(m_memberId, tax, 2);
 
-    m_cashAccount->setMemberId(memberId);
+    m_cashAccount->setMemberId(m_memberId);
     m_cashAccount->setBooked(true);
     m_cashAccount->save();
 
@@ -87,7 +86,7 @@ void BalancePersistHandler::onBooked()
     emit memberChanged();
 }
 
-void BalancePersistHandler::persistInBalance(int memberId, double value, int account)
+void BalancePersistHandler::persistInBalance(QString memberId, double value, int account)
 {
     qDebug() << "Book for member id "<< memberId << " on account " << account << " value " << value;
 

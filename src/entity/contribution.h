@@ -18,7 +18,7 @@ class Contribution : public QDjangoModel
     Q_CLASSINFO("info", "null=true")
 
     Q_PROPERTY(int contributionId READ contributionId WRITE setContributionId)
-    Q_PROPERTY(int memberId READ memberId WRITE setMemberId)
+    Q_PROPERTY(QString memberId READ memberId WRITE setMemberId)
     Q_PROPERTY(double fee READ fee WRITE setFee)
     Q_PROPERTY(double additionalFee READ additionalFee WRITE setAdditionalFee)
     Q_PROPERTY(double additionalDonation READ additionalDonation WRITE setAdditionalDonation)
@@ -32,8 +32,8 @@ public:
     int contributionId() const;
     void setContributionId(int id);
 
-    int memberId() const;
-    void setMemberId(int id);
+    QString memberId() const;
+    void setMemberId(QString id);
 
     double fee() const;
     void setFee(double fee);
@@ -57,15 +57,15 @@ public:
     void setValidFrom(const QDate &date);
 
 private:
-    QString m_info;
-    QDate m_validFrom;
-    double m_fee;
-    double m_additionalFee;
-    double m_additionalDonation;
-    double m_donation;
-    double m_amortization;
-    int m_contributionId;
-    int m_memberId;
+    QString m_memberId {};
+    QString m_info {};
+    QDate m_validFrom {};
+    double m_fee {};
+    double m_additionalFee {};
+    double m_additionalDonation {};
+    double m_donation {};
+    double m_amortization {};
+    int m_contributionId {};
 };
 
 } // namespace entity
