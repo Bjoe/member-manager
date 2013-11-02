@@ -215,7 +215,6 @@ update main.kasse set buschl = '-' where buschl is NULL
 /* insert into cashaccount */
 insert into chaosdorf.cashaccount (
 cashAccountId,
-deleted,
 primanota,
 valuta,
 date,
@@ -231,7 +230,6 @@ booked
 )
 select
 k.kasse_pkey,
-k.deleted,
 k.einleseid,
 k.valutadatum,
 k.buchungsdatum,

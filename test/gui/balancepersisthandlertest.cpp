@@ -51,7 +51,6 @@ void BalancePersistHandlerTest::initTestCase()
 
     membermanager::entity::CashAccount *cashAccount = new membermanager::entity::CashAccount();
     cashAccount->setBooked(false);
-    cashAccount->setDeleted(false);
     cashAccount->setDate(QDate::currentDate());
     cashAccount->setPrimanota("prima");
     cashAccount->setPurpose("Geld");

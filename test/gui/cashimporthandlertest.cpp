@@ -50,7 +50,6 @@ void CashImportHandlerTest::initTestCase()
 
     membermanager::entity::CashAccount *cashAccount = new membermanager::entity::CashAccount();
     cashAccount->setBooked(false);
-    cashAccount->setDeleted(false);
     cashAccount->setDate(QDate::currentDate());
     cashAccount->setMemberId("1");
     cashAccount->setPrimanota("prima");
@@ -67,7 +66,6 @@ void CashImportHandlerTest::initTestCase()
 
     cashAccount = new membermanager::entity::CashAccount();
     cashAccount->setBooked(false);
-    cashAccount->setDeleted(false);
     cashAccount->setDate(QDate(2010,1,1));
     cashAccount->setMemberId("1");
     cashAccount->setPrimanota("prima");

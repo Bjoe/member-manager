@@ -20,7 +20,6 @@ class CashAccount : public QDjangoModel
     Q_CLASSINFO("remoteAccountNumber", "null=true")
 
     Q_PROPERTY(int cashAccountId READ cashAccountId WRITE setCashAccountId)
-    Q_PROPERTY(bool deleted READ isDeleted WRITE setDeleted)
     Q_PROPERTY(QString primanota READ primanota WRITE setPrimanota)
     Q_PROPERTY(QDate valuta READ valuta WRITE setValuta)
     Q_PROPERTY(QDate date READ date WRITE setDate)
@@ -38,9 +37,6 @@ public:
 
     int cashAccountId() const;
     void setCashAccountId(int id);
-
-    bool isDeleted() const;
-    void setDeleted(bool deleted);
 
     QString primanota() const;
     void setPrimanota(const QString &primanota);
@@ -92,7 +88,6 @@ private:
     int m_transactionCode {};
     int m_cashAccountId {};
     bool m_booked {};
-    bool m_deleted {};
 };
 
 } // namespace entity

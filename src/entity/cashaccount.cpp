@@ -13,16 +13,6 @@ void CashAccount::setCashAccountId(int id)
     m_cashAccountId = id;
 }
 
-bool CashAccount::isDeleted() const
-{
-    return m_deleted;
-}
-
-void CashAccount::setDeleted(bool deleted)
-{
-    m_deleted = deleted;
-}
-
 QString CashAccount::primanota() const
 {
     return m_primanota;
