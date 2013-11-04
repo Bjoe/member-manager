@@ -233,7 +233,7 @@ ApplicationWindow {
 
     function onDatabaseReady() {
         mainWindow.refresh();
-        statusBar.message("Databese loaded");
+        statusBar.message("Database loaded");
         statusBar.progress(1);
         tabView.enabled = true;
     }
