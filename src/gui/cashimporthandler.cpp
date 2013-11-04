@@ -78,6 +78,7 @@ void CashImportHandler::onImport(const QString &urlFilename)
         cashAccount->setTransactionText(transaction->getTransactionText());
         cashAccount->setTransactionCode(transaction->getTransactionCode());
         cashAccount->setPrimanota(transaction->getPrimanota());
+        cashAccount->setState("imported");
 
         cashAccount->save();
         delete cashAccount;
