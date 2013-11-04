@@ -1,5 +1,12 @@
 /*! \mainpage TODO
  *
+ *
+ *
+ * \todo Bug: Das Buchen aus der Kasse zu den Mitgliedern geht nicht
+ * \todo Bug: Importierte Swift Umsaetze werden nicht auf den state imported gesetzt.
+ * \todo Bug: Das Fenster in Kasse läßt sich nicht vergrößern
+ *
+ *
  * \todo Fix member state und contribution state checkbox in MemberDetail
  * \todo Code Dokumentieren mit Doxygen.
  * \todo Welche Open Source License ?
