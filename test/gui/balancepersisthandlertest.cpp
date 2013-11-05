@@ -28,7 +28,9 @@ class BalancePersistHandlerTest : public QObject
 
 private slots:
     void initTestCase();
-    void testPersist();
+    void init();
+    void testPersistPositiveAmount();
+    void testPersistNegativAmount();
     void testSignalAfterPersist();
 };
 
@@ -43,6 +45,10 @@ void BalancePersistHandlerTest::initTestCase()
         }
     }
     QDjango::setDatabase(db);
+}
+
+void BalancePersistHandlerTest::init()
+{
     QDjango::registerModel<membermanager::entity::CashAccount>();
     QDjango::registerModel<membermanager::entity::Balance>();
 
@@ -65,7 +71,7 @@ void BalancePersistHandlerTest::initTestCase()
     delete cashAccount;
 }
 
-void BalancePersistHandlerTest::testPersist()
+void BalancePersistHandlerTest::testPersistPositiveAmount()
 {
     QDjangoQuerySet<membermanager::entity::CashAccount> cashAccountSet;
     membermanager::entity::CashAccount *cashAccount = new membermanager::entity::CashAccount();
@@ -99,6 +105,45 @@ void BalancePersistHandlerTest::testPersist()
     balanceSet.at(0, balance);
 
     QCOMPARE(balance->account(), 11);
+
+    delete balance;
+    delete actualCashAccount;
+    delete cashAccount;
+}
+
+void BalancePersistHandlerTest::testPersistNegativAmount()
+{
+    QDjangoQuerySet<membermanager::entity::CashAccount> cashAccountSet;
+    membermanager::entity::CashAccount *cashAccount = new membermanager::entity::CashAccount();
+    cashAccountSet.at(0, cashAccount);
+
+    membermanager::gui::BalancePersistHandler *handler = new membermanager::gui::BalancePersistHandler(this);
+
+    handler->setCashAccount(cashAccount);
+    handler->setMemberId("1099");
+    handler->setFee("-15");
+    handler->setAdditional("0,00");
+    handler->setTax("-6");
+
+    handler->onBooked();
+
+    QDjangoQuerySet<membermanager::entity::CashAccount> actualCashAccountSet;
+    QCOMPARE(actualCashAccountSet.count(), 1);
+
+    membermanager::entity::CashAccount *actualCashAccount = new membermanager::entity::CashAccount();
+    actualCashAccountSet.at(0, actualCashAccount);
+
+    QCOMPARE(actualCashAccount->memberId(), QString("1099"));
+
+    QDjangoQuerySet<membermanager::entity::Balance> balanceSet;
+
+    QCOMPARE(balanceSet.count(), 2);
+
+    membermanager::entity::Balance *balance = new membermanager::entity::Balance();
+    balanceSet.at(0, balance);
+
+    QCOMPARE(balance->account(), 11);
+    QCOMPARE(balance->value(), -15.0);
 
     delete balance;
     delete actualCashAccount;

@@ -1,8 +1,6 @@
 /*! \mainpage TODO
  *
  *
- * \todo BUG: Minus Werte können nicht auf das Mitgliedskonto gebucht werden (Kasse Tab).
- *
  * \todo Fix member state und contribution state checkbox in MemberDetail
  * \todo Code Dokumentieren mit Doxygen.
  * \todo Welche Open Source License ?

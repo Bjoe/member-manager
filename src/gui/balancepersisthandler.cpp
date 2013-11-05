@@ -90,7 +90,7 @@ void BalancePersistHandler::persistInBalance(QString memberId, double value, int
 {
     qDebug() << "Book for member id "<< memberId << " on account " << account << " value " << value;
 
-    if(value <= 0.0) {
+    if(value == 0.0) {
         return;
     }
 
