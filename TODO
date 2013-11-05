@@ -2,7 +2,6 @@
  *
  *
  * \todo BUG: Minus Werte können nicht auf das Mitgliedskonto gebucht werden (Kasse Tab).
- * \todo BUG: Die Gebühr wird bei der Berechnung der "Offene Beiträge" nicht berücksichtigt.
  *
  * \todo Fix member state und contribution state checkbox in MemberDetail
  * \todo Code Dokumentieren mit Doxygen.

@@ -121,6 +121,24 @@ void BalanceTableModelTest::initTestCase()
 
     balance = new membermanager::entity::Balance();
     balance->setMemberId("1");
+    balance->setValue(-6.0);
+    balance->setAccount(-2);
+    balance->setValuta(QDate(2011,10,15));
+    balance->setPurpose("foo bar");
+    balance->save();
+    delete balance;
+
+    balance = new membermanager::entity::Balance();
+    balance->setMemberId("1");
+    balance->setValue(3.0);
+    balance->setAccount(2);
+    balance->setValuta(QDate(2011,10,15));
+    balance->setPurpose("foo bar");
+    balance->save();
+    delete balance;
+
+    balance = new membermanager::entity::Balance();
+    balance->setMemberId("1");
     balance->setValue(10);
     balance->setAccount(11);
     balance->setValuta(QDate(2012,10,15));
@@ -162,7 +180,7 @@ void BalanceTableModelTest::testFindContributionByMemberIdAndYear()
 void BalanceTableModelTest::testCalculateSum()
 {
     double sum = membermanager::dao::BalanceTableModel::calculateFeeSumByMemberId(1);
-    QCOMPARE(sum, -16.0);
+    QCOMPARE(sum, -19.0);
 }
 
 void BalanceTableModelTest::testGiveBalanceByRow()

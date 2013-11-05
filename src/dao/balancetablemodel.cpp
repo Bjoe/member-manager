@@ -63,7 +63,9 @@ double BalanceTableModel::calculateFeeSumByMemberId(const QVariant& memberId)
                      QDjangoWhere("account", QDjangoWhere::Equals, "4") ||
                      QDjangoWhere("account", QDjangoWhere::Equals, "-4") ||
                      QDjangoWhere("account", QDjangoWhere::Equals, "3") ||
-                     QDjangoWhere("account", QDjangoWhere::Equals, "-3")));
+                     QDjangoWhere("account", QDjangoWhere::Equals, "-3") ||
+                     QDjangoWhere("account", QDjangoWhere::Equals, "2") ||
+                     QDjangoWhere("account", QDjangoWhere::Equals, "-2")));
 
     double sum = 0.0;
     for(const entity::Balance &balance : result) {

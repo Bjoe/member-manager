@@ -54,10 +54,46 @@ void FeeDebtHandlerTest::initTestCase()
     QDjango::dropTables();
     QDjango::createTables();
 
-    membermanager::entity::Balance *balance = new membermanager::entity::Balance();
+    membermanager::entity::Balance* balance = new membermanager::entity::Balance();
     balance->setMemberId("1");
     balance->setValue(-15.0);
     balance->setAccount(-11);
+    balance->setPurpose("Beitrag");
+    balance->setValuta(QDate(2006,10,15));
+    balance->save();
+    delete balance;
+
+    balance = new membermanager::entity::Balance();
+    balance->setMemberId("1");
+    balance->setValue(-10.0);
+    balance->setAccount(-12);
+    balance->setPurpose("Beitrag");
+    balance->setValuta(QDate(2006,10,15));
+    balance->save();
+    delete balance;
+
+    balance = new membermanager::entity::Balance();
+    balance->setMemberId("1");
+    balance->setValue(-3.0);
+    balance->setAccount(-4);
+    balance->setPurpose("Beitrag");
+    balance->setValuta(QDate(2006,10,15));
+    balance->save();
+    delete balance;
+
+    balance = new membermanager::entity::Balance();
+    balance->setMemberId("1");
+    balance->setValue(-2.0);
+    balance->setAccount(-3);
+    balance->setPurpose("Beitrag");
+    balance->setValuta(QDate(2006,10,15));
+    balance->save();
+    delete balance;
+
+    balance = new membermanager::entity::Balance();
+    balance->setMemberId("1");
+    balance->setValue(-5.0);
+    balance->setAccount(-2);
     balance->setPurpose("Beitrag");
     balance->setValuta(QDate(2006,10,15));
     balance->save();
@@ -128,8 +164,8 @@ void FeeDebtHandlerTest::testCopyClipboard()
                                         "\n"
                                         "Hallo James T.,\n"
                                         "\n"
-                                        "leider weist dein Mitgliedskontostand ein Sollwert von -15,00 EUR auf.\n"
-                                        "Bitte zahle uns den ausstehenden Beitrag von 15,00 EUR auf\n"
+                                        "leider weist dein Mitgliedskontostand ein Sollwert von -25,00 EUR auf.\n"
+                                        "Bitte zahle uns den ausstehenden Beitrag von 25,00 EUR auf\n"
                                         "folgendes Vereins Konto ein:\n"
                                         "Name: Chaosdorf e.V.\n"
                                         "Konto Nr.: 21057476\n"
@@ -155,7 +191,7 @@ void FeeDebtHandlerTest::testCopyAllToClipboard()
 
     QClipboard *clipboard = QApplication::clipboard();
     QCOMPARE(clipboard->text(), QString("Rueckstand\tName\tVorname\tEmail\n"
-                                        "-15,00 EUR\tKirk\tJames T.\tenterprise@startrek.com\n"));
+                                        "-25,00 EUR\tKirk\tJames T.\tenterprise@startrek.com\n"));
 }
 
 }
