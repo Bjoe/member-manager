@@ -22,6 +22,7 @@ void CashAccountTableModel::selectYear(QSqlTableModel *model, int year)
 {
     QString whereClause = QString("valuta BETWEEN '%1-01-01' AND '%1-12-31'").arg(year);
     model->setFilter(whereClause);
+    model->setSort(2, Qt::SortOrder::DescendingOrder);
     model->select();
 
     while(model->canFetchMore())
