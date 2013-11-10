@@ -163,6 +163,10 @@ void AccountingHandlerTest::testBook()
 
     QTextStream stream(&file);
     QCOMPARE(stream.readLine(), QString("29.09.2013;Lastschrift Einzug 011;011 Mitgliedsbeitrag Kirk, James T.;15"));
+    QCOMPARE(stream.readLine(), QString("29.09.2013;Lastschrift Einzug 012;012 Spende Kirk, James T.;10"));
+    QCOMPARE(stream.readLine(), QString("29.09.2013;Lastschrift Einzug 004;004 Durchlaufender Posten / CCC Beitrag Kirk, James T.;2"));
+    QCOMPARE(stream.readLine(), QString("29.09.2013;Lastschrift Einzug 005;005 Durchlaufender Posten / CCC Spende Kirk, James T.;3"));
+    QCOMPARE(stream.readLine(), QString("29.09.2013;Lastschrift Einzug 011;011 Mitgliedsbeitrag Rate Kirk, James T.;8"));
 
     file.close();
 

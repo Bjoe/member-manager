@@ -32,8 +32,6 @@ qiabanking::dtaus::Transaction AccountTransaction::createDtausTransaction(const 
     QDate date = memberData->valuta();
     QString purpose = memberData->purpose();
 
-    double value = fee + donation + additionalFee + additionalDonation + amortization;
-
     QString remoteName = QString("%1, %2").arg(name).arg(firstname);
 
     purpose.append(QString(" Beitrag %L2EUR")
@@ -68,7 +66,7 @@ qiabanking::dtaus::Transaction AccountTransaction::createDtausTransaction(const 
         m_stream << QString("%1;Lastschrift Einzug 011;011 Mitgliedsbeitrag Rate %2;%3\n")
                     .arg(date.toString("dd.MM.yyyy"))
                     .arg(remoteName)
-                    .arg(additionalFee);
+                    .arg(amortization);
     }
 
     qiabanking::dtaus::Transaction transaction = qiabanking::dtaus::TransactionBuilder()
@@ -78,7 +76,7 @@ qiabanking::dtaus::Transaction AccountTransaction::createDtausTransaction(const 
             .withRemoteName(remoteName)
             .withRemoteAccountNumber(accountNumber)
             .withRemoteBankCode(bankCode)
-            .withValue(value)
+            .withValue(fee + donation + additionalFee + additionalDonation + amortization)
             .withTextKey(5)
             .withPurpose(purpose)
             .build();
