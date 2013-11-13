@@ -9,16 +9,13 @@
 #include <QSqlDatabase>
 #include <QSqlTableModel>
 #include <QSqlError>
+#include <QSharedDataPointer>
 
 #include "QDjango.h"
 #include "QDjangoWhere.h"
 #include "QDjangoQuerySet.h"
 
 #include "testconfig.h"
-
-#include <aqbanking/transaction.h>
-#include <aqbanking/value.h>
-#include <gwenhywfar/stringlist.h>
 
 #include "dtaus/transaction.h"
 #include "dtaus/exporter.h"
@@ -86,7 +83,7 @@ void AccountTransactionTest::testCreateTranaction()
 
     membermanager::accounting::AccountTransaction accountTransaction("123456789", "76543210", "Sparstrumpf", stream);
 
-    qiabanking::dtaus::Transaction transaction = accountTransaction.createDtausTransaction(&accountingData);
+    QSharedPointer<qaqbanking::dtaus::Transaction> transaction = accountTransaction.createDtausTransaction(&accountingData);
 
     QCOMPARE(data, QString("21.09.2013;Lastschrift Einzug 011;011 Mitgliedsbeitrag Kirk, James T.;15\n"
                            "21.09.2013;Lastschrift Einzug 012;012 Spende Kirk, James T.;10\n"
@@ -94,25 +91,14 @@ void AccountTransactionTest::testCreateTranaction()
                            "21.09.2013;Lastschrift Einzug 005;005 Durchlaufender Posten / CCC Spende Kirk, James T.;3\n"
                            "21.09.2013;Lastschrift Einzug 011;011 Mitgliedsbeitrag Rate Kirk, James T.;8\n"));
 
-    AB_TRANSACTION *abTransaction = transaction.getAbTransaction();
-    QCOMPARE(AB_Transaction_GetLocalName(abTransaction), "Sparstrumpf");
-    QCOMPARE(AB_Transaction_GetLocalBankCode(abTransaction), "76543210");
-    QCOMPARE(AB_Transaction_GetLocalAccountNumber(abTransaction), "123456789");
-
-    const GWEN_STRINGLIST *stringList = AB_Transaction_GetRemoteName(abTransaction);
-    unsigned int i = 1;
-    QCOMPARE(GWEN_StringList_Count(stringList), i);
-    QCOMPARE(GWEN_StringList_StringAt(stringList, 0), "Kirk, James T.");
-
-    const GWEN_STRINGLIST *purposeList = AB_Transaction_GetPurpose(abTransaction);
-    QCOMPARE(GWEN_StringList_Count(purposeList), i);
-    QCOMPARE(GWEN_StringList_StringAt(purposeList, 0), "Buchen Beitrag 15EUR Spende 10EUR CCC 5EUR Rate 8EUR");
-
-    QCOMPARE(AB_Transaction_GetRemoteBankCode(abTransaction), "80070099");
-    QCOMPARE(AB_Transaction_GetRemoteAccountNumber(abTransaction), "22334455");
-
-    const AB_VALUE* value = AB_Transaction_GetValue(abTransaction);
-    QCOMPARE(AB_Value_GetValueAsDouble(value), 38.0);
+    QCOMPARE(transaction->localName(), QString("Sparstrumpf"));
+    QCOMPARE(transaction->localBankCode(), QString("76543210"));
+    QCOMPARE(transaction->localAccountNumber(), QString("123456789"));
+    QCOMPARE(transaction->remoteName(), QString("Kirk, James T."));
+    QCOMPARE(transaction->purpose(), QString("Buchen Beitrag 15EUR Spende 10EUR CCC 5EUR Rate 8EUR"));
+    QCOMPARE(transaction->remoteBankCode(), QString("80070099"));
+    QCOMPARE(transaction->remoteAccountNumber(), QString("22334455"));
+    QCOMPARE(transaction->value(), 38.0);
 }
 
 void AccountTransactionTest::testBooked()

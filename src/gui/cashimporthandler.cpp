@@ -62,22 +62,22 @@ void CashImportHandler::onImport(const QString &urlFilename)
     QString bankCode = settings.value("bank/code").toString();
     QString accountNumber = settings.value("bank/account").toString();
 
-    qiabanking::swift::Importer importer(bankCode, accountNumber);
-    QList<qiabanking::swift::Transaction *> transactionList = importer.importMt940Swift(filename);
+    qaqbanking::swift::Importer importer(bankCode, accountNumber);
+    QList<qaqbanking::swift::Transaction *> transactionList = importer.importMt940Swift(filename);
 
-    for(const qiabanking::swift::Transaction* transaction : transactionList) {
+    for(const qaqbanking::swift::Transaction* transaction : transactionList) {
         entity::CashAccount* cashAccount = new entity::CashAccount();
 
-        cashAccount->setRemoteName(transaction->getRemoteName());
-        cashAccount->setRemoteBankCode(transaction->getRemoteBankCode());
-        cashAccount->setRemoteAccountNumber(transaction->getRemoteAccountNumber());
-        cashAccount->setValue(transaction->getValue());
-        cashAccount->setValuta(transaction->getValutaDate());
-        cashAccount->setDate(transaction->getDate());
-        cashAccount->setPurpose(transaction->getPurpose());
-        cashAccount->setTransactionText(transaction->getTransactionText());
-        cashAccount->setTransactionCode(transaction->getTransactionCode());
-        cashAccount->setPrimanota(transaction->getPrimanota());
+        cashAccount->setRemoteName(transaction->remoteName());
+        cashAccount->setRemoteBankCode(transaction->remoteBankCode());
+        cashAccount->setRemoteAccountNumber(transaction->remoteAccountNumber());
+        cashAccount->setValue(transaction->value());
+        cashAccount->setValuta(transaction->valutaDate());
+        cashAccount->setDate(transaction->date());
+        cashAccount->setPurpose(transaction->purpose());
+        cashAccount->setTransactionText(transaction->transactionText());
+        cashAccount->setTransactionCode(transaction->transactionCode());
+        cashAccount->setPrimanota(transaction->primanota());
         cashAccount->setState("imported");
 
         cashAccount->save();

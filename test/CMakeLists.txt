@@ -35,7 +35,7 @@ include_directories(
 
 set(test_additional_lib
  memberManagerLib
- ${QIABANKING_LIBRARIES}
+ ${QAQBANKING_LIBRARIES}
  ${AQB_LDFLAGS}
  ${GWN_LDFLAGS}
  ${QDJ_LDFLAGS}

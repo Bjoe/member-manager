@@ -4,6 +4,7 @@
 #include <QString>
 #include <QDate>
 #include <QTextStream>
+#include <QSharedPointer>
 
 #include "dtaus/transaction.h"
 
@@ -19,7 +20,7 @@ class AccountTransaction
 public:
     AccountTransaction(const QString& accountNumber, const QString& bankCode, const QString& bankName, QTextStream& srteam);
 
-    qiabanking::dtaus::Transaction createDtausTransaction(const MemberAccountingData* memberData);
+    QSharedPointer<qaqbanking::dtaus::Transaction> createDtausTransaction(const MemberAccountingData* memberData);
     void collectionAccounting(const MemberAccountingData* memberData);
     void accounting(const MemberAccountingData* memberData);
 

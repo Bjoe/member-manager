@@ -14,9 +14,9 @@ class CashImporter
 public:
     CashImporter();
 
-    QList<qiabanking::swift::Transaction *> loadFromFilename(const QString &filename);
+    QList<qaqbanking::swift::Transaction *> loadFromFilename(const QString &filename);
 
-    void import(QList<qiabanking::swift::Transaction *> transactions);
+    void import(QList<qaqbanking::swift::Transaction *> transactions);
 };
 
 } // namespace accounting

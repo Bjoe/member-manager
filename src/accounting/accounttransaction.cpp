@@ -17,7 +17,7 @@ AccountTransaction::AccountTransaction(const QString& accountNumber, const QStri
 {
 }
 
-qiabanking::dtaus::Transaction AccountTransaction::createDtausTransaction(const MemberAccountingData* memberData)
+QSharedPointer<qaqbanking::dtaus::Transaction> AccountTransaction::createDtausTransaction(const MemberAccountingData* memberData)
 {
     QVariant memberId = memberData->memberId();
     QString name = memberData->name();
@@ -69,7 +69,7 @@ qiabanking::dtaus::Transaction AccountTransaction::createDtausTransaction(const 
                     .arg(amortization);
     }
 
-    qiabanking::dtaus::Transaction transaction = qiabanking::dtaus::TransactionBuilder()
+    QSharedPointer<qaqbanking::dtaus::Transaction> transaction = qaqbanking::dtaus::TransactionBuilder()
             .withLocalName(m_bankName)
             .withLocalAccountNumber(m_accountNumber)
             .withLocalBankCode(m_bankCode)

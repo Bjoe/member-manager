@@ -6,6 +6,7 @@
 #include <QFile>
 #include <QApplication>
 #include <QCursor>
+#include <QSharedPointer>
 
 #include "dtaus/exporter.h"
 #include "dtaus/transaction.h"
@@ -109,7 +110,7 @@ void AccountingHandler::book(const QString &urlFilename)
 
     accounting::AccountTransaction transaction(bankAccountNumber, bankCode, bankName, stream);
 
-    qiabanking::dtaus::Exporter exporter(bankAccountNumber, bankName,bankCode, "EUR");
+    qaqbanking::dtaus::Exporter exporter(bankAccountNumber, bankName,bankCode, "EUR");
 
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
     emit statusMessage("Booking in progess ... please wait");
@@ -120,7 +121,7 @@ void AccountingHandler::book(const QString &urlFilename)
         transaction.accounting(data);
 
         if(data->canCharge()) {
-            qiabanking::dtaus::Transaction dtausTransaction = transaction.createDtausTransaction(data);
+            QSharedPointer<qaqbanking::dtaus::Transaction> dtausTransaction = transaction.createDtausTransaction(data);
             exporter.addTransaction(dtausTransaction);
             transaction.collectionAccounting(data);
         }
