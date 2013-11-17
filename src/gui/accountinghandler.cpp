@@ -106,31 +106,43 @@ void AccountingHandler::book(const QString &urlFilename)
         return;
     }
 
-    QTextStream stream(&csvFile);
+    QString dtausFilename = QString("%1.txt").arg(filename);
+    QFile dtausFile(dtausFilename);
+    if(! dtausFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        QString error = dtausFile.errorString();
+        emit statusMessage(QString("Cant save %1:%2").arg(dtausFilename).arg(error));
+        csvFile.close();
+        return;
+    }
 
+    QTextStream stream(&csvFile);
     accounting::AccountTransaction transaction(bankAccountNumber, bankCode, bankName, stream);
 
     qaqbanking::dtaus::Exporter exporter(bankAccountNumber, bankName,bankCode, "EUR");
+    connect(&exporter, &qaqbanking::dtaus::Exporter::logMessage, this, &AccountingHandler::statusMessage);
 
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
     emit statusMessage("Booking in progess ... please wait");
     double progressValue = 1/m_memberAccountingDataList.size();
-    for(QObject* object : m_memberAccountingDataList) {
-        accounting::MemberAccountingData* data = qobject_cast<accounting::MemberAccountingData *>(object);
 
+    for(QObject* object : m_memberAccountingDataList) {
+
+        accounting::MemberAccountingData* data = qobject_cast<accounting::MemberAccountingData *>(object);
         transaction.accounting(data);
 
         if(data->canCharge()) {
-            QSharedPointer<qaqbanking::dtaus::Transaction> dtausTransaction = transaction.createDtausTransaction(data);
+            qaqbanking::dtaus::TransactionPtr dtausTransaction = transaction.createDtausTransaction(data);
             exporter.addTransaction(dtausTransaction);
             transaction.collectionAccounting(data);
         }
         emit progress(progressValue);
     }
 
-    QString dtausFilename = QString("%1.txt").arg(filename);
-    exporter.createDtausFile(dtausFilename);
+    QTextStream dtausStream(&dtausFile);
+    exporter.createDtausStream(&dtausStream);
 
+    csvFile.close();
+    dtausFile.close();
     emit statusMessage("Booking done");
     emit progress(1);
     QApplication::restoreOverrideCursor();

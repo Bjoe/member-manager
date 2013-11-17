@@ -6,6 +6,7 @@
 #include <QTextStream>
 #include <QSharedPointer>
 
+#include "dtaus/exporter.h"
 #include "dtaus/transaction.h"
 
 #include "entity/member.h"
@@ -20,7 +21,7 @@ class AccountTransaction
 public:
     AccountTransaction(const QString& accountNumber, const QString& bankCode, const QString& bankName, QTextStream& srteam);
 
-    QSharedPointer<qaqbanking::dtaus::Transaction> createDtausTransaction(const MemberAccountingData* memberData);
+    qaqbanking::dtaus::TransactionPtr createDtausTransaction(const MemberAccountingData* memberData);
     void collectionAccounting(const MemberAccountingData* memberData);
     void accounting(const MemberAccountingData* memberData);
 

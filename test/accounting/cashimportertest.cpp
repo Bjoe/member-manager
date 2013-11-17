@@ -1,18 +1,21 @@
 
 #include <QtTest/QtTest>
 
-#include <QList>
+#include <QString>
+#include <QTextStream>
 
 #include <QSqlDatabase>
 #include <QSqlTableModel>
 #include <QSqlError>
 
 #include "QDjango.h"
+#include "QDjangoQuerySet.h"
 
 #include "testconfig.h"
 
-#include "swift/transaction.h"
+#include "swift/importer.h"
 #include "entity/cashaccount.h"
+
 #include "accounting/cashimporter.h"
 
 namespace test {
@@ -24,7 +27,7 @@ class CashImporterTest : public QObject
 
 private slots:
     void initTestCase();
-    void testImport();
+    void testImportStream();
 };
 
 void CashImporterTest::initTestCase()
@@ -44,34 +47,37 @@ void CashImporterTest::initTestCase()
     QDjango::createTables();
 }
 
-void CashImporterTest::testImport()
+void CashImporterTest::testImportStream()
 {
-    QSqlTableModel *model = new QSqlTableModel();
-    model->setTable("cashaccount");
-    model->select();
+    QString data = QString(":20:STARTUMSE\n"
+                         ":25:29485723/0932104953\n"
+                         ":28C:00016/001\n"
+                         ":60F:C120928EUR9503,91\n"
+                         ":61:1210011001DR199,00N012NONREF\n"
+                         ":86:008?00DAUERAUFTRAG?107000?20KOHLE UND LK?3094392193?313945824\n"
+                         "293?32HANZ MEIERSEN?34997\n"
+                         ":62F:C121001EUR8493,91\n"
+                         "-\n");
+    QTextStream stream;
+    stream.setString(&data);
 
-    qaqbanking::swift::Transaction *transaction = new qaqbanking::swift::Transaction();
-    transaction->setRemoteName("remoteName");
-    transaction->setRemoteBankCode("0010011");
-    transaction->setRemoteAccountNumber("1234567890");
-    transaction->setValue(100.1);
-    transaction->setValutaDate(QDate(2012, 10, 19));
-    transaction->setDate(QDate(2012, 10, 22));
-    transaction->setPurpose("PurposeText");
-    transaction->setTransactionText("Transaction Text");
-    transaction->setPrimanota("abc123");
+    membermanager::accounting::CashImporter importer(&stream);
 
-    QList<qaqbanking::swift::Transaction *> transactions;
-    transactions.append(transaction);
-    transactions.append(transaction);
+    importer.logMessageSlot(
+        [] (QString message)
+        {
+            qDebug() << message;
+        }
+    );
 
-    QCOMPARE(model->rowCount(), 0);
+    QVERIFY(importer.import("29485723", "0932104953"));
 
-    membermanager::accounting::CashImporter importer;
-    importer.import(transactions);
-
-    model->select();
-    QCOMPARE(model->rowCount(), 2);
+    QDjangoQuerySet<membermanager::entity::CashAccount> result;
+    QCOMPARE(result.size(), 1);
+    QList<QVariantMap> propertyMaps = result.values(QStringList() << "value" << "purpose");
+    QVariantMap property = propertyMaps.at(0);
+    QCOMPARE(property["value"], QVariant(-199.0));
+    QCOMPARE(property["purpose"], QVariant("KOHLE UND LK"));
 }
 
 }

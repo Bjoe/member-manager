@@ -1,10 +1,12 @@
 #ifndef MEMBERMANAGER_ACCOUNTING_CASHIMPORTER_H
 #define MEMBERMANAGER_ACCOUNTING_CASHIMPORTER_H
 
-#include <QString>
-#include <QList>
+#include <functional>
 
-#include "swift/transaction.h"
+#include <QString>
+#include <QTextStream>
+
+#include "swift/importer.h"
 
 namespace membermanager {
 namespace accounting {
@@ -12,11 +14,15 @@ namespace accounting {
 class CashImporter
 {
 public:
-    CashImporter();
+    CashImporter(QTextStream *stream);
 
-    QList<qaqbanking::swift::Transaction *> loadFromFilename(const QString &filename);
+    void logMessageSlot(std::function<void (QString)> logCb);
 
-    void import(QList<qaqbanking::swift::Transaction *> transactions);
+    bool import(const QString bankCode, const QString accountNumber);
+
+private:
+    std::function<void (QString)> m_logCb;
+    QTextStream *m_stream;
 };
 
 } // namespace accounting

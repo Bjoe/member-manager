@@ -2,14 +2,18 @@
 
 #include <QDate>
 #include <QSqlTableModel>
-#include <QSettings>
+#include <QIODevice>
 #include <QUrl>
+#include <QTextStream>
+#include <QFile>
+#include <QSettings>
 
 #include <QDebug>
 
 #include "swift/importer.h"
 #include "swift/transaction.h"
 
+#include "accounting/cashimporter.h"
 #include "dao/cashaccounttablemodel.h"
 
 namespace membermanager {
@@ -54,39 +58,43 @@ void CashImportHandler::onSelectedRow(int row)
 void CashImportHandler::onImport(const QString &urlFilename)
 {
     emit progress(0);
-    emit statusMessage("Importing SWIFT .... please wait");
-
-    QUrl url(urlFilename);
-    QString filename = url.path();
     QSettings settings;
     QString bankCode = settings.value("bank/code").toString();
     QString accountNumber = settings.value("bank/account").toString();
-
-    qaqbanking::swift::Importer importer(bankCode, accountNumber);
-    QList<qaqbanking::swift::Transaction *> transactionList = importer.importMt940Swift(filename);
-
-    for(const qaqbanking::swift::Transaction* transaction : transactionList) {
-        entity::CashAccount* cashAccount = new entity::CashAccount();
-
-        cashAccount->setRemoteName(transaction->remoteName());
-        cashAccount->setRemoteBankCode(transaction->remoteBankCode());
-        cashAccount->setRemoteAccountNumber(transaction->remoteAccountNumber());
-        cashAccount->setValue(transaction->value());
-        cashAccount->setValuta(transaction->valutaDate());
-        cashAccount->setDate(transaction->date());
-        cashAccount->setPurpose(transaction->purpose());
-        cashAccount->setTransactionText(transaction->transactionText());
-        cashAccount->setTransactionCode(transaction->transactionCode());
-        cashAccount->setPrimanota(transaction->primanota());
-        cashAccount->setState("imported");
-
-        cashAccount->save();
-        delete cashAccount;
-        delete transaction;
+    if(accountNumber.isEmpty() || bankCode.isEmpty()) {
+        emit statusMessage(QString("Wrong settings: account Nr: -%2- code: -%3-")
+                           .arg(accountNumber)
+                           .arg(bankCode));
+        return;
     }
 
-    emit statusMessage(QString("Imported SWIFT file: %1").arg(urlFilename));
-    emit progress(1);
+    QUrl url(urlFilename);
+    QString filename = url.path();
+    QFile file(filename);
+    if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QString error = file.errorString();
+        emit statusMessage(QString("Error import SWIFT file: %1:%2").arg(urlFilename).arg(error));
+        return;
+    }
+    QTextStream stream(&file);
+    accounting::CashImporter importer(&stream);
+
+    emit statusMessage("Importing SWIFT .... please wait");
+    CashImportHandler* instance = this;
+    importer.logMessageSlot(
+        [instance](QString message)
+        {
+            emit instance->statusMessage(message);
+        }
+    );
+
+    bool result = importer.import(bankCode, accountNumber);
+    file.close();
+
+    if(result) {
+        emit statusMessage(QString("Imported SWIFT file: %1").arg(urlFilename));
+        emit progress(1);
+    }
     emit cashAccountModelChanged();
 }
 

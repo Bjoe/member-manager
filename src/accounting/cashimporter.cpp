@@ -2,45 +2,46 @@
 
 #include <QSettings>
 
-#include "swift/importer.h"
-
 #include "entity/cashaccount.h"
 
 namespace membermanager {
 namespace accounting {
 
-CashImporter::CashImporter()
+CashImporter::CashImporter(QTextStream *stream) : m_stream(stream), m_logCb([](QString){})
 {
 }
 
-QList<qaqbanking::swift::Transaction *> CashImporter::loadFromFilename(const QString &filename)
+void CashImporter::logMessageSlot(std::function<void (QString)> logCb)
 {
-    QSettings settings;
-    QString bankCode = settings.value("bank/code").toString();
-    QString accountNumber = settings.value("bank/account").toString();
+    m_logCb = logCb;
+}
 
+bool CashImporter::import(const QString bankCode, const QString accountNumber)
+{
     qaqbanking::swift::Importer importer(bankCode, accountNumber);
-    return importer.importMt940Swift(filename);
-}
+    QObject::connect(&importer, &qaqbanking::swift::Importer::logMessage, m_logCb);
 
-void CashImporter::import(QList<qaqbanking::swift::Transaction *> transactions)
-{
-    entity::CashAccount *cashaccount = nullptr;
-    for(qaqbanking::swift::Transaction *transaction : transactions) {
-        cashaccount = new entity::CashAccount();
-        cashaccount->setValuta(transaction->valutaDate());
-        cashaccount->setDate(transaction->date());
-        cashaccount->setRemoteName(transaction->remoteName());
-        cashaccount->setRemoteBankCode(transaction->remoteBankCode());
-        cashaccount->setRemoteAccountNumber(transaction->remoteAccountNumber());
-        cashaccount->setValue(transaction->value());
-        cashaccount->setPurpose(transaction->purpose());
-        cashaccount->setTransactionCode(transaction->transactionCode());
-        cashaccount->setTransactionText(transaction->transactionText());
-        cashaccount->setState("imported");
-        cashaccount->save();
-        delete cashaccount;
-    }
+    return importer.importMt940Swift(m_stream,
+        [](qaqbanking::swift::TransactionPtr transaction)
+        {
+            entity::CashAccount* cashAccount = new entity::CashAccount();
+
+            cashAccount->setRemoteName(transaction->remoteName());
+            cashAccount->setRemoteBankCode(transaction->remoteBankCode());
+            cashAccount->setRemoteAccountNumber(transaction->remoteAccountNumber());
+            cashAccount->setValue(transaction->value());
+            cashAccount->setValuta(transaction->valutaDate());
+            cashAccount->setDate(transaction->date());
+            cashAccount->setPurpose(transaction->purpose());
+            cashAccount->setTransactionText(transaction->transactionText());
+            cashAccount->setTransactionCode(transaction->transactionCode());
+            cashAccount->setPrimanota(transaction->primanota());
+            cashAccount->setState("imported");
+
+            cashAccount->save();
+            delete cashAccount;
+        }
+    );
 }
 
 } // namespace accounting
