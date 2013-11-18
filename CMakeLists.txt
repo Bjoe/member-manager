@@ -13,7 +13,7 @@ set (MemberManager_VERSION_PATCH 0)
 add_definitions(-std=c++11)
 
 # QML debuggen
-add_definitions(-DQT_QML_DEBUG)
+# add_definitions(-DQT_QML_DEBUG)
 # and set environment
 # QML_COMPILER_DUMP=1
 # QML_DISABLE_OPTIMIZER=1
