@@ -30,35 +30,11 @@ ApplicationWindow {
         onTriggered: fileDialog.open()
     }
 
-    Action {
-        id: openDbAction
-        text: qsTr("Open DB")
-        tooltip: qsTr("Öffne Datenbank")
-    }
-
-    Action {
-        id: openSettings
-        text: qsTr("Settings")
-        tooltip: qsTr("Öffne Einstellungen")
-        onTriggered: mainWindow.qmlSettingsTriggered()
-    }
-
     menuBar: MenuBar {
         Menu {
             title: qsTr("&Datei")
             MenuItem {
                 action: openFileAction
-            }
-
-            MenuItem {
-                action: openDbAction
-            }
-
-            MenuSeparator {
-            }
-
-            MenuItem {
-                action: openSettings
             }
 
             MenuSeparator {
@@ -174,30 +150,6 @@ ApplicationWindow {
                 Connections {
                     target: feeDebtTab
                     onLoaded: feeDebt.onRefresh()
-                }
-            }
-        }
-
-        Tab {
-            title: "Beitrags Buchung"
-            id: conrtibutionTab
-
-            Item {
-                ContributionTab {
-                    anchors.fill: parent
-
-                    id: contribution
-
-                    onStatusMessage: statusBar.message(msg);
-                    onProgress: statusBar.progress(value);
-                }
-                Connections {
-                    target: mainWindow
-                    onRefresh: contribution.onRefresh()
-                }
-                Connections {
-                    target: conrtibutionTab
-                    onLoaded: contribution.onRefresh()
                 }
             }
         }

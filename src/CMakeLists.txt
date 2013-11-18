@@ -1,9 +1,4 @@
 
-set(QT_UI
-    gui/connectiondialog.ui
-    gui/settingsdialog.ui
-    )
-
 set(QT_SRCS
 
     dao/membertablemodel.cpp
@@ -18,13 +13,7 @@ set(QT_SRCS
     entity/cashaccount.cpp
     entity/bankaccount.cpp
 
-    accounting/arithmetic.cpp
-    accounting/memberdonationsum.cpp
-    accounting/memberfeesum.cpp
-    accounting/memberadditionalsum.cpp
-    accounting/cashimporter.cpp
     accounting/memberdebt.cpp
-    accounting/accounttransaction.cpp
     accounting/memberaccountingdata.cpp
     accounting/contributionreceiptparser.cpp
 
@@ -33,14 +22,9 @@ set(QT_SRCS
     gui/memberhandler.cpp
     gui/memberlisthandler.cpp
     gui/proxytablemodel.cpp
-    gui/summaryhandler.cpp
     gui/cashimporthandler.cpp
     gui/balancepersisthandler.cpp
     gui/feedebthandler.cpp
-    gui/accountinghandler.cpp
-
-    gui/connectiondialog.cpp
-    gui/settingsdialog.cpp
 
     databasemanager.cpp
     )
@@ -54,12 +38,9 @@ configure_file (
   "${CMAKE_CURRENT_BINARY_DIR}/config.h"
   )
 
-# Die ui_xxxx.h files werden im CMAKE_CURRENT_BINARY_DIR erzeugt.
-qt5_wrap_ui(UI_OUTFILES ${QT_UI})
-
-add_library(memberManagerLib STATIC ${QT_SRCS} ${UI_OUTFILES})
+add_library(memberManagerLib STATIC ${QT_SRCS})
 target_link_libraries(memberManagerLib Qt5::Widgets Qt5::Sql Qt5::Qml)
 
 qt5_add_resources(QRC ${RESOURCES})
 add_executable(memberManager main.cpp ${QRC})
-target_link_libraries(memberManager memberManagerLib ${QAQBANKING_LIBRARIES} ${QDJ_LDFLAGS} ${AQB_LDFLAGS} ${GWN_LDFLAGS} Qt5::Core Qt5::Widgets Qt5::Qml Qt5::Quick)
+target_link_libraries(memberManager memberManagerLib ${QDJ_LDFLAGS} Qt5::Core Qt5::Widgets Qt5::Qml Qt5::Quick)

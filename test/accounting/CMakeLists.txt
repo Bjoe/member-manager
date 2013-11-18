@@ -1,7 +1,2 @@
-qt_test(memberdonationsum memberdonationsumtest.cpp)
-qt_test(memberfeesum memberfeesumtest.cpp)
-qt_test(memberadditionalsum memberadditionalsumtest.cpp)
-qt_test(cashimporter cashimportertest.cpp)
-qt_test(accounttransaction accounttransactiontest.cpp)
 qt_test(memberaccountingdata memberaccountingdatatest.cpp)
 qt_test(contributionreceiptparser contributionreceiptparsertest.cpp)

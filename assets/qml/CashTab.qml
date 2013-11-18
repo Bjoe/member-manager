@@ -49,13 +49,6 @@ Item {
                             handler.selectYear(root.selectedYear);
                         }
                     }
-
-                    Button {
-                        id: importButton
-                        text: qsTr("Import SWIFT")
-
-                        onClicked: fileDialog.open();
-                    }
                 }
 
                 TableView {
@@ -247,12 +240,6 @@ Item {
                 }
             }
         }
-    }
-
-    FileDialog {
-        id: fileDialog
-        title: qsTr("Read SWIFT file")
-        onAccepted: handler.onImport(fileDialog.fileUrl);
     }
 
     CashImportHandler {

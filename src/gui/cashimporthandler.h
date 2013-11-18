@@ -34,7 +34,6 @@ signals:
 public slots:
     void onRefresh();
     void onSelectedRow(int row);
-    void onImport(const QString& urlFilename);
 
 private:
     ProxyTableModel *m_cashProxyModel;

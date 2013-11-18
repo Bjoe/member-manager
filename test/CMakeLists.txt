@@ -35,9 +35,6 @@ include_directories(
 
 set(test_additional_lib
  memberManagerLib
- ${QAQBANKING_LIBRARIES}
- ${AQB_LDFLAGS}
- ${GWN_LDFLAGS}
  ${QDJ_LDFLAGS}
  ${QT_TEST_UTIL_LIBRARIES}
  ${QT_GUI_TEST_UTIL_LIBRARIES}

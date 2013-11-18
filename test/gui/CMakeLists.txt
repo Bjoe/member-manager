@@ -1,12 +1,7 @@
-qt_add_test(connectiondialog connectiondialogtest.cpp)
-qt_add_test(settingsdialog settingsdialogtest.cpp)
-
 qt_test(contributionreceipthandler contributionreceipthandlertest.cpp)
 qt_test(memberhandler memberhandlertest.cpp)
 qt_test(memberlisthandler memberlisthandlertest.cpp)
 qt_test(proxytablemodel proxytablemodeltest.cpp)
-qt_test(summaryhandler summaryhandlertest.cpp)
 qt_test(cashimporthandler cashimporthandlertest.cpp)
 qt_test(balancepersisthandler balancepersisthandlertest.cpp)
 qt_test(feedebthandler feedebthandlertest.cpp)
-qt_test(accountinghandler accountinghandlertest.cpp)
