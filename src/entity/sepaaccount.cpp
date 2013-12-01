@@ -11,6 +11,7 @@ QString SepaAccount::iban() const
 void SepaAccount::setIban(QString iban)
 {
     m_iban = iban;
+    emit ibanChanged();
 }
 
 QString SepaAccount::bic() const
@@ -21,6 +22,7 @@ QString SepaAccount::bic() const
 void SepaAccount::setBic(QString bic)
 {
     m_bic = bic;
+    emit bicChanged();
 }
 
 QDate SepaAccount::mandateDate() const
@@ -31,6 +33,7 @@ QDate SepaAccount::mandateDate() const
 void SepaAccount::setMandateDate(QDate date)
 {
     m_mandateDate = date;
+    emit mandateDateChanged();
 }
 
 QString SepaAccount::memberId() const
@@ -41,6 +44,7 @@ QString SepaAccount::memberId() const
 void SepaAccount::setMemberId(QString id)
 {
     m_memberId = id;
+    emit memberIdChanged();
 }
 
 QString SepaAccount::sequenceState() const
@@ -51,6 +55,7 @@ QString SepaAccount::sequenceState() const
 void SepaAccount::setSequenceState(QString state)
 {
     m_sequenceState = state;
+    emit sequenceStateChanged();
 }
 
 } // namespace entity

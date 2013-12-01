@@ -16,11 +16,11 @@ class SepaAccount : public QDjangoModel
 
     Q_CLASSINFO("__meta__", "db_table=CashAccount")
 
-    Q_PROPERTY(QString iban READ iban WRITE setIban)
-    Q_PROPERTY(QString bic READ bic WRITE setBic)
-    Q_PROPERTY(QString memberId READ memberId WRITE setMemberId)
-    Q_PROPERTY(QString sequenceState READ sequenceState WRITE setSequenceState)
-    Q_PROPERTY(QDate mandateDate READ mandateDate WRITE setMandateDate)
+    Q_PROPERTY(QString iban READ iban WRITE setIban NOTIFY ibanChanged)
+    Q_PROPERTY(QString bic READ bic WRITE setBic NOTIFY bicChanged)
+    Q_PROPERTY(QString memberId READ memberId WRITE setMemberId NOTIFY memberIdChanged)
+    Q_PROPERTY(QString sequenceState READ sequenceState WRITE setSequenceState NOTIFY sequenceStateChanged)
+    Q_PROPERTY(QDate mandateDate READ mandateDate WRITE setMandateDate NOTIFY mandateDateChanged)
 
 public:
 
@@ -38,6 +38,13 @@ public:
 
     QString sequenceState() const;
     void setSequenceState(QString sequenceState);
+
+signals:
+    void ibanChanged();
+    void bicChanged();
+    void memberIdChanged();
+    void sequenceStateChanged();
+    void mandateDateChanged();
 
 private:
     QString m_iban;
