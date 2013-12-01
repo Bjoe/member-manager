@@ -223,7 +223,6 @@ Item {
                             member.cancellationDate = cancelationDate;
                         }
 
-                        // TODO member.cancellationDate = cancelationDateField.text
                         if(stateField.checked) {
                             member.state = 'I';
                         } else {

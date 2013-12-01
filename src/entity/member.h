@@ -20,20 +20,20 @@ class Member : public QDjangoModel
     Q_CLASSINFO("info", "null=true")
     Q_CLASSINFO("reference", "null=true")
 
-    Q_PROPERTY(QString memberId READ memberId WRITE setMemberId)
-    Q_PROPERTY(QString name READ name WRITE setName)
-    Q_PROPERTY(QString firstname READ firstname WRITE setFirstname)
-    Q_PROPERTY(QString nickname READ nickname WRITE setNickname)
-    Q_PROPERTY(QString email READ email WRITE setEmail)
-    Q_PROPERTY(QDate entryDate READ entryDate WRITE setEntryDate)
-    Q_PROPERTY(QDate cancellationDate READ cancellationDate WRITE setCancellationDate)
-    Q_PROPERTY(QString info READ info WRITE setInfo)
-    Q_PROPERTY(QString reference READ reference WRITE setReference)
-    Q_PROPERTY(QString street READ street WRITE setStreet)
-    Q_PROPERTY(QString city READ city WRITE setCity)
-    Q_PROPERTY(QString zipCode READ zipCode WRITE setZipCode)
-    Q_PROPERTY(QString collectionState READ collectionState WRITE setCollectionState)
-    Q_PROPERTY(QString state READ state WRITE setState)
+    Q_PROPERTY(QString memberId READ memberId WRITE setMemberId NOTIFY memberIdChanged)
+    Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
+    Q_PROPERTY(QString firstname READ firstname WRITE setFirstname NOTIFY firstnameChanged)
+    Q_PROPERTY(QString nickname READ nickname WRITE setNickname NOTIFY nicknameChanged)
+    Q_PROPERTY(QString email READ email WRITE setEmail NOTIFY emailChanged)
+    Q_PROPERTY(QDate entryDate READ entryDate WRITE setEntryDate NOTIFY entryDateChanged)
+    Q_PROPERTY(QDate cancellationDate READ cancellationDate WRITE setCancellationDate NOTIFY cancellationDateChanged)
+    Q_PROPERTY(QString info READ info WRITE setInfo NOTIFY infoChanged)
+    Q_PROPERTY(QString reference READ reference WRITE setReference NOTIFY referenceChanged)
+    Q_PROPERTY(QString street READ street WRITE setStreet NOTIFY streetChanged)
+    Q_PROPERTY(QString city READ city WRITE setCity NOTIFY cityChanged)
+    Q_PROPERTY(QString zipCode READ zipCode WRITE setZipCode NOTIFY zipCodeChanged)
+    Q_PROPERTY(QString collectionState READ collectionState WRITE setCollectionState NOTIFY collectionStateChanged)
+    Q_PROPERTY(QString state READ state WRITE setState NOTIFY stateChanged)
 
     Q_ENUMS(membermanager::entity::Member::State)
     Q_ENUMS(membermanager::entity::Member::CollectionState)
@@ -86,6 +86,22 @@ public:
     QString state() const;
     void setState(QString state);
     void setState(State state);
+
+signals:
+    void memberIdChanged();
+    void nameChanged();
+    void firstnameChanged();
+    void nicknameChanged();
+    void emailChanged();
+    void entryDateChanged();
+    void cancellationDateChanged();
+    void infoChanged();
+    void referenceChanged();
+    void streetChanged();
+    void cityChanged();
+    void zipCodeChanged();
+    void collectionStateChanged();
+    void stateChanged();
 
 private:
     QString m_memberId {};

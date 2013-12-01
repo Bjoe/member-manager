@@ -13,6 +13,7 @@ QString Member::memberId() const
 void Member::setMemberId(QString id)
 {
     m_memberId = id;
+    emit memberIdChanged();
 }
 
 QString Member::name() const
@@ -23,6 +24,7 @@ QString Member::name() const
 void Member::setName(const QString &name)
 {
     m_name = name;
+    emit nameChanged();
 }
 
 QString Member::firstname() const
@@ -33,6 +35,7 @@ QString Member::firstname() const
 void Member::setFirstname(const QString &name)
 {
     m_firstname = name;
+    emit firstnameChanged();
 }
 
 QString Member::nickname() const
@@ -43,6 +46,7 @@ QString Member::nickname() const
 void Member::setNickname(const QString &name)
 {
     m_nickname = name;
+    emit nicknameChanged();
 }
 
 QString Member::email() const
@@ -53,6 +57,7 @@ QString Member::email() const
 void Member::setEmail(const QString &email)
 {
     m_email = email;
+    emit emailChanged();
 }
 
 QDate Member::entryDate() const
@@ -63,6 +68,7 @@ QDate Member::entryDate() const
 void Member::setEntryDate(const QDate &date)
 {
     m_entryDate = date;
+    emit entryDateChanged();
 }
 
 QDate Member::cancellationDate() const
@@ -73,6 +79,7 @@ QDate Member::cancellationDate() const
 void Member::setCancellationDate(const QDate &date)
 {
     m_cancellationDate = date;
+    emit cancellationDateChanged();
 }
 
 QString Member::info() const
@@ -83,6 +90,7 @@ QString Member::info() const
 void Member::setInfo(const QString &info)
 {
     m_info = info;
+    emit infoChanged();
 }
 
 QString Member::reference() const
@@ -93,6 +101,7 @@ QString Member::reference() const
 void Member::setReference(const QString &reference)
 {
     m_reference = reference;
+    emit referenceChanged();
 }
 
 QString Member::street() const
@@ -103,6 +112,7 @@ QString Member::street() const
 void Member::setStreet(const QString &street)
 {
     m_street = street;
+    emit streetChanged();
 }
 
 QString Member::city() const
@@ -113,6 +123,7 @@ QString Member::city() const
 void Member::setCity(const QString &city)
 {
     m_city = city;
+    emit cityChanged();
 }
 
 QString Member::zipCode() const
@@ -123,6 +134,7 @@ QString Member::zipCode() const
 void Member::setZipCode(const QString &code)
 {
     m_zipCode = code;
+    emit zipCodeChanged();
 }
 
 QString Member::collectionState() const
@@ -133,11 +145,13 @@ QString Member::collectionState() const
 void Member::setCollectionState(QString state)
 {
     m_collectionState = state;
+    emit collectionStateChanged();
 }
 
 void Member::setCollectionState(Member::CollectionState state)
 {
     m_collectionState = QChar(static_cast<char>(state));
+    emit collectionStateChanged();
 }
 
 QString Member::state() const
@@ -148,11 +162,13 @@ QString Member::state() const
 void Member::setState(QString state)
 {
     m_state = state;
+    emit stateChanged();
 }
 
 void Member::setState(Member::State state)
 {
     m_state = QChar(static_cast<char>(state));
+    emit stateChanged();
 }
 
 } // namespace entity

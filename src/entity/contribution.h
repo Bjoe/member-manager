@@ -17,15 +17,15 @@ class Contribution : public QDjangoModel
     Q_CLASSINFO("contributionId", "primary_key=true db_index=true unique=true auto_increment=true")
     Q_CLASSINFO("info", "null=true")
 
-    Q_PROPERTY(int contributionId READ contributionId WRITE setContributionId)
-    Q_PROPERTY(QString memberId READ memberId WRITE setMemberId)
-    Q_PROPERTY(double fee READ fee WRITE setFee)
-    Q_PROPERTY(double additionalFee READ additionalFee WRITE setAdditionalFee)
-    Q_PROPERTY(double additionalDonation READ additionalDonation WRITE setAdditionalDonation)
-    Q_PROPERTY(double donation READ donation WRITE setDonation)
-    Q_PROPERTY(double amortization READ amortization WRITE setAmortization)
-    Q_PROPERTY(QDate validFrom READ validFrom WRITE setValidFrom)
-    Q_PROPERTY(QString info READ info WRITE setInfo)
+    Q_PROPERTY(int contributionId READ contributionId WRITE setContributionId NOTIFY contributionIdChanged)
+    Q_PROPERTY(QString memberId READ memberId WRITE setMemberId NOTIFY memberIdChanged)
+    Q_PROPERTY(double fee READ fee WRITE setFee NOTIFY feeChanged)
+    Q_PROPERTY(double additionalFee READ additionalFee WRITE setAdditionalFee NOTIFY additionalFeeChanged)
+    Q_PROPERTY(double additionalDonation READ additionalDonation WRITE setAdditionalDonation NOTIFY additionalDonationChanged)
+    Q_PROPERTY(double donation READ donation WRITE setDonation NOTIFY donationChanged)
+    Q_PROPERTY(double amortization READ amortization WRITE setAmortization NOTIFY amortizationChanged)
+    Q_PROPERTY(QDate validFrom READ validFrom WRITE setValidFrom NOTIFY validFromChanged)
+    Q_PROPERTY(QString info READ info WRITE setInfo NOTIFY infoChanged)
 
 public:
 
@@ -55,6 +55,17 @@ public:
 
     QDate validFrom() const;
     void setValidFrom(const QDate &date);
+
+signals:
+    void contributionIdChanged();
+    void memberIdChanged();
+    void feeChanged();
+    void additionalFeeChanged();
+    void additionalDonationChanged();
+    void donationChanged();
+    void amortizationChanged();
+    void validFromChanged();
+    void infoChanged();
 
 private:
     QString m_memberId {};

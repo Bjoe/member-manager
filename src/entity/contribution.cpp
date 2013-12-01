@@ -11,6 +11,7 @@ int Contribution::contributionId() const
 void Contribution::setContributionId(int id)
 {
     m_contributionId = id;
+    emit contributionIdChanged();
 }
 
 QString Contribution::memberId() const
@@ -21,6 +22,7 @@ QString Contribution::memberId() const
 void Contribution::setMemberId(QString id)
 {
     m_memberId = id;
+    emit memberIdChanged();
 }
 
 double Contribution::fee() const
@@ -31,6 +33,7 @@ double Contribution::fee() const
 void Contribution::setFee(double fee)
 {
     m_fee = fee;
+    emit feeChanged();
 }
 
 double Contribution::additionalFee() const
@@ -41,6 +44,7 @@ double Contribution::additionalFee() const
 void Contribution::setAdditionalFee(double fee)
 {
     m_additionalFee = fee;
+    emit additionalFeeChanged();
 }
 
 double Contribution::additionalDonation() const
@@ -51,6 +55,7 @@ double Contribution::additionalDonation() const
 void Contribution::setAdditionalDonation(double donation)
 {
     m_additionalDonation = donation;
+    emit additionalDonationChanged();
 }
 
 double Contribution::donation() const
@@ -61,6 +66,7 @@ double Contribution::donation() const
 void Contribution::setDonation(double donation)
 {
     m_donation = donation;
+    emit donationChanged();
 }
 
 QString Contribution::info() const
@@ -71,6 +77,7 @@ QString Contribution::info() const
 void Contribution::setInfo(const QString &text)
 {
     m_info = text;
+    emit infoChanged();
 }
 
 QDate Contribution::validFrom() const
@@ -81,7 +88,9 @@ QDate Contribution::validFrom() const
 void Contribution::setValidFrom(const QDate &date)
 {
     m_validFrom = date;
+    emit validFromChanged();
 }
+
 double Contribution::amortization() const
 {
     return m_amortization;
@@ -90,6 +99,7 @@ double Contribution::amortization() const
 void Contribution::setAmortization(double amortization)
 {
     m_amortization = amortization;
+    emit amortizationChanged();
 }
 
 
