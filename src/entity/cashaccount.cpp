@@ -11,6 +11,7 @@ int CashAccount::cashAccountId() const
 void CashAccount::setCashAccountId(int id)
 {
     m_cashAccountId = id;
+    emit cashAccountIdChanged();
 }
 
 QString CashAccount::primanota() const
@@ -21,6 +22,7 @@ QString CashAccount::primanota() const
 void CashAccount::setPrimanota(const QString &primanota)
 {
     m_primanota = primanota;
+    emit primanotaChanged();
 }
 
 QDate CashAccount::valuta() const
@@ -31,6 +33,7 @@ QDate CashAccount::valuta() const
 void CashAccount::setValuta(const QDate &valuta)
 {
     m_valuta = valuta;
+    emit valutaChanged();
 }
 
 QDate CashAccount::date() const
@@ -41,6 +44,7 @@ QDate CashAccount::date() const
 void CashAccount::setDate(const QDate &date)
 {
     m_date = date;
+    emit dateChanged();
 }
 
 double CashAccount::value() const
@@ -51,6 +55,7 @@ double CashAccount::value() const
 void CashAccount::setValue(double value)
 {
     m_value = value;
+    emit valueChanged();
 }
 
 int CashAccount::transactionCode() const
@@ -61,6 +66,7 @@ int CashAccount::transactionCode() const
 void CashAccount::setTransactionCode(int code)
 {
     m_transactionCode = code;
+    emit transactionCodeChanged();
 }
 
 QString CashAccount::transactionText() const
@@ -71,6 +77,7 @@ QString CashAccount::transactionText() const
 void CashAccount::setTransactionText(const QString &text)
 {
     m_transactionText = text;
+    emit transactionTextChanged();
 }
 
 QString CashAccount::remoteName() const
@@ -81,6 +88,7 @@ QString CashAccount::remoteName() const
 void CashAccount::setRemoteName(const QString &name)
 {
     m_remoteName = name;
+    emit remoteNameChanged();
 }
 
 QString CashAccount::remoteBankCode() const
@@ -91,6 +99,7 @@ QString CashAccount::remoteBankCode() const
 void CashAccount::setRemoteBankCode(const QString &code)
 {
     m_remoteBankCode = code;
+    emit remoteBankCodeChanged();
 }
 
 QString CashAccount::remoteAccountNumber() const
@@ -101,6 +110,7 @@ QString CashAccount::remoteAccountNumber() const
 void CashAccount::setRemoteAccountNumber(const QString &number)
 {
     m_remoteAccountNumber = number;
+    emit remoteAccountNumeberChanged();
 }
 
 QString CashAccount::purpose() const
@@ -111,6 +121,7 @@ QString CashAccount::purpose() const
 void CashAccount::setPurpose(const QString &text)
 {
     m_purpose = text;
+    emit purposeChanged();
 }
 
 QString CashAccount::memberId() const
@@ -121,6 +132,7 @@ QString CashAccount::memberId() const
 void CashAccount::setMemberId(QString id)
 {
     m_memberId = id;
+    emit memberIdChanged();
 }
 
 QString CashAccount::state() const
@@ -131,6 +143,7 @@ QString CashAccount::state() const
 void CashAccount::setState(QString state)
 {
     m_state = state;
+    emit stateChanged();
 }
 
 } // namespace entity

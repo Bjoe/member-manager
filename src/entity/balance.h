@@ -18,14 +18,14 @@ class Balance : public QDjangoModel
     Q_CLASSINFO("cashAccountId", "null=true")
     Q_CLASSINFO("info", "null=true")
 
-    Q_PROPERTY(int balanceId READ balanceId WRITE setBalanceId)
-    Q_PROPERTY(QString memberId READ memberId WRITE setMemberId)
-    Q_PROPERTY(double value READ value WRITE setValue)
-    Q_PROPERTY(QDate valuta READ valuta WRITE setValuta)
-    Q_PROPERTY(QString purpose READ purpose WRITE setPurpose)
-    Q_PROPERTY(int account READ account WRITE setAccount)
-    Q_PROPERTY(int cashAccountId READ cashAccountId WRITE setCashAccountId)
-    Q_PROPERTY(QString info READ info WRITE setInfo)
+    Q_PROPERTY(int balanceId READ balanceId WRITE setBalanceId NOTIFY balanceIdChanged)
+    Q_PROPERTY(QString memberId READ memberId WRITE setMemberId NOTIFY memberIdChanged)
+    Q_PROPERTY(double value READ value WRITE setValue NOTIFY valueChanged)
+    Q_PROPERTY(QDate valuta READ valuta WRITE setValuta NOTIFY valutaChanged)
+    Q_PROPERTY(QString purpose READ purpose WRITE setPurpose NOTIFY purposeChanged)
+    Q_PROPERTY(int account READ account WRITE setAccount NOTIFY accountChanged)
+    Q_PROPERTY(int cashAccountId READ cashAccountId WRITE setCashAccountId NOTIFY cashAccountIdChanged)
+    Q_PROPERTY(QString info READ info WRITE setInfo NOTIFY infoChanged)
 
 public:
 
@@ -52,6 +52,16 @@ public:
 
     QString info() const;
     void setInfo(const QString &info);
+
+signals:
+    void balanceIdChanged();
+    void memberIdChanged();
+    void valueChanged();
+    void valutaChanged();
+    void purposeChanged();
+    void accountChanged();
+    void cashAccountIdChanged();
+    void infoChanged();
 
 private:
     QString m_memberId {};

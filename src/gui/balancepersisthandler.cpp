@@ -22,36 +22,78 @@ BalancePersistHandler::BalancePersistHandler(QObject *parent) :
 void BalancePersistHandler::setCashAccount(entity::CashAccount *cashAccount)
 {
     m_cashAccount = cashAccount;
+    emit cashAccountChanged();
+}
+
+entity::CashAccount *BalancePersistHandler::cashAccount() const
+{
+    return m_cashAccount;
 }
 
 void BalancePersistHandler::setMemberId(QString memberId)
 {
     m_memberId = memberId;
+    emit memberChanged();
+}
+
+QString BalancePersistHandler::memberId() const
+{
+    return m_memberId;
 }
 
 void BalancePersistHandler::setFee(QString fee)
 {
     m_fee = fee;
+    emit feeChanged();
+}
+
+QString BalancePersistHandler::fee() const
+{
+    return m_fee;
 }
 
 void BalancePersistHandler::setDonation(QString donation)
 {
     m_donation = donation;
+    emit donationChanged();
+}
+
+QString BalancePersistHandler::donation() const
+{
+    return m_donation;
 }
 
 void BalancePersistHandler::setAdditional(QString additional)
 {
     m_additional = additional;
+    emit additionalChanged();
+}
+
+QString BalancePersistHandler::additional() const
+{
+    return m_additional;
 }
 
 void BalancePersistHandler::setAdditionalDonation(QString additionalDonation)
 {
     m_additionalDonation = additionalDonation;
+    emit additionalDonationChanged();
+}
+
+QString BalancePersistHandler::additionalDonation() const
+{
+    return m_additionalDonation;
 }
 
 void BalancePersistHandler::setTax(QString tax)
 {
     m_tax = tax;
+    emit taxChanged();
+}
+
+QString BalancePersistHandler::tax() const
+{
+    return m_tax;
 }
 
 void BalancePersistHandler::onBooked()

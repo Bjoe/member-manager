@@ -11,6 +11,7 @@ int BankAccount::bankAccountId() const
 void BankAccount::setBankAccountId(int id)
 {
     m_bankaccountId = id;
+    emit bankAccountIdChanged();
 }
 
 QString BankAccount::memberId() const
@@ -21,6 +22,7 @@ QString BankAccount::memberId() const
 void BankAccount::setMemberId(QString id)
 {
     m_memberId = id;
+    emit memberIdChanged();
 }
 
 QString BankAccount::name() const
@@ -31,6 +33,7 @@ QString BankAccount::name() const
 void BankAccount::setName(QString name)
 {
     m_name = name;
+    emit nameChanged();
 }
 
 QString BankAccount::accountNumber() const
@@ -41,6 +44,7 @@ QString BankAccount::accountNumber() const
 void BankAccount::setAccountNumber(QString number)
 {
     m_accountNumber = number;
+    emit accountNumberChanged();
 }
 
 QString BankAccount::code() const
@@ -51,6 +55,7 @@ QString BankAccount::code() const
 void BankAccount::setCode(QString code)
 {
     m_code = code;
+    emit codeChanged();
 }
 
 } // namespace entity

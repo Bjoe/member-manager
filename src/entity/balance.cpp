@@ -11,6 +11,7 @@ int Balance::balanceId() const
 void Balance::setBalanceId(int id)
 {
     m_balanceId = id;
+    emit balanceIdChanged();
 }
 
 QString Balance::memberId() const
@@ -21,6 +22,7 @@ QString Balance::memberId() const
 void Balance::setMemberId(QString id)
 {
     m_memberId = id;
+    emit memberIdChanged();
 }
 
 double Balance::value() const
@@ -31,6 +33,7 @@ double Balance::value() const
 void Balance::setValue(double value)
 {
     m_value = value;
+    emit valueChanged();
 }
 
 QDate Balance::valuta() const
@@ -41,6 +44,7 @@ QDate Balance::valuta() const
 void Balance::setValuta(const QDate &date)
 {
     m_valuta = date;
+    emit valutaChanged();
 }
 
 QString Balance::purpose() const
@@ -51,6 +55,7 @@ QString Balance::purpose() const
 void Balance::setPurpose(const QString &purpose)
 {
     m_purpose = purpose;
+    emit purposeChanged();
 }
 
 int Balance::account() const
@@ -61,6 +66,7 @@ int Balance::account() const
 void Balance::setAccount(int account)
 {
     m_account = account;
+    emit accountChanged();
 }
 
 int Balance::cashAccountId() const
@@ -71,6 +77,7 @@ int Balance::cashAccountId() const
 void Balance::setCashAccountId(int id)
 {
     m_cashAccountId = id;
+    emit cashAccountIdChanged();
 }
 
 QString Balance::info() const
@@ -81,6 +88,7 @@ QString Balance::info() const
 void Balance::setInfo(const QString &info)
 {
     m_info = info;
+    emit infoChanged();
 }
 
 } // namespace entity
