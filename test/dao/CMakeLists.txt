@@ -1,5 +1,6 @@
 qt_test(membertablemodel membertablemodeltest.cpp)
 qt_test(bankaccounttablemodel bankaccounttablemodeltest.cpp)
+qt_test(sepaaccounttablemodel sepaaccounttablemodeltest.cpp)
 qt_test(contributiontablemodel contributiontablemodeltest.cpp)
 qt_test(balancetablemodel balancetablemodeltest.cpp)
 qt_test(cashaccounttablemodel cashaccounttablemodeltest.cpp)

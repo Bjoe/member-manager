@@ -7,6 +7,7 @@ Item {
     property alias member: handler.member
     property alias contribution: handler.contribution
     property alias bankAccount: handler.bankAccount
+    property alias sepaAccount: handler.sepaAccount
     property alias balanceListModel: handler.balanceProxyModel
     property alias contributionListModel: handler.contributionProxyModel
 
@@ -323,7 +324,7 @@ Item {
                     }
 
                     GroupBox {
-                        title: qsTr("Bank Verbindung")
+                        title: qsTr("SEPA Verbindung")
                         Layout.fillWidth: true
 
                         GridLayout {
@@ -332,13 +333,80 @@ Item {
 
                             columns: 2
 
-                            Text {text: qsTr("Einzug") }
+                            Text {text: qsTr("Basislastschrift") }
                             CheckBox {
                                 Layout.fillWidth: true
                                 id: contributionStateField
 
                                 checkedState: memberDetail.contributionState
                             }
+
+                            Text {text: qsTr("IBAN:") }
+                            TextField {
+                                Layout.fillWidth: true
+
+                                id: ibanField
+                                text: sepaAccount.iban
+                                placeholderText: "IBAN Id"
+                            }
+
+                            Text {text: qsTr("BIC:") }
+                            TextField {
+                                Layout.fillWidth: true
+
+                                id: bicField
+                                text: sepaAccount.bic
+                                placeholderText: "BIC Id"
+                            }
+
+                            Text {text: qsTr("Mandate Date:") }
+                            DateField {
+                                Layout.fillWidth: true
+
+                                id: mandateDateField
+                                value: sepaAccount.mandateDate
+                                placeholderText: "Mandate Unterschrift (tt.mm.yyyy)"
+                            }
+
+                            Text {text: qsTr("Typ") }
+                            ComboBox {
+                                Layout.fillWidth: true
+
+                                id: sequenceTypeField
+                                model: sequenceTypeChoice
+                            }
+
+                            ListModel {
+                                id: sequenceTypeChoice
+                                ListElement {
+                                    text: "Erste Lastschrift";
+                                    type: "FIRST";
+                                }
+                                ListElement {
+                                    text: "Folgelastschrift";
+                                    type: "FOLLOWING"
+                                }
+                                ListElement {
+                                    text: "Letzte Lastschrift";
+                                    type: "LAST";
+                                }
+                                ListElement {
+                                    text: "Einmallastschrift";
+                                    type: "ONCE";
+                                }
+                           }
+                        }
+                    }
+
+                    GroupBox {
+                        title: qsTr("Bank Verbindung")
+                        Layout.fillWidth: true
+
+                        GridLayout {
+                            anchors.fill: parent
+                            anchors.margins: 8
+
+                            columns: 2
 
                             Text {text: qsTr("Name:") }
                             TextField {
@@ -372,7 +440,6 @@ Item {
                             }
                         }
                     }
-
 
                     Item {
                         // Only for Spacing. Is there a better way?
@@ -409,6 +476,19 @@ Item {
                         bankAccount.name = bankNameField.text
                         bankAccount.accountNumber = accountNrField.text
                         bankAccount.code = bankCodeField.text
+
+                        sepaAccount.memberId = member.memberId;
+                        sepaAccount.iban = ibanField.text;
+                        sepaAccount.bic = bicField.text;
+                        var index = sequenceTypeField.currentIndex;
+                        var type = sequenceTypeChoice.get(index).type;
+                        sepaAccount.sequenceState = type;
+                        var validDate = mandateDateField.readDate();
+                        if(validDate === undefined) {
+                            memberDetail.valid = false;
+                        } else {
+                            sepaAccount.mandateDate = validDate;
+                        }
                     }
 
                     Connections {

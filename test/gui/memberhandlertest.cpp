@@ -18,6 +18,7 @@
 #include "entity/member.h"
 #include "entity/contribution.h"
 #include "entity/bankaccount.h"
+#include "entity/sepaaccount.h"
 #include "entity/balance.h"
 
 #include "gui/memberhandler.h"
@@ -55,6 +56,7 @@ void MemberHandlerTest::initTestCase()
     QDjango::registerModel<membermanager::entity::Member>();
     QDjango::registerModel<membermanager::entity::Contribution>();
     QDjango::registerModel<membermanager::entity::BankAccount>();
+    QDjango::registerModel<membermanager::entity::SepaAccount>();
     QDjango::registerModel<membermanager::entity::Balance>();
 
     QDjango::dropTables();
@@ -81,6 +83,15 @@ void MemberHandlerTest::initTestCase()
     bankAccount->setCode("7654321");
     bankAccount->save();
     delete bankAccount;
+
+    membermanager::entity::SepaAccount *sepaAccount = new membermanager::entity::SepaAccount();
+    sepaAccount->setMemberId("2");
+    sepaAccount->setBic("DUSSDEDDXXX");
+    sepaAccount->setIban("DE26312345670012345678");
+    sepaAccount->setMandateDate(QDate(2013,11,30));
+    sepaAccount->setSequenceState("FIRST");
+    sepaAccount->save();
+    delete sepaAccount;
 
     membermanager::entity::Contribution *contribution = new membermanager::entity::Contribution();
     contribution->setMemberId("2");
@@ -155,6 +166,9 @@ void MemberHandlerTest::testMemberSelected()
 
     membermanager::entity::BankAccount *bankAccount = handler->bankAccount();
     QCOMPARE(bankAccount->name(), QString("Sparstrumpf"));
+
+    membermanager::entity::SepaAccount *sepaAccount = handler->sepaAccount();
+    QCOMPARE(sepaAccount->iban(), QString("DE26312345670012345678"));
 
     membermanager::entity::Contribution *contribution = handler->contribution();
     double fee = 15.0;

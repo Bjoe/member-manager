@@ -7,6 +7,7 @@
 #include "gui/proxytablemodel.h"
 #include "entity/member.h"
 #include "entity/bankaccount.h"
+#include "entity/sepaaccount.h"
 #include "entity/contribution.h"
 
 namespace membermanager {
@@ -18,6 +19,7 @@ class MemberHandler : public QObject
 
     Q_PROPERTY(membermanager::entity::Member *member READ member NOTIFY memberChanged)
     Q_PROPERTY(membermanager::entity::BankAccount *bankAccount READ bankAccount NOTIFY memberChanged)
+    Q_PROPERTY(membermanager::entity::SepaAccount *sepaAccount READ sepaAccount NOTIFY memberChanged)
     Q_PROPERTY(membermanager::entity::Contribution *contribution READ contribution NOTIFY memberChanged)
     Q_PROPERTY(membermanager::gui::ProxyTableModel *contributionProxyModel READ contributionProxyModel NOTIFY memberChanged)
     Q_PROPERTY(membermanager::gui::ProxyTableModel *balanceProxyModel READ balanceProxyModel NOTIFY memberChanged)
@@ -29,6 +31,7 @@ public:
     ProxyTableModel *balanceProxyModel() const;
     entity::Member *member() const;
     entity::BankAccount *bankAccount() const;
+    entity::SepaAccount *sepaAccount() const;
     entity::Contribution *contribution() const;
 
     Q_INVOKABLE void copyBalanceToClipboard(int row);
@@ -44,7 +47,8 @@ public slots:
 
 private:
     entity::Member *m_member;
-    entity::BankAccount *m_bankaccount;
+    entity::BankAccount *m_bankAccount;
+    entity::SepaAccount *m_sepaAccount;
     entity::Contribution *m_contribution;
 
     ProxyTableModel *m_contributionProxyTableModel;

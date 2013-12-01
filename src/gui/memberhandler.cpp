@@ -12,6 +12,7 @@
 
 #include "dao/membertablemodel.h"
 #include "dao/bankaccounttablemodel.h"
+#include "dao/sepaaccounttablemodel.h"
 #include "dao/contributiontablemodel.h"
 #include "dao/balancetablemodel.h"
 
@@ -21,7 +22,8 @@ namespace gui {
 MemberHandler::MemberHandler(QObject *parent)
     : QObject(parent),
       m_member(new entity::Member()),
-      m_bankaccount(new entity::BankAccount()),
+      m_bankAccount(new entity::BankAccount()),
+      m_sepaAccount{new entity::SepaAccount()},
       m_contribution(new entity::Contribution()),
       m_contributionProxyTableModel(new ProxyTableModel()),
       m_balanceProxyTableModel(new ProxyTableModel())
@@ -44,7 +46,12 @@ entity::Member *MemberHandler::member() const
 
 entity::BankAccount *MemberHandler::bankAccount() const
 {
-    return m_bankaccount;
+    return m_bankAccount;
+}
+
+entity::SepaAccount *MemberHandler::sepaAccount() const
+{
+    return m_sepaAccount;
 }
 
 entity::Contribution *MemberHandler::contribution() const
@@ -87,14 +94,15 @@ QString MemberHandler::createText(const QSqlTableModel* model, int row)
 void MemberHandler::onSelectedMemberId(QVariant id)
 {
     delete m_member;
-    delete m_bankaccount;
+    delete m_bankAccount;
     delete m_contribution;
 
     delete m_contributionProxyTableModel;
     delete m_balanceProxyTableModel;
 
     m_member = dao::MemberTableModel::findByMemberId(id);
-    m_bankaccount = dao::BankAccountTableModel::findByMemberId(id);
+    m_bankAccount = dao::BankAccountTableModel::findByMemberId(id);
+    m_sepaAccount = dao::SepaAccountTableModel::findByMemberId(id);
     m_contribution = dao::ContributionTableModel::findLastEntryByMemberId(id);
 
     QSqlTableModel *contributionModel = dao::ContributionTableModel::createModel(id);
@@ -111,14 +119,14 @@ void MemberHandler::onSelectedMemberId(QVariant id)
 void MemberHandler::onNewMember()
 {
     delete m_member;
-    delete m_bankaccount;
+    delete m_bankAccount;
     delete m_contribution;
 
     delete m_contributionProxyTableModel;
     delete m_balanceProxyTableModel;
 
     m_member = new entity::Member();
-    m_bankaccount = new entity::BankAccount();
+    m_bankAccount = new entity::BankAccount();
     m_contribution = new entity::Contribution();
 
     m_contributionProxyTableModel = new ProxyTableModel(this);

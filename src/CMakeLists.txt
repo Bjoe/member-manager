@@ -8,6 +8,7 @@ set(QT_SRCS
 
     dao/membertablemodel.cpp
     dao/bankaccounttablemodel.cpp
+    dao/sepaaccounttablemodel.cpp
     dao/contributiontablemodel.cpp
     dao/balancetablemodel.cpp
     dao/cashaccounttablemodel.cpp
@@ -17,6 +18,7 @@ set(QT_SRCS
     entity/balance.cpp
     entity/cashaccount.cpp
     entity/bankaccount.cpp
+    entity/sepaaccount.cpp
 
     accounting/arithmetic.cpp
     accounting/memberdonationsum.cpp
