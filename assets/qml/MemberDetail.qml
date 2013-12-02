@@ -481,12 +481,14 @@ Item {
                         sepaAccount.bic = bicField.text;
                         var index = sequenceTypeField.currentIndex;
                         var type = sequenceTypeChoice.get(index).type;
+                        console.debug(type);
                         sepaAccount.sequenceState = type;
-                        var validDate = mandateDateField.readDate();
-                        if(validDate === undefined) {
+                        var mandateDate = mandateDateField.readDate();
+                        console.debug("MandateDate", mandateDate);
+                        if(mandateDate === undefined) {
                             memberDetail.valid = false;
                         } else {
-                            sepaAccount.mandateDate = validDate;
+                            sepaAccount.mandateDate = mandateDate;
                         }
                     }
 
@@ -594,6 +596,7 @@ Item {
                         console.debug("save");
                         member.save();
                         bankAccount.save();
+                        sepaAccount.save();
                         contribution.save();
                         memberDetail.readOnly = true;
                         memberDetail.databaseChanged();

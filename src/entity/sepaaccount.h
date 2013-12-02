@@ -14,7 +14,7 @@ class SepaAccount : public QDjangoModel
 {
     Q_OBJECT
 
-    Q_CLASSINFO("__meta__", "db_table=CashAccount")
+    Q_CLASSINFO("__meta__", "db_table=SepaAccount")
 
     Q_PROPERTY(QString iban READ iban WRITE setIban NOTIFY ibanChanged)
     Q_PROPERTY(QString bic READ bic WRITE setBic NOTIFY bicChanged)

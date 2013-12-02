@@ -13,6 +13,7 @@
 #include "entity/member.h"
 #include "entity/balance.h"
 #include "entity/bankaccount.h"
+#include "entity/sepaaccount.h"
 #include "entity/cashaccount.h"
 #include "entity/contribution.h"
 
@@ -45,6 +46,7 @@ MainWindowUiController::MainWindowUiController()
     qmlRegisterType<membermanager::gui::ProxyTableModel>("membermanager", 1, 0, "ProxyTableModel");
     qmlRegisterType<membermanager::entity::Member>("membermanager", 1, 0, "Member");
     qmlRegisterType<membermanager::entity::BankAccount>("membermanager", 1, 0, "BankAccount");
+    qmlRegisterType<membermanager::entity::SepaAccount>("membermanager", 1, 0, "SepaAccount");
     qmlRegisterType<membermanager::entity::Balance>("membermanager", 1, 0, "Balance");
     qmlRegisterType<membermanager::entity::CashAccount>("membermanager", 1, 0, "CashAccount");
     qmlRegisterType<membermanager::entity::Contribution>("membermanager", 1, 0, "Contribution");
