@@ -385,14 +385,14 @@ Item {
                                     text: "Folgelastschrift";
                                     type: "FOLLOWING"
                                 }
-                                ListElement {
+                                /*ListElement {
                                     text: "Letzte Lastschrift";
                                     type: "LAST";
                                 }
                                 ListElement {
                                     text: "Einmallastschrift";
                                     type: "ONCE";
-                                }
+                                }*/
                            }
                         }
                     }

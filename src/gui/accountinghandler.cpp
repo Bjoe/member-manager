@@ -13,10 +13,12 @@
 
 #include "entity/member.h"
 #include "entity/bankaccount.h"
+#include "entity/sepaaccount.h"
 #include "entity/contribution.h"
 
 #include "dao/membertablemodel.h"
 #include "dao/bankaccounttablemodel.h"
+#include "dao/sepaaccounttablemodel.h"
 #include "dao/contributiontablemodel.h"
 
 #include "accounting/memberaccountingdata.h"
@@ -87,8 +89,18 @@ void AccountingHandler::book(const QString &urlFilename)
     QString bankName = settings.value("bank/name").toString();
     QString bankCode = settings.value("bank/code").toString();
 
-    if(bankAccountNumber.isEmpty() || bankName.isEmpty() || bankCode.isEmpty()) {
-        emit statusMessage(QString("Wrong settings: Bank name -%1- account Nr: -%2- code: -%3-")
+    QString name = settings.value("name").toString();
+    QString creditorId = settings.value("creditorId").toString();
+    QString bic = settings.value("sepa/bic").toString();
+    QString iban = settings.value("sepa/iban").toString();
+
+    if(bankAccountNumber.isEmpty() || bankName.isEmpty() || bankCode.isEmpty() ||
+            name.isEmpty() || creditorId.isEmpty() || bic.isEmpty() || iban.isEmpty()) {
+        emit statusMessage(QString("Wrong settings: BIC -%1- IBAN -%2- Name -%3- Creditor Id -%4- Bank name -%5- account Nr: -%6- code: -%7-")
+                           .arg(bic)
+                           .arg(iban)
+                           .arg(name)
+                           .arg(creditorId)
                            .arg(bankName)
                            .arg(bankAccountNumber)
                            .arg(bankCode));
@@ -97,9 +109,9 @@ void AccountingHandler::book(const QString &urlFilename)
 
     QUrl url(urlFilename);
     QString filename = url.path();
+
     QString csvFilename = QString("%1.csv").arg(filename);
     QFile csvFile(csvFilename);
-
     if(! csvFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
         QString error = csvFile.errorString();
         emit statusMessage(QString("Cant save %1:%2").arg(csvFilename).arg(error));
@@ -115,10 +127,24 @@ void AccountingHandler::book(const QString &urlFilename)
         return;
     }
 
-    QTextStream stream(&csvFile);
-    accounting::AccountTransaction transaction(bankAccountNumber, bankCode, bankName, stream);
+    QString sepaFilename = QString("%1.xml").arg(filename);
+    QFile sepaFile(sepaFilename);
+    if(! sepaFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        QString error = sepaFile.errorString();
+        emit statusMessage(QString("Cant save SEPA %1:%2").arg(sepaFilename).arg(error));
+        dtausFile.close();
+        csvFile.close();
+        return;
+    }
 
+    QTextStream stream(&csvFile);
+    accounting::AccountTransaction transaction(bankAccountNumber, bankCode, bankName,
+                                               name, creditorId, iban, bic, stream);
+
+    qaqbanking::sepa::Exporter sepaExporter(iban, bic, name);
     qaqbanking::dtaus::Exporter exporter(bankAccountNumber, bankName,bankCode, "EUR");
+
+    connect(&sepaExporter, &qaqbanking::sepa::Exporter::logMessage, this, &AccountingHandler::statusMessage);
     connect(&exporter, &qaqbanking::dtaus::Exporter::logMessage, this, &AccountingHandler::statusMessage);
 
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
@@ -131,8 +157,12 @@ void AccountingHandler::book(const QString &urlFilename)
         transaction.accounting(data);
 
         if(data->canCharge()) {
+            qaqbanking::sepa::TransactionPtr sepaTransaction = transaction.createSepaTransaction(data);
+            sepaExporter.addTransaction(sepaTransaction);
+
             qaqbanking::dtaus::TransactionPtr dtausTransaction = transaction.createDtausTransaction(data);
             exporter.addTransaction(dtausTransaction);
+
             transaction.collectionAccounting(data);
         }
         emit progress(progressValue);
@@ -141,8 +171,12 @@ void AccountingHandler::book(const QString &urlFilename)
     QTextStream dtausStream(&dtausFile);
     exporter.createDtausStream(&dtausStream);
 
+    QTextStream sepaStream(&sepaFile);
+    sepaExporter.createSepaDirectDebitStream(&sepaStream);
+
     csvFile.close();
     dtausFile.close();
+    sepaFile.close();
     emit statusMessage("Booking done");
     emit progress(1);
     QApplication::restoreOverrideCursor();
@@ -151,6 +185,9 @@ void AccountingHandler::book(const QString &urlFilename)
 void AccountingHandler::onRefresh()
 {
     clearList();
+
+    QSettings settings;
+    int accountingReference = settings.value("accounting/reference", 0).toInt();
 
     QList<entity::Member *> memberList = dao::MemberTableModel::findByState(entity::Member::State::active);
     for(const entity::Member* member : memberList) {
@@ -166,9 +203,15 @@ void AccountingHandler::onRefresh()
         if(! collectionState.isEmpty())
             data->setCollectionState(collectionState.at(0));
 
-        entity::BankAccount *bankaccount = dao::BankAccountTableModel::findByMemberId(memberId);
-        data->setBankAccountNumber(bankaccount->accountNumber());
-        data->setBankCode(bankaccount->code());
+        entity::BankAccount *bankAccount = dao::BankAccountTableModel::findByMemberId(memberId);
+        data->setBankAccountNumber(bankAccount->accountNumber());
+        data->setBankCode(bankAccount->code());
+
+        entity::SepaAccount *sepaAccount = dao::SepaAccountTableModel::findByMemberId(memberId);
+        data->setSepaBic(sepaAccount->bic());
+        data->setSepaIban(sepaAccount->iban());
+        data->setSepaMandateDate(sepaAccount->mandateDate());
+        data->setSepaSequenceState(sepaAccount->sequenceState());
 
         entity::Contribution *contribution = dao::ContributionTableModel::findByMemberIdWithPointInTime(memberId, m_valuta);
         data->setFee(contribution->fee());
@@ -177,12 +220,16 @@ void AccountingHandler::onRefresh()
         data->setAdditionalDonation(contribution->additionalDonation());
         data->setAmortization(contribution->amortization());
 
+        data->setAccountingReference(QString("%1").arg(++accountingReference));
+
         m_memberAccountingDataList.append(data);
 
-        delete bankaccount;
+        delete bankAccount;
+        delete sepaAccount;
         delete contribution;
         delete member;
     }
+    settings.setValue("accounting/reference", accountingReference);
 
     emit accountingDataListChanged();
 }

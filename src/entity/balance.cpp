@@ -41,10 +41,21 @@ QDate Balance::valuta() const
     return m_valuta;
 }
 
-void Balance::setValuta(const QDate &date)
+void Balance::setValuta(QDate date)
 {
     m_valuta = date;
     emit valutaChanged();
+}
+
+QString Balance::accountingReference() const
+{
+    return m_accountingReference;
+}
+
+void Balance::setAccountingReference(QString reference)
+{
+    m_accountingReference = reference;
+    emit accountingReferenceChanged();
 }
 
 QString Balance::purpose() const
@@ -52,7 +63,7 @@ QString Balance::purpose() const
     return m_purpose;
 }
 
-void Balance::setPurpose(const QString &purpose)
+void Balance::setPurpose(QString purpose)
 {
     m_purpose = purpose;
     emit purposeChanged();
@@ -85,7 +96,7 @@ QString Balance::info() const
     return m_info;
 }
 
-void Balance::setInfo(const QString &info)
+void Balance::setInfo(QString info)
 {
     m_info = info;
     emit infoChanged();

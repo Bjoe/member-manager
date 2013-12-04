@@ -97,6 +97,11 @@ Item {
             }
 
             TableViewColumn {
+                role: "accountingReference"
+                title: qsTr("Rechnungs Nr.")
+            }
+
+            TableViewColumn {
                 role: "purpose"
                 title: qsTr("Verwendunsgszweck")
             }

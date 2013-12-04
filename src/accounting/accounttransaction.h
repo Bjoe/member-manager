@@ -9,6 +9,9 @@
 #include "dtaus/exporter.h"
 #include "dtaus/transaction.h"
 
+#include "sepa/exporter.h"
+#include "sepa/transaction.h"
+
 #include "entity/member.h"
 
 #include "accounting/memberaccountingdata.h"
@@ -19,19 +22,25 @@ namespace accounting {
 class AccountTransaction
 {
 public:
-    AccountTransaction(const QString& accountNumber, const QString& bankCode, const QString& bankName, QTextStream& srteam);
+    AccountTransaction(QString accountNumber, QString bankCode, QString bankName,
+                       QString name, QString creditorId, QString iban, QString bic, QTextStream& srteam);
 
     qaqbanking::dtaus::TransactionPtr createDtausTransaction(const MemberAccountingData* memberData);
-    void collectionAccounting(const MemberAccountingData* memberData);
-    void accounting(const MemberAccountingData* memberData);
+    qaqbanking::sepa::TransactionPtr createSepaTransaction(const MemberAccountingData* accountingData);
+    void collectionAccounting(const MemberAccountingData* accountingData);
+    void accounting(const MemberAccountingData* accountingData);
 
 private:
     QString m_accountNumber;
     QString m_bankCode;
     QString m_bankName;
+    QString m_name;
+    QString m_creditorId;
+    QString m_iban;
+    QString m_bic;
     QTextStream& m_stream;
 
-    void createAndSaveBalance(const QVariant &memberId, const QDate &valuta, int account, double value, const QString &purpose, const QString &info);
+    void createAndSaveBalance(const MemberAccountingData* accountingData, int account, double value, const QString &purpose, const QString &info);
 };
 
 } // namespace accounting

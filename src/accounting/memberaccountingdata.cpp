@@ -14,7 +14,7 @@ QDate MemberAccountingData::valuta() const
     return m_valuta;
 }
 
-void MemberAccountingData::setValuta(const QDate &date)
+void MemberAccountingData::setValuta(QDate date)
 {
     m_valuta = date;
     emit valutaChanged();
@@ -25,7 +25,7 @@ QString MemberAccountingData::memberId() const
     return m_memberId;
 }
 
-void MemberAccountingData::setMemberId(const QString &memberId)
+void MemberAccountingData::setMemberId(QString memberId)
 {
     m_memberId = memberId;
     emit memberIdChanged();
@@ -36,7 +36,7 @@ QString MemberAccountingData::name() const
     return m_name;
 }
 
-void MemberAccountingData::setName(const QString &name)
+void MemberAccountingData::setName(QString name)
 {
     m_name = name;
     emit nameChanged();
@@ -47,7 +47,7 @@ QString MemberAccountingData::firstname() const
     return m_firstname;
 }
 
-void MemberAccountingData::setFirstname(const QString &firstname)
+void MemberAccountingData::setFirstname(QString firstname)
 {
     m_firstname = firstname;
     emit firstnameChanged();
@@ -58,7 +58,7 @@ QString MemberAccountingData::bankAccountNumber() const
     return m_bankAccountNumber;
 }
 
-void MemberAccountingData::setBankAccountNumber(const QString &number)
+void MemberAccountingData::setBankAccountNumber(QString number)
 {
     m_bankAccountNumber = number;
     emit bankAccountNumberChanged();
@@ -69,10 +69,65 @@ QString MemberAccountingData::bankCode() const
     return m_bankCode;
 }
 
-void MemberAccountingData::setBankCode(const QString &code)
+void MemberAccountingData::setBankCode(QString code)
 {
     m_bankCode = code;
     emit bankCodeChanged();
+}
+
+QString MemberAccountingData::sepaBic() const
+{
+    return m_bic;
+}
+
+void MemberAccountingData::setSepaBic(QString bic)
+{
+    m_bic = bic;
+    emit sepaBicChanged();
+}
+
+QString MemberAccountingData::sepaIban() const
+{
+    return m_iban;
+}
+
+void MemberAccountingData::setSepaIban(QString iban)
+{
+    m_iban = iban;
+    emit sepaIbanChanged();
+}
+
+QDate MemberAccountingData::sepaMandateDate() const
+{
+    return m_mandateDate;
+}
+
+void MemberAccountingData::setSepaMandateDate(QDate date)
+{
+    m_mandateDate = date;
+    emit sepaMandateDateChanged();
+}
+
+QString MemberAccountingData::sepaSequenceState() const
+{
+    return m_sequenceState;
+}
+
+void MemberAccountingData::setSepaSequenceState(QString state)
+{
+    m_sequenceState = state;
+    emit sepaSequenceStateChanged();
+}
+
+QString MemberAccountingData::accountingReference() const
+{
+    return m_accountingReference;
+}
+
+void MemberAccountingData::setAccountingReference(QString reference)
+{
+    m_accountingReference = reference;
+    emit accountingReferenceChanged();
 }
 
 QString MemberAccountingData::purpose() const
@@ -80,7 +135,7 @@ QString MemberAccountingData::purpose() const
     return m_purpose;
 }
 
-void MemberAccountingData::setPurpose(const QString &purpose)
+void MemberAccountingData::setPurpose(QString purpose)
 {
     m_purpose = purpose;
     emit purposeChanged();
@@ -91,7 +146,7 @@ QString MemberAccountingData::accountingInfo() const
     return m_accountingInfo;
 }
 
-void MemberAccountingData::setAccountingInfo(const QString &info)
+void MemberAccountingData::setAccountingInfo(QString info)
 {
     m_accountingInfo = info;
     emit accountingInfoChanged();

@@ -19,6 +19,11 @@ class MemberAccountingData : public QObject
     Q_PROPERTY(QString firstname READ firstname WRITE setFirstname NOTIFY firstnameChanged)
     Q_PROPERTY(QString bankAccountNumber READ bankAccountNumber WRITE setBankAccountNumber NOTIFY bankAccountNumberChanged)
     Q_PROPERTY(QString bankCode READ bankCode WRITE setBankCode NOTIFY bankCodeChanged)
+    Q_PROPERTY(QString sepaBic READ sepaBic WRITE setSepaBic NOTIFY sepaBicChanged)
+    Q_PROPERTY(QString sepaIban READ sepaIban WRITE setSepaIban NOTIFY sepaIbanChanged)
+    Q_PROPERTY(QDate sepaMandateDate READ sepaMandateDate WRITE setSepaMandateDate NOTIFY sepaMandateDateChanged)
+    Q_PROPERTY(QString sepaSequenceState READ sepaSequenceState WRITE setSepaSequenceState NOTIFY sepaSequenceStateChanged)
+    Q_PROPERTY(QString accountingReference READ accountingReference WRITE setAccountingReference NOTIFY accountingReferenceChanged)
     Q_PROPERTY(double fee READ fee WRITE setFee NOTIFY feeChanged)
     Q_PROPERTY(double donation READ donation WRITE setDonation NOTIFY donationChanged)
     Q_PROPERTY(double additionalFee READ additionalFee WRITE setAdditionalFee NOTIFY additionalFeeChanged)
@@ -31,28 +36,43 @@ public:
     MemberAccountingData(QObject* parent = nullptr);
 
     QDate valuta() const;
-    void setValuta(const QDate& date);
+    void setValuta(QDate date);
 
     QString memberId() const;
-    void setMemberId(const QString& memberId);
+    void setMemberId(QString memberId);
 
     QString name() const;
-    void setName(const QString& name);
+    void setName(QString name);
 
     QString firstname() const;
-    void setFirstname(const QString& firstname);
+    void setFirstname(QString firstname);
 
     QString bankAccountNumber() const;
-    void setBankAccountNumber(const QString& number);
+    void setBankAccountNumber(QString number);
 
     QString bankCode() const;
-    void setBankCode(const QString& code);
+    void setBankCode(QString code);
+
+    QString sepaBic() const;
+    void setSepaBic(QString bic);
+
+    QString sepaIban() const;
+    void setSepaIban(QString iban);
+
+    QDate sepaMandateDate() const;
+    void setSepaMandateDate(QDate date);
+
+    QString sepaSequenceState() const;
+    void setSepaSequenceState(QString state);
+
+    QString accountingReference() const;
+    void setAccountingReference(QString reference);
 
     QString purpose() const;
-    void setPurpose(const QString& purpose);
+    void setPurpose(QString purpose);
 
     QString accountingInfo() const;
-    void setAccountingInfo(const QString& info);
+    void setAccountingInfo(QString info);
 
     double fee() const;
     void setFee(double fee);
@@ -79,6 +99,11 @@ signals:
     void firstnameChanged();
     void bankAccountNumberChanged();
     void bankCodeChanged();
+    void sepaBicChanged();
+    void sepaIbanChanged();
+    void sepaMandateDateChanged();
+    void sepaSequenceStateChanged();
+    void accountingReferenceChanged();
     void feeChanged();
     void donationChanged();
     void additionalFeeChanged();
@@ -94,6 +119,11 @@ private:
     QString m_firstname;
     QString m_bankAccountNumber;
     QString m_bankCode;
+    QString m_bic;
+    QString m_iban;
+    QDate m_mandateDate;
+    QString m_sequenceState;
+    QString m_accountingReference;
     QString m_purpose;
     QString m_accountingInfo;
     double m_fee;

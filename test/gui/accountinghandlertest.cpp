@@ -24,6 +24,7 @@
 
 #include "entity/member.h"
 #include "entity/bankaccount.h"
+#include "entity/sepaaccount.h"
 #include "entity/contribution.h"
 #include "entity/balance.h"
 
@@ -60,6 +61,7 @@ void AccountingHandlerTest::initTestCase()
     QDjango::registerModel<membermanager::entity::Member>();
     QDjango::registerModel<membermanager::entity::Contribution>();
     QDjango::registerModel<membermanager::entity::BankAccount>();
+    QDjango::registerModel<membermanager::entity::SepaAccount>();
     QDjango::registerModel<membermanager::entity::Balance>();
 
     QDjango::dropTables();
@@ -86,6 +88,15 @@ void AccountingHandlerTest::initTestCase()
     bankAccount->setName("Strumpfspar");
     bankAccount->save();
     delete bankAccount;
+
+    membermanager::entity::SepaAccount *sepaAccount = new membermanager::entity::SepaAccount();
+    sepaAccount->setMemberId("1");
+    sepaAccount->setBic("DUSSDEDDXXX");
+    sepaAccount->setIban("DE26312345670012345678");
+    sepaAccount->setMandateDate(QDate(2013,11,30));
+    sepaAccount->setSequenceState("FIRST");
+    sepaAccount->save();
+    delete sepaAccount;
 
     membermanager::entity::Contribution *contribution = new membermanager::entity::Contribution();
     contribution->setMemberId("1");
@@ -132,6 +143,11 @@ void AccountingHandlerTest::testBook()
     settings.setValue("bank/code", QString("39912399"));
     settings.setValue("bank/account", QString("123456"));
 
+    settings.setValue("name", QString("foobar e.V."));
+    settings.setValue("creditorId", QString("DE202300000782585"));
+    settings.setValue("sepa/iban", QString("DE26300501100021057476"));
+    settings.setValue("sepa/bic", QString("DUSSDEDDXXX"));
+
     membermanager::accounting::MemberAccountingData* accountingData = new membermanager::accounting::MemberAccountingData();
     accountingData->setAccountingInfo("foo");
     accountingData->setPurpose("bar");
@@ -140,6 +156,11 @@ void AccountingHandlerTest::testBook()
     accountingData->setAmortization(8.0);
     accountingData->setBankAccountNumber("22334455");
     accountingData->setBankCode("80070099");
+    accountingData->setSepaBic("DUSSDEDDXXX");
+    accountingData->setSepaIban("DE26312345670012345678");
+    accountingData->setSepaMandateDate(QDate(2013,11,30));
+    accountingData->setSepaSequenceState("FIRST");
+    accountingData->setAccountingReference("9876543210");
     accountingData->setCollectionState(static_cast<char>(membermanager::entity::Member::CollectionState::known));
     accountingData->setDonation(10.0);
     accountingData->setFee(15.0);
@@ -162,11 +183,7 @@ void AccountingHandlerTest::testBook()
     QVERIFY(file.open(QIODevice::ReadOnly | QIODevice::Text));
 
     QTextStream stream(&file);
-    QCOMPARE(stream.readLine(), QString("29.09.2013;Lastschrift Einzug 011;011 Mitgliedsbeitrag Kirk, James T.;15"));
-    QCOMPARE(stream.readLine(), QString("29.09.2013;Lastschrift Einzug 012;012 Spende Kirk, James T.;10"));
-    QCOMPARE(stream.readLine(), QString("29.09.2013;Lastschrift Einzug 004;004 Durchlaufender Posten / CCC Beitrag Kirk, James T.;2"));
-    QCOMPARE(stream.readLine(), QString("29.09.2013;Lastschrift Einzug 005;005 Durchlaufender Posten / CCC Spende Kirk, James T.;3"));
-    QCOMPARE(stream.readLine(), QString("29.09.2013;Lastschrift Einzug 011;011 Mitgliedsbeitrag Rate Kirk, James T.;8"));
+    QCOMPARE(stream.readLine(), QString("29.09.2013;Lastschrift Einzug 011;011 Mitgliedsbeitrag 9876543210 1 James T., Kirk;15"));
 
     file.close();
 
@@ -182,12 +199,33 @@ void AccountingHandlerTest::testBook()
 
     file2.close();
 
+    QFile sepaFile("testfile.xml");
+    QVERIFY(sepaFile.open(QIODevice::ReadOnly | QIODevice::Text));
+
+    QTextStream sepaStream(&sepaFile);
+
+    QString sepaContent = sepaStream.readAll();
+
+    regExp.setPattern(".*bar Beitrag 15EUR Spende 10EUR CCC 5EUR Rate 8EUR.*");
+    QVERIFY(regExp.exactMatch(sepaContent));
+
+    regExp.setPattern(".*9876543210.*");
+    QVERIFY(regExp.exactMatch(sepaContent));
+
+    sepaFile.close();
+
+    QDjangoQuerySet<membermanager::entity::SepaAccount> accountResult;
+    QList<QVariantMap> propertyMaps = accountResult.values(QStringList() << "sequenceState");
+    QVariantMap property = propertyMaps.at(0);
+    // TODO QCOMPARE(property["sequenceState"], QVariant("FOLLOWING"));
+
     QDjangoQuerySet<membermanager::entity::Balance> result;
     QCOMPARE(result.size(), 10);
-    QList<QVariantMap> propertyMaps = result.values(QStringList() << "value" << "purpose");
-    QVariantMap property = propertyMaps.at(0);
+    propertyMaps = result.values(QStringList() << "value" << "purpose" << "accountingReference");
+    property = propertyMaps.at(0);
     QCOMPARE(property["value"], QVariant(-15.0));
     QCOMPARE(property["purpose"], QVariant("Mitgliedsbeitrag foo"));
+    QCOMPARE(property["accountingReference"], QVariant("9876543210"));
 }
 
 void AccountingHandlerTest::testBookSignals()
@@ -200,6 +238,10 @@ void AccountingHandlerTest::testBookSignals()
     accountingData->setAmortization(8.0);
     accountingData->setBankAccountNumber("22334455");
     accountingData->setBankCode("80070099");
+    accountingData->setSepaBic("DUSSDEDDXXX");
+    accountingData->setSepaIban("DE26312345670012345678");
+    accountingData->setSepaMandateDate(QDate(2013,11,30));
+    accountingData->setSepaSequenceState("FIRST");
     accountingData->setCollectionState(static_cast<char>(membermanager::entity::Member::CollectionState::known));
     accountingData->setDonation(10.0);
     accountingData->setFee(15.0);

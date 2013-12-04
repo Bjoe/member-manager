@@ -22,6 +22,7 @@ class Balance : public QDjangoModel
     Q_PROPERTY(QString memberId READ memberId WRITE setMemberId NOTIFY memberIdChanged)
     Q_PROPERTY(double value READ value WRITE setValue NOTIFY valueChanged)
     Q_PROPERTY(QDate valuta READ valuta WRITE setValuta NOTIFY valutaChanged)
+    Q_PROPERTY(QString accountingReference READ accountingReference WRITE setAccountingReference NOTIFY accountingReferenceChanged)
     Q_PROPERTY(QString purpose READ purpose WRITE setPurpose NOTIFY purposeChanged)
     Q_PROPERTY(int account READ account WRITE setAccount NOTIFY accountChanged)
     Q_PROPERTY(int cashAccountId READ cashAccountId WRITE setCashAccountId NOTIFY cashAccountIdChanged)
@@ -39,10 +40,13 @@ public:
     void setValue(double value);
 
     QDate valuta() const;
-    void setValuta(const QDate &date);
+    void setValuta(QDate date);
+
+    QString accountingReference() const;
+    void setAccountingReference(QString reference);
 
     QString purpose() const;
-    void setPurpose(const QString &purpose);
+    void setPurpose(QString purpose);
 
     int account() const;
     void setAccount(int account);
@@ -51,13 +55,14 @@ public:
     void setCashAccountId(int id);
 
     QString info() const;
-    void setInfo(const QString &info);
+    void setInfo(QString info);
 
 signals:
     void balanceIdChanged();
     void memberIdChanged();
     void valueChanged();
     void valutaChanged();
+    void accountingReferenceChanged();
     void purposeChanged();
     void accountChanged();
     void cashAccountIdChanged();
@@ -67,6 +72,7 @@ private:
     QString m_memberId {};
     QString m_info {};
     QString m_purpose {};
+    QString m_accountingReference;
     QDate m_valuta {};
     double m_value {};
     int m_account {};
