@@ -3,16 +3,10 @@
 
 #include <QString>
 #include <QDate>
-#include <QTextStream>
+#include <QList>
 #include <QSharedPointer>
 
-#include "dtaus/exporter.h"
-#include "dtaus/transaction.h"
-
-#include "sepa/exporter.h"
-#include "sepa/transaction.h"
-
-#include "entity/member.h"
+#include "entity/balance.h"
 
 #include "accounting/memberaccountingdata.h"
 
@@ -22,23 +16,14 @@ namespace accounting {
 class AccountTransaction
 {
 public:
-    AccountTransaction(QString accountNumber, QString bankCode, QString bankName,
-                       QString name, QString creditorId, QString iban, QString bic, QTextStream& srteam);
+    AccountTransaction();
 
-    qaqbanking::dtaus::TransactionPtr createDtausTransaction(const MemberAccountingData* memberData);
-    qaqbanking::sepa::TransactionPtr createSepaTransaction(const MemberAccountingData* accountingData);
     void collectionAccounting(const MemberAccountingData* accountingData);
     void accounting(const MemberAccountingData* accountingData);
+    void commit();
 
 private:
-    QString m_accountNumber;
-    QString m_bankCode;
-    QString m_bankName;
-    QString m_name;
-    QString m_creditorId;
-    QString m_iban;
-    QString m_bic;
-    QTextStream& m_stream;
+    QList<entity::Balance *> m_balanceList;
 
     void createAndSaveBalance(const MemberAccountingData* accountingData, int account, double value, const QString &purpose, const QString &info);
 };

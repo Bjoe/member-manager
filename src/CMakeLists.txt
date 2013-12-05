@@ -27,6 +27,9 @@ set(QT_SRCS
     accounting/cashimporter.cpp
     accounting/memberdebt.cpp
     accounting/accounttransaction.cpp
+    accounting/accountingdatacreator.cpp
+    accounting/transactioncreator.cpp
+    accounting/transactionexporter.cpp
     accounting/memberaccountingdata.cpp
     accounting/contributionreceiptparser.cpp
 

@@ -21,8 +21,10 @@
 #include "dao/sepaaccounttablemodel.h"
 #include "dao/contributiontablemodel.h"
 
+#include "accounting/accountingdatacreator.h"
 #include "accounting/memberaccountingdata.h"
 #include "accounting/accounttransaction.h"
+#include "accounting/transactionexporter.h"
 
 namespace membermanager {
 namespace gui {
@@ -137,46 +139,38 @@ void AccountingHandler::book(const QString &urlFilename)
         return;
     }
 
-    QTextStream stream(&csvFile);
-    accounting::AccountTransaction transaction(bankAccountNumber, bankCode, bankName,
-                                               name, creditorId, iban, bic, stream);
+    accounting::TransactionExporter transactionExporter(creditorId, iban, bic, name,
+                                                        bankAccountNumber, bankName, bankCode);
+    accounting::AccountTransaction transaction;
 
-    qaqbanking::sepa::Exporter sepaExporter(iban, bic, name);
-    qaqbanking::dtaus::Exporter exporter(bankAccountNumber, bankName,bankCode, "EUR");
-
-    connect(&sepaExporter, &qaqbanking::sepa::Exporter::logMessage, this, &AccountingHandler::statusMessage);
-    connect(&exporter, &qaqbanking::dtaus::Exporter::logMessage, this, &AccountingHandler::statusMessage);
+    connect(&transactionExporter, &accounting::TransactionExporter::logMessage, this, &AccountingHandler::statusMessage);
 
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
     emit statusMessage("Booking in progess ... please wait");
     double progressValue = 1/m_memberAccountingDataList.size();
 
     for(QObject* object : m_memberAccountingDataList) {
-
         accounting::MemberAccountingData* data = qobject_cast<accounting::MemberAccountingData *>(object);
+
         transaction.accounting(data);
 
         if(data->canCharge()) {
-            qaqbanking::sepa::TransactionPtr sepaTransaction = transaction.createSepaTransaction(data);
-            sepaExporter.addTransaction(sepaTransaction);
-
-            qaqbanking::dtaus::TransactionPtr dtausTransaction = transaction.createDtausTransaction(data);
-            exporter.addTransaction(dtausTransaction);
-
+            transactionExporter.addTransaction(data);
             transaction.collectionAccounting(data);
         }
         emit progress(progressValue);
     }
 
+    QTextStream stream(&csvFile);
     QTextStream dtausStream(&dtausFile);
-    exporter.createDtausStream(&dtausStream);
-
     QTextStream sepaStream(&sepaFile);
-    sepaExporter.createSepaDirectDebitStream(&sepaStream);
-
+    transactionExporter.out(sepaStream, dtausStream, stream);
     csvFile.close();
     dtausFile.close();
     sepaFile.close();
+
+    transaction.commit();
+
     emit statusMessage("Booking done");
     emit progress(1);
     QApplication::restoreOverrideCursor();
@@ -189,47 +183,16 @@ void AccountingHandler::onRefresh()
     QSettings settings;
     int accountingReference = settings.value("accounting/reference", 0).toInt();
 
+    accounting::AccountingDataCreator accountingCreator(m_valuta, m_purpose, m_accountingInfo, accountingReference);
+
     QList<entity::Member *> memberList = dao::MemberTableModel::findByState(entity::Member::State::active);
     for(const entity::Member* member : memberList) {
-        QString memberId = member->memberId();
-        accounting::MemberAccountingData* data = new accounting::MemberAccountingData(this);
-        data->setValuta(m_valuta);
-        data->setAccountingInfo(m_accountingInfo);
-        data->setPurpose(m_purpose);
-        data->setMemberId(memberId);
-        data->setName(member->name());
-        data->setFirstname(member->firstname());
-        QString collectionState = member->collectionState();
-        if(! collectionState.isEmpty())
-            data->setCollectionState(collectionState.at(0));
 
-        entity::BankAccount *bankAccount = dao::BankAccountTableModel::findByMemberId(memberId);
-        data->setBankAccountNumber(bankAccount->accountNumber());
-        data->setBankCode(bankAccount->code());
-
-        entity::SepaAccount *sepaAccount = dao::SepaAccountTableModel::findByMemberId(memberId);
-        data->setSepaBic(sepaAccount->bic());
-        data->setSepaIban(sepaAccount->iban());
-        data->setSepaMandateDate(sepaAccount->mandateDate());
-        data->setSepaSequenceState(sepaAccount->sequenceState());
-
-        entity::Contribution *contribution = dao::ContributionTableModel::findByMemberIdWithPointInTime(memberId, m_valuta);
-        data->setFee(contribution->fee());
-        data->setDonation(contribution->donation());
-        data->setAdditionalFee(contribution->additionalFee());
-        data->setAdditionalDonation(contribution->additionalDonation());
-        data->setAmortization(contribution->amortization());
-
-        data->setAccountingReference(QString("%1").arg(++accountingReference));
-
+        accounting::MemberAccountingData* data = accountingCreator.create(member);
         m_memberAccountingDataList.append(data);
-
-        delete bankAccount;
-        delete sepaAccount;
-        delete contribution;
         delete member;
     }
-    settings.setValue("accounting/reference", accountingReference);
+    settings.setValue("accounting/reference", accountingCreator.getAccountingReference());
 
     emit accountingDataListChanged();
 }
