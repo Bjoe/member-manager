@@ -143,8 +143,8 @@ void AccountingHandlerTest::testBook()
     settings.setValue("bank/code", QString("39912399"));
     settings.setValue("bank/account", QString("123456"));
 
-    settings.setValue("name", QString("foobar e.V."));
-    settings.setValue("creditorId", QString("DE202300000782585"));
+    settings.setValue("main/name", QString("foobar e.V."));
+    settings.setValue("main/creditorId", QString("DE202300000782585"));
     settings.setValue("sepa/iban", QString("DE26300501100021057476"));
     settings.setValue("sepa/bic", QString("DUSSDEDDXXX"));
 

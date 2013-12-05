@@ -91,8 +91,8 @@ void AccountingHandler::book(const QString &urlFilename)
     QString bankName = settings.value("bank/name").toString();
     QString bankCode = settings.value("bank/code").toString();
 
-    QString name = settings.value("name").toString();
-    QString creditorId = settings.value("creditorId").toString();
+    QString name = settings.value("main/name").toString();
+    QString creditorId = settings.value("main/creditorId").toString();
     QString bic = settings.value("sepa/bic").toString();
     QString iban = settings.value("sepa/iban").toString();
 

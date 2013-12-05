@@ -55,7 +55,7 @@ MemberAccountingData *AccountingDataCreator::create(const entity::Member* member
     data->setAdditionalDonation(additionalDonation);
     double amortization = contribution->amortization();
     data->setAmortization(amortization);
-    //fee + donation + additionalFee + additionalDonation + amortization
+
     purpose.append(QString(" Beitrag %L2EUR")
             .arg(fee));
     if(donation > 0) {
