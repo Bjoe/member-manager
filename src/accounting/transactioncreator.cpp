@@ -23,24 +23,8 @@ qaqbanking::dtaus::TransactionPtr TransactionCreator::createDtausTransaction(con
     double additionalDonation = memberData->additionalDonation();
     double amortization = memberData->amortization();
     QDate date = memberData->valuta();
-    QString purpose = memberData->purpose();
 
     QString remoteName = QString("%1, %2").arg(name).arg(firstname);
-
-    purpose.append(QString(" Beitrag %L2EUR")
-            .arg(fee));
-    if(donation > 0) {
-        purpose.append(QString(" Spende %L1EUR")
-                       .arg(donation));
-    }
-    if(additionalDonation + additionalFee > 0) {
-        purpose.append(QString(" CCC %L1EUR")
-                       .arg(additionalDonation + additionalFee));
-    }
-    if(amortization > 0) {
-        purpose.append(QString(" Rate %L1EUR")
-                       .arg(amortization));
-    }
 
     qaqbanking::dtaus::TransactionPtr transaction = qaqbanking::dtaus::TransactionBuilder()
             .withLocalName(m_bankName)
@@ -51,7 +35,7 @@ qaqbanking::dtaus::TransactionPtr TransactionCreator::createDtausTransaction(con
             .withRemoteBankCode(bankCode)
             .withValue(fee + donation + additionalFee + additionalDonation + amortization)
             .withTextKey(5)
-            .withPurpose(purpose)
+            .withPurpose(memberData->purpose())
             .build();
 
     return transaction;
@@ -69,12 +53,7 @@ qaqbanking::sepa::TransactionPtr TransactionCreator::createTransaction(const Mem
     double additionalDonation = accountingData->additionalDonation();
     double amortization = accountingData->amortization();
     QDate valuta = accountingData->valuta();
-    QString purpose = accountingData->purpose();
     QString accountingReference = accountingData->accountingReference();
-
-    // TODO in prepare Accounting auslagern
-    purpose.append(QString(" Beitrag %L2EUR")
-            .arg(fee));
 
     m_transaction.append(QString("%1;Lastschrift Einzug 011;011 Mitgliedsbeitrag %3 %2 %4;%5\n")
                 .arg(valuta.toString("dd.MM.yyyy"))
@@ -83,11 +62,7 @@ qaqbanking::sepa::TransactionPtr TransactionCreator::createTransaction(const Mem
                 .arg(remoteName)
                 .arg(fee));
     if(donation > 0) {
-        // TODO in prepare Accounting auslagern
-        purpose.append(QString(" Spende %L1EUR")
-                       .arg(donation));
-
-    m_transaction.append(QString("%1;Lastschrift Einzug 012;012 Spende %3 %2 %4;%5\n")
+        m_transaction.append(QString("%1;Lastschrift Einzug 012;012 Spende %3 %2 %4;%5\n")
                     .arg(valuta.toString("dd.MM.yyyy"))
                     .arg(memberId)
                     .arg(accountingReference)
@@ -95,10 +70,6 @@ qaqbanking::sepa::TransactionPtr TransactionCreator::createTransaction(const Mem
                     .arg(donation));
     }
     if(additionalDonation + additionalFee > 0) {
-        // TODO in prepare Accounting auslagern
-        purpose.append(QString(" CCC %L1EUR")
-                       .arg(additionalDonation + additionalFee));
-
         m_transaction.append(QString("%1;Lastschrift Einzug 004;004 Durchlaufender Posten / CCC Beitrag %3 %2 %4;%5\n")
                     .arg(valuta.toString("dd.MM.yyyy"))
                     .arg(memberId)
@@ -113,10 +84,6 @@ qaqbanking::sepa::TransactionPtr TransactionCreator::createTransaction(const Mem
                     .arg(additionalDonation));
     }
     if(amortization > 0) {
-        // TODO in prepare Accounting auslagern
-        purpose.append(QString(" Rate %L1EUR")
-                       .arg(amortization));
-
         m_transaction.append(QString("%1;Lastschrift Einzug 011;011 Mitgliedsbeitrag Rate %3 %2 %4;%5\n")
                     .arg(valuta.toString("dd.MM.yyyy"))
                     .arg(memberId)
@@ -144,7 +111,7 @@ qaqbanking::sepa::TransactionPtr TransactionCreator::createTransaction(const Mem
     transaction->setMandateId(memberId);
     transaction->setMandateDate(accountingData->sepaMandateDate());
     transaction->setCollectionDate(valuta);
-    transaction->setPurpose(purpose);
+    transaction->setPurpose(accountingData->purpose());
     transaction->setValue(fee + donation + additionalFee + additionalDonation + amortization);
     return transaction;
 }

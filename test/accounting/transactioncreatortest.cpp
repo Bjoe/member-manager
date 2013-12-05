@@ -71,7 +71,7 @@ void TransactionCreatorTest::testCreateTransaction()
     QCOMPARE(transaction->localIban(), QString("DE26300501100021057476"));
     QCOMPARE(transaction->localBic(), QString("DUSSDEDDXXX"));
     QCOMPARE(transaction->remoteName(), QString("James T., Kirk"));
-    QCOMPARE(transaction->purpose(), QString("Buchen Beitrag 15EUR Spende 10EUR CCC 5EUR Rate 8EUR"));
+    QCOMPARE(transaction->purpose(), QString("Buchen"));
     QCOMPARE(transaction->remoteBic(), QString("DUSSDEDDXXX"));
     QCOMPARE(transaction->remoteIban(), QString("DE26312345670012345678"));
     QCOMPARE(transaction->creditorSchemeId(), QString("DE202300000782585"));
@@ -109,7 +109,7 @@ void TransactionCreatorTest::testCreateDtaus()
     QCOMPARE(transaction->localBankCode(), QString("76543210"));
     QCOMPARE(transaction->localAccountNumber(), QString("123456789"));
     QCOMPARE(transaction->remoteName(), QString("Kirk, James T."));
-    QCOMPARE(transaction->purpose(), QString("Buchen Beitrag 15EUR Spende 10EUR CCC 5EUR Rate 8EUR"));
+    QCOMPARE(transaction->purpose(), QString("Buchen"));
     QCOMPARE(transaction->remoteBankCode(), QString("80070099"));
     QCOMPARE(transaction->remoteAccountNumber(), QString("22334455"));
     QCOMPARE(transaction->value(), 38.0);

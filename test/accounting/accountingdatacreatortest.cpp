@@ -101,7 +101,7 @@ void AccountingDataCreatorTest::testCreateAccountingData()
     membermanager::accounting::AccountingDataCreator accountingCreator(QDate(2013,12,1), "purpose", "info", 100000);
     membermanager::accounting::MemberAccountingData* data = accountingCreator.create(member);
 
-    QCOMPARE(data->purpose(), QString("purpose"));
+    QCOMPARE(data->purpose(), QString("purpose Beitrag 15EUR Spende 10EUR CCC 5EUR Rate 8EUR"));
     QCOMPARE(data->accountingInfo(), QString("info"));
     QCOMPARE(data->firstname(), QString("James T."));
     QCOMPARE(data->name(), QString("Kirk"));

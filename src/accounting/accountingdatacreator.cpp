@@ -24,7 +24,6 @@ MemberAccountingData *AccountingDataCreator::create(const entity::Member* member
     MemberAccountingData* data = new MemberAccountingData();
     data->setValuta(m_valuta);
     data->setAccountingInfo(m_accountingInfo);
-    data->setPurpose(m_purpose);
     data->setMemberId(memberId);
     data->setFirstname(member->firstname());
     data->setName(member->name());
@@ -43,12 +42,35 @@ MemberAccountingData *AccountingDataCreator::create(const entity::Member* member
     data->setSepaMandateDate(sepaAccount->mandateDate());
     data->setSepaSequenceState(sepaAccount->sequenceState());
 
+    QString purpose = m_purpose;
+
     entity::Contribution *contribution = dao::ContributionTableModel::findByMemberIdWithPointInTime(memberId, m_valuta);
-    data->setFee(contribution->fee());
-    data->setDonation(contribution->donation());
-    data->setAdditionalFee(contribution->additionalFee());
-    data->setAdditionalDonation(contribution->additionalDonation());
-    data->setAmortization(contribution->amortization());
+    double fee = contribution->fee();
+    data->setFee(fee);
+    double donation = contribution->donation();
+    data->setDonation(donation);
+    double additionalFee = contribution->additionalFee();
+    data->setAdditionalFee(additionalFee);
+    double additionalDonation = contribution->additionalDonation();
+    data->setAdditionalDonation(additionalDonation);
+    double amortization = contribution->amortization();
+    data->setAmortization(amortization);
+    //fee + donation + additionalFee + additionalDonation + amortization
+    purpose.append(QString(" Beitrag %L2EUR")
+            .arg(fee));
+    if(donation > 0) {
+        purpose.append(QString(" Spende %L1EUR")
+                       .arg(donation));
+    }
+    if(additionalDonation + additionalFee > 0) {
+        purpose.append(QString(" CCC %L1EUR")
+                       .arg(additionalDonation + additionalFee));
+    }
+    if(amortization > 0) {
+        purpose.append(QString(" Rate %L1EUR")
+                       .arg(amortization));
+    }
+    data->setPurpose(purpose);
 
     data->setAccountingReference(QString("%1").arg(++m_accountingReference));
 
