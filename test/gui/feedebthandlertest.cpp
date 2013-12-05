@@ -153,6 +153,11 @@ void FeeDebtHandlerTest::testCalculateSignals()
 
 void FeeDebtHandlerTest::testCopyClipboard()
 {
+    QSettings settings;
+    settings.setValue("main/name", QString("foobar e.V."));
+    settings.setValue("sepa/iban", QString("DE26300501100021057476"));
+    settings.setValue("sepa/bic", QString("DUSSDEDDXXX"));
+
     membermanager::gui::FeeDebtHandler *handler = new membermanager::gui::FeeDebtHandler(this);
     handler->onCalculate();
 
@@ -167,13 +172,12 @@ void FeeDebtHandlerTest::testCopyClipboard()
                                         "leider weist dein Mitgliedskontostand ein Sollwert von -25,00 EUR auf.\n"
                                         "Bitte zahle uns den ausstehenden Beitrag von 25,00 EUR auf\n"
                                         "folgendes Vereins Konto ein:\n"
-                                        "Name: Chaosdorf e.V.\n"
-                                        "Konto Nr.: 21057476\n"
-                                        "BLZ: 300 501 10\n"
-                                        "Bank: Stadtsparkasse Duesseldorf\n"
+                                        "Name: foobar e.V.\n"
+                                        "IBAN: DE26300501100021057476\n"
+                                        "BIC: DUSSDEDDXXX\n"
                                         "\n"
-                                        "Als Referenz bitte folgendes Eintragen:\n"
-                                        "1 James T. Kirk ausstehenden Mitgliedsbeitraege\n"
+                                        "Als Referenz/MandateId bitte folgendes Eintragen:\n"
+                                        "1\n"
                                         "\n"
                                         "Sollte es Probleme oder Fragen geben, dann wende dich bitte\n"
                                         "schnellstmoeglich an den Chaosdorf Vorstand\n"

@@ -1,5 +1,6 @@
 #include "feedebthandler.h"
 
+#include <QSettings>
 #include <QClipboard>
 #include <QApplication>
 
@@ -61,6 +62,11 @@ void FeeDebtHandler::copyToClipboard(int row)
     const QObject* object = m_debtModel.at(row);
     const accounting::MemberDebt* member = qobject_cast<const accounting::MemberDebt* >(object);
 
+    QSettings settings;
+    QString name = settings.value("main/name").toString();
+    QString bic = settings.value("sepa/bic").toString();
+    QString iban = settings.value("sepa/iban").toString();
+
     QString text;
     text.append(QString("To: %1").arg(member->email()));
     text.append("\n");
@@ -80,19 +86,16 @@ void FeeDebtHandler::copyToClipboard(int row)
     text.append("\n");
     text.append(tr("folgendes Vereins Konto ein:"));
     text.append("\n");
-    text.append(tr("Name: Chaosdorf e.V."));
+    text.append(QString("Name: %1").arg(name));
     text.append("\n");
-    text.append(tr("Konto Nr.: 21057476"));
+    text.append(QString("IBAN: %1").arg(iban));
     text.append("\n");
-    text.append(tr("BLZ: 300 501 10"));
-    text.append("\n");
-    text.append(tr("Bank: Stadtsparkasse Duesseldorf"));
+    text.append(QString("BIC: %1").arg(bic));
     text.append("\n");
     text.append("\n");
-    text.append(tr("Als Referenz bitte folgendes Eintragen:"));
+    text.append(tr("Als Referenz/MandateId bitte folgendes Eintragen:"));
     text.append("\n");
-    text.append(QString("%1 %2 %3 ").arg(member->memberId()).arg(member->firstname()).arg(member->name()));
-    text.append(tr("ausstehenden Mitgliedsbeitraege"));
+    text.append(QString("%1").arg(member->memberId()));
     text.append("\n");
     text.append("\n");
     text.append(tr("Sollte es Probleme oder Fragen geben, dann wende dich bitte"));
