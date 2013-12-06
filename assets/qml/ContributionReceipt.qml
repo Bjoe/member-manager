@@ -120,5 +120,7 @@ Item {
         id: fileDialog
         title: qsTr("Read tex file")
         onAccepted: receipt.saveReceipt(memberId, fileDialog.folder, fileDialog.fileUrl, year.currentText)
+        nameFilters: [ "LaTex (*.tex)", "All files (*)" ]
+        selectedNameFilter: "LaTex (*.tex)"
     }
 }

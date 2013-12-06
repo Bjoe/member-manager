@@ -116,8 +116,10 @@ Item {
 
     FileDialog {
         id: fileDialog
-        title: qsTr("Save DTAUS and Buchungen")
+        title: qsTr("Save SEPA and Buchungen")
         onAccepted: handler.book(fileDialog.fileUrl)
+        nameFilters: [ "SEPA (*.xml)", "All files (*)" ]
+        selectedNameFilter: "SEPA (*.xml)"
     }
 
     AccountingHandler {

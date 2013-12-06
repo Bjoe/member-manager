@@ -21,6 +21,8 @@ ApplicationWindow {
             statusBar.progress(0.1);
             mainWindow.qmlOpenSqlFile(fileDialog.fileUrl);
         }
+        nameFilters: [ "SQLite (*.dat)", "All files (*)" ]
+        selectedNameFilter: "SQLite (*.dat)"
     }
 
     Action {

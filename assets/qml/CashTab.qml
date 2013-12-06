@@ -253,6 +253,8 @@ Item {
         id: fileDialog
         title: qsTr("Read SWIFT file")
         onAccepted: handler.onImport(fileDialog.fileUrl);
+        nameFilters: [ "MT940 (*.txt)", "All files (*)" ]
+        selectedNameFilter: "MT940 (*.txt)"
     }
 
     CashImportHandler {
