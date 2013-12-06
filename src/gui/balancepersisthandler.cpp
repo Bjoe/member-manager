@@ -143,6 +143,7 @@ void BalancePersistHandler::persistInBalance(QString memberId, double value, int
     balance->setPurpose(m_cashAccount->purpose());
     balance->setValue(value);
     balance->setAccount(account);
+    balance->setAccountingReference("0"); // TODO set reference nr
     balance->setInfo("Automatische Buchung");
     balance->save();
     delete balance;

@@ -72,7 +72,7 @@ private:
     QString m_memberId {};
     QString m_info {};
     QString m_purpose {};
-    QString m_accountingReference;
+    QString m_accountingReference {};
     QDate m_valuta {};
     double m_value {};
     int m_account {};
