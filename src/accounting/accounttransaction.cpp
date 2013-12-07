@@ -105,17 +105,6 @@ void AccountTransaction::accounting(const MemberAccountingData* accountingData)
                     QString("CCC Spende %1").arg(purpose),
                     "Automatische Monats Abbuchung");
     }
-
-    double amortization = accountingData->amortization();
-    if(amortization > 0) {
-
-        createAndSaveBalance(
-                    accountingData,
-                    -2,
-                    amortization * -1,
-                    QString("Rate %1").arg(purpose),
-                    "Automatische Monats Abbuchung");
-    }
 }
 
 void AccountTransaction::commit()

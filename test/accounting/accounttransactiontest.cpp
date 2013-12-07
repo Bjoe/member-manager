@@ -96,7 +96,7 @@ void AccountTransactionTest::testBooked()
     accountTransaction.commit();
 
     result = QDjangoQuerySet<membermanager::entity::Balance>();
-    QCOMPARE(result.size(), 10);
+    QCOMPARE(result.size(), 9);
 }
 
 }

@@ -220,7 +220,7 @@ void AccountingHandlerTest::testBook()
     // TODO QCOMPARE(property["sequenceState"], QVariant("FOLLOWING"));
 
     QDjangoQuerySet<membermanager::entity::Balance> result;
-    QCOMPARE(result.size(), 10);
+    QCOMPARE(result.size(), 9);
     propertyMaps = result.values(QStringList() << "value" << "purpose" << "accountingReference");
     property = propertyMaps.at(0);
     QCOMPARE(property["value"], QVariant(-15.0));
