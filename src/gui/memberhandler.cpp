@@ -95,6 +95,7 @@ void MemberHandler::onSelectedMemberId(QVariant id)
 {
     delete m_member;
     delete m_bankAccount;
+    delete m_sepaAccount;
     delete m_contribution;
 
     delete m_contributionProxyTableModel;
@@ -120,6 +121,7 @@ void MemberHandler::onNewMember()
 {
     delete m_member;
     delete m_bankAccount;
+    delete m_sepaAccount;
     delete m_contribution;
 
     delete m_contributionProxyTableModel;
@@ -127,6 +129,7 @@ void MemberHandler::onNewMember()
 
     m_member = new entity::Member();
     m_bankAccount = new entity::BankAccount();
+    m_sepaAccount = new entity::SepaAccount();
     m_contribution = new entity::Contribution();
 
     m_contributionProxyTableModel = new ProxyTableModel(this);
