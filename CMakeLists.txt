@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8.11)
 
 project(MemberManager)
 
-set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake" CACHE PATH "cmake modul path")
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
 include(BuildUtil)
 
 # The version number.

@@ -1,5 +1,5 @@
-qt_add_test(connectiondialog connectiondialogtest.cpp)
-qt_add_test(settingsdialog settingsdialogtest.cpp)
+#qt_add_test(connectiondialog connectiondialogtest.cpp)
+#qt_add_test(settingsdialog settingsdialogtest.cpp)
 
 qt_test(contributionreceipthandler contributionreceipthandlertest.cpp)
 qt_test(memberhandler memberhandlertest.cpp)

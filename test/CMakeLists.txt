@@ -3,8 +3,6 @@ if(CMAKE_CROSSCOMPILING)
     include(Coverage)
 endif(CMAKE_CROSSCOMPILING)
 
-find_package(QtTestUtil)
-
 # Instruct CMake to run moc automatically when needed.
 set(CMAKE_AUTOMOC OFF)
 
@@ -30,7 +28,6 @@ include_directories(
   "${CMAKE_CURRENT_BINARY_DIR}/dao"
   "${CMAKE_CURRENT_BINARY_DIR}/gui"
   "${CMAKE_CURRENT_BINARY_DIR}/sumoperator"
-  "${QT_TEST_UTIL_INCLUDE_DIRS}"
 )
 
 set(test_additional_lib
@@ -39,9 +36,6 @@ set(test_additional_lib
  ${AQB_LDFLAGS}
  ${GWN_LDFLAGS}
  ${QDJ_LDFLAGS}
- ${QT_TEST_UTIL_LIBRARIES}
- ${QT_GUI_TEST_UTIL_LIBRARIES}
- ${QT_DATABASE_TEST_UTIL_LIBRARIES}
  Qt5::Widgets
  Qt5::Qml
  Qt5::Quick
