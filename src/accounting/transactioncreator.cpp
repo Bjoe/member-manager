@@ -76,7 +76,7 @@ qaqbanking::sepa::TransactionPtr TransactionCreator::createTransaction(const Mem
                     .arg(accountingReference)
                     .arg(remoteName)
                     .arg(additionalFee));
-        m_transaction.append(QString("%1;Lastschrift Einzug 005;005 Durchlaufender Posten / CCC Spende %3 %2 %4;%5\n")
+        m_transaction.append(QString("%1;Lastschrift Einzug 003;003 Durchlaufender Posten / CCC Spende %3 %2 %4;%5\n")
                     .arg(valuta.toString("dd.MM.yyyy"))
                     .arg(memberId)
                     .arg(accountingReference)
@@ -84,7 +84,7 @@ qaqbanking::sepa::TransactionPtr TransactionCreator::createTransaction(const Mem
                     .arg(additionalDonation));
     }
     if(amortization > 0) {
-        m_transaction.append(QString("%1;Lastschrift Einzug 011;011 Mitgliedsbeitrag Rate %3 %2 %4;%5\n")
+        m_transaction.append(QString("%1;Lastschrift Einzug 002;002 Mitgliedsbeitrag Rate %3 %2 %4;%5\n")
                     .arg(valuta.toString("dd.MM.yyyy"))
                     .arg(memberId)
                     .arg(accountingReference)
