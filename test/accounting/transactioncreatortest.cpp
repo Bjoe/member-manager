@@ -64,8 +64,8 @@ void TransactionCreatorTest::testCreateTransaction()
     QCOMPARE(data, QString("29.09.2013;Lastschrift Einzug 011;011 Mitgliedsbeitrag 2342 23 James T., Kirk;15\n"
                            "29.09.2013;Lastschrift Einzug 012;012 Spende 2342 23 James T., Kirk;10\n"
                            "29.09.2013;Lastschrift Einzug 004;004 Durchlaufender Posten / CCC Beitrag 2342 23 James T., Kirk;2\n"
-                           "29.09.2013;Lastschrift Einzug 005;005 Durchlaufender Posten / CCC Spende 2342 23 James T., Kirk;3\n"
-                           "29.09.2013;Lastschrift Einzug 011;011 Mitgliedsbeitrag Rate 2342 23 James T., Kirk;8\n"));
+                           "29.09.2013;Lastschrift Einzug 003;003 Durchlaufender Posten / CCC Spende 2342 23 James T., Kirk;3\n"
+                           "29.09.2013;Lastschrift Einzug 002;002 Mitgliedsbeitrag Rate 2342 23 James T., Kirk;8\n"));
 
     QCOMPARE(transaction->localName(), QString("foobar e.V."));
     QCOMPARE(transaction->localIban(), QString("DE26300501100021057476"));
