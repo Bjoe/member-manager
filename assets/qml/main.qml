@@ -8,7 +8,7 @@ ApplicationWindow {
     id: mainWindow
     title: qsTr("Member Mmanager")
     width: 1024
-    height: 748
+    height: 850
 
     signal qmlSettingsTriggered()
     signal qmlOpenSqlFile(string filename)
@@ -32,7 +32,7 @@ ApplicationWindow {
         onTriggered: fileDialog.open()
     }
 
-    Action {
+/*    Action {
         id: openDbAction
         text: qsTr("Open DB")
         tooltip: qsTr("Öffne Datenbank")
@@ -44,14 +44,14 @@ ApplicationWindow {
         tooltip: qsTr("Öffne Einstellungen")
         onTriggered: mainWindow.qmlSettingsTriggered()
     }
-
+*/
     menuBar: MenuBar {
         Menu {
             title: qsTr("&Datei")
             MenuItem {
                 action: openFileAction
             }
-
+/*
             MenuItem {
                 action: openDbAction
             }
@@ -62,7 +62,7 @@ ApplicationWindow {
             MenuItem {
                 action: openSettings
             }
-
+*/
             MenuSeparator {
             }
 

@@ -16,14 +16,17 @@ Item {
     property bool activateBookButton;
 
     SplitView {
-        orientation: Qt.Vertical
         anchors.fill: parent
+        orientation: Qt.Vertical
 
         id: mainLayout
 
-        GroupBox { // TODO This is a quick fix, I dont understand SplitView or Layout managemend in QML
-            title: "."
+        GroupBox {
+            Layout.fillHeight: true
             Layout.fillWidth: true
+            Layout.minimumHeight: 150
+
+            title: qsTr("Konto")
 
             ColumnLayout {
                 anchors.fill: parent
@@ -112,6 +115,9 @@ Item {
         }
 
         GroupBox {
+            Layout.fillWidth: true
+            Layout.minimumHeight: 350
+
             title: qsTr("Buchen")
 
             SplitView {
@@ -120,35 +126,21 @@ Item {
 
                 id: rowLayout
 
-                GroupBox { // TODO This is a quick fix, I dont understand SplitView or Layout managemend in QML
-                    title: "."
-                    Layout.minimumWidth: 300
-
-                    MemberList {
-                        anchors.fill: parent
-                        id: list
-                    }
+                MemberList {
+                    id: list
                 }
 
-                GroupBox {  // TODO This is a quick fix, I dont understand SplitView or Layout managemend in QML
-                    title: "."
-                    Layout.minimumWidth: 20
+                Item {
+                    Layout.minimumWidth: 400
 
                     GridLayout {
                         anchors.fill: parent
                         anchors.margins: 8
-                        columns: 5
+                        columns: 3
 
-                        Text { text: qsTr("Valuta") }
-                        DateField {
-                            readOnly: true
-                            value: handler.cashAccount.valuta
-                        }
-
-                        Text { text: qsTr("Betrag") }
-                        AmountField {
-                            readOnly: true
-                            value: handler.cashAccount.value
+                        Text {
+                            Layout.columnSpan: 2
+                            text: qsTr("Daten")
                         }
 
                         Text {
@@ -156,13 +148,14 @@ Item {
                             text: qsTr("Bezeichnung")
                         }
 
-                        Text { text: qsTr("Beitrag") }
-                        Text { text: qsTr("Spende") }
-                        Text { text: qsTr("CCC Beitrag") }
-                        Text { text: qsTr("CCC Spende") }
+                        Text { text: qsTr("Valuta") }
+                        DateField {
+                            readOnly: true
+                            value: handler.cashAccount.valuta
+                        }
 
                         TextArea {
-                            Layout.rowSpan: 5
+                            Layout.rowSpan: 9
                             Layout.fillWidth: true
                             Layout.fillHeight: true
 
@@ -170,42 +163,55 @@ Item {
                             text: handler.cashAccount.purpose
                         }
 
+
+                        Text { text: qsTr("Betrag") }
+                        AmountField {
+                            readOnly: true
+                            value: handler.cashAccount.value
+                        }
+
+
+                        Text { text: qsTr("Beitrag") }
                         AmountField {
                             id: fee
                             value: 0
                         }
+
+                        Text { text: qsTr("Spende") }
                         AmountField {
                             id: donation
                             value: 0
                         }
+
+                        Text { text: qsTr("CCC Beitrag") }
                         AmountField {
                             id: additional
                             value: 0
                         }
+
+                        Text { text: qsTr("CCC Spende") }
                         AmountField {
                             id: additionalDonation
                             value: 0
                         }
+
 
                         Text { text: qsTr("Gebühr") }
                         AmountField {
                             id: tax
                             value: 0
                         }
-                        Item {
-                            Layout.columnSpan: 3
-                            Layout.fillHeight: true
-                        }
 
                         Item {
-                            Layout.columnSpan: 4
                             Layout.fillHeight: true
+                            Layout.columnSpan: 2
                         }
 
                         Button {
+                            Layout.columnSpan: 2
+
                             id: bookButton
 
-                            Layout.columnSpan: 4
                             text: qsTr("Buchen")
 
                             onClicked: {

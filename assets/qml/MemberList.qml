@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.0
 import membermanager 1.0
 
 Item {
-    width: 500
+    Layout.minimumWidth: 250
 
     id: root
 

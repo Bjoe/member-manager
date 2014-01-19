@@ -25,6 +25,8 @@ Item {
         MemberDetail {
             Layout.fillHeight: true
             Layout.fillWidth: true
+            Layout.minimumWidth: 400
+            Layout.minimumHeight: 750
 
             id: view
         }

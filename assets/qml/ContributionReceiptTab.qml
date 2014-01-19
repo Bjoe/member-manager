@@ -29,6 +29,7 @@ Item {
         ContributionReceipt {
             Layout.fillHeight: true
             Layout.fillWidth: true
+            Layout.minimumWidth: 400
 
             id: contributionReceipt
 
