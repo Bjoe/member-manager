@@ -34,7 +34,7 @@ Item {
                         model: ListModel {
                             id: yearList
                             Component.onCompleted: {
-                                var year = 2013; // TODO Date().toLocaleString("dd.MM.yyyy");
+                                var year = 2014; // TODO Date().toLocaleString("dd.MM.yyyy");
                                 root.selectedYear = year;
                                 console.debug("Jahr", year)
                                 for (var i = 0 ; i < 13 ; ++i) {
