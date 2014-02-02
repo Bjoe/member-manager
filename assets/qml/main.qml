@@ -217,7 +217,7 @@ ApplicationWindow {
                     onStatusMessage: statusBar.message(msg);
                     onProgress: statusBar.progress(value);
                 }
-                Connections {
+                /*Connections {
                     target: mainWindow
                     onRefresh: cash.onRefresh()
                 }
@@ -228,7 +228,7 @@ ApplicationWindow {
                 Connections {
                     target: cash
                     onDatabaseChanged: mainWindow.refresh()
-                }
+                }*/
             }
         }
     }

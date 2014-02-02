@@ -33,7 +33,7 @@ entity::CashAccount *BalancePersistHandler::cashAccount() const
 void BalancePersistHandler::setMemberId(QString memberId)
 {
     m_memberId = memberId;
-    emit memberChanged();
+    emit memberIdChanged();
 }
 
 QString BalancePersistHandler::memberId() const
@@ -125,7 +125,6 @@ void BalancePersistHandler::onBooked()
 
     emit progress(1);
     emit statusMessage("Booking done.");
-    emit memberChanged();
 }
 
 void BalancePersistHandler::persistInBalance(QString memberId, double value, int account)

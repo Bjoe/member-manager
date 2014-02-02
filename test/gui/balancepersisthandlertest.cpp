@@ -153,7 +153,6 @@ void BalancePersistHandlerTest::testPersistNegativAmount()
 void BalancePersistHandlerTest::testSignalAfterPersist()
 {
     membermanager::gui::BalancePersistHandler *handler = new membermanager::gui::BalancePersistHandler(this);
-    QSignalSpy spy(handler, SIGNAL(memberChanged()));
     QSignalSpy progressSignal(handler, SIGNAL(progress(double)));
     QSignalSpy messageSignal(handler, SIGNAL(statusMessage(QString)));
 
@@ -162,7 +161,6 @@ void BalancePersistHandlerTest::testSignalAfterPersist()
 
     handler->onBooked();
 
-    QCOMPARE(spy.count(), 1);
     QCOMPARE(messageSignal.count(), 2);
     QCOMPARE(progressSignal.count(), 2);
 

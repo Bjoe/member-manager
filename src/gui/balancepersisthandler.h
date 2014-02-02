@@ -54,7 +54,6 @@ signals:
     void additionalDonationChanged();
     void taxChanged();
 
-    void memberChanged();
     void statusMessage(QString message);
     void progress(double value);
 

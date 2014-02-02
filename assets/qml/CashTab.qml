@@ -10,10 +10,8 @@ Item {
 
     signal statusMessage(string msg);
     signal progress(double value);
-    signal databaseChanged();
 
     property var selectedYear;
-    property bool activateBookButton;
 
     SplitView {
         anchors.fill: parent
@@ -26,6 +24,7 @@ Item {
             Layout.fillWidth: true
             Layout.minimumHeight: 150
 
+            id: cashGroup
             title: qsTr("Konto")
 
             ColumnLayout {
@@ -41,7 +40,7 @@ Item {
                                 root.selectedYear = year;
                                 console.debug("Jahr", year)
                                 for (var i = 0 ; i < 13 ; ++i) {
-                                    append({"year": year - i})
+                                    append({"year": year - i, "text": year - i})
                                 }
                             }
                         }
@@ -104,11 +103,7 @@ Item {
 
                     model: handler.cashProxyModel
 
-                    onActivated: {
-                        console.debug("Activate row: " + row)
-                        handler.onSelectedRow(row)
-                        root.activateBooking();
-                    }
+                    onActivated: handler.onSelectedRow(row)
                 }
             }
 
@@ -118,6 +113,7 @@ Item {
             Layout.fillWidth: true
             Layout.minimumHeight: 350
 
+            id: bookGroup
             title: qsTr("Buchen")
 
             SplitView {
@@ -128,6 +124,8 @@ Item {
 
                 MemberList {
                     id: list
+
+                    onSelectedMemberId: memberHandler.onSelectedMemberId(id);
                 }
 
                 Item {
@@ -239,7 +237,7 @@ Item {
                                     persister.tax = tax.readValue();
 
                                     persister.onBooked();
-                                    root.databaseChanged();
+                                    onRefresh();
                                 } else {
                                     fee.textColor = "red";
                                     donation.textColor = "red";
@@ -291,25 +289,20 @@ Item {
             additionalDonation.value = contribution.additionalDonation;
 
             console.debug("Changed to member id: " + memberHandler.member.memberId);
-            root.activateBooking();
+            bookButton.enabled = true;
         }
     }
 
-    Connections {
-        target: list
-        onSelectedMemberId: memberHandler.onSelectedMemberId(id)
-    }
-
     function onRefresh() {
-        list.onRefresh()
-        handler.onRefresh()
-        cashTable.currentRow = -1;
-        bookButton.enabled = false;
-        root.activateBookButton = false;
-    }
+        list.onRefresh();
 
-    function activateBooking() {
-        bookButton.enabled = (true & root.activateBookButton);
-        root.activateBookButton = true;
+        var row = cashTable.currentRow;
+        handler.onRefresh();
+        if(row < -1) {
+            cashTable.selection.select(row);
+        }
+        cashTable.currentRow = row;
+
+        bookButton.enabled = false;
     }
 }

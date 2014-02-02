@@ -37,11 +37,11 @@ public slots:
     void onImport(const QString& urlFilename);
 
 private:
-    ProxyTableModel *m_cashProxyModel;
-    entity::CashAccount *m_cashAccount;
+    int m_year = 0;
+    ProxyTableModel *m_cashProxyModel = nullptr;
+    entity::CashAccount *m_cashAccount = new entity::CashAccount();
 
-    void createCashProxyTableModel(int year);
-    int currentYear();
+    void createCashProxyTableModel();
 };
 
 } // namespace gui

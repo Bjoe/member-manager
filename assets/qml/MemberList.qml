@@ -55,7 +55,10 @@ Item {
         RowLayout {
             Button { // TODO is there any TableView.changeSort.... SIGNAL in QML?
                 text: qsTr("Sort/Refresh")
-                onClicked: onRefresh();
+                onClicked: {
+                    memberViewList.currentRow = -1;
+                    onRefresh();
+                }
             }
 
             CheckBox {
@@ -74,9 +77,12 @@ Item {
     }
 
     function onRefresh() {
-        console.debug("refresh list")
+        var row = memberViewList.currentRow;
         handler.isInactive = memberState.checked;
         handler.onRefresh(memberViewList.getColumn(memberViewList.sortIndicatorColumn).role, memberViewList.sortIndicatorOrder);
-        memberViewList.currentRow = -1;
+        if(row < -1) {
+            memberViewList.selection.select(row);
+        }
+        memberViewList.currentRow = row;
     }
 }
