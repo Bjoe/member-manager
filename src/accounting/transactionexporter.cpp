@@ -5,6 +5,7 @@ namespace accounting {
 
 TransactionExporter::TransactionExporter(QString creditorId, QString iban, QString bic, QString name, QString bankAccountNumber, QString bankName, QString bankCode)
     : m_transactionCreator(bankAccountNumber, bankCode, bankName, name, creditorId, iban, bic),
+      m_exporterFirst(iban, bic, name),
       m_exporter(iban, bic, name),
       m_dtausExporter(bankAccountNumber, bankName, bankCode, "EUR")
 {
@@ -15,14 +16,20 @@ TransactionExporter::TransactionExporter(QString creditorId, QString iban, QStri
 void TransactionExporter::addTransaction(MemberAccountingData* accountingData)
 {
     qaqbanking::sepa::TransactionPtr transaction = m_transactionCreator.createTransaction(accountingData);
-    m_exporter.addTransaction(transaction);
+
+    if(transaction->sequenceType() == qaqbanking::sepa::Transaction::SequenceType::FIRST) {
+        m_exporterFirst.addTransaction(transaction);
+    } else {
+        m_exporter.addTransaction(transaction);
+    }
 
     qaqbanking::dtaus::TransactionPtr dtausTransaction = m_transactionCreator.createDtausTransaction(accountingData);
     m_dtausExporter.addTransaction(dtausTransaction);
 }
 
-void TransactionExporter::out(QTextStream& sepaStream, QTextStream& dtausStream, QTextStream& csvStream)
+void TransactionExporter::out(QTextStream& sepaStreamFirst, QTextStream& sepaStream, QTextStream& dtausStream, QTextStream& csvStream)
 {
+    m_exporterFirst.createSepaDirectDebitStream(&sepaStreamFirst);
     m_exporter.createSepaDirectDebitStream(&sepaStream);
     m_dtausExporter.createDtausStream(&dtausStream);
     m_transactionCreator.out(csvStream);

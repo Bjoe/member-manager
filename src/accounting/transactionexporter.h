@@ -24,13 +24,14 @@ class TransactionExporter : public QObject
 public:
     TransactionExporter(QString creditorId, QString iban, QString bic, QString name, QString bankAccountNumber, QString bankName, QString bankCode);
     void addTransaction(MemberAccountingData* accountingData);
-    void out(QTextStream &sepaStream, QTextStream &dtausStream, QTextStream &csvStream);
+    void out(QTextStream &sepaStreamFirst, QTextStream &sepaStream, QTextStream &dtausStream, QTextStream &csvStream);
 
 signals:
     void logMessage(QString);
 
 private:
     TransactionCreator m_transactionCreator;
+    qaqbanking::sepa::Exporter m_exporterFirst;
     qaqbanking::sepa::Exporter m_exporter;
     qaqbanking::dtaus::Exporter m_dtausExporter;
 };

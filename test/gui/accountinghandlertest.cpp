@@ -199,7 +199,7 @@ void AccountingHandlerTest::testBook()
 
     file2.close();
 
-    QFile sepaFile("testfile.xml");
+    QFile sepaFile("testfile-FIRST.xml");
     QVERIFY(sepaFile.open(QIODevice::ReadOnly | QIODevice::Text));
 
     QTextStream sepaStream(&sepaFile);
@@ -262,7 +262,7 @@ void AccountingHandlerTest::testBookSignals()
 
     handler.book("file:testfile");
 
-    QCOMPARE(messageSignal.count(), 2);
+    QCOMPARE(messageSignal.count(), 4);
     QCOMPARE(progressSignal.count(), 3);
 
     QList<QVariant> messageArgument1 = messageSignal.takeFirst();

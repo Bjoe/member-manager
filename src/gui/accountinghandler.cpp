@@ -129,11 +129,22 @@ void AccountingHandler::book(const QString &urlFilename)
         return;
     }
 
+    QString sepaFilenameFirst = QString("%1-FIRST.xml").arg(filename);
+    QFile sepaFileFirst(sepaFilenameFirst);
+    if(! sepaFileFirst.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        QString error = sepaFileFirst.errorString();
+        emit statusMessage(QString("Cant save SEPA %1:%2").arg(sepaFilenameFirst).arg(error));
+        dtausFile.close();
+        csvFile.close();
+        return;
+    }
+
     QString sepaFilename = QString("%1.xml").arg(filename);
     QFile sepaFile(sepaFilename);
     if(! sepaFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
         QString error = sepaFile.errorString();
         emit statusMessage(QString("Cant save SEPA %1:%2").arg(sepaFilename).arg(error));
+        sepaFileFirst.close();
         dtausFile.close();
         csvFile.close();
         return;
@@ -164,10 +175,12 @@ void AccountingHandler::book(const QString &urlFilename)
     QTextStream stream(&csvFile);
     QTextStream dtausStream(&dtausFile);
     QTextStream sepaStream(&sepaFile);
-    transactionExporter.out(sepaStream, dtausStream, stream);
+    QTextStream sepaStreamFirst(&sepaFileFirst);
+    transactionExporter.out(sepaStreamFirst, sepaStream, dtausStream, stream);
     csvFile.close();
     dtausFile.close();
     sepaFile.close();
+    sepaFileFirst.close();
 
     transaction.commit();
 
