@@ -111,7 +111,7 @@ Item {
 
         GroupBox {
             Layout.fillWidth: true
-            Layout.minimumHeight: 350
+            Layout.minimumHeight: 400
 
             id: bookGroup
             title: qsTr("Buchen")
@@ -138,7 +138,7 @@ Item {
 
                         Text {
                             Layout.columnSpan: 2
-                            text: qsTr("Daten")
+                            text: qsTr("Transactions Daten")
                         }
 
                         Text {
@@ -168,33 +168,43 @@ Item {
                             value: handler.cashAccount.value
                         }
 
+                        Text {
+                            Layout.columnSpan: 2
+                            text: qsTr("Mitglieds Daten")
+                        }
+
+                        Text { text: qsTr("MitgliedsNr") }
+                        TextField {
+                            id: memberId
+                            text: memberHandler.member.memberId
+                        }
 
                         Text { text: qsTr("Beitrag") }
                         AmountField {
                             id: fee
-                            value: 0
+                            value: memberHandler.contribution.fee
                         }
 
                         Text { text: qsTr("Spende") }
                         AmountField {
                             id: donation
-                            value: 0
+                            value: memberHandler.contribution.donation
                         }
 
                         Text { text: qsTr("CCC Beitrag") }
                         AmountField {
                             id: additional
-                            value: 0
+                            value: memberHandler.contribution.additionalFee
                         }
 
                         Text { text: qsTr("CCC Spende") }
                         AmountField {
                             id: additionalDonation
-                            value: 0
+                            value: memberHandler.contribution.additionalDonation
                         }
 
 
-                        Text { text: qsTr("Gebühr") }
+                        Text { text: qsTr("Gebühr/Sonstiges") }
                         AmountField {
                             id: tax
                             value: 0
@@ -229,7 +239,7 @@ Item {
                                     tax.textColor = "black";
 
                                     persister.cashAccount = handler.cashAccount;
-                                    persister.memberId = memberHandler.member.memberId;
+                                    persister.memberId = memberId.text;
                                     persister.fee = fee.readValue();
                                     persister.donation = donation.readValue();
                                     persister.additional = additional.readValue();
@@ -275,22 +285,6 @@ Item {
 
     MemberHandler {
         id: memberHandler
-
-        onMemberChanged: {
-            tax.value = 0;
-            fee.value = 0;
-            donation.value = 0;
-            additional.value = 0;
-            additionalDonation.value = 0;
-
-            fee.value = contribution.fee;
-            donation.value = contribution.donation;
-            additional.value = contribution.additionalFee;
-            additionalDonation.value = contribution.additionalDonation;
-
-            console.debug("Changed to member id: " + memberHandler.member.memberId);
-            bookButton.enabled = true;
-        }
     }
 
     function onRefresh() {
@@ -298,11 +292,9 @@ Item {
 
         var row = cashTable.currentRow;
         handler.onRefresh();
-        if(row < -1) {
+        if(row > -1) {
             cashTable.selection.select(row);
         }
         cashTable.currentRow = row;
-
-        bookButton.enabled = false;
     }
 }

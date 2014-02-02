@@ -80,7 +80,7 @@ Item {
         var row = memberViewList.currentRow;
         handler.isInactive = memberState.checked;
         handler.onRefresh(memberViewList.getColumn(memberViewList.sortIndicatorColumn).role, memberViewList.sortIndicatorOrder);
-        if(row < -1) {
+        if(row > -1) {
             memberViewList.selection.select(row);
         }
         memberViewList.currentRow = row;

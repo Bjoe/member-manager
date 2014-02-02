@@ -42,7 +42,7 @@ private:
     entity::Member::State m_memberState;
     ProxyTableModel *m_memberProxyTableModel;
 
-    void createMemberProxyTableModel(const QVariant& column = "memberId", const Qt::SortOrder order = Qt::SortOrder::DescendingOrder);
+    void createMemberProxyTableModel(const QVariant& column = "memberId", const Qt::SortOrder order = Qt::SortOrder::AscendingOrder);
 };
 
 } // namespace gui
