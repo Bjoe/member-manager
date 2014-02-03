@@ -75,7 +75,7 @@ void TransactionCreatorTest::testCreateTransaction()
     QCOMPARE(transaction->remoteBic(), QString("DUSSDEDDXXX"));
     QCOMPARE(transaction->remoteIban(), QString("DE26312345670012345678"));
     QCOMPARE(transaction->creditorSchemeId(), QString("DE202300000782585"));
-    QCOMPARE(transaction->mandateId(), QString("23"));
+    QCOMPARE(transaction->mandateId(), QString("CHD23"));
     QCOMPARE(transaction->mandateDate(), QDate(2013,11,30));
     QCOMPARE(transaction->endToEndReference(), QString("2342"));
     QCOMPARE(transaction->sequenceType(), qaqbanking::sepa::Transaction::FIRST);

@@ -108,7 +108,7 @@ qaqbanking::sepa::TransactionPtr TransactionCreator::createTransaction(const Mem
         transaction->setSequenceType(qaqbanking::sepa::Transaction::FOLLOWING);
     }
     transaction->setEndToEndReference(accountingReference);
-    transaction->setMandateId(memberId);
+    transaction->setMandateId(QString("CHD%1").arg(memberId));
     transaction->setMandateDate(accountingData->sepaMandateDate());
     transaction->setCollectionDate(valuta);
     transaction->setPurpose(accountingData->purpose());
