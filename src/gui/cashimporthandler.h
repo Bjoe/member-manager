@@ -32,16 +32,14 @@ signals:
     void progress(double value);
 
 public slots:
-    void onRefresh();
-    void onSelectedRow(int row);
-    void onImport(const QString& urlFilename);
+    void refresh();
+    void selectedRow(int row);
+    void importFile(const QString& urlFilename);
 
 private:
     int m_year = 0;
-    ProxyTableModel *m_cashProxyModel = nullptr;
+    ProxyTableModel *m_cashProxyModel = new ProxyTableModel(this);
     entity::CashAccount *m_cashAccount = new entity::CashAccount();
-
-    void createCashProxyTableModel();
 };
 
 } // namespace gui

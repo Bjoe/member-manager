@@ -25,10 +25,13 @@ class ProxyTableModel : public QAbstractListModel
 {
     Q_OBJECT
 public:
-    ProxyTableModel(QObject *parent = 0);
-    explicit ProxyTableModel(QSqlTableModel *model, QObject *parent = 0);
+    explicit ProxyTableModel(QObject *parent = 0);
 
+    // TODO add Move constructors
+
+    void setModel(QSqlTableModel* model);
     QSqlTableModel *getModel() const;
+
     bool select();
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
@@ -36,8 +39,8 @@ public:
     QHash<int,QByteArray> roleNames() const;
 
 private:
-    QHash<int, QByteArray> m_roles;
-    QSqlTableModel *m_sqlTableModel;
+    QHash<int, QByteArray> m_roles {};
+    QSqlTableModel *m_sqlTableModel = new QSqlTableModel();
 };
 
 } // namespace gui

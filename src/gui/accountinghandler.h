@@ -45,15 +45,14 @@ signals:
     void progress(double value);
 
 public slots:
-    void onRefresh();
+    void reset();
+    void refresh();
 
 private:
-    QDate m_valuta;
+    QDate m_valuta = QDate::currentDate();
     QString m_purpose {};
     QString m_accountingInfo {};
     QList<QObject *> m_memberAccountingDataList {};
-
-    void clearList();
 };
 
 } // namespace gui

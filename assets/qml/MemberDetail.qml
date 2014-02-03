@@ -11,13 +11,13 @@ Item {
     property alias balanceListModel: handler.balanceProxyModel
     property alias contributionListModel: handler.contributionProxyModel
 
-    property var memberState;
-    property var contributionState;
+    property var memberState: Qt.Unchecked;
+    property var contributionState: Qt.Unchecked;
     property bool valid;
     property bool readOnly;
 
     signal read()
-    signal databaseChanged()
+    signal refresh()
 
     id: memberDetail
 
@@ -196,7 +196,7 @@ Item {
                         Layout.fillWidth: true
                     }
 
-                    function onRead() {
+                    function read() {
                         console.debug("Read data valid =", memberDetail.valid);
 
                         member.memberId = memberIdField.text;
@@ -232,7 +232,7 @@ Item {
 
                     Connections {
                         target: memberDetail
-                        onRead: dataTab.onRead()
+                        onRead: dataTab.read()
                     }
 
                 }
@@ -317,7 +317,7 @@ Item {
 
                             Button {
                                 text: qsTr("Neuer Beitrag")
-                                onClicked: handler.onNewContribution()
+                                onClicked: handler.newContribution()
                             }
                         }
                     }
@@ -446,7 +446,7 @@ Item {
                         Layout.fillWidth: true
                     }
 
-                    function onRead() {
+                    function read() {
                         console.debug("Read contribution valid =", memberDetail.valid);
 
                         contribution.memberId = member.memberId;
@@ -494,7 +494,7 @@ Item {
 
                     Connections {
                         target: memberDetail
-                        onRead: contributionTab.onRead()
+                        onRead: contributionTab.read()
                     }
                 }
             }
@@ -560,14 +560,14 @@ Item {
 
                     }
 
-                    function onRead() {
+                    function read() {
                         console.debug("Read");
                         member.info = infoField.text
                     }
 
                     Connections {
                         target: memberDetail
-                        onRead: infoTab.onRead()
+                        onRead: infoTab.read()
                     }
                 }
             }
@@ -580,7 +580,7 @@ Item {
 
                 onClicked: {
                     console.debug("new member")
-                    handler.onNewMember();
+                    handler.newMember();
                     memberDetail.readOnly = false;
                 }
             }
@@ -599,7 +599,7 @@ Item {
                         sepaAccount.save();
                         contribution.save();
                         memberDetail.readOnly = true;
-                        memberDetail.databaseChanged();
+                        memberDetail.refresh();
                     } else {
                         console.debug("error");
                     }
@@ -614,7 +614,7 @@ Item {
 
     function selectedMemberId(id) {
         memberDetail.readOnly = true;
-        handler.onSelectedMemberId(id);
+        handler.selectedMemberId(id);
 
         if(handler.member.collectionState === 'K') {
             memberDetail.contributionState = Qt.Checked;
@@ -627,5 +627,9 @@ Item {
         } else {
             memberDetail.memberState = Qt.Unchecked;
         }
+    }
+
+    function reset() {
+        handler.reset();
     }
 }

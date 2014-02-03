@@ -13,7 +13,7 @@ namespace membermanager {
 namespace gui {
 
 FeeDebtHandler::FeeDebtHandler(QObject *parent) :
-    QObject(parent), m_memberState(entity::Member::State::active), m_debtModel()
+    QObject(parent)
 {
 }
 
@@ -128,12 +128,12 @@ void FeeDebtHandler::copyAllToClipboard()
     clipboard->setText(text);
 }
 
-void FeeDebtHandler::onCalculate()
+void FeeDebtHandler::calculate()
 {
     emit progress(0);
     emit statusMessage("Calculate in progress ... please wait");
 
-    clearList();
+    reset();
     QList<entity::Member *> members = dao::MemberTableModel::findByState(m_memberState);
 
     double progressValue = 1/ members.size();
@@ -158,20 +158,12 @@ void FeeDebtHandler::onCalculate()
     emit statusMessage("Calculate done");
 }
 
-void FeeDebtHandler::clearList()
+void FeeDebtHandler::reset()
 {
-    for(const QObject *object : m_debtModel) {
-        delete object;
-    }
+    qDeleteAll(m_debtModel);
     m_debtModel.clear();
-}
-
-void FeeDebtHandler::onRefresh()
-{
-    clearList();
     emit debtModelChanged();
 }
-
 
 } // namespace gui
 } // namespace membermanager

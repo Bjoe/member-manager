@@ -30,13 +30,13 @@ namespace membermanager {
 namespace gui {
 
 AccountingHandler::AccountingHandler(QObject *parent) :
-    QObject(parent), m_valuta(QDate::currentDate())
+    QObject(parent)
 {
 }
 
 AccountingHandler::~AccountingHandler()
 {
-    clearList();
+    reset();
 }
 
 void AccountingHandler::setValuta(const QDate &date)
@@ -189,9 +189,9 @@ void AccountingHandler::book(const QString &urlFilename)
     QApplication::restoreOverrideCursor();
 }
 
-void AccountingHandler::onRefresh()
+void AccountingHandler::refresh()
 {
-    clearList();
+    reset();
 
     QSettings settings;
     int accountingReference = settings.value("accounting/reference", 0).toInt();
@@ -210,12 +210,11 @@ void AccountingHandler::onRefresh()
     emit accountingDataListChanged();
 }
 
-void AccountingHandler::clearList()
+void AccountingHandler::reset()
 {
-    for(const QObject* object : m_memberAccountingDataList) {
-        delete object;
-    }
+    qDeleteAll(m_memberAccountingDataList);
     m_memberAccountingDataList.clear();
+    emit accountingDataListChanged();
 }
 
 } // namespace gui

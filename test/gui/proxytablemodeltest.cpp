@@ -62,8 +62,8 @@ void ProxyTableModelTest::testProxy()
     model->setTable("member");
     model->select();
 
-    membermanager::gui::ProxyTableModel proxyTable(model, this);
-
+    membermanager::gui::ProxyTableModel proxyTable(this);
+    proxyTable.setModel(model);
     QHash<int, QByteArray> roles = proxyTable.roleNames();
 
     QCOMPARE(roles.size(), 15);

@@ -23,7 +23,7 @@ Item {
 
             Button {
                 text: qsTr("Aktualisieren")
-                onClicked: onRefresh()
+                onClicked: handler.refresh()
             }
 
             Label {
@@ -129,9 +129,7 @@ Item {
         onProgress: root.progress(value);
     }
 
-    function onRefresh() {
-        handler.accountingInfo = accountingInfo.text
-        handler.purpose = purpose.text
-        handler.onRefresh()
+    function reset() {
+        handler.reset();
     }
 }

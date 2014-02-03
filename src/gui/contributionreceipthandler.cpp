@@ -26,12 +26,12 @@ ContributionReceiptHandler::ContributionReceiptHandler(QObject *parent) :
 
 ContributionReceiptHandler::~ContributionReceiptHandler()
 {
-    clearList();
+    reset();
 }
 
 void ContributionReceiptHandler::createReceipt(QVariant memberId, int year)
 {
-    clearList();
+    reset();
     m_balanceList = dao::BalanceTableModel::findContributionByMemberIdAndYear(memberId, year);
     setSum(calculateSum());
     emit balanceListChanged();
@@ -94,12 +94,11 @@ void ContributionReceiptHandler::saveReceipt(int id, const QString& urlPath, con
     emit progress(1);
 }
 
-void ContributionReceiptHandler::clearList()
+void ContributionReceiptHandler::reset()
 {
-    for(QObject *object : m_balanceList) {
-        delete object;
-    }
+    qDeleteAll(m_balanceList);
     m_balanceList.clear();
+    emit balanceListChanged();
 }
 
 double ContributionReceiptHandler::calculateSum()

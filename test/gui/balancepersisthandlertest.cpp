@@ -87,7 +87,7 @@ void BalancePersistHandlerTest::testPersistPositiveAmount()
     handler->setAdditionalDonation("8");
     handler->setTax("6");
 
-    handler->onBooked();
+    handler->book();
 
     QDjangoQuerySet<membermanager::entity::CashAccount> actualCashAccountSet;
     QCOMPARE(actualCashAccountSet.count(), 1);
@@ -125,7 +125,7 @@ void BalancePersistHandlerTest::testPersistNegativAmount()
     handler->setAdditional("0,00");
     handler->setTax("-6");
 
-    handler->onBooked();
+    handler->book();
 
     QDjangoQuerySet<membermanager::entity::CashAccount> actualCashAccountSet;
     QCOMPARE(actualCashAccountSet.count(), 1);
@@ -159,7 +159,7 @@ void BalancePersistHandlerTest::testSignalAfterPersist()
     membermanager::entity::CashAccount *cashAccount = new membermanager::entity::CashAccount();
     handler->setCashAccount(cashAccount);
 
-    handler->onBooked();
+    handler->book();
 
     QCOMPARE(messageSignal.count(), 2);
     QCOMPARE(progressSignal.count(), 2);

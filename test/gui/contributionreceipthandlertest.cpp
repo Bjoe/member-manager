@@ -98,7 +98,7 @@ void ContributionReceiptHandlerTest::testCreateReceipt()
 
     QList<QObject *> balanceList = handler.balanceList();
     QCOMPARE(balanceList.size(), 2);
-    QCOMPARE(spy.count(), 1);
+    QCOMPARE(spy.count(), 2);
 }
 
 void ContributionReceiptHandlerTest::testRemoveRow()
@@ -112,7 +112,7 @@ void ContributionReceiptHandlerTest::testRemoveRow()
 
     QList<QObject *> balanceList = handler.balanceList();
     QCOMPARE(balanceList.size(), 1);
-    QCOMPARE(spy.count(), 2);
+    QCOMPARE(spy.count(), 3);
 }
 
 void ContributionReceiptHandlerTest::testSum()

@@ -81,16 +81,13 @@ void MemberListHandlerTest::initTestCase()
 void MemberListHandlerTest::testMemberProxyModelChanged()
 {
     membermanager::gui::MemberListHandler *handler = new membermanager::gui::MemberListHandler(this);
-    QSignalSpy spy(handler, SIGNAL(memberProxyModelChanged()));
 
     membermanager::gui::ProxyTableModel *model = handler->memberProxyModel();
     QCOMPARE(model->rowCount(), 1);
-    QCOMPARE(spy.count(), 0);
 
-    handler->onRefresh("memberId", Qt::SortOrder::AscendingOrder);
+    handler->refresh("memberId", Qt::SortOrder::AscendingOrder);
     model = handler->memberProxyModel();
     QCOMPARE(model->rowCount(), 1);
-    QCOMPARE(spy.count(), 1);
 }
 
 void MemberListHandlerTest::testMemberSelected()
@@ -98,7 +95,7 @@ void MemberListHandlerTest::testMemberSelected()
     membermanager::gui::MemberListHandler *handler = new membermanager::gui::MemberListHandler(this);
     QSignalSpy spy(handler, SIGNAL(selectMemberId(QVariant)));
 
-    handler->onSelectedRow(0);
+    handler->selectedRow(0);
     QCOMPARE(spy.count(), 1);
 
     QList<QVariant> arguments = spy.takeFirst();
@@ -114,9 +111,9 @@ void MemberListHandlerTest::testMemberDeletedSelected()
     handler->setMemberState(membermanager::entity::Member::State::deleted);
     QCOMPARE(spyState.count(), 1);
 
-    handler->onRefresh("memberId", Qt::SortOrder::AscendingOrder);
+    handler->refresh("memberId", Qt::SortOrder::AscendingOrder);
 
-    handler->onSelectedRow(0);
+    handler->selectedRow(0);
     QCOMPARE(spy.count(), 1);
 
     QList<QVariant> arguments = spy.takeFirst();

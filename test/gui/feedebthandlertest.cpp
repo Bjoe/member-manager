@@ -119,9 +119,9 @@ void FeeDebtHandlerTest::testCalculate()
     membermanager::gui::FeeDebtHandler *handler = new membermanager::gui::FeeDebtHandler(this);
     QSignalSpy spy(handler, SIGNAL(debtModelChanged()));
 
-    handler->onCalculate();
+    handler->calculate();
 
-    QCOMPARE(spy.count(), 1);
+    QCOMPARE(spy.count(), 2);
 
     QList<QObject *> debtModel = handler->debtModel();
     QCOMPARE(debtModel.size(), 1);
@@ -133,7 +133,7 @@ void FeeDebtHandlerTest::testCalculateSignals()
     QSignalSpy progressSignal(handler, SIGNAL(progress(double)));
     QSignalSpy messageSignal(handler, SIGNAL(statusMessage(QString)));
 
-    handler->onCalculate();
+    handler->calculate();
 
     QCOMPARE(messageSignal.count(), 2);
     QCOMPARE(progressSignal.count(), 2);
@@ -159,7 +159,7 @@ void FeeDebtHandlerTest::testCopyClipboard()
     settings.setValue("sepa/bic", QString("DUSSDEDDXXX"));
 
     membermanager::gui::FeeDebtHandler *handler = new membermanager::gui::FeeDebtHandler(this);
-    handler->onCalculate();
+    handler->calculate();
 
     handler->copyToClipboard(0);
 
@@ -189,7 +189,7 @@ void FeeDebtHandlerTest::testCopyClipboard()
 void FeeDebtHandlerTest::testCopyAllToClipboard()
 {
     membermanager::gui::FeeDebtHandler *handler = new membermanager::gui::FeeDebtHandler(this);
-    handler->onCalculate();
+    handler->calculate();
 
     handler->copyAllToClipboard();
 

@@ -83,30 +83,25 @@ void CashImportHandlerTest::initTestCase()
 void CashImportHandlerTest::testCashProxyModelChanged()
 {
     membermanager::gui::CashImportHandler *importHandler = new membermanager::gui::CashImportHandler(this);
-    QSignalSpy spy(importHandler, SIGNAL(cashProxyModelChanged()));
 
     membermanager::gui::ProxyTableModel* proxyModel = importHandler->cashProxyModel();
 
     QCOMPARE(proxyModel->rowCount(), 1);
-    QCOMPARE(spy.count(), 0);
 
-    importHandler->onRefresh();
+    importHandler->refresh();
 
     proxyModel = importHandler->cashProxyModel();
     QCOMPARE(proxyModel->rowCount(), 1);
-    QCOMPARE(spy.count(), 1);
 }
 
 void CashImportHandlerTest::testSelectYear()
 {
     membermanager::gui::CashImportHandler *importHandler = new membermanager::gui::CashImportHandler(this);
-    QSignalSpy spy(importHandler, SIGNAL(cashProxyModelChanged()));
 
     importHandler->selectYear(2010);
 
     membermanager::gui::ProxyTableModel* proxyModel = importHandler->cashProxyModel();
     QCOMPARE(proxyModel->rowCount(), 1);
-    QCOMPARE(spy.count(), 1);
 }
 
 void CashImportHandlerTest::testCashSelected()
@@ -114,7 +109,7 @@ void CashImportHandlerTest::testCashSelected()
     membermanager::gui::CashImportHandler* handler = new membermanager::gui::CashImportHandler(this);
     QSignalSpy spy(handler, SIGNAL(cashAccountChanged()));
 
-    handler->onSelectedRow(0);
+    handler->selectedRow(0);
 
     QCOMPARE(spy.count(), 1);
 

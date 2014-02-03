@@ -24,7 +24,7 @@ CashImportHandler::CashImportHandler(QObject *parent) :
 {
     QDate date = QDate::currentDate();
     m_year = date.year();
-    createCashProxyTableModel();
+    refresh();
 }
 
 ProxyTableModel *CashImportHandler::cashProxyModel() const
@@ -40,17 +40,17 @@ entity::CashAccount *CashImportHandler::cashAccount() const
 void CashImportHandler::selectYear(int year)
 {
     m_year = year;
-    delete m_cashProxyModel;
-    createCashProxyTableModel();
-    emit cashProxyModelChanged();
+    QSqlTableModel* model = dao::CashAccountTableModel::createModel(m_year);
+    m_cashProxyModel->setModel(model);
 }
 
-void CashImportHandler::onRefresh()
+void CashImportHandler::refresh()
 {
     selectYear(m_year);
+    qDebug() << QString("Refresh: Selected row count: %1").arg(m_cashProxyModel->rowCount());
 }
 
-void CashImportHandler::onSelectedRow(int row)
+void CashImportHandler::selectedRow(int row)
 {
     delete m_cashAccount;
     QSqlTableModel* model = m_cashProxyModel->getModel();
@@ -58,7 +58,7 @@ void CashImportHandler::onSelectedRow(int row)
     emit cashAccountChanged();
 }
 
-void CashImportHandler::onImport(const QString &urlFilename)
+void CashImportHandler::importFile(const QString &urlFilename)
 {
     emit progress(0);
     QSettings settings;
@@ -99,13 +99,6 @@ void CashImportHandler::onImport(const QString &urlFilename)
         emit progress(1);
     }
     emit cashAccountModelChanged();
-}
-
-void CashImportHandler::createCashProxyTableModel()
-{
-    QSqlTableModel* model = dao::CashAccountTableModel::createModel(m_year);
-    m_cashProxyModel = new ProxyTableModel(model, this);
-    qDebug() << QString("Database ready. Selected row count: %1").arg(m_cashProxyModel->rowCount());
 }
 
 } // namespace gui

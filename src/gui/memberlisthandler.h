@@ -21,6 +21,7 @@ class MemberListHandler : public QObject
 public:
     explicit MemberListHandler(QObject *parent = 0);
 
+    void setMemberProxyModel(ProxyTableModel* model);
     ProxyTableModel *memberProxyModel() const;
 
     entity::Member::State memberState() const;
@@ -35,14 +36,13 @@ signals:
     void selectMemberId(QVariant id);
 
 public slots:
-    void onRefresh(const QVariant& column, const Qt::SortOrder order);
-    void onSelectedRow(int row);
+    void reset();
+    void refresh(const QVariant& column = "memberId", const Qt::SortOrder order = Qt::SortOrder::AscendingOrder);
+    void selectedRow(int row);
 
 private:
-    entity::Member::State m_memberState;
-    ProxyTableModel *m_memberProxyTableModel;
-
-    void createMemberProxyTableModel(const QVariant& column = "memberId", const Qt::SortOrder order = Qt::SortOrder::AscendingOrder);
+    entity::Member::State m_memberState = entity::Member::State::active;
+    ProxyTableModel *m_memberProxyTableModel = new ProxyTableModel(this);
 };
 
 } // namespace gui

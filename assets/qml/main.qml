@@ -12,7 +12,7 @@ ApplicationWindow {
 
     signal qmlSettingsTriggered()
     signal qmlOpenSqlFile(string filename)
-    signal refresh()
+    signal reset()
 
     FileDialog {
         id: fileDialog
@@ -118,18 +118,9 @@ ApplicationWindow {
                 }
                 Connections {
                     target: mainWindow
-                    onRefresh: activeMember.onRefresh()
-                }
-                Connections {
-                    target: membersTab
-                    onLoaded: activeMember.onRefresh()
-                }
-                Connections {
-                    target: activeMember
-                    onDatabaseChanged: mainWindow.refresh()
+                    onReset: activeMember.reset();
                 }
             }
-
         }
 
         Tab {
@@ -147,11 +138,7 @@ ApplicationWindow {
                 }
                 Connections {
                     target: mainWindow
-                    onRefresh: contributionReceipt.onRefresh()
-                }
-                Connections {
-                    target: contributonReceiptTab
-                    onLoaded: contributionReceipt.onRefresh()
+                    onReset: contributionReceipt.reset();
                 }
             }
         }
@@ -171,11 +158,7 @@ ApplicationWindow {
                 }
                 Connections {
                     target: mainWindow
-                    onRefresh: feeDebt.onRefresh()
-                }
-                Connections {
-                    target: feeDebtTab
-                    onLoaded: feeDebt.onRefresh()
+                    onReset: feeDebt.reset();
                 }
             }
         }
@@ -195,11 +178,7 @@ ApplicationWindow {
                 }
                 Connections {
                     target: mainWindow
-                    onRefresh: contribution.onRefresh()
-                }
-                Connections {
-                    target: conrtibutionTab
-                    onLoaded: contribution.onRefresh()
+                    onReset: contribution.reset();
                 }
             }
         }
@@ -217,26 +196,18 @@ ApplicationWindow {
                     onStatusMessage: statusBar.message(msg);
                     onProgress: statusBar.progress(value);
                 }
-                /*Connections {
+                Connections {
                     target: mainWindow
-                    onRefresh: cash.onRefresh()
+                    onReset: cash.reset()
                 }
-                Connections {
-                    target: cashTab
-                    onLoaded: cash.onRefresh()
-                }
-                Connections {
-                    target: cash
-                    onDatabaseChanged: mainWindow.refresh()
-                }*/
             }
         }
     }
 
     function onDatabaseReady() {
-        mainWindow.refresh();
         statusBar.message("Database loaded");
         statusBar.progress(1);
         tabView.enabled = true;
+        mainWindow.reset();
     }
 }

@@ -10,11 +10,9 @@ namespace membermanager {
 namespace gui {
 
 MemberListHandler::MemberListHandler(QObject *parent) :
-    QObject(parent),
-    m_memberState(entity::Member::State::active),
-    m_memberProxyTableModel(nullptr)
+    QObject(parent)
 {
-    createMemberProxyTableModel();
+    refresh();
 }
 
 ProxyTableModel *MemberListHandler::memberProxyModel() const
@@ -51,25 +49,27 @@ void MemberListHandler::setBoolMemberState(bool isInactive)
     emit memberStateChanged();
 }
 
-void MemberListHandler::onRefresh(const QVariant &column, const Qt::SortOrder order)
+void MemberListHandler::reset()
 {
-    delete m_memberProxyTableModel; // TODO Refactor to autoptr
-    createMemberProxyTableModel(column, order);
+    delete m_memberProxyTableModel->getModel(); // TODO Add SharedPointer!
+    delete m_memberProxyTableModel;
+    m_memberProxyTableModel = new ProxyTableModel(this);
+    refresh();
     emit memberProxyModelChanged();
 }
 
-void MemberListHandler::onSelectedRow(int row)
+void MemberListHandler::refresh(const QVariant &column, const Qt::SortOrder order)
+{
+    QSqlTableModel *model = dao::MemberTableModel::createModel(m_memberState, column, order);
+    m_memberProxyTableModel->setModel(model);
+    qDebug() << QString("Refresh: Selected row count: %1").arg(m_memberProxyTableModel->rowCount());
+}
+
+void MemberListHandler::selectedRow(int row)
 {
     QSqlTableModel *memberModel = m_memberProxyTableModel->getModel();
     QVariant memberId = dao::MemberTableModel::giveMemberIdByRow(memberModel, row);
     emit selectMemberId(memberId);
-}
-
-void MemberListHandler::createMemberProxyTableModel(const QVariant &column, const Qt::SortOrder order)
-{
-    QSqlTableModel *model = dao::MemberTableModel::createModel(m_memberState, column, order);
-    m_memberProxyTableModel = new ProxyTableModel(model, this);
-    qDebug() << QString("Database ready. Selected row count: %1").arg(m_memberProxyTableModel->rowCount());
 }
 
 } // namespace gui

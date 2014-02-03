@@ -7,8 +7,6 @@ Item {
     anchors.fill: parent
     anchors.margins: 8
 
-    signal databaseChanged()
-
     id:root
 
     SplitView {
@@ -20,6 +18,8 @@ Item {
             Layout.fillHeight: true
 
             id: list
+
+            onSelectedMemberId: view.selectedMemberId(id)
         }
 
         MemberDetail {
@@ -29,20 +29,13 @@ Item {
             Layout.minimumHeight: 750
 
             id: view
+
+            onRefresh: list.refresh();
         }
     }
 
-    Connections {
-        target: list
-        onSelectedMemberId: view.selectedMemberId(id)
-    }
-
-    Connections {
-        target: view
-        onDatabaseChanged: root.databaseChanged()
-    }
-
-    function onRefresh() {
-        list.onRefresh();
+    function reset() {
+        list.reset();
+        view.reset();
     }
 }

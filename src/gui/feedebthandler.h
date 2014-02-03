@@ -38,14 +38,12 @@ signals:
     void progress(double value);
 
 public slots:
-    void onCalculate();
-    void onRefresh();
+    void calculate();
+    void reset();
 
 private:
-    entity::Member::State m_memberState;
-    QList<QObject *> m_debtModel;
-
-    void clearList();
+    entity::Member::State m_memberState = entity::Member::State::active;
+    QList<QObject *> m_debtModel {};
 };
 
 } // namespace gui

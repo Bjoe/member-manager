@@ -29,6 +29,7 @@ public:
     Q_INVOKABLE void createReceipt(QVariant memberId, int year);
     Q_INVOKABLE void removeRow(int row);
     Q_INVOKABLE void saveReceipt(int id, const QString &urlPath, const QString& urlFilename, int year);
+    Q_INVOKABLE void reset();
 
 signals:
     void balanceListChanged();
@@ -37,10 +38,9 @@ signals:
     void statusMessage(QString message);
 
 private:
-    double m_sum {};
+    double m_sum = 0.0;
     QList<QObject *> m_balanceList {};
 
-    void clearList();
     double calculateSum();
 };
 

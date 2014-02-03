@@ -24,7 +24,7 @@ Item {
                 text: "Calculate"
                 onClicked: {
                     handler.isInactive = memberState.checked;
-                    handler.onCalculate();
+                    handler.calculate();
                 }
             }
             CheckBox {
@@ -97,7 +97,7 @@ Item {
         }
     }
 
-    function onRefresh() {
-        handler.onRefresh()
+    function reset() {
+        handler.reset()
     }
 }

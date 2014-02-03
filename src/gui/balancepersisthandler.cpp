@@ -8,14 +8,7 @@ namespace membermanager {
 namespace gui {
 
 BalancePersistHandler::BalancePersistHandler(QObject *parent) :
-    QObject(parent),
-    m_cashAccount(nullptr),
-    m_memberId("0"),
-    m_fee("0"),
-    m_donation("0"),
-    m_additional("0"),
-    m_additionalDonation("0"),
-    m_tax("0")
+    QObject(parent)
 {
 }
 
@@ -96,7 +89,7 @@ QString BalancePersistHandler::tax() const
     return m_tax;
 }
 
-void BalancePersistHandler::onBooked()
+void BalancePersistHandler::book()
 {
     Q_ASSERT(m_cashAccount);
     emit progress(0);

@@ -22,7 +22,7 @@ Item {
 
             onSelectedMemberId: {
                 contributionReceipt.memberId = id;
-                contributionReceipt.onChanged();
+                contributionReceipt.changed();
             }
         }
 
@@ -38,7 +38,8 @@ Item {
         }
     }
 
-    function onRefresh() {
-        list.onRefresh();
+    function reset() {
+        list.reset();
+        contributionReceipt.reset();
     }
 }

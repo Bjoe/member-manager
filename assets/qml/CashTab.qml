@@ -49,6 +49,7 @@ Item {
                             console.debug("Selected year", element.year);
                             root.selectedYear = element.year;
                             handler.selectYear(root.selectedYear);
+                            cashTable.currentRow = -1;
                         }
                     }
 
@@ -103,7 +104,7 @@ Item {
 
                     model: handler.cashProxyModel
 
-                    onActivated: handler.onSelectedRow(row)
+                    onActivated: handler.selectedRow(row)
                 }
             }
 
@@ -125,7 +126,7 @@ Item {
                 MemberList {
                     id: list
 
-                    onSelectedMemberId: memberHandler.onSelectedMemberId(id);
+                    onSelectedMemberId: memberHandler.selectedMemberId(id);
                 }
 
                 Item {
@@ -246,8 +247,8 @@ Item {
                                     persister.additionalDonation = additionalDonation.readValue();
                                     persister.tax = tax.readValue();
 
-                                    persister.onBooked();
-                                    onRefresh();
+                                    persister.book();
+                                    handler.refresh();
                                 } else {
                                     fee.textColor = "red";
                                     donation.textColor = "red";
@@ -266,7 +267,7 @@ Item {
     FileDialog {
         id: fileDialog
         title: qsTr("Read SWIFT file")
-        onAccepted: handler.onImport(fileDialog.fileUrl);
+        onAccepted: handler.importFile(fileDialog.fileUrl);
         nameFilters: [ "MT940 (*.txt)", "All files (*)" ]
         selectedNameFilter: "MT940 (*.txt)"
     }
@@ -287,14 +288,10 @@ Item {
         id: memberHandler
     }
 
-    function onRefresh() {
-        list.onRefresh();
-
-        var row = cashTable.currentRow;
-        handler.onRefresh();
-        if(row > -1) {
-            cashTable.selection.select(row);
-        }
-        cashTable.currentRow = row;
+    function reset() {
+        list.reset();
+        memberHandler.reset();
+        cashTable.currentRow = -1;
+        handler.refresh();
     }
 }

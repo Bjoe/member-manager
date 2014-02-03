@@ -34,7 +34,7 @@ Item {
                     }
                 }
 
-                onCurrentIndexChanged: root.onChanged();
+                onCurrentIndexChanged: root.changed();
             }
 
             Button {
@@ -97,7 +97,7 @@ Item {
         onProgress: root.progress(value);
     }
 
-    function onChanged() {
+    function changed() {
         var index = year.currentIndex;
         var yearText = yearList.get(index).year;
         receipt.createReceipt(memberId, yearText);
@@ -122,5 +122,9 @@ Item {
         onAccepted: receipt.saveReceipt(memberId, fileDialog.folder, fileDialog.fileUrl, year.currentText)
         nameFilters: [ "LaTex (*.tex)", "All files (*)" ]
         selectedNameFilter: "LaTex (*.tex)"
+    }
+
+    function reset() {
+        receipt.reset();
     }
 }

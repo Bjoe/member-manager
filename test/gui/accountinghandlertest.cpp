@@ -120,16 +120,16 @@ void AccountingHandlerTest::testGetAccountingData()
     QList<QObject *> list = handler->accountingDataList();
     QCOMPARE(list.size(), 0);
 
-    handler->onRefresh();
+    handler->refresh();
 
-    QCOMPARE(spy.count(), 1);
+    QCOMPARE(spy.count(), 2);
     list = handler->accountingDataList();
     QCOMPARE(list.size(), 1);
 
 
-    handler->onRefresh();
+    handler->refresh();
 
-    QCOMPARE(spy.count(), 2);
+    QCOMPARE(spy.count(), 4);
     list = handler->accountingDataList();
     QCOMPARE(list.size(), 1);
 

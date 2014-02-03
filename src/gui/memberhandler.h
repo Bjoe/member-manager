@@ -41,18 +41,19 @@ signals:
     void memberChanged();
 
 public slots:
-    void onSelectedMemberId(QVariant id);
-    void onNewMember();
-    void onNewContribution();
+    void reset();
+    void selectedMemberId(QVariant id);
+    void newMember();
+    void newContribution();
 
 private:
-    entity::Member *m_member;
-    entity::BankAccount *m_bankAccount;
-    entity::SepaAccount *m_sepaAccount;
-    entity::Contribution *m_contribution;
+    entity::Member *m_member = new entity::Member();
+    entity::BankAccount *m_bankAccount = new entity::BankAccount();
+    entity::SepaAccount *m_sepaAccount = new entity::SepaAccount();
+    entity::Contribution *m_contribution = new entity::Contribution();
 
-    ProxyTableModel *m_contributionProxyTableModel;
-    ProxyTableModel *m_balanceProxyTableModel;
+    ProxyTableModel *m_contributionProxyTableModel = new ProxyTableModel(this);
+    ProxyTableModel *m_balanceProxyTableModel = new ProxyTableModel(this);
 
     QString createText(const QSqlTableModel* model, int row);
 };

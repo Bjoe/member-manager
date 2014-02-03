@@ -46,19 +46,13 @@ Item {
                 title: qsTr("Nickname")
             }
 
-            onActivated: {
-                console.debug("Activate row: "+ row)
-                handler.onSelectedRow(row);
-            }
+            onActivated: handler.selectedRow(row);
         }
 
         RowLayout {
             Button { // TODO is there any TableView.changeSort.... SIGNAL in QML?
                 text: qsTr("Sort/Refresh")
-                onClicked: {
-                    memberViewList.currentRow = -1;
-                    onRefresh();
-                }
+                onClicked: reset();
             }
 
             CheckBox {
@@ -76,13 +70,12 @@ Item {
         // handler.memberState -- Member.inactive <--- doesent work :-( Why? FIXME
     }
 
-    function onRefresh() {
-        var row = memberViewList.currentRow;
+    function refresh() {
         handler.isInactive = memberState.checked;
-        handler.onRefresh(memberViewList.getColumn(memberViewList.sortIndicatorColumn).role, memberViewList.sortIndicatorOrder);
-        if(row > -1) {
-            memberViewList.selection.select(row);
-        }
-        memberViewList.currentRow = row;
+        handler.refresh(memberViewList.getColumn(memberViewList.sortIndicatorColumn).role, memberViewList.sortIndicatorOrder);
+    }
+
+    function reset() {
+        handler.reset();
     }
 }

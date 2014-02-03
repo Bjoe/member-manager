@@ -58,16 +58,16 @@ signals:
     void progress(double value);
 
 public slots:
-    void onBooked();
+    void book();
 
 private:
-    entity::CashAccount *m_cashAccount;
-    QString m_memberId;
-    QString m_fee;
-    QString m_donation;
-    QString m_additional;
-    QString m_additionalDonation;
-    QString m_tax;
+    entity::CashAccount *m_cashAccount = nullptr;
+    QString m_memberId = QString("0");
+    QString m_fee = QString("0");
+    QString m_donation = QString("0");
+    QString m_additional = QString("0");
+    QString m_additionalDonation = QString("0");
+    QString m_tax = QString("0");
 
     void persistInBalance(QString memberId, double value, int account);
 };

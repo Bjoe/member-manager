@@ -132,7 +132,7 @@ void MemberHandlerTest::testContribuitonProxyModelChanged()
     membermanager::gui::MemberHandler *handler = new membermanager::gui::MemberHandler(this);
     QSignalSpy spy(handler, SIGNAL(memberChanged()));
 
-    handler->onSelectedMemberId(2);
+    handler->selectedMemberId(2);
     membermanager::gui::ProxyTableModel *model = handler->contributionProxyModel();
     QCOMPARE(model->rowCount(), 1);
     QCOMPARE(spy.count(), 1);
@@ -143,7 +143,7 @@ void MemberHandlerTest::testBalanceProxyModelChanged()
     membermanager::gui::MemberHandler *handler = new membermanager::gui::MemberHandler(this);
     QSignalSpy spy(handler, SIGNAL(memberChanged()));
 
-    handler->onSelectedMemberId(2);
+    handler->selectedMemberId(2);
     membermanager::gui::ProxyTableModel *model = handler->balanceProxyModel();
     QCOMPARE(model->rowCount(), 1);
     QCOMPARE(spy.count(), 1);
@@ -154,7 +154,7 @@ void MemberHandlerTest::testMemberSelected()
     membermanager::gui::MemberHandler *handler = new membermanager::gui::MemberHandler(this);
     QSignalSpy spy(handler, SIGNAL(memberChanged()));
 
-    handler->onSelectedMemberId(2);
+    handler->selectedMemberId(2);
     QCOMPARE(spy.count(), 1);
     membermanager::entity::Member *member = handler->member();
     QCOMPARE(member->name(), QString("McCoy"));
@@ -180,7 +180,7 @@ void MemberHandlerTest::testNewMember()
     membermanager::gui::MemberHandler *handler = new membermanager::gui::MemberHandler(this);
     QSignalSpy spy(handler, SIGNAL(memberChanged()));
 
-    handler->onNewMember();
+    handler->newMember();
 
     QCOMPARE(spy.count(), 1);
     membermanager::entity::Member *member = handler->member();
@@ -192,7 +192,7 @@ void MemberHandlerTest::testNewContribution()
     membermanager::gui::MemberHandler *handler = new membermanager::gui::MemberHandler(this);
     QSignalSpy spy(handler, SIGNAL(memberChanged()));
 
-    handler->onNewContribution();
+    handler->newContribution();
 
     QCOMPARE(spy.count(), 1);
     membermanager::entity::Contribution* contribution = handler->contribution();
@@ -203,7 +203,7 @@ void MemberHandlerTest::testNewContribution()
 void MemberHandlerTest::testCopyOneBalanceToClipboard()
 {
     membermanager::gui::MemberHandler *handler = new membermanager::gui::MemberHandler(this);
-    handler->onSelectedMemberId(2);
+    handler->selectedMemberId(2);
 
     handler->copyBalanceToClipboard(0);
 
@@ -215,7 +215,7 @@ void MemberHandlerTest::testCopyOneBalanceToClipboard()
 void MemberHandlerTest::testCopyAllBalanceToClipboard()
 {
     membermanager::gui::MemberHandler *handler = new membermanager::gui::MemberHandler(this);
-    handler->onSelectedMemberId(2);
+    handler->selectedMemberId(2);
 
     handler->copyAllBalanceToClipboard();
 

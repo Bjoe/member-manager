@@ -4,21 +4,21 @@ namespace membermanager {
 namespace gui {
 
 ProxyTableModel::ProxyTableModel(QObject *parent) :
-    QAbstractListModel(parent),
-    m_roles(),
-    m_sqlTableModel(new QSqlTableModel())
+    QAbstractListModel(parent)
 {}
 
-ProxyTableModel::ProxyTableModel(QSqlTableModel *model, QObject *parent) :
-    QAbstractListModel(parent),
-    m_roles(),
-    m_sqlTableModel(model)
+void ProxyTableModel::setModel(QSqlTableModel *model)
 {
+    beginResetModel();
+    delete m_sqlTableModel;
+    m_roles.clear();
+    m_sqlTableModel = model;
     int colCount = m_sqlTableModel->columnCount();
     for(int i = 0; i < colCount; ++i) {
         QVariant role = m_sqlTableModel->headerData(i, Qt::Horizontal);
         m_roles[Qt::UserRole + 1 + i] = role.toByteArray();
     }
+    endResetModel();
 }
 
 QSqlTableModel *ProxyTableModel::getModel() const
