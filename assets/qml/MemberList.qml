@@ -52,7 +52,7 @@ Item {
         RowLayout {
             Button { // TODO is there any TableView.changeSort.... SIGNAL in QML?
                 text: qsTr("Sort/Refresh")
-                onClicked: reset();
+                onClicked: refresh();
             }
 
             CheckBox {
