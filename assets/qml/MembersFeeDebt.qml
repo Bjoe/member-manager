@@ -21,12 +21,23 @@ Item {
             spacing: 4
 
             Button {
-                text: "Calculate"
+                text: qsTr("Calculate")
                 onClicked: {
+                    handler.valuta = valutaField.readDate();
                     handler.isInactive = memberState.checked;
                     handler.calculate();
                 }
             }
+
+            Label {
+                text: qsTr("Valuta")
+            }
+
+            DateField {
+                id: valutaField
+                value: handler.valuta
+            }
+
             CheckBox {
                 id: memberState
                 text: qsTr("Inactive")

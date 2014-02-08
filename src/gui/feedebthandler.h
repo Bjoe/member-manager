@@ -2,6 +2,7 @@
 #define MEMBERMANAGER_GUI_FEEDEBTHANDLER_H
 
 #include <QObject>
+#include <QDate>
 #include <QList>
 
 #include "entity/member.h"
@@ -14,6 +15,7 @@ class FeeDebtHandler : public QObject
     Q_OBJECT
 
     Q_PROPERTY(QList<QObject *> debtModel READ debtModel WRITE setDebtModel NOTIFY debtModelChanged)
+    Q_PROPERTY(QDate valuta READ valuta WRITE setValuta NOTIFY valutaChanged)
     Q_PROPERTY(membermanager::entity::Member::State memberState READ memberState WRITE setMemberState NOTIFY memberStateChanged)
     Q_PROPERTY(bool isInactive READ isInactive WRITE setBoolMemberState NOTIFY memberStateChanged)
 
@@ -27,6 +29,8 @@ public:
     void setMemberState(entity::Member::State state);
     bool isInactive() const;
     void setBoolMemberState(bool isInactive);
+    void setValuta(const QDate& valuta);
+    QDate valuta() const;
 
     Q_INVOKABLE void copyToClipboard(int row);
     Q_INVOKABLE void copyAllToClipboard();
@@ -34,6 +38,7 @@ public:
 signals:
     void debtModelChanged();
     void memberStateChanged();
+    void valutaChanged();
     void statusMessage(QString message);
     void progress(double value);
 
@@ -43,6 +48,7 @@ public slots:
 
 private:
     entity::Member::State m_memberState = entity::Member::State::active;
+    QDate m_valuta = QDate::currentDate();
     QList<QObject *> m_debtModel {};
 };
 

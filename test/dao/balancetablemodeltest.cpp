@@ -28,6 +28,7 @@ private slots:
     void testCreateModel();
     void testFindContributionByMemberIdAndYear();
     void testCalculateSum();
+    void testCalculateSumWithValuta();
     void testGiveBalanceByRow();
 };
 
@@ -179,8 +180,14 @@ void BalanceTableModelTest::testFindContributionByMemberIdAndYear()
 
 void BalanceTableModelTest::testCalculateSum()
 {
-    double sum = membermanager::dao::BalanceTableModel::calculateFeeSumByMemberId(1);
+    double sum = membermanager::dao::BalanceTableModel::calculateFeeSumByMemberId(1, QDate::currentDate());
     QCOMPARE(sum, -19.0);
+}
+
+void BalanceTableModelTest::testCalculateSumWithValuta()
+{
+    double sum = membermanager::dao::BalanceTableModel::calculateFeeSumByMemberId(1, QDate(2012,1,1));
+    QCOMPARE(sum, -29.0);
 }
 
 void BalanceTableModelTest::testGiveBalanceByRow()

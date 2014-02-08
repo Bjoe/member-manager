@@ -36,10 +36,10 @@ entity::Balance *BalanceTableModel::giveBalanceByRow(const QSqlTableModel *model
 
 QList<QObject *> BalanceTableModel::findContributionByMemberIdAndYear(const QVariant &memberId, const QVariant &year)
 {
+    QList<QString> inList = {"11", "12"};
     QDjangoQuerySet<entity::Balance> result = QDjangoQuerySet<entity::Balance>()
             .filter(QDjangoWhere("memberId", QDjangoWhere::Equals, memberId) &&
-                    (QDjangoWhere("account", QDjangoWhere::Equals, "11") ||
-                     QDjangoWhere("account", QDjangoWhere::Equals, "12")))
+                    QDjangoWhere("account", QDjangoWhere::IsIn, QVariant(inList)))
             .orderBy(QStringList() << "valuta");
 
     QList<QObject *> list;
@@ -54,18 +54,14 @@ QList<QObject *> BalanceTableModel::findContributionByMemberIdAndYear(const QVar
     return list;
 }
 
-double BalanceTableModel::calculateFeeSumByMemberId(const QVariant& memberId)
+double BalanceTableModel::calculateFeeSumByMemberId(const QVariant& memberId, const QDate& valuta)
 {
+    QList<QString> inList = {"11", "-11", "4", "-4", "3", "-3", "2", "-2"};
     QDjangoQuerySet<entity::Balance> result = QDjangoQuerySet<entity::Balance>()
             .filter(QDjangoWhere("memberId", QDjangoWhere::Equals, memberId) &&
-                    (QDjangoWhere("account", QDjangoWhere::Equals, "11") ||
-                     QDjangoWhere("account", QDjangoWhere::Equals, "-11") ||
-                     QDjangoWhere("account", QDjangoWhere::Equals, "4") ||
-                     QDjangoWhere("account", QDjangoWhere::Equals, "-4") ||
-                     QDjangoWhere("account", QDjangoWhere::Equals, "3") ||
-                     QDjangoWhere("account", QDjangoWhere::Equals, "-3") ||
-                     QDjangoWhere("account", QDjangoWhere::Equals, "2") ||
-                     QDjangoWhere("account", QDjangoWhere::Equals, "-2")));
+                    QDjangoWhere("valuta", QDjangoWhere::LessThan, valuta) &&
+                    QDjangoWhere("account", QDjangoWhere::IsIn, QVariant(inList)))
+            .orderBy(QStringList() << "valuta");
 
     double sum = 0.0;
     for(const entity::Balance &balance : result) {

@@ -159,6 +159,7 @@ void FeeDebtHandlerTest::testCopyClipboard()
     settings.setValue("sepa/bic", QString("DUSSDEDDXXX"));
 
     membermanager::gui::FeeDebtHandler *handler = new membermanager::gui::FeeDebtHandler(this);
+    handler->setValuta(QDate(2014,3,3));
     handler->calculate();
 
     handler->copyToClipboard(0);
@@ -169,7 +170,8 @@ void FeeDebtHandlerTest::testCopyClipboard()
                                         "\n"
                                         "Hallo James T.,\n"
                                         "\n"
-                                        "leider weist dein Mitgliedskontostand ein Sollwert von -25,00 EUR auf.\n"
+                                        "leider weist dein Mitgliedskontostand zum Mo. Mär. 3 2014 \n"
+                                        "ein Sollwert von -25,00 EUR auf.\n"
                                         "Bitte zahle uns den ausstehenden Beitrag von 25,00 EUR auf\n"
                                         "folgendes Vereins Konto ein:\n"
                                         "Name: foobar e.V.\n"
@@ -177,7 +179,7 @@ void FeeDebtHandlerTest::testCopyClipboard()
                                         "BIC: DUSSDEDDXXX\n"
                                         "\n"
                                         "Als Referenz/MandateId bitte folgendes Eintragen:\n"
-                                        "1\n"
+                                        "CHD-1\n"
                                         "\n"
                                         "Sollte es Probleme oder Fragen geben, dann wende dich bitte\n"
                                         "schnellstmoeglich an den Chaosdorf Vorstand\n"
@@ -189,13 +191,15 @@ void FeeDebtHandlerTest::testCopyClipboard()
 void FeeDebtHandlerTest::testCopyAllToClipboard()
 {
     membermanager::gui::FeeDebtHandler *handler = new membermanager::gui::FeeDebtHandler(this);
+    handler->setValuta(QDate(2014,3,3));
     handler->calculate();
 
     handler->copyAllToClipboard();
 
     QClipboard *clipboard = QApplication::clipboard();
     QCOMPARE(clipboard->text(), QString("Rueckstand\tName\tVorname\tEmail\n"
-                                        "-25,00 EUR\tKirk\tJames T.\tenterprise@startrek.com\n"));
+                                        "-25,00 EUR\tKirk\tJames T.\tenterprise@startrek.com\n"
+                                        "Stand am 03.03.2014"));
 }
 
 }
