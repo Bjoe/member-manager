@@ -23,7 +23,21 @@ Item {
 
             Button {
                 text: qsTr("Aktualisieren")
-                onClicked: handler.refresh()
+                onClicked: {
+                    handler.purpose = purposeField.text; // Why? What is with binding?
+                    handler.accountingInfo = accountingInfoField.text; // Why? What is with binding?
+                    handler.valuta = valutaField.readDate();
+                    handler.refresh();
+                }
+            }
+
+            Label {
+                text: qsTr("Valuta")
+            }
+
+            DateField {
+                id: valutaField
+                value: handler.valuta
             }
 
             Label {
@@ -31,7 +45,7 @@ Item {
             }
 
             TextField {
-                id: accountingInfo
+                id: accountingInfoField
                 text: handler.accountingInfo
             }
 
@@ -40,13 +54,15 @@ Item {
             }
 
             TextField {
-                id: purpose
+                id: purposeField
                 text: handler.purpose
             }
 
             Button {
                 text: qsTr("Buchen")
-                onClicked: fileDialog.open()
+                onClicked: {
+                    fileDialog.open();
+                }
             }
         }
 
@@ -57,8 +73,13 @@ Item {
             model: handler.accountingDataList
 
             TableViewColumn {
-                role: "memberId"
-                title: qsTr("Mitglieds Nr")
+                role: "valuta"
+                title: qsTr("Valuta")
+            }
+
+            TableViewColumn {
+                role: "mandateId"
+                title: qsTr("Mandate Id")
             }
 
             TableViewColumn {
