@@ -46,7 +46,7 @@ qaqbanking::sepa::TransactionPtr TransactionCreator::createTransaction(const Mem
     QString remoteName = QString("%1, %2")
             .arg(accountingData->firstname())
             .arg(accountingData->name());
-    QString memberId = accountingData->memberId();
+    QString mandateId = accountingData->mandateId();
     double fee = accountingData->fee();
     double donation = accountingData->donation();
     double additionalFee = accountingData->additionalFee();
@@ -57,14 +57,14 @@ qaqbanking::sepa::TransactionPtr TransactionCreator::createTransaction(const Mem
 
     m_transaction.append(QString("%1;Lastschrift Einzug 011;011 Mitgliedsbeitrag %3 %2 %4;%5\n")
                 .arg(valuta.toString("dd.MM.yyyy"))
-                .arg(memberId)
+                .arg(mandateId)
                 .arg(accountingReference)
                 .arg(remoteName)
                 .arg(fee));
     if(donation > 0) {
         m_transaction.append(QString("%1;Lastschrift Einzug 012;012 Spende %3 %2 %4;%5\n")
                     .arg(valuta.toString("dd.MM.yyyy"))
-                    .arg(memberId)
+                    .arg(mandateId)
                     .arg(accountingReference)
                     .arg(remoteName)
                     .arg(donation));
@@ -72,13 +72,13 @@ qaqbanking::sepa::TransactionPtr TransactionCreator::createTransaction(const Mem
     if(additionalDonation + additionalFee > 0) {
         m_transaction.append(QString("%1;Lastschrift Einzug 004;004 Durchlaufender Posten / CCC Beitrag %3 %2 %4;%5\n")
                     .arg(valuta.toString("dd.MM.yyyy"))
-                    .arg(memberId)
+                    .arg(mandateId)
                     .arg(accountingReference)
                     .arg(remoteName)
                     .arg(additionalFee));
         m_transaction.append(QString("%1;Lastschrift Einzug 003;003 Durchlaufender Posten / CCC Spende %3 %2 %4;%5\n")
                     .arg(valuta.toString("dd.MM.yyyy"))
-                    .arg(memberId)
+                    .arg(mandateId)
                     .arg(accountingReference)
                     .arg(remoteName)
                     .arg(additionalDonation));
@@ -86,7 +86,7 @@ qaqbanking::sepa::TransactionPtr TransactionCreator::createTransaction(const Mem
     if(amortization > 0) {
         m_transaction.append(QString("%1;Lastschrift Einzug 002;002 Mitgliedsbeitrag Rate %3 %2 %4;%5\n")
                     .arg(valuta.toString("dd.MM.yyyy"))
-                    .arg(memberId)
+                    .arg(mandateId)
                     .arg(accountingReference)
                     .arg(remoteName)
                     .arg(amortization));
@@ -108,7 +108,7 @@ qaqbanking::sepa::TransactionPtr TransactionCreator::createTransaction(const Mem
         transaction->setSequenceType(qaqbanking::sepa::Transaction::FOLLOWING);
     }
     transaction->setEndToEndReference(accountingReference);
-    transaction->setMandateId(QString("CHD%1").arg(memberId));
+    transaction->setMandateId(mandateId);
     transaction->setMandateDate(accountingData->sepaMandateDate());
     transaction->setCollectionDate(valuta);
     transaction->setPurpose(accountingData->purpose());

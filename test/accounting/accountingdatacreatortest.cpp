@@ -105,7 +105,7 @@ void AccountingDataCreatorTest::testCreateAccountingData()
     QCOMPARE(data->accountingInfo(), QString("info"));
     QCOMPARE(data->firstname(), QString("James T."));
     QCOMPARE(data->name(), QString("Kirk"));
-    QCOMPARE(data->memberId(), QString("1"));
+    QCOMPARE(data->mandateId(), QString("CHD-1"));
     QCOMPARE(data->canCharge(), true);
     QCOMPARE(data->sepaBic(), QString("DUSSDEDDXXX"));
     QCOMPARE(data->sepaIban(), QString("DE26312345670012345678"));

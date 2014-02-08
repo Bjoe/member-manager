@@ -47,7 +47,7 @@ void TransactionCreatorTest::testCreateTransaction()
     accountingData->setDonation(10.0);
     accountingData->setFee(15.0);
     accountingData->setFirstname("James T.");
-    accountingData->setMemberId("23");
+    accountingData->setMandateId("23");
     accountingData->setName("Kirk");
     accountingData->setValuta(QDate(2013, 9, 29));
 
@@ -75,7 +75,7 @@ void TransactionCreatorTest::testCreateTransaction()
     QCOMPARE(transaction->remoteBic(), QString("DUSSDEDDXXX"));
     QCOMPARE(transaction->remoteIban(), QString("DE26312345670012345678"));
     QCOMPARE(transaction->creditorSchemeId(), QString("DE202300000782585"));
-    QCOMPARE(transaction->mandateId(), QString("CHD23"));
+    QCOMPARE(transaction->mandateId(), QString("23"));
     QCOMPARE(transaction->mandateDate(), QDate(2013,11,30));
     QCOMPARE(transaction->endToEndReference(), QString("2342"));
     QCOMPARE(transaction->sequenceType(), qaqbanking::sepa::Transaction::FIRST);
@@ -85,7 +85,7 @@ void TransactionCreatorTest::testCreateTransaction()
 void TransactionCreatorTest::testCreateDtaus()
 {
     membermanager::accounting::MemberAccountingData accountingData;
-    accountingData.setMemberId("1");
+    accountingData.setMandateId("1");
     accountingData.setFirstname("James T.");
     accountingData.setName("Kirk");
     accountingData.setFee(15.0);

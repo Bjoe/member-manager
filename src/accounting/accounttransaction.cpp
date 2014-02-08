@@ -125,7 +125,7 @@ void AccountTransaction::createAndSaveBalance(
         )
 {
     entity::Balance* balance = new entity::Balance();
-    balance->setMemberId(accountingData->memberId());
+    balance->setMemberId(accountingData->mandateId());
     balance->setValuta(accountingData->valuta());
     balance->setAccountingReference(accountingData->accountingReference());
     balance->setValue(value);

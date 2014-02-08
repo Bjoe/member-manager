@@ -20,15 +20,15 @@ void MemberAccountingData::setValuta(QDate date)
     emit valutaChanged();
 }
 
-QString MemberAccountingData::memberId() const
+QString MemberAccountingData::mandateId() const
 {
-    return m_memberId;
+    return m_mandateId;
 }
 
-void MemberAccountingData::setMemberId(QString memberId)
+void MemberAccountingData::setMandateId(QString manadateId)
 {
-    m_memberId = memberId;
-    emit memberIdChanged();
+    m_mandateId = manadateId;
+    emit mandateIdChanged();
 }
 
 QString MemberAccountingData::name() const

@@ -14,7 +14,7 @@ class MemberAccountingData : public QObject
     Q_OBJECT
 
     Q_PROPERTY(QDate valuta READ valuta WRITE setValuta NOTIFY valutaChanged)
-    Q_PROPERTY(QString memberId READ memberId WRITE setMemberId NOTIFY memberIdChanged)
+    Q_PROPERTY(QString mandateId READ mandateId WRITE setMandateId NOTIFY mandateIdChanged)
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
     Q_PROPERTY(QString firstname READ firstname WRITE setFirstname NOTIFY firstnameChanged)
     Q_PROPERTY(QString bankAccountNumber READ bankAccountNumber WRITE setBankAccountNumber NOTIFY bankAccountNumberChanged)
@@ -38,8 +38,8 @@ public:
     QDate valuta() const;
     void setValuta(QDate date);
 
-    QString memberId() const;
-    void setMemberId(QString memberId);
+    QString mandateId() const;
+    void setMandateId(QString manadateId);
 
     QString name() const;
     void setName(QString name);
@@ -94,7 +94,7 @@ public:
 
 signals:
     void valutaChanged();
-    void memberIdChanged();
+    void mandateIdChanged();
     void nameChanged();
     void firstnameChanged();
     void bankAccountNumberChanged();
@@ -114,7 +114,7 @@ signals:
 
 private:
     QDate m_valuta;
-    QString m_memberId;
+    QString m_mandateId;
     QString m_name;
     QString m_firstname;
     QString m_bankAccountNumber;

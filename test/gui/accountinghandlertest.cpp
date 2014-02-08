@@ -165,7 +165,7 @@ void AccountingHandlerTest::testBook()
     accountingData->setDonation(10.0);
     accountingData->setFee(15.0);
     accountingData->setFirstname("James T.");
-    accountingData->setMemberId("1");
+    accountingData->setMandateId("1");
     accountingData->setName("Kirk");
     accountingData->setValuta(QDate(2013, 9, 29));
 
@@ -246,7 +246,7 @@ void AccountingHandlerTest::testBookSignals()
     accountingData->setDonation(10.0);
     accountingData->setFee(15.0);
     accountingData->setFirstname("James T.");
-    accountingData->setMemberId("1");
+    accountingData->setMandateId("1");
     accountingData->setName("Kirk");
     accountingData->setValuta(QDate(2013, 9, 29));
 

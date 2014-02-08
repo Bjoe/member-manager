@@ -24,7 +24,7 @@ MemberAccountingData *AccountingDataCreator::create(const entity::Member* member
     MemberAccountingData* data = new MemberAccountingData();
     data->setValuta(m_valuta);
     data->setAccountingInfo(m_accountingInfo);
-    data->setMemberId(memberId);
+    data->setMandateId(QString("CHD-%1").arg(memberId));
     data->setFirstname(member->firstname());
     data->setName(member->name());
     QString collectionState = member->collectionState();

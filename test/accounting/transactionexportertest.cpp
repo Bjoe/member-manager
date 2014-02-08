@@ -49,7 +49,7 @@ void TransactionExporterTest::testAddTransaction()
     accountingData->setDonation(10.0);
     accountingData->setFee(15.0);
     accountingData->setFirstname("James T.");
-    accountingData->setMemberId("1");
+    accountingData->setMandateId("1");
     accountingData->setName("Kirk");
     accountingData->setValuta(QDate(2013, 9, 29));
 
@@ -70,7 +70,7 @@ void TransactionExporterTest::testAddTransaction()
     accountingData2->setDonation(10.0);
     accountingData2->setFee(15.0);
     accountingData2->setFirstname("James T.");
-    accountingData2->setMemberId("1");
+    accountingData2->setMandateId("1");
     accountingData2->setName("Kirk");
     accountingData2->setValuta(QDate(2013, 9, 29));
 
