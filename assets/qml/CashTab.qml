@@ -281,6 +281,9 @@ Item {
 
     BalancePersistHandler {
         id: persister
+
+        onStatusMessage: root.statusMessage(message);
+        onProgress: root.progress(value);
     }
 
     MemberHandler {
