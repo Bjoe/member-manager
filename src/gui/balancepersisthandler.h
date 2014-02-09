@@ -13,6 +13,8 @@ class BalancePersistHandler : public QObject
 {
     Q_OBJECT
 
+    Q_ENUMS(State)
+
     Q_PROPERTY(membermanager::entity::CashAccount *cashAccount READ cashAccount WRITE setCashAccount NOTIFY cashAccountChanged)
     Q_PROPERTY(QString memberId READ memberId WRITE setMemberId NOTIFY memberIdChanged)
     Q_PROPERTY(QString fee READ fee WRITE setFee NOTIFY feeChanged)
@@ -22,6 +24,8 @@ class BalancePersistHandler : public QObject
     Q_PROPERTY(QString tax READ tax WRITE setTax NOTIFY taxChanged)
 
 public:
+    enum class State { OK, WRONGVALUE, ISBOOKED };
+
     explicit BalancePersistHandler(QObject *parent = 0);
 
     void setCashAccount(entity::CashAccount *cashAccount);
@@ -45,6 +49,8 @@ public:
     void setTax(QString tax);
     QString tax() const;
 
+    Q_INVOKABLE State book();
+
 signals:
     void cashAccountChanged();
     void memberIdChanged();
@@ -57,9 +63,6 @@ signals:
     void statusMessage(QString message);
     void progress(double value);
 
-public slots:
-    void book();
-
 private:
     entity::CashAccount *m_cashAccount = nullptr;
     QString m_memberId = QString("0");
@@ -70,6 +73,7 @@ private:
     QString m_tax = QString("0");
 
     void persistInBalance(QString memberId, double value, int account);
+    State verifySum();
 };
 
 } // namespace gui

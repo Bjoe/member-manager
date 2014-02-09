@@ -89,9 +89,18 @@ QString BalancePersistHandler::tax() const
     return m_tax;
 }
 
-void BalancePersistHandler::book()
+BalancePersistHandler::State BalancePersistHandler::book()
 {
-    Q_ASSERT(m_cashAccount);
+    if(m_cashAccount == nullptr || m_cashAccount->state() == "booked") {
+        emit statusMessage("Ist schon gebucht!");
+        return State::ISBOOKED;
+    }
+
+    if(verifySum() == State::WRONGVALUE) {
+        emit statusMessage("Falscher Wert!");
+        return State::WRONGVALUE;
+    }
+
     emit progress(0);
     emit statusMessage("Booking in progress ... please wait");
 
@@ -118,6 +127,8 @@ void BalancePersistHandler::book()
 
     emit progress(1);
     emit statusMessage("Booking done.");
+
+    return State::OK;
 }
 
 void BalancePersistHandler::persistInBalance(QString memberId, double value, int account)
@@ -139,6 +150,18 @@ void BalancePersistHandler::persistInBalance(QString memberId, double value, int
     balance->setInfo("Automatische Buchung");
     balance->save();
     delete balance;
+}
+
+BalancePersistHandler::State BalancePersistHandler::verifySum()
+{
+    double sum = 0.0;
+    sum += m_fee.toDouble();
+    sum += m_donation.toDouble();
+    sum += m_additional.toDouble();
+    sum += m_additionalDonation.toDouble();
+    sum += m_tax.toDouble();
+
+    return sum == m_cashAccount->value() ? State::OK : State::WRONGVALUE;
 }
 
 } // namespace gui

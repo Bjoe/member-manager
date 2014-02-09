@@ -31,6 +31,8 @@ private slots:
     void init();
     void testPersistPositiveAmount();
     void testPersistNegativAmount();
+    void testWrongValue();
+    void testIsBooked();
     void testSignalAfterPersist();
 };
 
@@ -64,8 +66,38 @@ void BalancePersistHandlerTest::init()
     cashAccount->setRemoteBankCode("7654321");
     cashAccount->setRemoteName("Spar Strumpf");
     cashAccount->setTransactionCode(5);
+    cashAccount->setTransactionText("GUTSCHRIFT");
+    cashAccount->setValue(40.0);
+    cashAccount->setValuta(QDate::currentDate());
+    cashAccount->save();
+    delete cashAccount;
+
+    cashAccount = new membermanager::entity::CashAccount();
+    cashAccount->setState("imported");
+    cashAccount->setDate(QDate::currentDate());
+    cashAccount->setPrimanota("prima");
+    cashAccount->setPurpose("Geld");
+    cashAccount->setRemoteAccountNumber("1234567");
+    cashAccount->setRemoteBankCode("7654321");
+    cashAccount->setRemoteName("Spar Strumpf");
+    cashAccount->setTransactionCode(5);
     cashAccount->setTransactionText("LASTSCHRIFT");
-    cashAccount->setValue(100.9);
+    cashAccount->setValue(-21.0);
+    cashAccount->setValuta(QDate::currentDate());
+    cashAccount->save();
+    delete cashAccount;
+
+    cashAccount = new membermanager::entity::CashAccount();
+    cashAccount->setState("booked");
+    cashAccount->setDate(QDate::currentDate());
+    cashAccount->setPrimanota("prima");
+    cashAccount->setPurpose("Geld");
+    cashAccount->setRemoteAccountNumber("1234567");
+    cashAccount->setRemoteBankCode("7654321");
+    cashAccount->setRemoteName("Spar Strumpf");
+    cashAccount->setTransactionCode(5);
+    cashAccount->setTransactionText("LASTSCHRIFT");
+    cashAccount->setValue(40.0);
     cashAccount->setValuta(QDate::currentDate());
     cashAccount->save();
     delete cashAccount;
@@ -84,14 +116,12 @@ void BalancePersistHandlerTest::testPersistPositiveAmount()
     handler->setFee("15");
     handler->setDonation("5");
     handler->setAdditional("10");
-    handler->setAdditionalDonation("8");
-    handler->setTax("6");
+    handler->setAdditionalDonation("5");
+    handler->setTax("5");
 
-    handler->book();
+    QVERIFY(handler->book() == membermanager::gui::BalancePersistHandler::State::OK);
 
     QDjangoQuerySet<membermanager::entity::CashAccount> actualCashAccountSet;
-    QCOMPARE(actualCashAccountSet.count(), 1);
-
     membermanager::entity::CashAccount *actualCashAccount = new membermanager::entity::CashAccount();
     actualCashAccountSet.at(0, actualCashAccount);
 
@@ -115,7 +145,7 @@ void BalancePersistHandlerTest::testPersistNegativAmount()
 {
     QDjangoQuerySet<membermanager::entity::CashAccount> cashAccountSet;
     membermanager::entity::CashAccount *cashAccount = new membermanager::entity::CashAccount();
-    cashAccountSet.at(0, cashAccount);
+    cashAccountSet.at(1, cashAccount);
 
     membermanager::gui::BalancePersistHandler *handler = new membermanager::gui::BalancePersistHandler(this);
 
@@ -128,10 +158,8 @@ void BalancePersistHandlerTest::testPersistNegativAmount()
     handler->book();
 
     QDjangoQuerySet<membermanager::entity::CashAccount> actualCashAccountSet;
-    QCOMPARE(actualCashAccountSet.count(), 1);
-
     membermanager::entity::CashAccount *actualCashAccount = new membermanager::entity::CashAccount();
-    actualCashAccountSet.at(0, actualCashAccount);
+    actualCashAccountSet.at(1, actualCashAccount);
 
     QCOMPARE(actualCashAccount->memberId(), QString("1099"));
 
@@ -148,6 +176,44 @@ void BalancePersistHandlerTest::testPersistNegativAmount()
     delete balance;
     delete actualCashAccount;
     delete cashAccount;
+}
+
+void BalancePersistHandlerTest::testWrongValue()
+{
+    QDjangoQuerySet<membermanager::entity::CashAccount> cashAccountSet;
+    membermanager::entity::CashAccount *cashAccount = new membermanager::entity::CashAccount();
+    cashAccountSet.at(0, cashAccount);
+
+    membermanager::gui::BalancePersistHandler *handler = new membermanager::gui::BalancePersistHandler(this);
+
+    handler->setCashAccount(cashAccount);
+    handler->setMemberId("1023");
+    handler->setFee("15");
+    handler->setDonation("5");
+    handler->setAdditional("10");
+    handler->setAdditionalDonation("5");
+    handler->setTax("15");
+
+    QVERIFY(handler->book() == membermanager::gui::BalancePersistHandler::State::WRONGVALUE);
+}
+
+void BalancePersistHandlerTest::testIsBooked()
+{
+    QDjangoQuerySet<membermanager::entity::CashAccount> cashAccountSet;
+    membermanager::entity::CashAccount *cashAccount = new membermanager::entity::CashAccount();
+    cashAccountSet.at(2, cashAccount);
+
+    membermanager::gui::BalancePersistHandler *handler = new membermanager::gui::BalancePersistHandler(this);
+
+    handler->setCashAccount(cashAccount);
+    handler->setMemberId("1023");
+    handler->setFee("15");
+    handler->setDonation("5");
+    handler->setAdditional("10");
+    handler->setAdditionalDonation("5");
+    handler->setTax("5");
+
+    QVERIFY(handler->book() == membermanager::gui::BalancePersistHandler::State::ISBOOKED);
 }
 
 void BalancePersistHandlerTest::testSignalAfterPersist()

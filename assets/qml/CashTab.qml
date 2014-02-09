@@ -224,37 +224,36 @@ Item {
                             text: qsTr("Buchen")
 
                             onClicked: {
-                                var sum = Number(0.0);
-                                sum += Number(fee.readValue());
-                                sum += Number(donation.readValue());
-                                sum += Number(additional.readValue());
-                                sum += Number(additionalDonation.readValue());
-                                sum += Number(tax.readValue());
+                                fee.textColor = "black";
+                                donation.textColor = "black";
+                                additional.textColor = "black";
+                                additionalDonation.textColor = "black";
+                                tax.textColor = "black";
 
-                                console.debug("Summe " + sum + " Betrag " + handler.cashAccount.value);
-                                if(sum === handler.cashAccount.value) {
-                                    fee.textColor = "black";
-                                    donation.textColor = "black";
-                                    additional.textColor = "black";
-                                    additionalDonation.textColor = "black";
-                                    tax.textColor = "black";
+                                persister.cashAccount = handler.cashAccount;
+                                persister.memberId = memberId.text;
+                                persister.fee = fee.readValue();
+                                persister.donation = donation.readValue();
+                                persister.additional = additional.readValue();
+                                persister.additionalDonation = additionalDonation.readValue();
+                                persister.tax = tax.readValue();
 
-                                    persister.cashAccount = handler.cashAccount;
-                                    persister.memberId = memberId.text;
-                                    persister.fee = fee.readValue();
-                                    persister.donation = donation.readValue();
-                                    persister.additional = additional.readValue();
-                                    persister.additionalDonation = additionalDonation.readValue();
-                                    persister.tax = tax.readValue();
-
-                                    persister.book();
+                                var state = persister.book();
+                                switch(state) {
+                                case BalancePersistHandler.OK:
                                     handler.refresh();
-                                } else {
+                                    break;
+                                case BalancePersistHandler.WRONGVALUE:
                                     fee.textColor = "red";
                                     donation.textColor = "red";
                                     additional.textColor = "red";
                                     additionalDonation.textColor = "red";
                                     tax.textColor = "red";
+                                    break;
+                                case BalancePersistHandler.ISBOOKED:
+                                    break;
+                                default:
+                                    break;
                                 }
                             }
                         }
