@@ -65,6 +65,7 @@ void AccountTransactionTest::initTestCase()
 void AccountTransactionTest::testBooked()
 {
     membermanager::accounting::MemberAccountingData accountingData;
+    accountingData.setMemberId("23");
     accountingData.setMandateId("1");
     accountingData.setFirstname("James T.");
     accountingData.setName("Kirk");

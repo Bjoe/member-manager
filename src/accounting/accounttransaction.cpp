@@ -125,13 +125,13 @@ void AccountTransaction::createAndSaveBalance(
         )
 {
     entity::Balance* balance = new entity::Balance();
-    balance->setMemberId(accountingData->mandateId());
+    balance->setMemberId(accountingData->memberId());
     balance->setValuta(accountingData->valuta());
     balance->setAccountingReference(accountingData->accountingReference());
     balance->setValue(value);
     balance->setAccount(account);
     balance->setPurpose(purpose);
-    balance->setInfo(info);
+    balance->setInfo(accountingData->mandateId() + " " + info);
 
     m_balanceList.append(balance);
 }

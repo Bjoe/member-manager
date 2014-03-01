@@ -22,6 +22,7 @@ MemberAccountingData *AccountingDataCreator::create(const entity::Member* member
 {
     QString memberId = member->memberId();
     MemberAccountingData* data = new MemberAccountingData();
+    data->setMemberId(memberId);
     data->setValuta(m_valuta);
     data->setAccountingInfo(m_accountingInfo);
     data->setMandateId(QString("CHD-%1").arg(memberId));

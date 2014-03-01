@@ -31,6 +31,17 @@ void MemberAccountingData::setMandateId(QString manadateId)
     emit mandateIdChanged();
 }
 
+QString MemberAccountingData::memberId() const
+{
+    return m_memberId;
+}
+
+void MemberAccountingData::setMemberId(QString memberId)
+{
+    m_memberId = memberId;
+    emit memberIdChanged();
+}
+
 QString MemberAccountingData::name() const
 {
     return m_name;
