@@ -141,6 +141,7 @@ Item {
         onAccepted: handler.book(fileDialog.fileUrl)
         nameFilters: [ "SEPA (*.xml)", "All files (*)" ]
         selectedNameFilter: "SEPA (*.xml)"
+        selectExisting: false
     }
 
     AccountingHandler {
