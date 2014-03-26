@@ -225,9 +225,7 @@ void MemberAccountingData::setCollectionState(const QChar &state)
 
 bool MemberAccountingData::canCharge() const
 {
-    return m_collectionState == static_cast<char>(entity::Member::CollectionState::known) &&
-           ! m_bankAccountNumber.isEmpty() &&
-            ! m_bankCode.isEmpty();
+    return m_collectionState == static_cast<char>(entity::Member::CollectionState::known);
 }
 
 } // namespace accounting

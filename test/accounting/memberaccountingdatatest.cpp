@@ -37,7 +37,7 @@ void MemberAccountingDataTest::testDontCanCharge()
 
     data.setCollectionState(static_cast<char>(membermanager::entity::Member::CollectionState::known));
 
-    QVERIFY(data.canCharge() == false);
+    QVERIFY(data.canCharge() == true);
 }
 
 }
